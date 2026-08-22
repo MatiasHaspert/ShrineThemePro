@@ -1,0 +1,350 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "titulo": {
+          "type": "title",
+          "settings": {
+            "text_size": "h1",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 9
+          }
+        },
+        "subtitulo": {
+          "type": "text",
+          "settings": {
+            "text_1": "Isómero R puro, sin mezcla racémica. 30 cápsulas de producción nacional.",
+            "icon_1": "",
+            "icon_2": "",
+            "icon_3": "",
+            "mobile_text_size": 15,
+            "desktop_text_size": 17,
+            "alignment": "left",
+            "text_color": "#10262A",
+            "icon_color": "#557C82",
+            "width": "100%",
+            "direction": "horizontal",
+            "enable_bg": false,
+            "margin_top": 0,
+            "margin_bottom": 21
+          }
+        },
+        "precio": {
+          "type": "price",
+          "settings": {
+            "layout": "price_first",
+            "price_color": "text",
+            "compare_price_color": "text",
+            "displayed_badge": "none",
+            "margin_top": 0,
+            "margin_bottom": 21
+          }
+        },
+        "bullets_a": {
+          "type": "icon_with_text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_color": "accent-2",
+            "desktop_icon_size": 28,
+            "desktop_spacing": 10,
+            "desktop_text_size": 16,
+            "mobile_icon_size": 24,
+            "mobile_spacing": 8,
+            "mobile_text_size": 14,
+            "icon_1": "science",
+            "icon_1_fill": false,
+            "heading_1": "Forma R pura, no racémica",
+            "icon_2": "medication",
+            "icon_2_fill": false,
+            "heading_2": "600 mg por cápsula",
+            "icon_3": "",
+            "icon_3_fill": false,
+            "heading_3": "",
+            "margin_top": 0,
+            "margin_bottom": 12
+          }
+        },
+        "bullets_b": {
+          "type": "icon_with_text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_color": "accent-2",
+            "desktop_icon_size": 28,
+            "desktop_spacing": 10,
+            "desktop_text_size": 16,
+            "mobile_icon_size": 24,
+            "mobile_spacing": 8,
+            "mobile_text_size": 14,
+            "icon_1": "biotech",
+            "icon_1_fill": false,
+            "heading_1": "Analizado por laboratorio externo",
+            "icon_2": "factory",
+            "icon_2_fill": false,
+            "heading_2": "Producción nacional",
+            "icon_3": "",
+            "icon_3_fill": false,
+            "heading_3": "",
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "separador": {
+          "type": "divider",
+          "settings": {
+            "color": "#DFDBCE",
+            "height": 1,
+            "width": 100,
+            "Full_mobile_width": false,
+            "alignment": "flex-start",
+            "border_radius": 0,
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "ofertas": {
+          "type": "quantity_selector",
+          "settings": {
+            "full_width_classic": true,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": true,
+            "style": "normal",
+            "headline": "Elegí tu cantidad",
+            "preselected": "option_2",
+            "display_selected_indicator": true,
+            "border_radius": 6,
+            "border_width": 1,
+            "color_scheme": "text",
+            "enable_variant_selectors": false,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "update_prices": false,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "1",
+            "option_1_badge_color": "accent-2",
+            "option_1_label": "1 frasco",
+            "option_1_benefit": "",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "outlined",
+            "option_1_benefit_color": "accent-2",
+            "option_1_caption": "[duracion]",
+            "option_1_percentage_off_text": "0",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "",
+            "option_2_badge_style": "1",
+            "option_2_badge_color": "accent-2",
+            "option_2_label": "2 frascos",
+            "option_2_benefit": "[[PENDIENTE: descuento_x2]]",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "outlined",
+            "option_2_benefit_color": "accent-2",
+            "option_2_caption": "[duracion]",
+            "option_2_percentage_off_text": "0",
+            "option_2_fixed_amount_off": "0",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 3,
+            "option_3_badge": "",
+            "option_3_badge_style": "1",
+            "option_3_badge_color": "accent-2",
+            "option_3_label": "3 frascos",
+            "option_3_benefit": "[[PENDIENTE: descuento_x3]]",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "outlined",
+            "option_3_benefit_color": "accent-2",
+            "option_3_caption": "[duracion]",
+            "option_3_percentage_off_text": "0",
+            "option_3_fixed_amount_off": "0",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "margin_top": 0,
+            "margin_bottom": 21
+          }
+        },
+        "suscripcion": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-suscripcion', producto: product, form_id: product_form_id %}"
+          }
+        },
+        "comprar": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": false,
+            "icon_scale": 110,
+            "icon_spacing": 10,
+            "display_price": false,
+            "enable_custom_color": false,
+            "enable_secondary_btn": false,
+            "margin_top": 0,
+            "margin_bottom": 15
+          }
+        },
+        "pagos": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}"
+          }
+        },
+        "acordeon_composicion": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- assign cauce_t = 'cauce.pdp.acordeon_composicion' | t -%}\n{% render 'cauce-acordeon', producto: product, clave: 'composicion', titulo: cauce_t, icono: 'science', id: 'composicion' %}"
+          }
+        },
+        "acordeon_modo_uso": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- assign cauce_t = 'cauce.pdp.acordeon_modo_uso' | t -%}\n{% render 'cauce-acordeon', producto: product, clave: 'modo_uso', titulo: cauce_t, icono: 'schedule', id: 'modo-uso' %}"
+          }
+        },
+        "acordeon_analisis": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- assign cauce_t = 'cauce.pdp.acordeon_analisis' | t -%}\n{% render 'cauce-acordeon', producto: product, clave: 'analisis', titulo: cauce_t, icono: 'biotech', id: 'analisis' %}"
+          }
+        },
+        "acordeon_envios": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Envíos y entrega",
+            "heading_size": "medium",
+            "icon": "local_shipping",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Despachamos desde [[PENDIENTE: ciudad_deposito]]. El plazo estimado es de [[PENDIENTE: plazo_envio]] días hábiles y el costo se calcula en el checkout según tu código postal. Envío sin cargo en compras desde $ [[PENDIENTE: umbral_envio_gratis]].</p>",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "acordeon_garantia": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Cambios y devoluciones",
+            "heading_size": "medium",
+            "icon": "undo",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Tenés 10 días corridos desde que recibís el pedido para arrepentirte de la compra y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). El producto tiene que estar sin abrir.</p><p>Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a [[PENDIENTE: email_contacto]].</p>",
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "disclaimer": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-disclaimer' %}"
+          }
+        },
+        "sticky": {
+          "type": "sticky_atc",
+          "settings": {
+            "function": "add_to_cart",
+            "display_when": "after_scroll",
+            "button_label": "Agregar al carrito",
+            "enable_custom_btn_color": false,
+            "color_scheme": "background-1",
+            "picker_type": "combined",
+            "desktop_show_image": true,
+            "desktop_show_title": true,
+            "desktop_rating_stars": false,
+            "desktop_show_price": true,
+            "desktop_show_sale_badge": false,
+            "desktop_variant_picker": false,
+            "desktop_full_button_width": false,
+            "desktop_show_price_in_button": false,
+            "desktop_transparent_bg": false,
+            "mobile_show_image": false,
+            "mobile_show_title": false,
+            "mobile_rating_stars": false,
+            "mobile_show_price": true,
+            "mobile_show_sale_badge": false,
+            "mobile_variant_picker": false,
+            "mobile_full_button_width": true,
+            "mobile_show_price_in_button": false,
+            "mobile_transparent_bg": false
+          }
+        }
+      },
+      "block_order": [
+        "titulo",
+        "subtitulo",
+        "precio",
+        "bullets_a",
+        "bullets_b",
+        "separador",
+        "ofertas",
+        "suscripcion",
+        "comprar",
+        "pagos",
+        "acordeon_composicion",
+        "acordeon_modo_uso",
+        "acordeon_analisis",
+        "acordeon_envios",
+        "acordeon_garantia",
+        "disclaimer",
+        "sticky"
+      ],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": false,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "lightbox",
+        "arrows_color_scheme": "background-1",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_count": 5,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 4,
+        "mobile_spacing_pixels": 8,
+        "mobile_arrows_position": "hidden",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails": "show",
+        "mobile_thumbnails_count": 5,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 16,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

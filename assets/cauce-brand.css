@@ -317,3 +317,162 @@ h1, h2, h3, h4,
   font-family: var(--cauce-font-dato);
   font-size: 0.92em;
 }
+
+/* ==========================================================================
+   5. PDP — hero
+   Acompana a templates/product.cauce-landing.json.
+   ========================================================================== */
+
+/* El block `text` de Shrine expone text_color e icon_color como color pickers
+   crudos y los baja por style inline. Se fuerzan a los tokens: ningun hex suelto
+   decide un color de marca, y en el theme editor nadie va a recordar la paleta. */
+.product__text-container .product__text {
+  --text-color: var(--cauce-tinta) !important;
+  --icon-color: var(--cauce-vado-icono) !important;
+}
+
+/* Subtitulo del hero: una linea, sin competir con el h1. */
+.product__text-container .product__text {
+  line-height: 1.5;
+  max-width: 46ch;
+}
+
+/* Escalones de cantidad --------------------------------------------------- */
+
+/* Si el producto no tiene los metafields de dosis, [duracion] se reemplaza por
+   vacio y el caption queda sin texto. Sin esto queda un renglon fantasma.
+   Ver snippets/cauce-duracion.liquid. */
+.quantity-break__caption:empty,
+.quantity-break__benefit:empty,
+.quantity-break__badge:empty {
+  display: none;
+}
+
+/* La duracion es un dato, no copy. Va en mono como el resto de los datos duros. */
+.quantity-break__caption {
+  font-family: var(--cauce-font-dato);
+  letter-spacing: 0.01em;
+  opacity: 0.72;
+}
+
+.quantity-breaks__title {
+  font-family: var(--cauce-font-texto);
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+/* Medios de pago ---------------------------------------------------------- */
+
+.cauce-pagos {
+  margin: var(--cauce-aire-xs) 0 0;
+}
+
+.cauce-pagos--center { text-align: center; }
+.cauce-pagos--right  { text-align: right; }
+
+.cauce-pagos__lista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cauce-pagos--center .cauce-pagos__lista { justify-content: center; }
+.cauce-pagos--right  .cauce-pagos__lista { justify-content: flex-end; }
+
+.cauce-pagos__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.cauce-pagos__svg {
+  width: 3.8rem;
+  height: auto;
+  display: block;
+  border-radius: 3px;
+}
+
+/* Chip tipografico para las marcas que Shopify no dibuja (Mercado Pago, Cabal,
+   Naranja X). Deliberadamente sobrio: la regla de marca prohibe la sopa de
+   sellos, y un logo redibujado a mano seria un logo mal dibujado. */
+.cauce-pagos__chip {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.1rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  padding: 0.55em 0.7em;
+  border: 1px solid rgba(16, 38, 42, 0.22);
+  border-radius: 3px;
+  color: var(--cauce-tinta);
+  white-space: nowrap;
+}
+
+.cauce-pagos__tira {
+  max-width: 100%;
+  height: auto;
+}
+
+.cauce-pagos__cuotas {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.2rem;
+  margin: var(--cauce-aire-xs) 0 0;
+  opacity: 0.75;
+}
+
+/* Suscripcion (hook apagado por defecto) ---------------------------------- */
+
+.cauce-suscripcion {
+  border: 1px solid rgba(16, 38, 42, 0.18);
+  border-radius: 4px;
+  padding: var(--cauce-aire-s);
+  margin: 0 0 var(--cauce-aire-s);
+}
+
+.cauce-suscripcion__titulo {
+  font-family: var(--cauce-font-texto);
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  padding: 0;
+}
+
+.cauce-suscripcion__opcion {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0;
+  cursor: pointer;
+}
+
+/* Leyenda de suplemento --------------------------------------------------- */
+
+.cauce-disclaimer {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin: var(--cauce-aire-s) 0 0;
+  padding-top: var(--cauce-aire-s);
+  border-top: 1px solid rgba(16, 38, 42, 0.12);
+  opacity: 0.8;
+  max-width: 62ch;
+}
+
+.cauce-disclaimer--compacto {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* Foco visible dentro del hero. El tema no lo garantiza en los radios de los
+   escalones ni en los acordeones propios. */
+.product__info-container :focus-visible,
+.cauce-acordeon :focus-visible {
+  outline: 2px solid var(--cauce-vado-icono);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

@@ -387,14 +387,14 @@
       "name": "CAUCE",
       "settings": {
         "intro": {
-          "content": "Datos de marca que usan todas las secciones cauce-*. Lo que cargues aca aparece en el footer legal, en la PDP y en las paginas de politicas, sin tener que repetirlo en cada seccion."
+          "content": "Datos de marca que usan todas las secciones cauce-*. Lo que cargues acá aparece en el footer legal, en la PDP y en las páginas de políticas, sin tener que repetirlo en cada sección."
         },
         "header__vendedor": {
-          "content": "Identificacion del vendedor"
+          "content": "Identificación del vendedor"
         },
         "razon_social": {
-          "label": "Razon social",
-          "info": "Obligatorio por Ley 24.240. Aparece en el footer de todas las paginas."
+          "label": "Razón social",
+          "info": "Obligatorio por Ley 24.240. Aparece en el footer de todas las páginas."
         },
         "cuit": {
           "label": "CUIT"
@@ -406,60 +406,64 @@
           "label": "Email de contacto"
         },
         "telefono": {
-          "label": "Telefono de contacto"
+          "label": "Teléfono de contacto"
         },
         "header__legales": {
           "content": "Obligatorios de Argentina"
         },
         "legales": {
-          "content": "Los tres primeros son exigibles y se muestran en todas las paginas. Si alguno queda vacio, la barra legal muestra un placeholder visible en vez de ocultarlo."
+          "content": "Los tres primeros son exigibles y se muestran en todas las páginas. Si alguno queda vacío, la barra legal muestra un placeholder visible en vez de ocultarlo."
         },
         "url_arrepentimiento": {
           "label": "Formulario de arrepentimiento",
-          "info": "Link directo al formulario, no a una pagina intermedia. Res. SCI 424/2020."
+          "info": "Link directo al formulario, no a una página intermedia. Res. SCI 424/2020."
         },
         "url_libro_quejas": {
           "label": "Libro de Quejas Online",
-          "info": "Sistema de la Secretaria de Comercio. Res. 270/2020."
+          "info": "Sistema de la Secretaría de Comercio. Res. 270/2020."
         },
         "url_data_fiscal": {
           "label": "Link de Data Fiscal AFIP",
-          "info": "La URL que te da AFIP al generar el codigo QR de Data Fiscal."
+          "info": "La URL que te da AFIP al generar el código QR de Data Fiscal."
         },
         "img_data_fiscal": {
           "label": "Imagen de Data Fiscal"
         },
         "rnpa": {
           "label": "RNPA / RNE",
-          "info": "Numero de registro del producto. Mientras este vacio, el disclaimer muestra un pendiente visible."
+          "info": "Número de registro del producto. Mientras esté vacío, el disclaimer muestra un pendiente visible."
         },
         "dias_arrepentimiento": {
-          "label": "Dias de arrepentimiento",
-          "info": "El minimo legal es 10 dias corridos. Se puede ofrecer mas, nunca menos."
+          "label": "Días de arrepentimiento",
+          "info": "El mínimo legal es 10 días corridos. Se puede ofrecer más, nunca menos."
         },
         "header__envios": {
-          "content": "Envios"
+          "content": "Envíos"
         },
         "umbral_envio": {
-          "label": "Envio gratis a partir de",
-          "info": "Monto en pesos, solo el numero. Ej: 45000. Se usa en la barra de anuncio y en los acordeones de la PDP."
+          "label": "Envío gratis a partir de",
+          "info": "Monto en pesos, solo el número. Ej: 45000. Se usa en la barra de anuncio y en los acordeones de la PDP."
         },
         "header__pagos": {
           "content": "Medios de pago"
         },
         "medios_pago": {
           "label": "Medios a mostrar",
-          "info": "Separados por coma, sin espacios. Disponibles: mercadopago, visa, mastercard, amex, cabal, naranja, debito, transferencia, efectivo."
+          "info": "Separados por coma, sin espacios. Disponibles: mercadopago, visa, mastercard, amex, cabal, naranja, pagofacil, rapipago, transferencia, efectivo. Las que Shopify no dibuja salen como chip tipográfico."
+        },
+        "img_medios_pago": {
+          "label": "Imagen de medios de pago",
+          "info": "Opcional. Si subís una tira con los logos oficiales, reemplaza a los chips de texto."
         },
         "cuotas": {
-          "label": "Cuotas sin interes",
-          "info": "0 desactiva la leyenda de cuotas. Solo poner un numero si el plan esta realmente activo en Mercado Pago."
+          "label": "Cuotas sin interés",
+          "info": "0 desactiva la leyenda de cuotas. Solo poner un número si el plan está realmente activo en Mercado Pago."
         },
         "header__suscripcion": {
-          "content": "Suscripcion"
+          "content": "Suscripción"
         },
         "suscripcion": {
-          "label": "Activar la opcion de suscripcion",
+          "label": "Activar la opción de suscripción",
           "info": "Deja el hook listo en la PDP. Requiere una app de suscripciones instalada y un medio de pago que la soporte. Apagado por defecto."
         }
       }

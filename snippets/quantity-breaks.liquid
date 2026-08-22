@@ -1,3 +1,51 @@
+{%- comment -%}
+  CAUCE: token [duracion] en los escalones de cantidad.
+
+  Que hace: reemplaza [duracion] por la duracion del suministro de ese escalon,
+  calculada desde los metafields de dosis del producto.
+
+  Por que aca arriba y no dentro de text-with-price.liquid: el JS del tema
+  re-renderiza estos textos leyendo el atributo data-text, que se escribe directo
+  desde block.settings. Si el token se resolviera solo en el snippet, al cambiar
+  de variante el label volveria a mostrar "[duracion]" en crudo. Ademas Liquid no
+  admite filtros en los argumentos del tag render.
+
+  Los cauce_oN_* reemplazan a block.settings.option_N_* en TODO el archivo,
+  incluidos los guardas != blank: asi un SKU sin metafields de dosis no deja un
+  caption vacio ocupando renglon.
+
+  Ver snippets/cauce-duracion.liquid y docs/DECISIONS.md D-003.
+{%- endcomment -%}
+{%- capture cauce_duracion_1 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_1_quantity %}{% endcapture -%}
+{%- capture cauce_duracion_2 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_2_quantity %}{% endcapture -%}
+{%- capture cauce_duracion_3 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_3_quantity %}{% endcapture -%}
+{%- capture cauce_duracion_4 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_4_quantity %}{% endcapture -%}
+{%- liquid
+  assign cauce_o1_badge = block.settings.option_1_badge | replace: '[duracion]', cauce_duracion_1
+  assign cauce_o1_label = block.settings.option_1_label | replace: '[duracion]', cauce_duracion_1
+  assign cauce_o1_benefit = block.settings.option_1_benefit | replace: '[duracion]', cauce_duracion_1
+  assign cauce_o1_caption = block.settings.option_1_caption | replace: '[duracion]', cauce_duracion_1
+  assign cauce_o1_price_text = block.settings.option_1_price_text | replace: '[duracion]', cauce_duracion_1
+  assign cauce_o1_compare_price_text = block.settings.option_1_compare_price_text | replace: '[duracion]', cauce_duracion_1
+  assign cauce_o2_badge = block.settings.option_2_badge | replace: '[duracion]', cauce_duracion_2
+  assign cauce_o2_label = block.settings.option_2_label | replace: '[duracion]', cauce_duracion_2
+  assign cauce_o2_benefit = block.settings.option_2_benefit | replace: '[duracion]', cauce_duracion_2
+  assign cauce_o2_caption = block.settings.option_2_caption | replace: '[duracion]', cauce_duracion_2
+  assign cauce_o2_price_text = block.settings.option_2_price_text | replace: '[duracion]', cauce_duracion_2
+  assign cauce_o2_compare_price_text = block.settings.option_2_compare_price_text | replace: '[duracion]', cauce_duracion_2
+  assign cauce_o3_badge = block.settings.option_3_badge | replace: '[duracion]', cauce_duracion_3
+  assign cauce_o3_label = block.settings.option_3_label | replace: '[duracion]', cauce_duracion_3
+  assign cauce_o3_benefit = block.settings.option_3_benefit | replace: '[duracion]', cauce_duracion_3
+  assign cauce_o3_caption = block.settings.option_3_caption | replace: '[duracion]', cauce_duracion_3
+  assign cauce_o3_price_text = block.settings.option_3_price_text | replace: '[duracion]', cauce_duracion_3
+  assign cauce_o3_compare_price_text = block.settings.option_3_compare_price_text | replace: '[duracion]', cauce_duracion_3
+  assign cauce_o4_badge = block.settings.option_4_badge | replace: '[duracion]', cauce_duracion_4
+  assign cauce_o4_label = block.settings.option_4_label | replace: '[duracion]', cauce_duracion_4
+  assign cauce_o4_benefit = block.settings.option_4_benefit | replace: '[duracion]', cauce_duracion_4
+  assign cauce_o4_caption = block.settings.option_4_caption | replace: '[duracion]', cauce_duracion_4
+  assign cauce_o4_price_text = block.settings.option_4_price_text | replace: '[duracion]', cauce_duracion_4
+  assign cauce_o4_compare_price_text = block.settings.option_4_compare_price_text | replace: '[duracion]', cauce_duracion_4
+-%}
 {% liquid
  assign item_count = 0
   if block.settings.option_1_quantity != 0
@@ -19,7 +67,7 @@
   endif
 
   assign has_badge = false
-  if block.settings.option_1_badge != blank or block.settings.option_2_badge != blank or block.settings.option_3_badge != blank or block.settings.option_4_badge != blank
+  if cauce_o1_badge != blank or cauce_o2_badge != blank or cauce_o3_badge != blank or cauce_o4_badge != blank
     assign has_badge = true
   endif
   
@@ -85,16 +133,16 @@
       >
       <label
         for="quantity1"
-        class="quantity-break{% if block.settings.option_1_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_1_badge_style }} quantity-break--benefit-{{ block.settings.option_1_benefit_position }}"
+        class="quantity-break{% if cauce_o1_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_1_badge_style }} quantity-break--benefit-{{ block.settings.option_1_benefit_position }}"
         data-quantity="{{ block.settings.option_1_quantity }}"
         data-input="input_1"
         data-percentage-left="{{ percentage_left }}"
         data-fixed-discount="{{ fixed_amount_off }}"
       >
-        {% if block.settings.option_1_badge != blank %}
-          <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_1_badge_color }}" data-text="{{ block.settings.option_1_badge }}">
+        {% if cauce_o1_badge != blank %}
+          <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_1_badge_color }}" data-text="{{ cauce_o1_badge }}">
             {% render 'text-with-price',
-              text: block.settings.option_1_badge,
+              text: cauce_o1_badge,
               quantity: block.settings.option_1_quantity,
               price: option_1_price,
               compare_price: option_1_compare_price,
@@ -120,10 +168,10 @@
           <div class="quantity-break__content">
             <div class="quantity-break__left">
               <span class="quantity-break__label">
-                {%- if block.settings.option_1_label != blank -%}
-                  <span class="quantity-break__label-text dynamic-price variant-price-update" data-text="{{ block.settings.option_1_label }}">
+                {%- if cauce_o1_label != blank -%}
+                  <span class="quantity-break__label-text dynamic-price variant-price-update" data-text="{{ cauce_o1_label }}">
                     {% render 'text-with-price',
-                      text: block.settings.option_1_label,
+                      text: cauce_o1_label,
                       quantity: block.settings.option_1_quantity,
                       price: option_1_price,
                       compare_price: option_1_compare_price,
@@ -134,10 +182,10 @@
                     %}
                   </span>
                 {%- endif -%}
-                {% if block.settings.option_1_benefit != blank %}
-                  <span class="quantity-break__benefit quantity-break__benefit--{{ block.settings.option_1_benefit_style }} accent-color-{{ block.settings.option_1_benefit_color }} dynamic-price variant-price-update" data-text="{{ block.settings.option_1_benefit }}">
+                {% if cauce_o1_benefit != blank %}
+                  <span class="quantity-break__benefit quantity-break__benefit--{{ block.settings.option_1_benefit_style }} accent-color-{{ block.settings.option_1_benefit_color }} dynamic-price variant-price-update" data-text="{{ cauce_o1_benefit }}">
                     {% render 'text-with-price',
-                      text: block.settings.option_1_benefit,
+                      text: cauce_o1_benefit,
                       quantity: block.settings.option_1_quantity,
                       price: option_1_price,
                       compare_price: option_1_compare_price,
@@ -149,10 +197,10 @@
                   </span>
                 {% endif %}
               </span>
-              {% if block.settings.option_1_caption != blank %}
-                <span class="quantity-break__caption dynamic-price variant-price-update" data-text="{{ block.settings.option_1_caption }}">
+              {% if cauce_o1_caption != blank %}
+                <span class="quantity-break__caption dynamic-price variant-price-update" data-text="{{ cauce_o1_caption }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_1_caption,
+                    text: cauce_o1_caption,
                     quantity: block.settings.option_1_quantity,
                     price: option_1_price,
                     compare_price: option_1_compare_price,
@@ -165,10 +213,10 @@
               {% endif %}
             </div>
             <div class="quantity-break__right dynamic-price">
-              {% if block.settings.option_1_price_text != blank %}
-                <span class="quantity-break__price variant-price-update" data-text="{{ block.settings.option_1_price_text }}">
+              {% if cauce_o1_price_text != blank %}
+                <span class="quantity-break__price variant-price-update" data-text="{{ cauce_o1_price_text }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_1_price_text,
+                    text: cauce_o1_price_text,
                     quantity: block.settings.option_1_quantity,
                     price: option_1_price,
                     compare_price: option_1_compare_price,
@@ -179,10 +227,10 @@
                   %}
                 </span>
               {% endif %}
-              {% if block.settings.option_1_compare_price_text != blank %}
-                <span class="quantity-break__compare-price variant-price-update{% if option_1_compare_price <= option_1_price %} hidden{% endif %}" data-text="{{ block.settings.option_1_compare_price_text }}">
+              {% if cauce_o1_compare_price_text != blank %}
+                <span class="quantity-break__compare-price variant-price-update{% if option_1_compare_price <= option_1_price %} hidden{% endif %}" data-text="{{ cauce_o1_compare_price_text }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_1_compare_price_text,
+                    text: cauce_o1_compare_price_text,
                     quantity: block.settings.option_1_quantity,
                     price: option_1_price,
                     compare_price: option_1_compare_price,
@@ -314,16 +362,16 @@
       >
       <label
         for="quantity2"
-        class="quantity-break{% if block.settings.option_2_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_2_badge_style }} quantity-break--benefit-{{ block.settings.option_2_benefit_position }}"
+        class="quantity-break{% if cauce_o2_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_2_badge_style }} quantity-break--benefit-{{ block.settings.option_2_benefit_position }}"
         data-quantity="{{ block.settings.option_2_quantity }}"
         data-input="input_2"
         data-percentage-left="{{ percentage_left }}"
         data-fixed-discount="{{ fixed_amount_off }}"
       >
-        {% if block.settings.option_2_badge != blank %}
-          <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_2_badge_color }}" data-text="{{ block.settings.option_2_badge }}">
+        {% if cauce_o2_badge != blank %}
+          <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_2_badge_color }}" data-text="{{ cauce_o2_badge }}">
             {% render 'text-with-price',
-              text: block.settings.option_2_badge,
+              text: cauce_o2_badge,
               quantity: block.settings.option_2_quantity,
               price: option_2_price,
               compare_price: option_2_compare_price,
@@ -349,10 +397,10 @@
           <div class="quantity-break__content">
             <div class="quantity-break__left">
               <span class="quantity-break__label">
-                {%- if block.settings.option_2_label != blank -%}
-                  <span class="quantity-break__label-text dynamic-price variant-price-update" data-text="{{ block.settings.option_2_label }}">
+                {%- if cauce_o2_label != blank -%}
+                  <span class="quantity-break__label-text dynamic-price variant-price-update" data-text="{{ cauce_o2_label }}">
                     {% render 'text-with-price',
-                      text: block.settings.option_2_label,
+                      text: cauce_o2_label,
                       quantity: block.settings.option_2_quantity,
                       price: option_2_price,
                       compare_price: option_2_compare_price,
@@ -363,10 +411,10 @@
                     %}
                   </span>
                 {%- endif -%}
-                {% if block.settings.option_2_benefit != blank %}
-                  <span class="quantity-break__benefit quantity-break__benefit--{{ block.settings.option_2_benefit_style }} accent-color-{{ block.settings.option_2_benefit_color }} dynamic-price variant-price-update" data-text="{{ block.settings.option_2_benefit }}">
+                {% if cauce_o2_benefit != blank %}
+                  <span class="quantity-break__benefit quantity-break__benefit--{{ block.settings.option_2_benefit_style }} accent-color-{{ block.settings.option_2_benefit_color }} dynamic-price variant-price-update" data-text="{{ cauce_o2_benefit }}">
                     {% render 'text-with-price',
-                      text: block.settings.option_2_benefit,
+                      text: cauce_o2_benefit,
                       quantity: block.settings.option_2_quantity,
                       price: option_2_price,
                       compare_price: option_2_compare_price,
@@ -378,10 +426,10 @@
                   </span>
                 {% endif %}
               </span>
-              {% if block.settings.option_2_caption != blank %}
-                <span class="quantity-break__caption dynamic-price variant-price-update" data-text="{{ block.settings.option_2_caption }}">
+              {% if cauce_o2_caption != blank %}
+                <span class="quantity-break__caption dynamic-price variant-price-update" data-text="{{ cauce_o2_caption }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_2_caption,
+                    text: cauce_o2_caption,
                     quantity: block.settings.option_2_quantity,
                     price: option_2_price,
                     compare_price: option_2_compare_price,
@@ -394,10 +442,10 @@
               {% endif %}
             </div>
             <div class="quantity-break__right dynamic-price">
-              {% if block.settings.option_2_price_text != blank %}
-                <span class="quantity-break__price variant-price-update" data-text="{{ block.settings.option_2_price_text }}">
+              {% if cauce_o2_price_text != blank %}
+                <span class="quantity-break__price variant-price-update" data-text="{{ cauce_o2_price_text }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_2_price_text,
+                    text: cauce_o2_price_text,
                     quantity: block.settings.option_2_quantity,
                     price: option_2_price,
                     compare_price: option_2_compare_price,
@@ -408,10 +456,10 @@
                   %}
                 </span>
               {% endif %}
-              {% if block.settings.option_2_compare_price_text != blank %}
-                <span class="quantity-break__compare-price variant-price-update{% if option_2_compare_price <= option_2_price %} hidden{% endif %}" data-text="{{ block.settings.option_2_compare_price_text }}">
+              {% if cauce_o2_compare_price_text != blank %}
+                <span class="quantity-break__compare-price variant-price-update{% if option_2_compare_price <= option_2_price %} hidden{% endif %}" data-text="{{ cauce_o2_compare_price_text }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_2_compare_price_text,
+                    text: cauce_o2_compare_price_text,
                     quantity: block.settings.option_2_quantity,
                     price: option_2_price,
                     compare_price: option_2_compare_price,
@@ -543,16 +591,16 @@
       >
       <label
         for="quantity3"
-        class="quantity-break{% if block.settings.option_3_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_3_badge_style }} quantity-break--benefit-{{ block.settings.option_3_benefit_position }}"
+        class="quantity-break{% if cauce_o3_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_3_badge_style }} quantity-break--benefit-{{ block.settings.option_3_benefit_position }}"
         data-quantity="{{ block.settings.option_3_quantity }}"
         data-input="input_3"
         data-percentage-left="{{ percentage_left }}"
         data-fixed-discount="{{ fixed_amount_off }}"
       >
-        {% if block.settings.option_3_badge != blank %}
-          <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_3_badge_color }}" data-text="{{ block.settings.option_3_badge }}">
+        {% if cauce_o3_badge != blank %}
+          <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_3_badge_color }}" data-text="{{ cauce_o3_badge }}">
             {% render 'text-with-price',
-              text: block.settings.option_3_badge,
+              text: cauce_o3_badge,
               quantity: block.settings.option_3_quantity,
               price: option_3_price,
               compare_price: option_3_compare_price,
@@ -578,10 +626,10 @@
           <div class="quantity-break__content">
             <div class="quantity-break__left">
               <span class="quantity-break__label">
-                {%- if block.settings.option_3_label != blank -%}
-                  <span class="quantity-break__label-text dynamic-price variant-price-update" data-text="{{ block.settings.option_3_label }}">
+                {%- if cauce_o3_label != blank -%}
+                  <span class="quantity-break__label-text dynamic-price variant-price-update" data-text="{{ cauce_o3_label }}">
                     {% render 'text-with-price',
-                      text: block.settings.option_3_label,
+                      text: cauce_o3_label,
                       quantity: block.settings.option_3_quantity,
                       price: option_3_price,
                       compare_price: option_3_compare_price,
@@ -592,10 +640,10 @@
                     %}
                   </span>
                 {%- endif -%}
-                {% if block.settings.option_3_benefit != blank %}
-                  <span class="quantity-break__benefit quantity-break__benefit--{{ block.settings.option_3_benefit_style }} accent-color-{{ block.settings.option_3_benefit_color }} dynamic-price variant-price-update" data-text="{{ block.settings.option_3_benefit }}">
+                {% if cauce_o3_benefit != blank %}
+                  <span class="quantity-break__benefit quantity-break__benefit--{{ block.settings.option_3_benefit_style }} accent-color-{{ block.settings.option_3_benefit_color }} dynamic-price variant-price-update" data-text="{{ cauce_o3_benefit }}">
                     {% render 'text-with-price',
-                      text: block.settings.option_3_benefit,
+                      text: cauce_o3_benefit,
                       quantity: block.settings.option_3_quantity,
                       price: option_3_price,
                       compare_price: option_3_compare_price,
@@ -607,10 +655,10 @@
                   </span>
                 {% endif %}
               </span>
-              {% if block.settings.option_3_caption != blank %}
-                <span class="quantity-break__caption dynamic-price variant-price-update" data-text="{{ block.settings.option_3_caption }}">
+              {% if cauce_o3_caption != blank %}
+                <span class="quantity-break__caption dynamic-price variant-price-update" data-text="{{ cauce_o3_caption }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_3_caption,
+                    text: cauce_o3_caption,
                     quantity: block.settings.option_3_quantity,
                     price: option_3_price,
                     compare_price: option_3_compare_price,
@@ -623,10 +671,10 @@
               {% endif %}
             </div>
             <div class="quantity-break__right dynamic-price">
-              {% if block.settings.option_3_price_text != blank %}
-                <span class="quantity-break__price variant-price-update" data-text="{{ block.settings.option_3_price_text }}">
+              {% if cauce_o3_price_text != blank %}
+                <span class="quantity-break__price variant-price-update" data-text="{{ cauce_o3_price_text }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_3_price_text,
+                    text: cauce_o3_price_text,
                     quantity: block.settings.option_3_quantity,
                     price: option_3_price,
                     compare_price: option_3_compare_price,
@@ -637,10 +685,10 @@
                   %}
                 </span>
               {% endif %}
-              {% if block.settings.option_3_compare_price_text != blank %}
-                <span class="quantity-break__compare-price variant-price-update{% if option_3_compare_price <= option_3_price %} hidden{% endif %}" data-text="{{ block.settings.option_3_compare_price_text }}">
+              {% if cauce_o3_compare_price_text != blank %}
+                <span class="quantity-break__compare-price variant-price-update{% if option_3_compare_price <= option_3_price %} hidden{% endif %}" data-text="{{ cauce_o3_compare_price_text }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_3_compare_price_text,
+                    text: cauce_o3_compare_price_text,
                     quantity: block.settings.option_3_quantity,
                     price: option_3_price,
                     compare_price: option_3_compare_price,
@@ -772,16 +820,16 @@
       >
       <label
         for="quantity4"
-        class="quantity-break{% if block.settings.option_4_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_4_badge_style }} quantity-break--benefit-{{ block.settings.option_4_benefit_position }}"
+        class="quantity-break{% if cauce_o4_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_4_badge_style }} quantity-break--benefit-{{ block.settings.option_4_benefit_position }}"
         data-quantity="{{ block.settings.option_4_quantity }}"
         data-input="input_4"
         data-percentage-left="{{ percentage_left }}"
         data-fixed-discount="{{ fixed_amount_off }}"
       >
-        {% if block.settings.option_4_badge != blank %}
-          <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_4_badge_color }}" data-text="{{ block.settings.option_4_badge }}">
+        {% if cauce_o4_badge != blank %}
+          <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_4_badge_color }}" data-text="{{ cauce_o4_badge }}">
             {% render 'text-with-price',
-              text: block.settings.option_4_badge,
+              text: cauce_o4_badge,
               quantity: block.settings.option_4_quantity,
               price: option_4_price,
               compare_price: option_4_compare_price,
@@ -807,10 +855,10 @@
           <div class="quantity-break__content">
             <div class="quantity-break__left">
               <span class="quantity-break__label">
-                {%- if block.settings.option_4_label != blank -%}
-                  <span class="quantity-break__label-text dynamic-price variant-price-update" data-text="{{ block.settings.option_4_label }}">
+                {%- if cauce_o4_label != blank -%}
+                  <span class="quantity-break__label-text dynamic-price variant-price-update" data-text="{{ cauce_o4_label }}">
                     {% render 'text-with-price',
-                      text: block.settings.option_4_label,
+                      text: cauce_o4_label,
                       quantity: block.settings.option_4_quantity,
                       price: option_4_price,
                       compare_price: option_4_compare_price,
@@ -821,10 +869,10 @@
                     %}
                   </span>
                 {%- endif -%}
-                {% if block.settings.option_4_benefit != blank %}
-                  <span class="quantity-break__benefit quantity-break__benefit--{{ block.settings.option_4_benefit_style }} accent-color-{{ block.settings.option_4_benefit_color }} dynamic-price variant-price-update" data-text="{{ block.settings.option_4_benefit }}">
+                {% if cauce_o4_benefit != blank %}
+                  <span class="quantity-break__benefit quantity-break__benefit--{{ block.settings.option_4_benefit_style }} accent-color-{{ block.settings.option_4_benefit_color }} dynamic-price variant-price-update" data-text="{{ cauce_o4_benefit }}">
                     {% render 'text-with-price',
-                      text: block.settings.option_4_benefit,
+                      text: cauce_o4_benefit,
                       quantity: block.settings.option_4_quantity,
                       price: option_4_price,
                       compare_price: option_4_compare_price,
@@ -836,10 +884,10 @@
                   </span>
                 {% endif %}
               </span>
-              {% if block.settings.option_4_caption != blank %}
-                <span class="quantity-break__caption dynamic-price variant-price-update" data-text="{{ block.settings.option_4_caption }}">
+              {% if cauce_o4_caption != blank %}
+                <span class="quantity-break__caption dynamic-price variant-price-update" data-text="{{ cauce_o4_caption }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_4_caption,
+                    text: cauce_o4_caption,
                     quantity: block.settings.option_4_quantity,
                     price: option_4_price,
                     compare_price: option_4_compare_price,
@@ -852,10 +900,10 @@
               {% endif %}
             </div>
             <div class="quantity-break__right dynamic-price">
-              {% if block.settings.option_4_price_text != blank %}
-                <span class="quantity-break__price variant-price-update" data-text="{{ block.settings.option_4_price_text }}">
+              {% if cauce_o4_price_text != blank %}
+                <span class="quantity-break__price variant-price-update" data-text="{{ cauce_o4_price_text }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_4_price_text,
+                    text: cauce_o4_price_text,
                     quantity: block.settings.option_4_quantity,
                     price: option_4_price,
                     compare_price: option_4_compare_price,
@@ -866,10 +914,10 @@
                   %}
                 </span>
               {% endif %}
-              {% if block.settings.option_4_compare_price_text != blank %}
-                <span class="quantity-break__compare-price variant-price-update{% if option_4_compare_price <= option_4_price %} hidden{% endif %}" data-text="{{ block.settings.option_4_compare_price_text }}">
+              {% if cauce_o4_compare_price_text != blank %}
+                <span class="quantity-break__compare-price variant-price-update{% if option_4_compare_price <= option_4_price %} hidden{% endif %}" data-text="{{ cauce_o4_compare_price_text }}">
                   {% render 'text-with-price',
-                    text: block.settings.option_4_compare_price_text,
+                    text: cauce_o4_compare_price_text,
                     quantity: block.settings.option_4_quantity,
                     price: option_4_price,
                     compare_price: option_4_compare_price,

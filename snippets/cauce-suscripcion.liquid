@@ -1,0 +1,52 @@
+{% comment %}
+  CAUCE: selector de suscripcion. Hook listo, apagado por defecto.
+
+  Renderiza SOLO si se cumplen las dos condiciones:
+    1. settings.cauce_suscripcion_activa esta en true, y
+    2. el producto tiene selling plans reales (product.selling_plan_groups).
+
+  La segunda condicion no es redundante: sin una app de suscripciones instalada
+  no existen selling plans, y un checkbox que el cliente puede tildar sin que
+  pase nada es una promesa incumplida bajo Ley 24.240. Preferimos no mostrarlo.
+
+  El input se asocia al form del producto por atributo form=, asi el snippet
+  puede vivir en un block custom_liquid fuera del <form>.
+
+  Limite conocido: el precio mostrado arriba no se actualiza al cambiar de plan.
+  Las apps de suscripciones traen su propio JS para eso. Antes de encender el
+  setting hay que verificar ese punto con la app elegida.
+
+  Parametros:
+    producto        {object}  requerido.
+    form_id         {string}  requerido. Id del form del producto.
+{% endcomment %}
+
+{%- if settings.cauce_suscripcion_activa and producto.selling_plan_groups.size > 0 -%}
+  {%- assign cauce_plan_grupo = producto.selling_plan_groups | first -%}
+  <fieldset class="cauce-suscripcion" form="{{ form_id }}">
+    <legend class="cauce-suscripcion__titulo">{{ 'cauce.pdp.suscripcion_titulo' | t }}</legend>
+
+    <label class="cauce-suscripcion__opcion">
+      <input
+        type="radio"
+        name="selling_plan"
+        value=""
+        form="{{ form_id }}"
+        checked
+      >
+      <span>{{ 'cauce.pdp.suscripcion_unica' | t }}</span>
+    </label>
+
+    {%- for cauce_plan in cauce_plan_grupo.selling_plans -%}
+      <label class="cauce-suscripcion__opcion">
+        <input
+          type="radio"
+          name="selling_plan"
+          value="{{ cauce_plan.id }}"
+          form="{{ form_id }}"
+        >
+        <span>{{ cauce_plan.name }}</span>
+      </label>
+    {%- endfor -%}
+  </fieldset>
+{%- endif -%}

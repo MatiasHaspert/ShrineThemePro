@@ -2939,6 +2939,12 @@
         "default": "mercadopago,visa,mastercard,amex,cabal,naranja"
       },
       {
+        "type": "image_picker",
+        "id": "cauce_img_medios_pago",
+        "label": "t:settings_schema.cauce.settings.img_medios_pago.label",
+        "info": "t:settings_schema.cauce.settings.img_medios_pago.info"
+      },
+      {
         "type": "range",
         "id": "cauce_cuotas",
         "label": "t:settings_schema.cauce.settings.cuotas.label",

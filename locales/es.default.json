@@ -492,39 +492,54 @@
   "cauce": {
     "marca": {
       "nombre": "Cauce",
-      "descriptor": "Formulas de uso diario"
+      "descriptor": "Fórmulas de uso diario"
     },
     "legal": {
-      "suplemento": "Este producto es un suplemento dietario. No reemplaza una alimentacion variada.",
-      "consulta_medico": "Consulta a tu medico.",
+      "suplemento": "Este producto es un suplemento dietario. No reemplaza una alimentación variada.",
+      "consulta_medico": "Consultá a tu médico.",
       "rnpa": "RNPA {{ numero }}",
-      "arrepentimiento_titulo": "Boton de arrepentimiento",
-      "arrepentimiento_texto": "Podes arrepentirte de tu compra dentro de los 10 dias corridos de recibido el producto y pedir la devolucion del importe pagado, sin costo. Res. SCI 424/2020.",
+      "arrepentimiento_titulo": "Botón de arrepentimiento",
+      "arrepentimiento_texto": "Podés arrepentirte de tu compra dentro de los 10 días corridos de recibido el producto y pedir la devolución del importe pagado, sin costo. Res. SCI 424/2020.",
       "arrepentimiento_cta": "Solicitar el arrepentimiento",
       "libro_quejas_titulo": "Libro de quejas online",
       "libro_quejas_cta": "Ir al Libro de Quejas Online",
       "data_fiscal_alt": "Data Fiscal AFIP",
       "vendedor_titulo": "Datos del vendedor",
       "precio_iva": "Precios en pesos argentinos con IVA incluido.",
-      "defensa_consumidor": "Defensa de las y los consumidores. Para reclamos ingresa aca."
+      "defensa_consumidor": "Defensa de las y los consumidores. Para reclamos ingresá acá."
     },
     "pdp": {
-      "duracion_dias": "{{ dias }} dias de uso",
-      "duracion_meses": "{{ meses }} meses de uso",
-      "suministro": "Rinde {{ dias }} dias",
+      "duracion_dias": "{{ dias }} días de uso",
       "medios_pago_titulo": "Medios de pago",
-      "cuotas": "Hasta {{ cuotas }} cuotas con tarjeta"
+      "cuotas": "Hasta {{ cuotas }} cuotas con tarjeta",
+      "suscripcion_titulo": "Frecuencia de entrega",
+      "suscripcion_unica": "Compra única",
+      "acordeon_composicion": "Composición",
+      "acordeon_modo_uso": "Modo de uso",
+      "acordeon_analisis": "Análisis de laboratorio"
     },
     "newsletter": {
-      "consentimiento": "Acepto recibir emails de CAUCE y que mis datos se traten segun la Politica de Privacidad (Ley 25.326). Puedo darme de baja cuando quiera.",
+      "consentimiento": "Acepto recibir emails de CAUCE y que mis datos se traten según la Política de Privacidad (Ley 25.326). Puedo darme de baja cuando quiera.",
       "consentimiento_error": "Necesitamos tu consentimiento para poder escribirte.",
-      "exito": "Listo. Te vamos a escribir poco y solo cuando valga la pena."
+      "exito": "Listo. Te vamos a escribir poco y sólo cuando valga la pena."
     },
     "a11y": {
       "carrusel_anterior": "Anterior",
       "carrusel_siguiente": "Siguiente",
       "reproducir_video": "Reproducir video",
       "pausar_video": "Pausar video"
+    },
+    "pagos": {
+      "mercadopago": "Mercado Pago",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "amex": "American Express",
+      "cabal": "Cabal",
+      "naranja": "Naranja X",
+      "pagofacil": "Pago Fácil",
+      "rapipago": "Rapipago",
+      "transferencia": "Transferencia bancaria",
+      "efectivo": "Efectivo"
     }
   }
 }

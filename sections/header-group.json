@@ -8,7 +8,7 @@
         "envio": {
           "type": "announcement",
           "settings": {
-            "text": "Envio gratis en compras desde $ {{ PENDIENTE: umbral_envio_gratis }}",
+            "text": "Envío gratis en compras desde $ [[PENDIENTE: umbral_envio_gratis]]",
             "text_alignment": "center",
             "mobile_text_size": 12,
             "desktop_text_size": 13,
@@ -22,7 +22,7 @@
         "produccion": {
           "type": "announcement",
           "settings": {
-            "text": "Produccion nacional. Analisis por laboratorio tercero.",
+            "text": "Producción nacional. Análisis por laboratorio externo.",
             "text_alignment": "center",
             "mobile_text_size": 12,
             "desktop_text_size": 13,
@@ -34,7 +34,10 @@
           }
         }
       },
-      "block_order": ["envio", "produccion"],
+      "block_order": [
+        "envio",
+        "produccion"
+      ],
       "settings": {
         "columns_desktop": 0,
         "columns_mobile": 1,
@@ -67,10 +70,13 @@
         "mobile_logo_position": "center",
         "display_search": false,
         "margin_bottom": 0,
-        "padding_top": 18,
-        "padding_bottom": 18
+        "padding_top": 16,
+        "padding_bottom": 16
       }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
 }
