@@ -19,6 +19,14 @@
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- else -%}
+      {% comment %}
+        CAUCE: fallback de favicon con el isotipo inline. Es el unico lugar donde el
+        isotipo va suelto sin el wordmark (regla de marca). Trazo engrosado para que
+        aguante a 32 px, como indica la escala de reduccion de la brandboard.
+        Si se sube un PNG a Theme settings > Logo > Favicon, este fallback se apaga solo.
+      {% endcomment %}
+      <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%2076%27%3E%3Cpath%20d%3D%27M17%208%20C17%2048%2029%2064%2050%2064%20C71%2064%2083%2048%2083%208%27%20fill%3D%27none%27%20stroke%3D%27%2310262A%27%20stroke-width%3D%2712%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M27%2050%20H73%27%20fill%3D%27none%27%20stroke%3D%27%23B98A44%27%20stroke-width%3D%279%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E">
     {%- endif -%}
 
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
@@ -395,6 +403,23 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
 
+    {% comment %}
+      CAUCE: tipografias de marca y tokens.
+      Va DESPUES de base.css a proposito: cauce-brand.css remapea variables del tema.
+      No se usan settings.custom_header_font_link / custom_body_font_link porque el
+      @font-face que genera este layout espera un archivo de fuente, no una hoja de
+      Google Fonts. Ver docs/AUDIT-SHRINE.md 1.
+
+      Archivo se pide como variable con eje de ancho (wdth) porque el logo usa
+      Archivo Expanded 600 y el cuerpo Archivo Regular: un solo archivo cubre los dos.
+    {% endcomment %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..600&family=Newsreader:opsz,wght@6..72,400&family=DM+Mono:wght@400&display=swap"
+    >
+    {{ 'cauce-brand.css' | asset_url | stylesheet_tag }}
+
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
     {%- endunless -%}
@@ -417,17 +442,12 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-     <!-- Hotjar Tracking Code for https://ceio.store/ -->
-    <script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:5110780,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
+    {% comment %}
+      CAUCE: se elimino el snippet de Hotjar que venia hardcodeado con el hjid 5110780 de
+      ceio.store. Mandaba grabaciones de sesion de nuestros visitantes a la cuenta de un tercero
+      (Ley 25.326). Ver docs/AUDIT-SHRINE.md 5.2. Si se quiere analitica de sesion, va con hjid
+      propio o por Customer Events de Shopify.
+    {% endcomment %}
   </head>
 
   <body class="gradient link-btns--{{ settings.link_btn_hover }} action-btns--{{ settings.action_btn_hover }}">

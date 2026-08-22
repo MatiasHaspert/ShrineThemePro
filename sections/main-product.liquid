@@ -486,7 +486,16 @@
                     </div>
                     {%- if block.settings.mobile_variant_picker or block.settings.desktop_variant_picker -%}
                       {% unless product.has_only_default_variant %}
-                        <secondary-variant-select{% if block.settings.picker_type == 'separate' %}-separate{% endif %}
+                        {% comment %} CAUCE: nombre de tag dinamico movido a una variable. Shopify acepta
+     la forma <{% if %}a{% else %}div{% endif %}> pero el parser de theme-check no, y
+     tapaba errores reales. Mismo HTML renderizado. {% endcomment %}
+{%- liquid
+  assign cauce_svs_tag = 'secondary-variant-select'
+  if block.settings.picker_type == 'separate'
+    assign cauce_svs_tag = 'secondary-variant-select-separate'
+  endif
+-%}
+<{{ cauce_svs_tag }}
                           id="StickyAtcVariantPicker-{{ section.id }}"
                           class="sticky-atc__picker--{{ block.settings.picker_type }} no-js-hidden{% unless block.settings.mobile_variant_picker %} mobile-hidden{% endunless %}{% unless block.settings.desktop_variant_picker %} desktop-hidden{% endunless %}"
                           data-section="{{ section.id }}"
@@ -591,7 +600,7 @@
                           <script type="application/json">
                             {{ product.variants | json }}
                           </script>
-                        </secondary-variant-select{% if block.settings.picker_type == 'separate' %}-separate{% endif %}>
+                        </{{ cauce_svs_tag }}>
                       {% endunless %}
                     {%- endif -%}
                   </div>

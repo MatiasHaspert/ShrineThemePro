@@ -80,7 +80,8 @@
   </div>
 </div>
 
-<script type="text/javascript" src="//www.17track.net/externalcall.js"></script>
+{% comment %} CAUCE: se agrega defer, bloqueaba el parser. {% endcomment %}
+<script type="text/javascript" src="//www.17track.net/externalcall.js" defer="defer"></script>
 <script type="text/javascript">
   function doTrack() {
     var num = document.getElementById("YQNum").value;

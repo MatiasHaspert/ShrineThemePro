@@ -22,7 +22,16 @@
   assign hidden_products = 0
 %}
 
-<{% if is_recommendation %}product-recommendations{% else %}div{% endif %}
+{% comment %} CAUCE: nombre de tag dinamico movido a una variable. Shopify acepta
+     la forma <{% if %}a{% else %}div{% endif %}> pero el parser de theme-check no, y
+     tapaba errores reales. Mismo HTML renderizado. {% endcomment %}
+{%- liquid
+  assign cauce_upsell_tag = 'div'
+  if is_recommendation
+    assign cauce_upsell_tag = 'product-recommendations'
+  endif
+-%}
+<{{ cauce_upsell_tag }}
   class='{{ type }}-upsells-container{% if item_count > 1 and block.settings.stacking == 'column' %} upsells-container--stacked-columns{% endif %}{% if item_count > 1 and block.settings.stacking == 'slider' %} side-margins-negative{% endif %}{% if is_recommendation %} display-block{% endif %}'
   style="
     --item-count: {{ item_count }};
@@ -347,7 +356,7 @@
         </div>
       </splide-component>
     {% endif %}
-</{% if is_recommendation %}product-recommendations{% else %}div{% endif %}>
+</{{ cauce_upsell_tag }}>
 
 {% if product_list.count == hidden_products and product_list.count > 0 %}
   <style>

@@ -194,9 +194,17 @@
                                       <p class="caption-with-letter-spacing light">{{ item.product.vendor }}</p>
                                     {%- endif -%}
         
-                                    <{% if block.settings.title_link %}a href="{{ item.url }}"{% else %}h4{% endif %} class="cart-item__name h4 break">
+                                    {% comment %} CAUCE: nombre de tag dinamico movido a una variable, mismo HTML.
+                                         Ver docs/DECISIONS.md D-007. {% endcomment %}
+                                    {%- liquid
+                                      assign cauce_item_title_tag = 'h4'
+                                      if block.settings.title_link
+                                        assign cauce_item_title_tag = 'a'
+                                      endif
+                                    -%}
+                                    <{{ cauce_item_title_tag }}{% if block.settings.title_link %} href="{{ item.url }}"{% endif %} class="cart-item__name h4 break">
                                       {{- item.product.title | escape -}}
-                                    </{% if block.settings.title_link %}a{% else %}h4{% endif %}>
+                                    </{{ cauce_item_title_tag }}>
         
                                     {%- if item.original_price != item.final_price and block.settings.display_single_item_prices -%}
                                       {% assign has_props = true %}

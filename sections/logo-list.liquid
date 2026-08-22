@@ -78,7 +78,16 @@
               {% for block in section.blocks %}
                 <li class="splide__slide">
                   <div class="splide__slide__container">
-                    <{% if block.settings.link != blank %}a href="{{ block.settings.link }}" {% if block.settings.target_blank %}target="_blank" rel="noreferrer"{% endif %} {% else %}div{% endif %} class="logo-list__item{% if section.settings.gray_logos %} logo-list__item--gray{% endif %} animate-item animate-item--child" style="--index:{{ forloop.index0 | plus: content_index }};">
+                    {% comment %} CAUCE: nombre de tag dinamico movido a una variable. Shopify acepta
+     la forma <{% if %}a{% else %}div{% endif %}> pero el parser de theme-check no, y
+     tapaba errores reales. Mismo HTML renderizado. {% endcomment %}
+{%- liquid
+  assign cauce_logo_tag = 'div'
+  if block.settings.link != blank
+    assign cauce_logo_tag = 'a'
+  endif
+-%}
+<{{ cauce_logo_tag }}{% if block.settings.link != blank %} href="{{ block.settings.link }}"{% if block.settings.target_blank %} target="_blank" rel="noreferrer"{% endif %}{% endif %} class="logo-list__item{% if section.settings.gray_logos %} logo-list__item--gray{% endif %} animate-item animate-item--child" style="--index:{{ forloop.index0 | plus: content_index }};">
                       {% if block.settings.image != blank %}
                         <img
                           src="{{ block.settings.image | image_url }}"
@@ -94,7 +103,7 @@
                       {% else %}
                         {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
                       {% endif %}
-                    </{%- if block.settings.link != blank -%}a{% else %}div{%- endif -%}>
+                    </{{ cauce_logo_tag }}>
                   </div>
                 </li>
               {% endfor %}

@@ -106,3 +106,97 @@ estructurado falso ante Google. El brief lo pide explícito ("Schema.org solo si
 
 **Pendiente de vos.** Si hay reseñas reales y una app (Judge.me, Loox, Ryviu), se reevalúa: el tema
 ya lee `product.metafields.reviews.rating` y tiene hooks para Loox y Ryviu.
+
+---
+
+## D-007 · 2026-08-21 · Espanol como locale por defecto y borrado de los otros 48
+
+**Decision.** `es.json` pasa a ser `es.default.json` (y `es.schema.json` a
+`es.default.schema.json`). Se borran los otros 50 archivos de `locales/`, ingles incluido.
+
+**Alternativa descartada.** Dejar `en.default.json` como default y `es.json` como traduccion.
+
+**Por que.** La tienda es solo Argentina, sin selector de pais ni de idioma (regla 3.1). Con
+ingles como default, cualquier string que Shrine no tradujo caia en ingles en una tienda
+rioplatense. Ademas `theme check` valida contra el locale default: con espanol como default,
+las etiquetas de las secciones CAUCE se validan en el idioma en el que se van a leer.
+
+**Impacto medido.** De 1.645 a 20 errores de `theme check` en un paso. Los 1.625 eran los otros
+locales sin las claves nuevas.
+
+**Riesgo y mitigacion.** Antes de renombrar se compararon las claves: a `es` le faltaban 8, todas
+bajo `shopify.checkout.*`. Se completaron a mano. Si manana se agrega un segundo idioma, se
+recupera el archivo desde git (`git show main:locales/en.default.json`).
+
+---
+
+## D-008 · 2026-08-21 · Nombres de tag dinamicos reescritos como variable
+
+**Decision.** El patron `<{% if x %}a{% else %}div{% endif %}>` se reescribe como
+`{%- liquid assign tag = ... -%}` + `<{{ tag }}>` en los 6 archivos donde aparecia y que si usamos:
+`header.liquid`, `logo-list.liquid`, `main-product.liquid`, `bundle-offer.liquid`,
+`cart-drawer.liquid` (snippet) y `upsell-block.liquid`.
+
+**Alternativa descartada.** Apagar la regla `LiquidHTMLSyntaxError` en `.theme-check.yml`.
+
+**Por que.** Shopify acepta el patron original, pero el parser de theme-check no, y **se corta en el
+primer error de cada archivo**: mientras estuviera ahi, cualquier error real que escribieramos mas
+abajo en `main-product.liquid` o en `header.liquid` quedaba invisible. Apagar la regla habria
+tenido el mismo efecto. El HTML renderizado es identico; se verifico que cada apertura tenga su
+cierre correspondiente.
+
+**Alcance.** Las mismas ocurrencias en secciones `sp-*` / `ss-*` no se tocaron: estan fuera del
+alcance por D-001 y `.theme-check.yml` ya las ignora.
+
+---
+
+## D-009 · 2026-08-21 · Borrar tres secciones importadas de otro tema
+
+**Decision.** Se eliminan `special-banner.liquid`, `spotlight-products.liquid` y
+`spotlight-block.liquid`.
+
+**Alternativa descartada.** Escribir a mano las 115 claves de traduccion que les faltan.
+
+**Por que.** No son de Shrine. Referencian namespaces que no existen en ningun locale de este tema
+(`sections.layout.*`, `sections.collection_lookbook.*`, `sections.main_lookbook_page.*`,
+`sections.policies_block.*`) y ademas piden tres assets que no estan en `assets/`
+(`component-special-banner.css`, `component-spotlight-products.css`, `lookbook-script.js`). Aunque
+alguien las insertara, renderizarian sin estilos y con las etiquetas rotas. Ningun template las
+referencia.
+
+**Impacto.** 244 errores menos. Si aparecen los archivos que faltan, se recuperan desde git.
+
+---
+
+## D-010 · 2026-08-21 · Se elimina el snippet cjpod
+
+**Decision.** Se borra `snippets/cjpod.liquid`.
+
+**Por que.** Es una integracion de CJ Dropshipping que inyecta `frontend.cjdropshipping.com/egg/pod3.js`
+en las paginas de producto y vuelca el objeto `product` completo a `window`. Ningun archivo del tema
+lo renderiza, asi que hoy esta muerto, pero es un script de terceros esperando a que alguien lo
+conecte. Nada del roadmap de CAUCE lo necesita.
+
+---
+
+## D-011 · 2026-08-21 · El label del boton solido es TINTA, no blanco
+
+**Decision.** `colors_solid_button_labels` = `#10262A` (TINTA).
+
+**Alternativa descartada.** Blanco o SEDIMENTO sobre el boton BRONCE, que es lo que se ve en la
+mayoria de las tiendas.
+
+**Por que.** Contraste medido sobre BRONCE `#B98A44`:
+
+| Label | Ratio | AA texto |
+|---|---|---|
+| Blanco `#FFFFFF` | 3.10:1 | falla |
+| SEDIMENTO `#E9E6DC` | 2.48:1 | falla |
+| **TINTA `#10262A`** | **5.09:1** | **pasa** |
+
+El boton de compra es el elemento mas importante de la pagina; no puede ser el que no pasa AA.
+Ademas tinta sobre bronce lee mas editorial que blanco sobre dorado.
+
+**Relacionado.** Por la misma razon existen `--cauce-bronce-texto` y `--cauce-vado-icono` en
+`cauce-brand.css`: los tokens puros como texto sobre SEDIMENTO dan 2.48:1 y 2.44:1. Se ajusto el
+tono del texto, no el token de marca.

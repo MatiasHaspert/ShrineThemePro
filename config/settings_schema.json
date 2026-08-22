@@ -2830,5 +2830,135 @@
         "info": "If empty, a link to all products will be applied."
       }
     ]
+  },
+  {
+    "name": "t:settings_schema.cauce.name",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "t:settings_schema.cauce.settings.intro.content"
+      },
+      {
+        "type": "header",
+        "content": "t:settings_schema.cauce.settings.header__vendedor.content"
+      },
+      {
+        "type": "text",
+        "id": "cauce_razon_social",
+        "label": "t:settings_schema.cauce.settings.razon_social.label",
+        "info": "t:settings_schema.cauce.settings.razon_social.info"
+      },
+      {
+        "type": "text",
+        "id": "cauce_cuit",
+        "label": "t:settings_schema.cauce.settings.cuit.label"
+      },
+      {
+        "type": "text",
+        "id": "cauce_domicilio",
+        "label": "t:settings_schema.cauce.settings.domicilio.label"
+      },
+      {
+        "type": "text",
+        "id": "cauce_email",
+        "label": "t:settings_schema.cauce.settings.email.label"
+      },
+      {
+        "type": "text",
+        "id": "cauce_telefono",
+        "label": "t:settings_schema.cauce.settings.telefono.label"
+      },
+      {
+        "type": "header",
+        "content": "t:settings_schema.cauce.settings.header__legales.content"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:settings_schema.cauce.settings.legales.content"
+      },
+      {
+        "type": "url",
+        "id": "cauce_url_arrepentimiento",
+        "label": "t:settings_schema.cauce.settings.url_arrepentimiento.label",
+        "info": "t:settings_schema.cauce.settings.url_arrepentimiento.info"
+      },
+      {
+        "type": "text",
+        "id": "cauce_url_libro_quejas",
+        "label": "t:settings_schema.cauce.settings.url_libro_quejas.label",
+        "info": "t:settings_schema.cauce.settings.url_libro_quejas.info",
+        "default": "https://autogestion.produccion.gob.ar/consumidores"
+      },
+      {
+        "type": "text",
+        "id": "cauce_url_data_fiscal",
+        "label": "t:settings_schema.cauce.settings.url_data_fiscal.label",
+        "info": "t:settings_schema.cauce.settings.url_data_fiscal.info"
+      },
+      {
+        "type": "image_picker",
+        "id": "cauce_img_data_fiscal",
+        "label": "t:settings_schema.cauce.settings.img_data_fiscal.label"
+      },
+      {
+        "type": "text",
+        "id": "cauce_rnpa",
+        "label": "t:settings_schema.cauce.settings.rnpa.label",
+        "info": "t:settings_schema.cauce.settings.rnpa.info"
+      },
+      {
+        "type": "range",
+        "id": "cauce_dias_arrepentimiento",
+        "label": "t:settings_schema.cauce.settings.dias_arrepentimiento.label",
+        "info": "t:settings_schema.cauce.settings.dias_arrepentimiento.info",
+        "min": 10,
+        "max": 45,
+        "step": 1,
+        "unit": "d",
+        "default": 10
+      },
+      {
+        "type": "header",
+        "content": "t:settings_schema.cauce.settings.header__envios.content"
+      },
+      {
+        "type": "text",
+        "id": "cauce_umbral_envio_gratis",
+        "label": "t:settings_schema.cauce.settings.umbral_envio.label",
+        "info": "t:settings_schema.cauce.settings.umbral_envio.info"
+      },
+      {
+        "type": "header",
+        "content": "t:settings_schema.cauce.settings.header__pagos.content"
+      },
+      {
+        "type": "text",
+        "id": "cauce_medios_pago",
+        "label": "t:settings_schema.cauce.settings.medios_pago.label",
+        "info": "t:settings_schema.cauce.settings.medios_pago.info",
+        "default": "mercadopago,visa,mastercard,amex,cabal,naranja"
+      },
+      {
+        "type": "range",
+        "id": "cauce_cuotas",
+        "label": "t:settings_schema.cauce.settings.cuotas.label",
+        "info": "t:settings_schema.cauce.settings.cuotas.info",
+        "min": 0,
+        "max": 18,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "t:settings_schema.cauce.settings.header__suscripcion.content"
+      },
+      {
+        "type": "checkbox",
+        "id": "cauce_suscripcion_activa",
+        "label": "t:settings_schema.cauce.settings.suscripcion.label",
+        "info": "t:settings_schema.cauce.settings.suscripcion.info",
+        "default": false
+      }
+    ]
   }
 ]

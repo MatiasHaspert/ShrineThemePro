@@ -1,0 +1,18 @@
+# CAUCE: config de theme-check para el tema base Shrine Pro.
+# El tema trae 118 secciones de packs de terceros que no vamos a usar (ver docs/DECISIONS.md D-001);
+# no las corregimos, pero tampoco queremos que su ruido tape los errores de las secciones cauce-*.
+root: "."
+
+extends: :default
+
+ignore:
+  - assets/main.js          # ofuscado por el vendor, no editable
+  - assets/secondary.js
+  - sections/sp-*.liquid    # pack Sections Pro, descartado
+  - sections/ss-*.liquid    # pack de terceros, descartado
+
+UnusedAssets:
+  enabled: false            # el tema carga assets condicionalmente desde secciones
+
+MissingTemplate:
+  enabled: false

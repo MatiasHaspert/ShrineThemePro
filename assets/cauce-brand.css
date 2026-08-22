@@ -1,0 +1,319 @@
+/* ==========================================================================
+   CAUCE — sistema de marca
+   Unico lugar donde viven los tokens. Ninguna seccion cauce-* declara hex.
+
+   Se carga DESPUES de base.css (ver layout/theme.liquid).
+
+   Los 4 colores tambien estan cargados en los settings globales del tema
+   (colors_text, colors_background_1, colors_accent_1, colors_accent_2) para que
+   las secciones nativas de Shrine los hereden via su sistema de color_scheme.
+   Ver docs/DECISIONS.md D-002.
+   ========================================================================== */
+
+:root {
+  /* --- Paleta (brandboard v1) ------------------------------------------ */
+  --cauce-tinta:      #10262A; /* marca: fondos oscuros, tipografia */
+  --cauce-sedimento:  #E9E6DC; /* fondo dominante */
+  --cauce-bronce:     #B98A44; /* acento UNICO: boton de compra y precio */
+  --cauce-vado:       #6F9BA1; /* secundario: iconos, graficos, submarcas */
+
+  /* --- Variantes accesibles -------------------------------------------- *
+   * BRONCE y VADO puros no llegan a AA como texto sobre SEDIMENTO.
+   * Medido (WCAG 2.1, sRGB):
+   *   BRONCE sobre SEDIMENTO ............ 2.48:1  FALLA
+   *   VADO sobre SEDIMENTO .............. 2.44:1  FALLA
+   * Se ajusta el tono del texto, no el token de marca (brief 7).
+   * Mismo matiz (H 36 y H 187), solo baja la luminosidad:
+   *   BRONCE-TEXTO sobre SEDIMENTO ...... 5.00:1  AA texto
+   *   VADO-ICONO sobre SEDIMENTO ........ 3.66:1  AA componentes (1.4.11)
+   * Sobre TINTA los tokens puros SI pasan: BRONCE 5.09:1, VADO 5.16:1.        */
+  --cauce-bronce-texto: #7A5B2E;
+  --cauce-vado-icono:   #557C82;
+
+  /* Superficie secundaria: tarjetas y bandas sobre SEDIMENTO.
+     TINTA sobre esta superficie mantiene 11.5:1. */
+  --cauce-sedimento-2: #DFDBCE;
+  --cauce-linea:       rgba(16, 38, 42, 0.14);
+  --cauce-linea-fuerte: rgba(16, 38, 42, 0.28);
+
+  /* --- Tipografia ------------------------------------------------------- */
+  --cauce-font-logo:    'Archivo', var(--font-body-family, system-ui), sans-serif;
+  --cauce-font-titulo:  'Newsreader', Georgia, 'Times New Roman', serif;
+  --cauce-font-texto:   'Archivo', var(--font-body-family, system-ui), sans-serif;
+  --cauce-font-dato:    'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* El logo es Archivo con el eje de ancho al maximo (Expanded) + tracking.  */
+  --cauce-logo-stretch: 125;
+  --cauce-logo-weight:  600;
+  --cauce-logo-tracking: 0.14em;
+
+  /* --- Ritmo ------------------------------------------------------------ */
+  --cauce-aire-xs: 0.8rem;
+  --cauce-aire-s:  1.6rem;
+  --cauce-aire-m:  3.2rem;
+  --cauce-aire-l:  6.4rem;
+  --cauce-aire-xl: 9.6rem;
+
+  /* Aire minimo del logo = altura de la C. Nada entra en esa zona.
+     Se aplica como padding alrededor del lockup. */
+  --cauce-logo-aire: 1em;
+}
+
+/* ==========================================================================
+   1. Remapeo del tema
+   Las secciones nativas de Shrine resuelven contra --color-base-*, que
+   theme.liquid genera desde los settings globales. Aca solo reforzamos lo
+   que los settings no pueden expresar.
+   ========================================================================== */
+
+body {
+  font-family: var(--cauce-font-texto);
+  background-color: var(--cauce-sedimento);
+}
+
+h1, h2, h3, h4,
+.h0, .h1, .h2, .h3, .h4 {
+  font-family: var(--cauce-font-titulo);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Regla de marca: el bronce se usa una vez por pieza. El titulo nunca es
+   bronce; el bronce queda reservado al boton de compra y al precio.
+   Esto neutraliza los "title_highlight_color" que traen las secciones de
+   Shrine si alguien los pone en accent-1 por error. */
+.cauce-page h1, .cauce-page h2, .cauce-page h3 {
+  color: rgb(var(--color-foreground, 16 38 42));
+}
+
+/* ==========================================================================
+   2. Utilidades de marca
+   ========================================================================== */
+
+/* Logo: wordmark en Archivo Expanded. Ver snippets/cauce-logo.liquid. */
+.cauce-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  padding: var(--cauce-logo-aire);
+  text-decoration: none;
+  color: inherit;
+}
+
+.cauce-logo__marca {
+  font-family: var(--cauce-font-logo);
+  font-variation-settings: 'wdth' var(--cauce-logo-stretch), 'wght' var(--cauce-logo-weight);
+  font-weight: var(--cauce-logo-weight);
+  font-stretch: expanded;
+  letter-spacing: var(--cauce-logo-tracking);
+  /* el tracking agrega aire a la derecha; se compensa para que el bloque
+     optico quede centrado */
+  margin-right: calc(var(--cauce-logo-tracking) * -1);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cauce-logo__isotipo {
+  flex: 0 0 auto;
+  display: block;
+  height: 1.15em;
+  width: auto;
+}
+
+.cauce-logo__descriptor {
+  display: block;
+  font-family: var(--cauce-font-texto);
+  font-size: 0.3em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  margin-top: 0.5em;
+}
+
+/* Datos, lotes, etiquetas: DM Mono. */
+.cauce-dato {
+  font-family: var(--cauce-font-dato);
+  font-weight: 400;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Antetitulo de seccion. */
+.cauce-eyebrow {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0 0 var(--cauce-aire-s);
+}
+
+/* El unico bronce de la pieza. Usar como maximo una vez por seccion visible. */
+.cauce-acento {
+  color: var(--cauce-bronce-texto);
+}
+
+/* Sobre fondo TINTA el bronce puro si pasa AA, no hace falta oscurecerlo. */
+.color-inverse .cauce-acento,
+.cauce-banda-oscura .cauce-acento {
+  color: var(--cauce-bronce);
+}
+
+/* Iconos VADO. currentColor deja que hereden el tono correcto por contexto. */
+.cauce-icono {
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: 0 0 auto;
+  color: var(--cauce-vado-icono);
+  stroke-width: 1.4;
+}
+
+.color-inverse .cauce-icono,
+.cauce-banda-oscura .cauce-icono {
+  color: var(--cauce-vado);
+}
+
+/* Reglas finas editoriales. */
+.cauce-regla {
+  border: 0;
+  border-top: 1px solid var(--cauce-linea);
+  margin: var(--cauce-aire-m) 0;
+}
+
+/* ==========================================================================
+   3. Parches a secciones reusadas de Shrine
+   Cada uno responde a un hueco concreto documentado en docs/AUDIT-SHRINE.md.
+   ========================================================================== */
+
+/* Correccion de contraste global de los acentos.
+
+   Las secciones nativas de Shrine ofrecen `icon_color` / `title_highlight_color`
+   con opciones accent-1 y accent-2, que resuelven al token puro:
+       .text-color-accent-1 { color: rgb(var(--color-base-accent-1)) }  BRONCE
+       .text-color-accent-2 { color: rgb(var(--color-base-accent-2)) }  VADO
+   Sobre SEDIMENTO eso da 2.48:1 y 2.44:1 y no pasa AA.
+
+   En vez de prohibir esas opciones en el theme editor (que nadie va a recordar),
+   se remapean aca: sobre fondo claro entran las variantes oscurecidas, sobre
+   TINTA vuelven los tokens puros, que ahi si pasan. Un solo lugar, sin tocar
+   ninguna seccion. */
+.color-background-1 .text-color-accent-1,
+.color-background-2 .text-color-accent-1 {
+  color: var(--cauce-bronce-texto);
+}
+
+.color-background-1 .text-color-accent-2,
+.color-background-2 .text-color-accent-2 {
+  color: var(--cauce-vado-icono);
+}
+
+.color-inverse .text-color-accent-1,
+.color-accent-1 .text-color-accent-1 {
+  color: var(--cauce-bronce);
+}
+
+.color-inverse .text-color-accent-2 {
+  color: var(--cauce-vado);
+}
+
+/* horizontal-ticker no respeta prefers-reduced-motion (AUDIT 2, bloque 11). */
+@media (prefers-reduced-motion: reduce) {
+  .horizontal-ticker__content,
+  .horizontal-ticker__wrapper,
+  .cauce-marquee__pista {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .cauce-marquee__pista {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* Foco visible propio: el tema lo apaga en varios componentes. */
+.cauce-page :focus-visible,
+.cauce-legal :focus-visible {
+  outline: 2px solid var(--cauce-vado-icono);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   4. Barra legal (Argentina). Ver sections/cauce-legal-bar.liquid.
+   ========================================================================== */
+
+.cauce-legal {
+  background-color: var(--cauce-tinta);
+  color: var(--cauce-sedimento);
+  font-family: var(--cauce-font-texto);
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+
+.cauce-legal a {
+  color: var(--cauce-sedimento);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.cauce-legal a:hover {
+  color: var(--cauce-bronce);
+}
+
+.cauce-legal__grid {
+  display: grid;
+  gap: var(--cauce-aire-m);
+  grid-template-columns: 1fr;
+  padding: var(--cauce-aire-m) 0;
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-legal__grid {
+    grid-template-columns: 1.2fr 1fr auto;
+    align-items: start;
+  }
+}
+
+.cauce-legal__titulo {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin: 0 0 var(--cauce-aire-xs);
+}
+
+.cauce-legal__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cauce-legal__datafiscal img {
+  display: block;
+  width: 60px;
+  height: auto;
+}
+
+.cauce-legal__disclaimer {
+  border-top: 1px solid rgba(233, 230, 220, 0.2);
+  padding: var(--cauce-aire-s) 0;
+  font-size: 1.2rem;
+  opacity: 0.85;
+  max-width: 78ch;
+}
+
+/* Placeholder visible: los datos que faltan no pueden pasar desapercibidos. */
+.cauce-pendiente {
+  background: rgba(185, 138, 68, 0.22);
+  border-bottom: 1px dashed var(--cauce-bronce);
+  padding: 0 0.3em;
+  font-family: var(--cauce-font-dato);
+  font-size: 0.92em;
+}
