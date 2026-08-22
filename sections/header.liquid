@@ -145,6 +145,13 @@
   if section.settings.sticky_header_type != 'none'
     assign cauce_header_tag = 'sticky-header'
   endif
+  # CAUCE: el tag del logo se resuelve aca arriba, no adentro de las ramas de
+  # logo_position: los dos usos estan en ramas mutuamente excluyentes y si el
+  # assign vive dentro de una, la otra renderiza un tag vacio.
+  assign cauce_logo_link_tag = 'div'
+  if section.settings.logo_link != blank
+    assign cauce_logo_link_tag = 'a'
+  endif
 -%}
 <{{ cauce_header_tag }}{% if section.settings.sticky_header_type != 'none' %} data-sticky-type="{{ section.settings.sticky_header_type }}"{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}{% if section.settings.sticky_header_type == 'none' %} header-wrapper--not-sticky{% endif %}">
   <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}">
@@ -240,14 +247,6 @@
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
-          {% comment %} CAUCE: nombre de tag dinamico movido a una variable, mismo HTML.
-               Ver docs/DECISIONS.md D-007. {% endcomment %}
-          {%- liquid
-            assign cauce_logo_link_tag = 'div'
-            if section.settings.logo_link != blank
-              assign cauce_logo_link_tag = 'a'
-            endif
-          -%}
           <{{ cauce_logo_link_tag }}{% if section.settings.logo_link != blank %} href="{{ section.settings.logo_link }}"{% endif %}
             class="header__heading-link{% if section.settings.logo_link != blank %} link link--text focus-inset{% endif %}{% if settings.logo != blank %} media media--transparent ratio{% endif %}"
             {%- if settings.logo != blank -%}
