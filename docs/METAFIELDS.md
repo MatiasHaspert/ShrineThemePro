@@ -24,7 +24,7 @@ renderiza — nunca renderiza vacía ni inventa un valor.
 | `cauce.composicion` | `rich_text_field` | acordeón Composición | tabla de ingredientes |
 | `cauce.modo_uso` | `rich_text_field` | acordeón Modo de uso | `1 cápsula por día…` |
 | `cauce.analisis` | `rich_text_field` | acordeón Análisis | lote, laboratorio, fecha |
-| `cauce.beneficios` | `rich_text_field` | acordeón de detalle (fase 4) | — |
+| `cauce.beneficios` | `list.metaobject_reference` | acordeón de detalle (bloque 10) | — |
 | `cauce.faq` | `list.metaobject_reference` | FAQ de la PDP (fase 5) | — |
 
 ### Quién consume qué
@@ -32,11 +32,10 @@ renderiza — nunca renderiza vacía ni inventa un valor.
 | Metafield | Consumido por |
 |---|---|
 | `unidades_envase`, `dosis_diaria` | `snippets/cauce-duracion.liquid` → token `[duracion]` en los escalones de cantidad |
-| `composicion` | bloque `acordeon_composicion` de `templates/product.cauce-landing.json` |
-| `modo_uso` | bloque `acordeon_modo_uso` |
-| `analisis` | bloque `acordeon_analisis` |
-| `unidad`, `formato` | `cauce-datos` (fase 4) |
-| `beneficios` | `cauce-acordeon-detalle` (fase 4) |
+| `composicion`, `modo_uso`, `analisis` | pestañas de `cauce-tabs` (bloque 14) |
+| `formato` | fila de `cauce-datos` (bloque 7) |
+| `beneficios` | `cauce-acordeon-detalle` (bloque 10) |
+| `unidad` | reservado para textos de formato de fases siguientes |
 | `faq` | `cauce-faq` (fase 5) |
 
 ---
@@ -103,9 +102,9 @@ Variables, una por definición:
            "type": "rich_text_field", "ownerType": "PRODUCT" } }
 { "def": { "name": "Analisis de laboratorio", "namespace": "cauce", "key": "analisis",
            "type": "rich_text_field", "ownerType": "PRODUCT" } }
-{ "def": { "name": "Beneficios", "namespace": "cauce", "key": "beneficios",
-           "type": "rich_text_field", "ownerType": "PRODUCT" } }
 ```
+
+`cauce.beneficios` va aparte porque referencia un metaobjeto: ver más abajo.
 
 `cauce.faq` se define recién en la fase 5, junto con el metaobjeto de pregunta y
 respuesta que referencia.
