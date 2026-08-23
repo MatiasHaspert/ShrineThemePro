@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -16,18 +25,30 @@
         "subtitulo": {
           "type": "text",
           "settings": {
-            "text_1": "El compuesto puro en forma R que ayuda a tu cuerpo a hacer lo que la comida moderna le hizo olvidar — sacar el azúcar de la sangre y convertirlo en energía estable. La dosis exacta de 600mg estudiada en investigaciones clínicas alemanas.",
-            "icon_1": "",
-            "icon_2": "",
-            "icon_3": "",
             "mobile_text_size": 15,
             "desktop_text_size": 17,
             "alignment": "left",
-            "text_color": "#10262A",
-            "icon_color": "#557C82",
+            "text_color": "#10262a",
+            "text_1": "El compuesto puro en forma R que ayuda a tu cuerpo a hacer lo que la comida moderna le hizo olvidar — sacar el azúcar de la sangre y convertirlo en energía estable. La dosis exacta de 600mg estudiada en investigaciones clínicas alemanas.",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#557c82",
+            "icon_1": "",
+            "filled_icon_1": false,
+            "icon_2": "",
+            "filled_icon_2": false,
+            "icon_3": "",
+            "filled_icon_3": false,
             "width": "100%",
             "direction": "horizontal",
+            "column_gap": 3,
             "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
             "margin_top": 0,
             "margin_bottom": 21
           }
@@ -39,6 +60,12 @@
             "price_color": "text",
             "compare_price_color": "text",
             "displayed_badge": "none",
+            "icon_scale": 140,
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "icon_1": "redeem",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
             "margin_top": 0,
             "margin_bottom": 21
           }
@@ -57,9 +84,9 @@
             "icon_1": "water_drop",
             "icon_1_fill": false,
             "heading_1": "Apoyo para un azúcar saludable",
-            "icon_2": "medication",
+            "icon_2": "battery_full",
             "icon_2_fill": false,
-            "heading_2": "600 mg por cápsula",
+            "heading_2": "Energía estable todo el día",
             "icon_3": "",
             "icon_3_fill": false,
             "heading_3": "",
@@ -94,7 +121,7 @@
         "separador": {
           "type": "divider",
           "settings": {
-            "color": "#DFDBCE",
+            "color": "#dfdbce",
             "height": 1,
             "width": 100,
             "Full_mobile_width": false,
@@ -124,6 +151,7 @@
             "skip_unavailable": false,
             "full_width_pickers": false,
             "hide_pickers_overlay": true,
+            "pickers_label": "",
             "image_width": 70,
             "space_images": true,
             "vertical_images_position": "top",
@@ -174,6 +202,20 @@
             "option_3_compare_price": "compare_price",
             "option_3_compare_price_text": "[compare_price]",
             "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "Buy [quantity]",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
             "margin_top": 0,
             "margin_bottom": 21
           }
@@ -194,7 +236,11 @@
             "icon_spacing": 10,
             "display_price": false,
             "enable_custom_color": false,
+            "custom_color": "#dd1d1d",
             "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_custom_color": "#dd1d1d",
             "margin_top": 0,
             "margin_bottom": 15
           }
@@ -216,6 +262,7 @@
             "display_top_border": true,
             "open": false,
             "content": "<p>Despachamos desde [[PENDIENTE: ciudad_deposito]]. El plazo estimado es de [[PENDIENTE: plazo_envio]] días hábiles y el costo se calcula en el checkout según tu código postal. Envío sin cargo en compras desde $ [[PENDIENTE: umbral_envio_gratis]].</p>",
+            "page": "",
             "margin_top": 0,
             "margin_bottom": 0
           }
@@ -231,6 +278,7 @@
             "display_top_border": true,
             "open": false,
             "content": "<p>Tenés 10 días corridos desde que recibís el pedido para arrepentirte de la compra y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). El producto tiene que estar sin abrir.</p><p>Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a [[PENDIENTE: email_contacto]].</p>",
+            "page": "",
             "margin_top": 0,
             "margin_bottom": 24
           }
@@ -248,7 +296,10 @@
             "display_when": "after_scroll",
             "button_label": "Agregar al carrito",
             "enable_custom_btn_color": false,
+            "custom_btn_color": "#dd1d1d",
             "color_scheme": "background-1",
+            "star_color": "#ffcc00",
+            "stars_label": "(xxxx Reviews)",
             "picker_type": "combined",
             "desktop_show_image": true,
             "desktop_show_title": true,
@@ -298,6 +349,14 @@
         "arrows_color_scheme": "background-1",
         "transparent_arrows": false,
         "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
         "media_size": "medium",
         "media_position": "left",
         "gallery_layout": "thumbnail_slider",
@@ -316,6 +375,8 @@
         "enable_mobile_outher_spacing": false,
         "mobile_slides_container_width": 100,
         "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
         "mobile_padding_top": 8,
         "mobile_padding_bottom": 16,
         "desktop_padding_top": 40,
@@ -369,7 +430,10 @@
         "p4"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "title": "",
+        "title_highlight_color": "#6d388b",
         "heading_size": "h2",
         "text": "",
         "color_scheme": "background-1",
@@ -379,18 +443,34 @@
         "cards_color_scheme": "background-1",
         "type": "slide",
         "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
         "desktop_full_page": false,
         "columns_desktop": 4,
         "slider_desktop": false,
+        "per_move_desktop": 1,
         "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
         "desktop_dots_position": "hidden",
         "desktop_arrows_position": "hidden",
         "columns_mobile": "1",
         "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
         "mobile_dots_position": "under",
         "mobile_arrows_position": "hidden",
         "padding_top": 8,
-        "padding_bottom": 64
+        "padding_bottom": 64,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
       }
     },
     "ugc": {
@@ -398,19 +478,35 @@
       "blocks": {
         "v1": {
           "type": "video",
-          "settings": {}
+          "settings": {
+            "alt": "",
+            "autor": "",
+            "texto": ""
+          }
         },
         "v2": {
           "type": "video",
-          "settings": {}
+          "settings": {
+            "alt": "",
+            "autor": "",
+            "texto": ""
+          }
         },
         "v3": {
           "type": "video",
-          "settings": {}
+          "settings": {
+            "alt": "",
+            "autor": "",
+            "texto": ""
+          }
         },
         "v4": {
           "type": "video",
-          "settings": {}
+          "settings": {
+            "alt": "",
+            "autor": "",
+            "texto": ""
+          }
         }
       },
       "block_order": [
@@ -436,37 +532,41 @@
         "b1": {
           "type": "column",
           "settings": {
+            "muted_autoplay": true,
             "title": "Composición",
             "text": "<p>Un solo activo. Ácido R-alfa lipoico y los excipientes necesarios para la cápsula, todos declarados en el rótulo.</p>",
             "link_label": "",
-            "muted_autoplay": true
+            "link": ""
           }
         },
         "b2": {
           "type": "column",
           "settings": {
+            "muted_autoplay": true,
             "title": "Dosis",
             "text": "<p>600 mg por cápsula, una por día. La cantidad que dice la etiqueta es la que mide el análisis.</p>",
             "link_label": "",
-            "muted_autoplay": true
+            "link": ""
           }
         },
         "b3": {
           "type": "column",
           "settings": {
+            "muted_autoplay": true,
             "title": "Origen del ingrediente",
             "text": "<p>La materia prima llega con su propio certificado de análisis, que queda asociado al lote que se produce con ella.</p>",
             "link_label": "",
-            "muted_autoplay": true
+            "link": ""
           }
         },
         "b4": {
           "type": "column",
           "settings": {
+            "muted_autoplay": true,
             "title": "Control de lote",
             "text": "<p>Cada lote se analiza antes de salir: identidad del compuesto y contenido por cápsula, en laboratorio externo.</p>",
             "link_label": "",
-            "muted_autoplay": true
+            "link": ""
           }
         }
       },
@@ -477,9 +577,16 @@
         "b4"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "title": "Cuatro cosas que se pueden verificar",
+        "title_highlight_color": "#6d388b",
         "heading_size": "h1",
         "button_label": "",
+        "button_link": "",
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
         "color_scheme": "background-2",
         "cards_color_scheme": "background-1",
         "cards_corner_radius": 4,
@@ -493,25 +600,46 @@
         "mobile_heading_size": 20,
         "desktop_text_size": 15,
         "mobile_text_size": 15,
+        "desktop_text_top_margin": 10,
+        "mobile_text_top_margin": 10,
         "desktop_container_padding_y": 24,
         "desktop_container_padding_x": 24,
         "mobile_container_padding_y": 24,
         "mobile_container_padding_x": 24,
         "type": "slide",
         "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
         "desktop_full_page": false,
         "columns_desktop": 4,
         "slider_desktop": false,
+        "per_move_desktop": 1,
         "desktop_spacing": 24,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
         "desktop_dots_position": "hidden",
         "desktop_arrows_position": "hidden",
         "columns_mobile": "1",
         "slider_mobile": true,
         "enable_mobile_preview": true,
+        "mobile_adaptive_height": false,
         "mobile_dots_position": "under",
         "mobile_arrows_position": "hidden",
         "padding_top": 72,
-        "padding_bottom": 72
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_heading": "#222126",
+        "custom_cards_colors_text": "#2e2a39"
       }
     },
     "datos": {
@@ -564,6 +692,7 @@
         "volanta": "Ficha técnica",
         "titulo": "Los números que sí podemos publicar",
         "heading_size": "h1",
+        "producto": "",
         "columnas": 4,
         "color_scheme": "background-1",
         "nota": "<p>Los valores corresponden al rótulo declarado. El resultado del análisis del lote vigente está en la pestaña Análisis de laboratorio.</p>",
@@ -577,19 +706,21 @@
         "e1": {
           "type": "column",
           "settings": {
+            "muted_autoplay": true,
             "title": "Qué es el ácido alfa lipoico",
             "text": "<p>Es un compuesto que el organismo produce en cantidades pequeñas y que también aparece en algunos alimentos. Se describió por primera vez en la década del cincuenta y desde entonces se usa como ingrediente de suplementos dietarios en buena parte del mundo.</p><p>Como suplemento se presenta en cápsulas, y la cantidad por unidad es el dato que define de qué se está hablando. Por eso está en el frente del envase y no en la letra chica.</p>",
             "link_label": "",
-            "muted_autoplay": true
+            "link": ""
           }
         },
         "e2": {
           "type": "column",
           "settings": {
+            "muted_autoplay": true,
             "title": "Por qué la forma R",
             "text": "<p>Sintetizado en laboratorio, el ácido alfa lipoico se obtiene como una mezcla de dos isómeros en partes iguales: R y S. El R es la forma que existe en la naturaleza; el S es su imagen especular y no aparece por fuera de la síntesis química.</p><p>Separar los dos encarece la producción. Por eso la mayoría de los suplementos se venden como mezcla racémica, sin aclararlo. Esta fórmula usa únicamente el isómero R, y el análisis de lote lo verifica.</p>",
             "link_label": "",
-            "muted_autoplay": true
+            "link": ""
           }
         }
       },
@@ -598,13 +729,21 @@
         "e2"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "title": "",
+        "title_highlight_color": "#6d388b",
         "heading_size": "h1",
         "button_label": "",
+        "button_link": "",
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
         "color_scheme": "background-1",
         "cards_color_scheme": "background-1",
         "cards_corner_radius": 0,
         "stretch_cards": false,
+        "stretched_cards_content_alignment": "center",
         "image_width": "full",
         "image_ratio": "square",
         "media_position": "top",
@@ -613,24 +752,46 @@
         "mobile_heading_size": 22,
         "desktop_text_size": 16,
         "mobile_text_size": 15,
+        "desktop_text_top_margin": 10,
+        "mobile_text_top_margin": 10,
         "desktop_container_padding_y": 0,
         "desktop_container_padding_x": 0,
         "mobile_container_padding_y": 0,
         "mobile_container_padding_x": 0,
         "type": "slide",
         "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
         "desktop_full_page": false,
         "columns_desktop": 2,
         "slider_desktop": false,
+        "per_move_desktop": 1,
         "desktop_spacing": 64,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
         "desktop_dots_position": "hidden",
         "desktop_arrows_position": "hidden",
         "columns_mobile": "1",
         "slider_mobile": false,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
         "mobile_dots_position": "hidden",
         "mobile_arrows_position": "hidden",
         "padding_top": 24,
-        "padding_bottom": 72
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_heading": "#222126",
+        "custom_cards_colors_text": "#2e2a39"
       }
     },
     "banda": {
@@ -680,7 +841,10 @@
         "f4"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "title": "Comprar acá",
+        "title_highlight_color": "#6d388b",
         "heading_size": "h1",
         "text": "",
         "color_scheme": "inverse",
@@ -690,18 +854,34 @@
         "cards_color_scheme": "inverse",
         "type": "slide",
         "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
         "desktop_full_page": false,
         "columns_desktop": 2,
         "slider_desktop": false,
+        "per_move_desktop": 1,
         "desktop_spacing": 48,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
         "desktop_dots_position": "hidden",
         "desktop_arrows_position": "hidden",
         "columns_mobile": "1",
         "slider_mobile": false,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
         "mobile_dots_position": "hidden",
         "mobile_arrows_position": "hidden",
         "padding_top": 72,
-        "padding_bottom": 72
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
       }
     },
     "detalle": {
@@ -738,6 +918,7 @@
         "volanta": "Letra chica, en grande",
         "titulo": "En detalle",
         "heading_size": "h1",
+        "producto": "",
         "color_scheme": "background-1",
         "padding_top": 72,
         "padding_bottom": 72
@@ -785,6 +966,7 @@
         "t5"
       ],
       "settings": {
+        "visibility": "always-display",
         "speed": 3,
         "direction": "normal",
         "stop_on_hover": true,
@@ -796,10 +978,20 @@
         "italic_text": false,
         "uppercase_text": true,
         "bold_text": false,
+        "mobile_image_height": 26,
+        "desktop_image_height": 40,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
         "mobile_padding_top": 16,
         "mobile_padding_bottom": 16,
         "desktop_padding_top": 20,
-        "desktop_padding_bottom": 20
+        "desktop_padding_bottom": 20,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39"
       }
     },
     "timeline": {
@@ -808,28 +1000,31 @@
         "t1": {
           "type": "column",
           "settings": {
+            "muted_autoplay": true,
             "title": "Los primeros días",
             "text": "<p>Elegí un momento fijo y asociá la cápsula a algo que ya hacés: el desayuno, el café, lavarte los dientes. La constancia se sostiene mejor cuando no depende de acordarse.</p>",
             "link_label": "",
-            "muted_autoplay": true
+            "link": ""
           }
         },
         "t2": {
           "type": "column",
           "settings": {
+            "muted_autoplay": true,
             "title": "Las primeras semanas",
             "text": "<p>Un frasco cubre un mes de uso diario. Es el tiempo en el que la rutina deja de ser una decisión de todos los días y pasa a ser costumbre.</p>",
             "link_label": "",
-            "muted_autoplay": true
+            "link": ""
           }
         },
         "t3": {
           "type": "column",
           "settings": {
+            "muted_autoplay": true,
             "title": "El uso sostenido",
             "text": "<p>Si decidís seguir, tener el frasco siguiente antes de que se termine evita los cortes. Ante cualquier duda sobre continuidad o cantidad, consultá a tu médico.</p>",
             "link_label": "",
-            "muted_autoplay": true
+            "link": ""
           }
         }
       },
@@ -839,9 +1034,16 @@
         "t3"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "title": "Una rutina, no un tratamiento",
+        "title_highlight_color": "#6d388b",
         "heading_size": "h1",
         "button_label": "",
+        "button_link": "",
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
         "color_scheme": "background-1",
         "cards_color_scheme": "background-2",
         "cards_corner_radius": 4,
@@ -855,55 +1057,96 @@
         "mobile_heading_size": 20,
         "desktop_text_size": 16,
         "mobile_text_size": 15,
+        "desktop_text_top_margin": 10,
+        "mobile_text_top_margin": 10,
         "desktop_container_padding_y": 28,
         "desktop_container_padding_x": 28,
         "mobile_container_padding_y": 24,
         "mobile_container_padding_x": 24,
         "type": "slide",
         "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
         "desktop_full_page": false,
         "columns_desktop": 3,
         "slider_desktop": false,
+        "per_move_desktop": 1,
         "desktop_spacing": 24,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
         "desktop_dots_position": "hidden",
         "desktop_arrows_position": "hidden",
         "columns_mobile": "1",
         "slider_mobile": true,
         "enable_mobile_preview": true,
+        "mobile_adaptive_height": false,
         "mobile_dots_position": "under",
         "mobile_arrows_position": "hidden",
         "padding_top": 72,
-        "padding_bottom": 72
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_heading": "#222126",
+        "custom_cards_colors_text": "#2e2a39"
       }
     },
     "reviews": {
       "type": "testimonials",
       "disabled": true,
-      "blocks": {},
-      "block_order": [],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "title": "Lo que dicen",
+        "title_highlight_color": "#6d388b",
         "heading_size": "h1",
+        "text": "",
         "color_scheme": "background-1",
         "image_width": "full",
         "image_ratio": "circle",
         "column_alignment": "left",
         "show_stars": false,
+        "stars_color": "#ffd700",
         "show_quotes": false,
+        "quotes_color_scheme": "accent-2",
         "cards_color_scheme": "background-2",
         "type": "slide",
         "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
         "desktop_full_page": false,
         "columns_desktop": 3,
         "slider_desktop": false,
+        "per_move_desktop": 1,
         "desktop_spacing": 24,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
         "desktop_dots_position": "hidden",
         "desktop_arrows_position": "hidden",
         "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
         "mobile_dots_position": "under",
         "mobile_arrows_position": "hidden",
         "padding_top": 72,
-        "padding_bottom": 72
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
       }
     },
     "fichas": {
@@ -943,6 +1186,7 @@
         "titulo": "La ficha completa",
         "heading_size": "h1",
         "etiqueta_a11y": "Detalle del producto",
+        "producto": "",
         "color_scheme": "background-2",
         "padding_top": 72,
         "padding_bottom": 72
@@ -957,6 +1201,7 @@
             "column": "col_1",
             "visibility": "always-display",
             "heading": "Si te arrepentís, se devuelve",
+            "title_highlight_color": "#6d388b",
             "heading_size": "h1",
             "alignment": "left",
             "mobile_alignment": "mobile-left",
@@ -970,6 +1215,7 @@
             "column": "col_1",
             "visibility": "always-display",
             "text": "<p>No es una promesa comercial: es un derecho que tenés por la Resolución SCI 424/2020 y que acá está escrito sin condiciones escondidas.</p>",
+            "text_style": "body",
             "alignment": "left",
             "mobile_alignment": "mobile-left",
             "margin_top": 0,
@@ -1039,6 +1285,8 @@
         "g4"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "color_scheme": "background-1",
         "columns_count": 2,
         "column_gap_desktop": 64,
@@ -1053,8 +1301,26 @@
         "col_2_desktop_width": 7,
         "col_2_mobile_width": 4,
         "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
         "padding_top": 72,
-        "padding_bottom": 72
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
       }
     },
     "comparativa": {
@@ -1130,11 +1396,18 @@
         "c6"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "title": "Qué mirar antes de comparar precios",
+        "title_highlight_color": "#6d388b",
         "heading_size": "h1",
         "text": "<p>La comparación es contra el ácido alfa lipoico en mezcla racémica, que es el formato más habitual de la categoría. No compara con ninguna marca ni con ningún medicamento en particular.</p>",
         "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
         "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
         "desktop_alignment": "left",
         "mobile_alignment": "left",
         "color_scheme": "background-1",
@@ -1144,18 +1417,46 @@
         "number_of_competitors": 1,
         "us_label": "CAUCE",
         "us_label_size": 18,
+        "logo_width": 90,
+        "mobile_logo_width": 60,
         "others_label": "Suplemento genérico",
         "others_label_size": 18,
+        "others_logo_width": 90,
+        "others_mobile_logo_width": 60,
+        "others_2_label": "Competitor 2",
+        "others_2_label_size": 18,
+        "others_2_logo_width": 90,
+        "others_2_mobile_logo_width": 60,
+        "others_3_label": "Competitor 3",
+        "others_3_label_size": 18,
+        "others_3_logo_width": 90,
+        "others_3_mobile_logo_width": 60,
         "checkmark_style": "regular",
+        "checkmark_color": "#10262a",
+        "checkmark_bg_color": "#b98a44",
         "x_style": "regular",
+        "x_color": "#10262a",
+        "x_bg_color": "#dfdbce",
         "opposite_icon_colors": "original",
         "highlighted_color_scheme": "background-2",
+        "highlighted_separator_opacity": 0,
+        "highlighted_overlay_opacity": 0,
+        "other_cells_color_scheme": "background-1",
+        "regular_separator_opacity": 10,
+        "regular_overlay_opacity": 0,
+        "minimalistic_border_opacity": 16,
         "padding_top": 72,
         "padding_bottom": 72,
-        "checkmark_color": "#10262A",
-        "checkmark_bg_color": "#B98A44",
-        "x_color": "#10262A",
-        "x_bg_color": "#DFDBCE"
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_highlighted_background": "#2e2a39",
+        "custom_colors_highlighted_text": "#ffffff",
+        "custom_colors_others_background": "#ffffff",
+        "custom_colors_others_text": "#2e2a39"
       }
     },
     "faq": {
@@ -1217,6 +1518,7 @@
         "titulo": "Preguntas frecuentes",
         "heading_size": "h1",
         "pie": "",
+        "producto": "",
         "emitir_schema": true,
         "color_scheme": "background-2",
         "padding_top": 72,
@@ -1232,6 +1534,7 @@
             "column": "col_1",
             "visibility": "always-display",
             "heading": "Una cápsula por día, y listo",
+            "title_highlight_color": "#6d388b",
             "heading_size": "h0",
             "alignment": "left",
             "mobile_alignment": "mobile-left",
@@ -1245,6 +1548,7 @@
             "column": "col_1",
             "visibility": "always-display",
             "text": "<ul><li>Isómero R puro, sin mezcla racémica</li><li>600 mg por cápsula, una por día</li><li>Certificado de análisis por lote</li><li>Producción nacional, envío a todo el país</li><li>10 días para arrepentirte, sin costo</li></ul>",
+            "text_style": "body",
             "alignment": "left",
             "mobile_alignment": "mobile-left",
             "margin_top": 0,
@@ -1257,6 +1561,8 @@
             "column": "col_1",
             "visibility": "always-display",
             "button_label": "Agregar al carrito",
+            "atc_product": "",
+            "atc_skip_cart": false,
             "full_width": false,
             "alignment": "flex-start",
             "mobile_alignment": "center",
@@ -1282,6 +1588,8 @@
         "x3"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "color_scheme": "background-1",
         "columns_count": 1,
         "column_gap_desktop": 40,
@@ -1293,8 +1601,29 @@
         "col_1_desktop_width": 12,
         "col_1_mobile_width": 4,
         "col_1_visibility": "always-display",
+        "col_2_desktop_width": 4,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
         "padding_top": 88,
-        "padding_bottom": 88
+        "padding_bottom": 88,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
       }
     },
     "suscripcion": {
@@ -1305,6 +1634,7 @@
         "heading_size": "h2",
         "bajada": "<p>Avisamos cuando sale una fórmula nueva y cuando se publica el análisis de un lote. Nada más que eso.</p>",
         "boton": "Suscribirme",
+        "pagina_privacidad": "",
         "color_scheme": "background-2",
         "padding_top": 72,
         "padding_bottom": 72
