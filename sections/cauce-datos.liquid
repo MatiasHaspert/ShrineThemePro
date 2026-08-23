@@ -56,10 +56,16 @@
         {%- if cauce_valor != blank and block.settings.etiqueta != blank -%}
           <div class="cauce-datos__item" {{ block.shopify_attributes }}>
             <dt class="cauce-datos__etiqueta">{{ block.settings.etiqueta }}</dt>
-            <dd class="cauce-datos__valor cauce-dato">{{ cauce_valor }}</dd>
-            {%- if block.settings.aclaracion != blank -%}
-              <p class="cauce-datos__aclaracion">{{ block.settings.aclaracion }}</p>
-            {%- endif -%}
+            <dd class="cauce-datos__valor cauce-dato">
+              {{ cauce_valor }}
+              {%- if block.settings.aclaracion != blank -%}
+                {%- comment -%}
+                  La aclaracion va DENTRO del dd: un dl solo admite dt, dd, div, script y
+                  template como hijos, asi que un p suelto invalida la lista.
+                {%- endcomment -%}
+                <span class="cauce-datos__aclaracion">{{ block.settings.aclaracion }}</span>
+              {%- endif -%}
+            </dd>
           </div>
         {%- endif -%}
       {%- endfor -%}

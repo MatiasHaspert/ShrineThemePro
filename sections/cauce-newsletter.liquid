@@ -65,8 +65,16 @@
             aria-describedby="{{ cauce_id }}-error"
           {% endif %}
         >
+        {%- liquid
+          # El filtro t no puede ir despues de default: se aplicaria a la cadena entera
+          # y traduciria el texto del comercio, que da "Translation missing".
+          assign cauce_boton = section.settings.boton
+          if cauce_boton == blank
+            assign cauce_boton = 'newsletter.button_label' | t
+          endif
+        -%}
         <button type="submit" class="cauce-news__boton button" name="commit">
-          {{- section.settings.boton | default: 'newsletter.button_label' | t -}}
+          {{- cauce_boton -}}
         </button>
       </div>
 

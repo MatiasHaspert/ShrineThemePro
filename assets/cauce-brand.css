@@ -29,6 +29,9 @@
    * Sobre TINTA los tokens puros SI pasan: BRONCE 5.09:1, VADO 5.16:1.        */
   --cauce-bronce-texto: #7A5B2E;
   --cauce-vado-icono:   #557C82;
+  /* VADO para texto chico: --cauce-vado-icono da 3.66:1, que alcanza para
+     iconos y componentes pero no para texto. Este da 5.39:1. */
+  --cauce-vado-texto:   #3F6167;
 
   /* Superficie secundaria: tarjetas y bandas sobre SEDIMENTO.
      TINTA sobre esta superficie mantiene 11.5:1. */
@@ -387,7 +390,8 @@ h1, h2, h3, h4,
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  opacity: 0.65;
+  /* 0.65 daba 3.77:1 sobre SEDIMENTO. Ver seccion 8. */
+  opacity: 0.85;
 }
 
 /* Medios de pago ---------------------------------------------------------- */
@@ -955,3 +959,45 @@ h1, h2, h3, h4,
 
 .cauce-news__error svg,
 .cauce-news__exito svg { flex: 0 0 auto; width: 1.6rem; height: 1.6rem; }
+
+
+/* ==========================================================================
+   8. Correcciones del QA de la fase 6
+   ========================================================================== */
+
+/* Contraste. Lighthouse mobile marco cinco elementos por debajo de 4.5:1, todos
+   por bajar la opacidad sobre texto chico. Los numeros medidos eran: volanta
+   4.31, etiqueta de dato 3.35, aclaracion 3.77, pestana inactiva 2.88.
+   Subir la opacidad es preferible a agrandar el texto: el tamano es parte del
+   diseno editorial, la opacidad no. */
+.cauce-eyebrow { opacity: 0.85; }
+.cauce-datos__etiqueta { opacity: 0.85; }
+.cauce-datos__aclaracion { opacity: 0.85; }
+.cauce-tabs__boton { opacity: 0.8; }
+.cauce-detalle__contenido,
+.cauce-faq__respuesta { opacity: 1; }
+
+/* La aclaracion pasa a span por la estructura del dl, asi que necesita ser
+   bloque de nuevo. */
+.cauce-datos__aclaracion {
+  display: block;
+  font-size: 1.2rem;
+  font-family: var(--cauce-font-texto);
+  margin: 0.6rem 0 0;
+}
+
+/* Los pills de los escalones usan --accent-color, que Shrine resuelve al token
+   puro. VADO sobre SEDIMENTO da 2.44:1. Mismo remapeo que ya se hizo para
+   .text-color-accent-*, que no cubria esta clase. */
+/* Sin prefijo de esquema: la columna de info del producto no esta envuelta en
+   ningun .color-*, asi que la version con ancestro no aplicaba justo donde hacia
+   falta. Misma especificidad que la regla de base.css, pero carga despues. */
+.accent-color-accent-1 { --accent-color: var(--cauce-bronce-texto); }
+.accent-color-accent-2 { --accent-color: var(--cauce-vado-texto); }
+.color-inverse .accent-color-accent-1 { --accent-color: var(--cauce-bronce); }
+.color-inverse .accent-color-accent-2 { --accent-color: var(--cauce-vado); }
+
+/* Los parrafos de multicolumn venian pegados: el tema pone margin 0 en los p del
+   richtext de las columnas. Se nota en el bloque de explicacion, que es el unico
+   con dos parrafos por columna. */
+.multicolumn-card__info p + p { margin-top: 1em; }

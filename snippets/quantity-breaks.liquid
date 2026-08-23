@@ -94,11 +94,16 @@
   {% assign has_variants = false %}
   {% assign price = product.selected_or_first_available_variant.price %}
   {% if block.settings.headline != blank %}
-    <h3 class="quantity-breaks__title flex-center center">
+    {%- comment -%}
+      CAUCE: era un h3 justo despues del h1 del producto, salteando el h2. No es un
+      encabezado de documento sino la etiqueta del grupo de radios, asi que va como
+      p y el grupo queda nombrado por aria-labelledby.
+    {%- endcomment -%}
+    <p class="quantity-breaks__title flex-center center" id="quantity-breaks-title-{{ section.id }}">
       <span></span>
       <span>{{ block.settings.headline }}</span>
       <span></span>
-    </h3>
+    </p>
   {% endif %}
   <div class="quantity-breaks-container">
     {% if block.settings.option_1_quantity != 0 %}

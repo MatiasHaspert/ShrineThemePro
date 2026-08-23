@@ -1151,7 +1151,11 @@
         "opposite_icon_colors": "original",
         "highlighted_color_scheme": "background-2",
         "padding_top": 72,
-        "padding_bottom": 72
+        "padding_bottom": 72,
+        "checkmark_color": "#10262A",
+        "checkmark_bg_color": "#B98A44",
+        "x_color": "#10262A",
+        "x_bg_color": "#DFDBCE"
       }
     },
     "faq": {

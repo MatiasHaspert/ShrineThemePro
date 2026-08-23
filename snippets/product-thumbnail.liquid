@@ -30,6 +30,16 @@
     assign lazy = 'lazy'
   endunless
 
+  # CAUCE: la primera imagen de la galeria es el elemento LCP de la PDP. Sin
+  # fetchpriority compite en igualdad con las fuentes y el resto de la pagina;
+  # en el Lighthouse mobile el LCP daba 7,4 s. Solo se marca la que ya venia sin
+  # lazy, asi que nunca hay dos imagenes en alta prioridad.
+  unless lazy_load == false
+    assign cauce_prioridad = nil
+  else
+    assign cauce_prioridad = 'high'
+  endunless
+
   assign desktop_columns = 1
   if desktop_layout == 'columns' and media_count > 1
     assign desktop_columns = 2
@@ -181,6 +191,7 @@
         {{ media.preview_image | image_url: width: 1946 | image_tag:
           class: image_class,
           loading: lazy,
+          fetchpriority: cauce_prioridad,
           sizes: sizes,
           widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
         }}
