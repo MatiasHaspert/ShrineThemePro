@@ -1,0 +1,149 @@
+{% comment %}
+  CAUCE — datos duros de la formula.
+
+  Reemplaza al bloque de porcentajes de resultados de la referencia. Ese bloque es
+  indefendible bajo Disp. ANMAT 4980/05: cualquier cifra de eficacia es un claim.
+  Lo que si es defendible es la ficha tecnica, que es verificable contra el rotulo
+  y contra el COA.
+
+  Cada fila puede sacar su valor de un metafield del producto o de un valor fijo.
+  Si no hay ninguno de los dos, la fila no se renderiza: un SKU a medio cargar
+  muestra menos filas, no filas vacias.
+
+  Ninguna fila asume un formato. "600 mg por capsula" es contenido, no codigo.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_prod = product
+  if section.settings.producto != blank
+    assign cauce_prod = section.settings.producto
+  endif
+-%}
+
+<div class="cauce-datos color-{{ section.settings.color_scheme }} gradient">
+  <div
+    class="page-width cauce-datos__inner"
+    style="--cauce-datos-cols: {{ section.settings.columnas }}; --padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+  >
+    {%- if section.settings.volanta != blank -%}
+      <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.titulo != blank -%}
+      <h2 class="cauce-datos__titulo {{ section.settings.heading_size }}">
+        {{ section.settings.titulo }}
+      </h2>
+    {%- endif -%}
+
+    <dl class="cauce-datos__grilla">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign cauce_valor = blank
+          assign cauce_clave = block.settings.clave
+
+          if cauce_clave != blank and cauce_prod != blank
+            assign cauce_mf = cauce_prod.metafields.cauce[cauce_clave]
+            if cauce_mf != blank
+              assign cauce_valor = cauce_mf.value
+            endif
+          endif
+
+          if cauce_valor == blank
+            assign cauce_valor = block.settings.valor
+          endif
+        -%}
+
+        {%- if cauce_valor != blank and block.settings.etiqueta != blank -%}
+          <div class="cauce-datos__item" {{ block.shopify_attributes }}>
+            <dt class="cauce-datos__etiqueta">{{ block.settings.etiqueta }}</dt>
+            <dd class="cauce-datos__valor cauce-dato">{{ cauce_valor }}</dd>
+            {%- if block.settings.aclaracion != blank -%}
+              <p class="cauce-datos__aclaracion">{{ block.settings.aclaracion }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </dl>
+
+    {%- if section.settings.nota != blank -%}
+      <p class="cauce-datos__nota">{{ section.settings.nota }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CAUCE · Datos",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Ficha tecnica en tipografia mono. No pongas acá cifras de eficacia ni porcentajes de resultado: son claim terapeutico. Solo datos verificables contra el rotulo o el COA."
+    },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo", "default": "La ficha, completa" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "product",
+      "id": "producto",
+      "label": "Producto",
+      "info": "Solo hace falta fuera de una pagina de producto. En la PDP toma el producto de la pagina."
+    },
+    { "type": "range", "id": "columnas", "min": 2, "max": 4, "step": 1, "label": "Columnas en desktop", "default": 4 },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "background-2"
+    },
+    { "type": "richtext", "id": "nota", "label": "Nota al pie" },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "dato",
+      "name": "Dato",
+      "settings": [
+        { "type": "text", "id": "etiqueta", "label": "Etiqueta", "default": "Etiqueta" },
+        {
+          "type": "text",
+          "id": "clave",
+          "label": "Clave del metafield",
+          "info": "Clave dentro del namespace cauce. Ej: formato. Si el producto la tiene cargada, gana sobre el valor fijo."
+        },
+        { "type": "text", "id": "valor", "label": "Valor fijo", "info": "Se usa si no hay metafield." },
+        { "type": "text", "id": "aclaracion", "label": "Aclaracion" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Datos",
+      "blocks": [
+        { "type": "dato" },
+        { "type": "dato" },
+        { "type": "dato" },
+        { "type": "dato" }
+      ]
+    }
+  ]
+}
+{% endschema %}

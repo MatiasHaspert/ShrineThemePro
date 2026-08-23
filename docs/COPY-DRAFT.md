@@ -4,8 +4,8 @@ Todo lo que sigue es un **borrador** cargado como valor por defecto en settings 
 para poder ver la página armada. **Nada de esto está aprobado.** Revisalo antes de que la
 tienda salga de modo contraseña.
 
-Cobertura: fases 2 y 3 (home mínima, barra de anuncio, hero de la PDP). El cuerpo de la
-landing (bloques 4–20) se agrega en las fases 4 y 5.
+Cobertura: fases 2 a 4 (home mínima, barra de anuncio, hero de la PDP y cuerpo de la
+landing, bloques 4 a 14). El cierre y los legales (bloques 15 a 20) se agregan en la fase 5.
 
 Convenciones:
 
@@ -102,11 +102,12 @@ exactamente el tipo de dato que todavía no tenemos. Cuando haya ventas reales, 
 
 | Acordeón | Origen del texto | Riesgo |
 |---|---|---|
-| Composición | metafield `cauce.composicion` | `pendiente` — tiene que ser textual de la etiqueta |
-| Modo de uso | metafield `cauce.modo_uso` | `pendiente` — textual de la etiqueta |
-| Análisis de laboratorio | metafield `cauce.analisis` | `pendiente` |
 | Envíos y entrega | setting del template | `pendiente` ×3 |
 | Cambios y devoluciones | setting del template | `dato` — refleja el derecho de arrepentimiento |
+
+> Actualizado en la fase 4: composición, modo de uso y análisis salieron del hero y
+> viven en las pestañas del bloque 14. Leían el mismo metafield y aparecían dos veces en
+> la misma página. Ver `DECISIONS.md` D-020.
 
 Texto actual de **Envíos y entrega**:
 
@@ -146,6 +147,164 @@ porque también hay que leerlos antes de publicar.
 | `pdp.cuotas` | Hasta {{ cuotas }} cuotas con tarjeta |
 | `newsletter.consentimiento` | Acepto recibir emails de CAUCE y que mis datos se traten según la Política de Privacidad (Ley 25.326). Puedo darme de baja cuando quiera. |
 | `newsletter.exito` | Listo. Te vamos a escribir poco y sólo cuando valga la pena. |
+
+---
+
+## 6. Cuerpo de la landing (fase 4) · `templates/product.cauce-landing.json`
+
+Orden real de la página: hero → pilares → videos → 4 cards → ficha técnica →
+explicación → banda oscura → detalle → marquee → rutina → *(reseñas, desactivada)* →
+pestañas.
+
+### 6.1 Pilares (bloque 4) · `icon-bar`
+
+Repiten los cuatro bullets del hero, ahora con una frase de fundamento cada uno. La
+repetición es deliberada: el hero enuncia, esta sección sostiene.
+
+| Título | Texto | Riesgo |
+|---|---|---|
+| Forma R pura | El ácido alfa lipoico se vende casi siempre como mezcla racémica: mitad isómero R, mitad S. Acá es solo el R. | `dato` — el COA lo tiene que confirmar |
+| 600 mg por cápsula | La dosis diaria declarada entra en una cápsula. No hay que tomar tres para llegar al número de la etiqueta. | `dato` |
+| Análisis por laboratorio externo | Cada lote se analiza en un laboratorio independiente y el certificado se publica junto al número de lote. | `dato` — compromete a publicar por lote |
+| Producción nacional | Se elabora en Argentina. Eso define la trazabilidad del lote y los tiempos de entrega reales. | `dato` |
+
+### 6.2 Videos (bloque 5) · `cauce-ugc`
+
+Cuatro tarjetas vacías. La sección no renderiza nada hasta que se cargue al menos un
+video o un poster. Título propuesto: **Quienes ya lo toman**.
+
+> El texto de cada tarjeta no puede mencionar patologías, síntomas, plazos de resultado ni
+> profesionales de la salud, **aunque lo diga un cliente**. La advertencia está escrita en
+> el editor, arriba de los campos.
+
+### 6.3 Cuatro cards (bloque 6) · `multicolumn`
+
+Título: **Cuatro cosas que se pueden verificar**
+
+| Card | Texto | Riesgo |
+|---|---|---|
+| Composición | Un solo activo. Ácido R-alfa lipoico y los excipientes necesarios para la cápsula, todos declarados en el rótulo. | `dato` |
+| Dosis | 600 mg por cápsula, una por día. La cantidad que dice la etiqueta es la que mide el análisis. | `dato` |
+| Origen del ingrediente | La materia prima llega con su propio certificado de análisis, que queda asociado al lote que se produce con ella. | `dato` — exige que ese certificado exista |
+| Control de lote | Cada lote se analiza antes de salir: identidad del compuesto y contenido por cápsula, en laboratorio externo. | `dato` |
+
+> Reemplacé la card de *biodisponibilidad* que pedía el brief. Ver `DECISIONS.md` D-021:
+> cualquier redacción útil de esa card es un claim de eficacia comparativa.
+
+### 6.4 Ficha técnica (bloque 7) · `cauce-datos`
+
+Volanta **Ficha técnica**, título **Los números que sí podemos publicar**.
+
+| Etiqueta | Valor | Origen |
+|---|---|---|
+| Formato | 30 cápsulas blandas | metafield `cauce.formato`, con respaldo fijo |
+| Activo por cápsula | 600 mg — *Ácido R-alfa lipoico* | valor fijo |
+| Forma química | Isómero R — *Sin mezcla racémica* | valor fijo |
+| Elaboración | Argentina | valor fijo |
+
+Nota al pie: *Los valores corresponden al rótulo declarado. El resultado del análisis del
+lote vigente está en la pestaña Análisis de laboratorio.*
+
+> El título juega con que la referencia pone porcentajes de resultado en este lugar. Si te
+> suena a que señala demasiado el hueco, cambialo por *La ficha, completa*.
+
+### 6.5 Explicación (bloque 8) · `multicolumn`, 2 columnas
+
+**Qué es el ácido alfa lipoico**
+
+> Es un compuesto que el organismo produce en cantidades pequeñas y que también aparece en
+> algunos alimentos. Se describió por primera vez en la década del cincuenta y desde
+> entonces se usa como ingrediente de suplementos dietarios en buena parte del mundo.
+>
+> Como suplemento se presenta en cápsulas, y la cantidad por unidad es el dato que define
+> de qué se está hablando. Por eso está en el frente del envase y no en la letra chica.
+
+**Por qué la forma R**
+
+> Sintetizado en laboratorio, el ácido alfa lipoico se obtiene como una mezcla de dos
+> isómeros en partes iguales: R y S. El R es la forma que existe en la naturaleza; el S es
+> su imagen especular y no aparece por fuera de la síntesis química.
+>
+> Separar los dos encarece la producción. Por eso la mayoría de los suplementos se venden
+> como mezcla racémica, sin aclararlo. Esta fórmula usa únicamente el isómero R, y el
+> análisis de lote lo verifica.
+
+`dato` — *"década del cincuenta"* es verificable (el ácido lipoico se aisló en 1951). Es
+recorrido de la molécula, no de la marca, que es lo que el brief habilita. **No dice para
+qué sirve en ningún momento**, y esa ausencia es intencional.
+
+### 6.6 Banda oscura (bloque 9) · `icon-bar` en TINTA
+
+La única sección con fondo oscuro de la página. Título: **Comprar acá**.
+
+| Ícono | Título | Texto | Riesgo |
+|---|---|---|---|
+| envío | Envío a todo el país | `[[PENDIENTE: plazo_envio]]` días hábiles. El costo se calcula en el checkout según tu código postal. | `pendiente` |
+| devolución | 10 días para arrepentirte | Sin costo y sin explicar por qué, como marca la Res. SCI 424/2020. | `dato` |
+| candado | Pago procesado por Mercado Pago | Nosotros no vemos ni guardamos los datos de tu tarjeta. | `dato` — cierto con MP, confirmá si se suma otro medio |
+| mail | Te contestamos | `[[PENDIENTE: email_contacto]]` | `pendiente` |
+
+### 6.7 Detalle (bloque 10) · `cauce-acordeon-detalle`
+
+Volanta **Letra chica, en grande**, título **En detalle**. Estos tres ítems son
+**provisorios**: en cuanto cargues el metafield `cauce.beneficios`, la sección los ignora y
+usa el metafield.
+
+| Ítem | Texto | Riesgo |
+|---|---|---|
+| Qué lleva la cápsula | Ácido R-alfa lipoico como único activo, más los excipientes necesarios para la cápsula blanda. La lista completa, con sus cantidades, está en el rótulo y en la pestaña de composición. | `dato` |
+| Qué no lleva | No lleva mezclas propietarias: no existe un «blend» donde no se sepa cuánto hay de cada cosa. Tampoco isómero S agregado para abaratar el gramaje. | `dato` |
+| Cómo leer el análisis de lote | El certificado indica el número de lote, la fecha del ensayo, el laboratorio que lo hizo y dos resultados: identidad del compuesto y contenido por cápsula. El número de lote del certificado tiene que coincidir con el de tu envase. | `forma` |
+
+### 6.8 Marquee (bloque 11) · `horizontal-ticker`
+
+Producción nacional · Isómero R puro · Análisis por lote · Envío a todo el país · 10 días
+de arrepentimiento
+
+En SEDIMENTO 2, no en bronce: cinco marcas de confianza en un color de acento serían
+demasiado peso para una tira decorativa. Se frena al pasar el mouse y respeta
+`prefers-reduced-motion`.
+
+### 6.9 Rutina (bloque 12) · `multicolumn`, 3 columnas
+
+Título: **Una rutina, no un tratamiento**
+
+| Columna | Texto |
+|---|---|
+| Los primeros días | Elegí un momento fijo y asociá la cápsula a algo que ya hacés: el desayuno, el café, lavarte los dientes. La constancia se sostiene mejor cuando no depende de acordarse. |
+| Las primeras semanas | Un frasco cubre un mes de uso diario. Es el tiempo en el que la rutina deja de ser una decisión de todos los días y pasa a ser costumbre. |
+| El uso sostenido | Si decidís seguir, tener el frasco siguiente antes de que se termine evita los cortes. Ante cualquier duda sobre continuidad o cantidad, consultá a tu médico. |
+
+Esta es la sección de mayor riesgo del blueprint, porque en la referencia es donde va
+*"a las 2 semanas vas a notar…"*. Acá **no hay ningún plazo de resultado, ningún síntoma y
+ninguna sensación**: las tres columnas hablan de hábito y de reposición. El título lo dice
+de frente y de paso diferencia a la marca.
+
+### 6.10 Reseñas (bloque 13) — desactivada
+
+Configurada pero apagada. No hay reseñas reales. Ver `DECISIONS.md` D-019.
+
+### 6.11 Pestañas (bloque 14) · `cauce-tabs`
+
+Título: **La ficha completa**. Tres pestañas que leen `cauce.composicion`,
+`cauce.modo_uso` y `cauce.analisis`. Mientras los metafields estén vacíos muestran un
+`[[PENDIENTE: …]]` con la instrucción de qué cargar.
+
+**Estos tres textos no los puede escribir marketing**: tienen que ser transcripción del
+rótulo aprobado y del certificado.
+
+---
+
+## 7. Pendientes que agregó la fase 4
+
+| # | Dato | Dónde |
+|---|---|---|
+| 10 | Plazo de envío en días hábiles | banda oscura + acordeón del hero |
+| 11 | Email de contacto | banda oscura + acordeón del hero |
+| 12 | Videos UGC reales, o posters provisorios | bloque 5 |
+| 13 | Metaobjetos de `cauce.beneficios` | bloque 10 |
+| 14 | Confirmar que se publica el COA **de cada lote** | pilares + cards |
+| 15 | Confirmar que la materia prima llega con certificado propio | card "Origen del ingrediente" |
 
 ---
 

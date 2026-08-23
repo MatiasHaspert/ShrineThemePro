@@ -205,24 +205,6 @@
             "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}"
           }
         },
-        "acordeon_composicion": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{%- assign cauce_t = 'cauce.pdp.acordeon_composicion' | t -%}\n{% render 'cauce-acordeon', producto: product, clave: 'composicion', titulo: cauce_t, icono: 'science', id: 'composicion' %}"
-          }
-        },
-        "acordeon_modo_uso": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{%- assign cauce_t = 'cauce.pdp.acordeon_modo_uso' | t -%}\n{% render 'cauce-acordeon', producto: product, clave: 'modo_uso', titulo: cauce_t, icono: 'schedule', id: 'modo-uso' %}"
-          }
-        },
-        "acordeon_analisis": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{%- assign cauce_t = 'cauce.pdp.acordeon_analisis' | t -%}\n{% render 'cauce-acordeon', producto: product, clave: 'analisis', titulo: cauce_t, icono: 'biotech', id: 'analisis' %}"
-          }
-        },
         "acordeon_envios": {
           "type": "collapsible_tab",
           "settings": {
@@ -300,9 +282,6 @@
         "suscripcion",
         "comprar",
         "pagos",
-        "acordeon_composicion",
-        "acordeon_modo_uso",
-        "acordeon_analisis",
         "acordeon_envios",
         "acordeon_garantia",
         "disclaimer",
@@ -342,9 +321,646 @@
         "desktop_padding_top": 40,
         "desktop_padding_bottom": 48
       }
+    },
+    "pilares": {
+      "type": "icon-bar",
+      "blocks": {
+        "p1": {
+          "type": "column",
+          "settings": {
+            "icon": "science",
+            "filled_icon": false,
+            "title": "Forma R pura",
+            "text": "<p>El ácido alfa lipoico se vende casi siempre como mezcla racémica: mitad isómero R, mitad S. Acá es solo el R.</p>"
+          }
+        },
+        "p2": {
+          "type": "column",
+          "settings": {
+            "icon": "medication",
+            "filled_icon": false,
+            "title": "600 mg por cápsula",
+            "text": "<p>La dosis diaria declarada entra en una cápsula. No hay que tomar tres para llegar al número de la etiqueta.</p>"
+          }
+        },
+        "p3": {
+          "type": "column",
+          "settings": {
+            "icon": "biotech",
+            "filled_icon": false,
+            "title": "Análisis por laboratorio externo",
+            "text": "<p>Cada lote se analiza en un laboratorio independiente y el certificado se publica junto al número de lote.</p>"
+          }
+        },
+        "p4": {
+          "type": "column",
+          "settings": {
+            "icon": "factory",
+            "filled_icon": false,
+            "title": "Producción nacional",
+            "text": "<p>Se elabora en Argentina. Eso define la trazabilidad del lote y los tiempos de entrega reales.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "text": "",
+        "color_scheme": "background-1",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "icon_color": "accent-2",
+        "cards_color_scheme": "background-1",
+        "type": "slide",
+        "autoplay": false,
+        "desktop_full_page": false,
+        "columns_desktop": 4,
+        "slider_desktop": false,
+        "desktop_spacing": 40,
+        "desktop_dots_position": "hidden",
+        "desktop_arrows_position": "hidden",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 8,
+        "padding_bottom": 64
+      }
+    },
+    "ugc": {
+      "type": "cauce-ugc",
+      "blocks": {
+        "v1": {
+          "type": "video",
+          "settings": {}
+        },
+        "v2": {
+          "type": "video",
+          "settings": {}
+        },
+        "v3": {
+          "type": "video",
+          "settings": {}
+        },
+        "v4": {
+          "type": "video",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
+      "settings": {
+        "volanta": "Comunidad",
+        "titulo": "Quienes ya lo toman",
+        "heading_size": "h1",
+        "etiqueta_a11y": "Videos de clientes",
+        "ancho_tarjeta": 280,
+        "color_scheme": "background-1",
+        "padding_top": 8,
+        "padding_bottom": 72
+      }
+    },
+    "beneficios": {
+      "type": "multicolumn",
+      "blocks": {
+        "b1": {
+          "type": "column",
+          "settings": {
+            "title": "Composición",
+            "text": "<p>Un solo activo. Ácido R-alfa lipoico y los excipientes necesarios para la cápsula, todos declarados en el rótulo.</p>",
+            "link_label": "",
+            "muted_autoplay": true
+          }
+        },
+        "b2": {
+          "type": "column",
+          "settings": {
+            "title": "Dosis",
+            "text": "<p>600 mg por cápsula, una por día. La cantidad que dice la etiqueta es la que mide el análisis.</p>",
+            "link_label": "",
+            "muted_autoplay": true
+          }
+        },
+        "b3": {
+          "type": "column",
+          "settings": {
+            "title": "Origen del ingrediente",
+            "text": "<p>La materia prima llega con su propio certificado de análisis, que queda asociado al lote que se produce con ella.</p>",
+            "link_label": "",
+            "muted_autoplay": true
+          }
+        },
+        "b4": {
+          "type": "column",
+          "settings": {
+            "title": "Control de lote",
+            "text": "<p>Cada lote se analiza antes de salir: identidad del compuesto y contenido por cápsula, en laboratorio externo.</p>",
+            "link_label": "",
+            "muted_autoplay": true
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "title": "Cuatro cosas que se pueden verificar",
+        "heading_size": "h1",
+        "button_label": "",
+        "color_scheme": "background-2",
+        "cards_color_scheme": "background-1",
+        "cards_corner_radius": 4,
+        "stretch_cards": true,
+        "stretched_cards_content_alignment": "flex-start",
+        "image_width": "full",
+        "image_ratio": "square",
+        "media_position": "top",
+        "column_alignment": "left",
+        "desktop_heading_size": 22,
+        "mobile_heading_size": 20,
+        "desktop_text_size": 15,
+        "mobile_text_size": 15,
+        "desktop_container_padding_y": 24,
+        "desktop_container_padding_x": 24,
+        "mobile_container_padding_y": 24,
+        "mobile_container_padding_x": 24,
+        "type": "slide",
+        "autoplay": false,
+        "desktop_full_page": false,
+        "columns_desktop": 4,
+        "slider_desktop": false,
+        "desktop_spacing": 24,
+        "desktop_dots_position": "hidden",
+        "desktop_arrows_position": "hidden",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": true,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "datos": {
+      "type": "cauce-datos",
+      "blocks": {
+        "d1": {
+          "type": "dato",
+          "settings": {
+            "etiqueta": "Formato",
+            "clave": "formato",
+            "valor": "30 cápsulas blandas",
+            "aclaracion": ""
+          }
+        },
+        "d2": {
+          "type": "dato",
+          "settings": {
+            "etiqueta": "Activo por cápsula",
+            "clave": "",
+            "valor": "600 mg",
+            "aclaracion": "Ácido R-alfa lipoico"
+          }
+        },
+        "d3": {
+          "type": "dato",
+          "settings": {
+            "etiqueta": "Forma química",
+            "clave": "",
+            "valor": "Isómero R",
+            "aclaracion": "Sin mezcla racémica"
+          }
+        },
+        "d4": {
+          "type": "dato",
+          "settings": {
+            "etiqueta": "Elaboración",
+            "clave": "",
+            "valor": "Argentina",
+            "aclaracion": ""
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "settings": {
+        "volanta": "Ficha técnica",
+        "titulo": "Los números que sí podemos publicar",
+        "heading_size": "h1",
+        "columnas": 4,
+        "color_scheme": "background-1",
+        "nota": "<p>Los valores corresponden al rótulo declarado. El resultado del análisis del lote vigente está en la pestaña Análisis de laboratorio.</p>",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "explicacion": {
+      "type": "multicolumn",
+      "blocks": {
+        "e1": {
+          "type": "column",
+          "settings": {
+            "title": "Qué es el ácido alfa lipoico",
+            "text": "<p>Es un compuesto que el organismo produce en cantidades pequeñas y que también aparece en algunos alimentos. Se describió por primera vez en la década del cincuenta y desde entonces se usa como ingrediente de suplementos dietarios en buena parte del mundo.</p><p>Como suplemento se presenta en cápsulas, y la cantidad por unidad es el dato que define de qué se está hablando. Por eso está en el frente del envase y no en la letra chica.</p>",
+            "link_label": "",
+            "muted_autoplay": true
+          }
+        },
+        "e2": {
+          "type": "column",
+          "settings": {
+            "title": "Por qué la forma R",
+            "text": "<p>Sintetizado en laboratorio, el ácido alfa lipoico se obtiene como una mezcla de dos isómeros en partes iguales: R y S. El R es la forma que existe en la naturaleza; el S es su imagen especular y no aparece por fuera de la síntesis química.</p><p>Separar los dos encarece la producción. Por eso la mayoría de los suplementos se venden como mezcla racémica, sin aclararlo. Esta fórmula usa únicamente el isómero R, y el análisis de lote lo verifica.</p>",
+            "link_label": "",
+            "muted_autoplay": true
+          }
+        }
+      },
+      "block_order": [
+        "e1",
+        "e2"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "button_label": "",
+        "color_scheme": "background-1",
+        "cards_color_scheme": "background-1",
+        "cards_corner_radius": 0,
+        "stretch_cards": false,
+        "image_width": "full",
+        "image_ratio": "square",
+        "media_position": "top",
+        "column_alignment": "left",
+        "desktop_heading_size": 26,
+        "mobile_heading_size": 22,
+        "desktop_text_size": 16,
+        "mobile_text_size": 15,
+        "desktop_container_padding_y": 0,
+        "desktop_container_padding_x": 0,
+        "mobile_container_padding_y": 0,
+        "mobile_container_padding_x": 0,
+        "type": "slide",
+        "autoplay": false,
+        "desktop_full_page": false,
+        "columns_desktop": 2,
+        "slider_desktop": false,
+        "desktop_spacing": 64,
+        "desktop_dots_position": "hidden",
+        "desktop_arrows_position": "hidden",
+        "columns_mobile": "1",
+        "slider_mobile": false,
+        "mobile_dots_position": "hidden",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 24,
+        "padding_bottom": 72
+      }
+    },
+    "banda": {
+      "type": "icon-bar",
+      "blocks": {
+        "f1": {
+          "type": "column",
+          "settings": {
+            "icon": "local_shipping",
+            "filled_icon": false,
+            "title": "Envío a todo el país",
+            "text": "<p>[[PENDIENTE: plazo_envio]] días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
+          }
+        },
+        "f2": {
+          "type": "column",
+          "settings": {
+            "icon": "undo",
+            "filled_icon": false,
+            "title": "10 días para arrepentirte",
+            "text": "<p>Sin costo y sin explicar por qué, como marca la Res. SCI 424/2020.</p>"
+          }
+        },
+        "f3": {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "filled_icon": false,
+            "title": "Pago procesado por Mercado Pago",
+            "text": "<p>Nosotros no vemos ni guardamos los datos de tu tarjeta.</p>"
+          }
+        },
+        "f4": {
+          "type": "column",
+          "settings": {
+            "icon": "mail",
+            "filled_icon": false,
+            "title": "Te contestamos",
+            "text": "<p>[[PENDIENTE: email_contacto]]</p>"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "title": "Comprar acá",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "inverse",
+        "icon_layout": "horizontal",
+        "icon_size": "small",
+        "icon_color": "background-1",
+        "cards_color_scheme": "inverse",
+        "type": "slide",
+        "autoplay": false,
+        "desktop_full_page": false,
+        "columns_desktop": 2,
+        "slider_desktop": false,
+        "desktop_spacing": 48,
+        "desktop_dots_position": "hidden",
+        "desktop_arrows_position": "hidden",
+        "columns_mobile": "1",
+        "slider_mobile": false,
+        "mobile_dots_position": "hidden",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "detalle": {
+      "type": "cauce-acordeon-detalle",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "titulo": "Qué lleva la cápsula",
+            "texto": "<p>Ácido R-alfa lipoico como único activo, más los excipientes necesarios para la cápsula blanda. La lista completa, con sus cantidades, está en el rótulo y en la pestaña de composición.</p>"
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "titulo": "Qué no lleva",
+            "texto": "<p>No lleva mezclas propietarias: no existe un &laquo;blend&raquo; donde no se sepa cuánto hay de cada cosa. Tampoco isómero S agregado para abaratar el gramaje.</p>"
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "titulo": "Cómo leer el análisis de lote",
+            "texto": "<p>El certificado indica el número de lote, la fecha del ensayo, el laboratorio que lo hizo y dos resultados: identidad del compuesto y contenido por cápsula. El número de lote del certificado tiene que coincidir con el de tu envase.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3"
+      ],
+      "settings": {
+        "volanta": "Letra chica, en grande",
+        "titulo": "En detalle",
+        "heading_size": "h1",
+        "color_scheme": "background-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "marquee": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "t1": {
+          "type": "text",
+          "settings": {
+            "title": "Producción nacional"
+          }
+        },
+        "t2": {
+          "type": "text",
+          "settings": {
+            "title": "Isómero R puro"
+          }
+        },
+        "t3": {
+          "type": "text",
+          "settings": {
+            "title": "Análisis por lote"
+          }
+        },
+        "t4": {
+          "type": "text",
+          "settings": {
+            "title": "Envío a todo el país"
+          }
+        },
+        "t5": {
+          "type": "text",
+          "settings": {
+            "title": "10 días de arrepentimiento"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "settings": {
+        "speed": 3,
+        "direction": "normal",
+        "stop_on_hover": true,
+        "mobile_spacing": 40,
+        "desktop_spacing": 72,
+        "color_scheme": "background-2",
+        "mobile_text_size": 13,
+        "desktop_text_size": 14,
+        "italic_text": false,
+        "uppercase_text": true,
+        "bold_text": false,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20
+      }
+    },
+    "timeline": {
+      "type": "multicolumn",
+      "blocks": {
+        "t1": {
+          "type": "column",
+          "settings": {
+            "title": "Los primeros días",
+            "text": "<p>Elegí un momento fijo y asociá la cápsula a algo que ya hacés: el desayuno, el café, lavarte los dientes. La constancia se sostiene mejor cuando no depende de acordarse.</p>",
+            "link_label": "",
+            "muted_autoplay": true
+          }
+        },
+        "t2": {
+          "type": "column",
+          "settings": {
+            "title": "Las primeras semanas",
+            "text": "<p>Un frasco cubre un mes de uso diario. Es el tiempo en el que la rutina deja de ser una decisión de todos los días y pasa a ser costumbre.</p>",
+            "link_label": "",
+            "muted_autoplay": true
+          }
+        },
+        "t3": {
+          "type": "column",
+          "settings": {
+            "title": "El uso sostenido",
+            "text": "<p>Si decidís seguir, tener el frasco siguiente antes de que se termine evita los cortes. Ante cualquier duda sobre continuidad o cantidad, consultá a tu médico.</p>",
+            "link_label": "",
+            "muted_autoplay": true
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "title": "Una rutina, no un tratamiento",
+        "heading_size": "h1",
+        "button_label": "",
+        "color_scheme": "background-1",
+        "cards_color_scheme": "background-2",
+        "cards_corner_radius": 4,
+        "stretch_cards": true,
+        "stretched_cards_content_alignment": "flex-start",
+        "image_width": "full",
+        "image_ratio": "square",
+        "media_position": "top",
+        "column_alignment": "left",
+        "desktop_heading_size": 22,
+        "mobile_heading_size": 20,
+        "desktop_text_size": 16,
+        "mobile_text_size": 15,
+        "desktop_container_padding_y": 28,
+        "desktop_container_padding_x": 28,
+        "mobile_container_padding_y": 24,
+        "mobile_container_padding_x": 24,
+        "type": "slide",
+        "autoplay": false,
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "desktop_spacing": 24,
+        "desktop_dots_position": "hidden",
+        "desktop_arrows_position": "hidden",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": true,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "disabled": true,
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "title": "Lo que dicen",
+        "heading_size": "h1",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "circle",
+        "column_alignment": "left",
+        "show_stars": false,
+        "show_quotes": false,
+        "cards_color_scheme": "background-2",
+        "type": "slide",
+        "autoplay": false,
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "desktop_spacing": 24,
+        "desktop_dots_position": "hidden",
+        "desktop_arrows_position": "hidden",
+        "slider_mobile": true,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "fichas": {
+      "type": "cauce-tabs",
+      "blocks": {
+        "ta1": {
+          "type": "tab",
+          "settings": {
+            "titulo": "Composición",
+            "clave": "composicion",
+            "contenido": "<p>[[PENDIENTE: composicion]] Cargar el metafield cauce.composicion con la lista textual del rótulo.</p>"
+          }
+        },
+        "ta2": {
+          "type": "tab",
+          "settings": {
+            "titulo": "Modo de uso",
+            "clave": "modo_uso",
+            "contenido": "<p>[[PENDIENTE: modo_uso]] Cargar el metafield cauce.modo_uso con la posología textual del rótulo.</p>"
+          }
+        },
+        "ta3": {
+          "type": "tab",
+          "settings": {
+            "titulo": "Análisis de laboratorio",
+            "clave": "analisis",
+            "contenido": "<p>[[PENDIENTE: analisis]] Cargar el metafield cauce.analisis con lote, laboratorio, fecha y resultados.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ta1",
+        "ta2",
+        "ta3"
+      ],
+      "settings": {
+        "titulo": "La ficha completa",
+        "heading_size": "h1",
+        "etiqueta_a11y": "Detalle del producto",
+        "color_scheme": "background-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "pilares",
+    "ugc",
+    "beneficios",
+    "datos",
+    "explicacion",
+    "banda",
+    "detalle",
+    "marquee",
+    "timeline",
+    "reviews",
+    "fichas"
   ]
 }

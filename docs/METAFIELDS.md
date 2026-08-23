@@ -110,6 +110,44 @@ Variables, una por definición:
 `cauce.faq` se define recién en la fase 5, junto con el metaobjeto de pregunta y
 respuesta que referencia.
 
+### El metaobjeto de `cauce.beneficios`
+
+`cauce.beneficios` no es texto suelto: es una **lista de metaobjetos**, para que el
+acordeón de detalle (bloque 10) tenga un ítem por entrada en vez de un bloque de HTML que
+haya que parsear.
+
+Primero el tipo de metaobjeto:
+
+```json
+{ "definition": {
+    "name": "Beneficio CAUCE", "type": "cauce_beneficio",
+    "fieldDefinitions": [
+      { "name": "Titulo", "key": "titulo", "type": "single_line_text_field", "required": true },
+      { "name": "Texto",  "key": "texto",  "type": "rich_text_field" }
+    ]
+} }
+```
+
+con `metaobjectDefinitionCreate`. Después el metafield que los referencia:
+
+```json
+{ "def": { "name": "Beneficios", "namespace": "cauce", "key": "beneficios",
+           "type": "list.metaobject_reference", "ownerType": "PRODUCT",
+           "validations": [{ "name": "metaobject_definition_id", "value": "gid://shopify/MetaobjectDefinition/XXXX" }] } }
+```
+
+El `XXXX` es el id que devuelve la mutación anterior.
+
+**Mientras el metafield esté vacío**, la sección usa sus propios bloques, que ya vienen
+cargados con tres ítems de borrador en el template. En cuanto haya metaobjetos, los ignora.
+
+### `cauce-datos` acepta cualquier clave
+
+La sección de ficha técnica no tiene una lista cerrada de claves: cada fila pide el nombre
+del metafield como texto libre. Una cápsula usa `formato`, un shampoo puede usar `rinde` y
+un polvo `porcion`, sin tocar el `.liquid`. Si la clave no existe, la fila cae al valor
+fijo cargado en el template. Ver `DECISIONS.md` D-023.
+
 ---
 
 ## 4. Contenido a cargar en el primer SKU

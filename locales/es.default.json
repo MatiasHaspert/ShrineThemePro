@@ -527,7 +527,9 @@
       "carrusel_anterior": "Anterior",
       "carrusel_siguiente": "Siguiente",
       "reproducir_video": "Reproducir video",
-      "pausar_video": "Pausar video"
+      "pausar_video": "Pausar video",
+      "activar_sonido": "Activar sonido",
+      "silenciar": "Silenciar"
     },
     "pagos": {
       "mercadopago": "Mercado Pago",

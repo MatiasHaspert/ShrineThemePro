@@ -476,3 +476,303 @@ h1, h2, h3, h4,
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+/* ==========================================================================
+   6. Secciones cauce-* del cuerpo de la landing
+   ========================================================================== */
+
+/* Las secciones nativas de Shrine emiten su propio <style> con el padding.
+   Las cauce-* lo bajan como custom property y lo resuelven aca, con la misma
+   reduccion de 0.75 en mobile que usa el tema. */
+.cauce-datos__inner,
+.cauce-detalle__inner,
+.cauce-ugc__inner,
+.cauce-tabs-wrap > .page-width {
+  padding-top: var(--padding-top, 7.2rem);
+  padding-bottom: var(--padding-bottom, 7.2rem);
+}
+
+@media screen and (max-width: 749px) {
+  .cauce-datos__inner,
+  .cauce-detalle__inner,
+  .cauce-ugc__inner,
+  .cauce-tabs-wrap > .page-width {
+    padding-top: calc(var(--padding-top, 7.2rem) * 0.75);
+    padding-bottom: calc(var(--padding-bottom, 7.2rem) * 0.75);
+  }
+}
+
+/* Datos duros ------------------------------------------------------------- */
+
+.cauce-datos__titulo {
+  margin: 0 0 var(--cauce-aire-m);
+  max-width: 24ch;
+}
+
+/* El gap de 1px pintado hace que la grilla se lea como una tabla con reglas
+   finas sin declarar un borde por celda. currentColor la mantiene legible
+   tanto sobre SEDIMENTO como sobre TINTA sin duplicar la regla. */
+.cauce-datos__grilla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  background-color: currentColor;
+  border: 1px solid currentColor;
+}
+
+.cauce-datos__item {
+  background-color: var(--cauce-fondo-celda, var(--cauce-sedimento));
+  padding: var(--cauce-aire-s);
+}
+
+.color-background-2 .cauce-datos__item { --cauce-fondo-celda: var(--cauce-sedimento-2); }
+.color-inverse .cauce-datos__item { --cauce-fondo-celda: var(--cauce-tinta); }
+
+.cauce-datos__etiqueta {
+  font-family: var(--cauce-font-texto);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin: 0 0 0.6rem;
+}
+
+.cauce-datos__valor {
+  font-family: var(--cauce-font-dato);
+  font-size: 2rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.cauce-datos__aclaracion {
+  font-size: 1.2rem;
+  opacity: 0.65;
+  margin: 0.6rem 0 0;
+}
+
+.cauce-datos__nota {
+  font-size: 1.2rem;
+  opacity: 0.7;
+  margin: var(--cauce-aire-s) 0 0;
+  max-width: 70ch;
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-datos__grilla {
+    grid-template-columns: repeat(var(--cauce-datos-cols, 4), minmax(0, 1fr));
+  }
+  .cauce-datos__item { padding: var(--cauce-aire-m) var(--cauce-aire-s); }
+  .cauce-datos__valor { font-size: 2.6rem; }
+}
+
+/* Acordeon de detalle ----------------------------------------------------- */
+
+.cauce-detalle__titulo { margin: 0 0 var(--cauce-aire-m); }
+
+.cauce-detalle__lista { max-width: 82ch; }
+
+.cauce-detalle__item { border-top: 1px solid rgba(16, 38, 42, 0.15); }
+.cauce-detalle__item:last-child { border-bottom: 1px solid rgba(16, 38, 42, 0.15); }
+
+.color-inverse .cauce-detalle__item,
+.color-inverse .cauce-detalle__item:last-child { border-color: rgba(233, 230, 220, 0.22); }
+
+.cauce-detalle__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cauce-aire-s);
+  padding: var(--cauce-aire-s) 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.cauce-detalle__summary::-webkit-details-marker { display: none; }
+
+.cauce-detalle__item-titulo {
+  font-family: var(--cauce-font-titulo);
+  font-size: 1.9rem;
+  line-height: 1.3;
+}
+
+.cauce-detalle__summary svg {
+  flex: 0 0 auto;
+  width: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.cauce-detalle__item[open] .cauce-detalle__summary svg { transform: rotate(180deg); }
+
+.cauce-detalle__contenido {
+  padding: 0 0 var(--cauce-aire-s);
+  max-width: 72ch;
+}
+
+/* Pestanas ---------------------------------------------------------------- */
+
+.cauce-tabs__titulo { margin: 0 0 var(--cauce-aire-m); }
+
+.cauce-tabs__lista {
+  display: flex;
+  gap: var(--cauce-aire-s);
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid rgba(16, 38, 42, 0.15);
+  margin-bottom: var(--cauce-aire-m);
+}
+
+.cauce-tabs__lista::-webkit-scrollbar { display: none; }
+.color-inverse .cauce-tabs__lista { border-color: rgba(233, 230, 220, 0.22); }
+
+.cauce-tabs__boton {
+  flex: 0 0 auto;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 0 0 var(--cauce-aire-xs);
+  margin-bottom: -1px;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.55;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cauce-tabs__boton[aria-selected="true"] {
+  opacity: 1;
+  border-bottom-color: currentColor;
+}
+
+.cauce-tabs__panel { max-width: 78ch; }
+
+/* Sin JS los paneles quedan todos visibles. Se los separa para que se lean
+   como secciones y no como un bloque continuo. */
+.cauce-tabs__panel + .cauce-tabs__panel { margin-top: var(--cauce-aire-m); }
+
+/* Videos verticales ------------------------------------------------------- */
+
+.cauce-ugc__encabezado { padding-bottom: var(--cauce-aire-m); }
+.cauce-ugc__titulo { margin: 0; }
+
+.cauce-ugc__pista {
+  display: flex;
+  gap: var(--cauce-aire-s);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1.5rem;
+  padding: 0 1.5rem 1rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.cauce-ugc__pista::-webkit-scrollbar { display: none; }
+
+.cauce-ugc__card {
+  flex: 0 0 var(--cauce-ugc-ancho, 280px);
+  scroll-snap-align: start;
+}
+
+.cauce-ugc__media {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: var(--cauce-sedimento-2);
+}
+
+.cauce-ugc__poster,
+.cauce-ugc__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* El poster se oculta cuando arranca el video: el <video> tiene su propio
+   poster, y dejar los dos apilados muestra el estatico un frame de mas. */
+.cauce-ugc__card--reproduciendo .cauce-ugc__poster { opacity: 0; }
+
+.cauce-ugc__play,
+.cauce-ugc__sonido {
+  position: absolute;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cauce-tinta);
+}
+
+.cauce-ugc__play {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.cauce-ugc__play svg {
+  width: 4.8rem;
+  height: 4.8rem;
+  padding: 1.4rem;
+  border-radius: 50%;
+  background-color: rgba(233, 230, 220, 0.92);
+  transition: opacity 0.15s ease;
+}
+
+.cauce-ugc__card--reproduciendo .cauce-ugc__play svg { opacity: 0; }
+.cauce-ugc__card--reproduciendo .cauce-ugc__play:hover svg,
+.cauce-ugc__card--reproduciendo .cauce-ugc__play:focus-visible svg { opacity: 1; }
+
+.cauce-ugc__sonido {
+  right: 0.8rem;
+  bottom: 0.8rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background-color: rgba(233, 230, 220, 0.9);
+}
+
+/* Icono de sonido dibujado en CSS: es una forma, no hace falta otro SVG. */
+.cauce-ugc__sonido-icono {
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: currentColor;
+  clip-path: polygon(0 35%, 35% 35%, 65% 5%, 65% 95%, 35% 65%, 0 65%);
+}
+
+.cauce-ugc__sonido--activo { background-color: var(--cauce-bronce); }
+
+.cauce-ugc__pie { padding: var(--cauce-aire-xs) 0 0; }
+
+.cauce-ugc__autor {
+  font-size: 1.2rem;
+  margin: 0 0 0.3rem;
+  opacity: 0.7;
+}
+
+.cauce-ugc__texto {
+  font-size: 1.4rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+@media screen and (min-width: 990px) {
+  .cauce-ugc__pista {
+    padding-left: max(1.5rem, calc((100vw - var(--page-width, 120rem)) / 2 + 1.5rem));
+  }
+}
+
+/* Parches a las secciones reusadas ---------------------------------------- */
+
+/* Shrine trae un violeta #6D388B para el resaltado del titulo y un amarillo
+   para las estrellas, como hex sueltos en settings que nadie va a recordar
+   cambiar seccion por seccion. Se fuerzan al token. */
+.title-with-highlight { --hightlight-color: var(--cauce-bronce-texto) !important; }
+.color-inverse .title-with-highlight { --hightlight-color: var(--cauce-bronce) !important; }
+.testimonial-card__stars { --stars-color: var(--cauce-bronce-texto) !important; }
+.color-inverse .testimonial-card__stars { --stars-color: var(--cauce-bronce) !important; }

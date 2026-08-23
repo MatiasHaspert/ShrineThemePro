@@ -420,6 +420,13 @@
     >
     {{ 'cauce-brand.css' | asset_url | stylesheet_tag }}
 
+    {% comment %}
+      CAUCE: comportamiento de las secciones cauce-*. defer porque nada de lo que
+      hace es necesario para el primer render: los acordeones son <details> y los
+      carruseles son scroll-snap, asi que la pagina funciona antes de que cargue.
+    {% endcomment %}
+    <script src="{{ 'cauce.js' | asset_url }}" defer="defer"></script>
+
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
     {%- endunless -%}

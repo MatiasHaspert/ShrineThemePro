@@ -335,3 +335,122 @@ Shopify** con las mismas cantidades y porcentajes. Si no coinciden, la PDP muest
 precio y el carrito cobra otro: eso es infraccion al art. 7 y 8 de la Ley 24.240, no un
 detalle de UX. Cargar los porcentajes en el theme editor **y** en Descuentos, o ninguno de
 los dos.
+
+---
+
+## D-018 · 2026-08-22 · Los schemas de las secciones cauce-* usan texto plano, no claves `t:`
+
+**Decision.** Los `{% schema %}` de `cauce-datos`, `cauce-tabs`, `cauce-acordeon-detalle` y
+`cauce-ugc` escriben sus labels en castellano directo, sin pasar por
+`locales/es.default.schema.json`.
+
+**Alternativa descartada.** Usar `t:sections.cauce_*.…` como hace Shrine.
+
+**Por que.** Son etiquetas del theme editor, no copy de la tienda: no las lee un cliente,
+no son auditables bajo la regla 3.1 y la tienda tiene un solo idioma. La indireccion solo
+agrega un archivo mas donde equivocarse y una clase de error (`ValidSchemaTranslations`)
+que ya nos costo 244 offenses en la fase 2.
+
+**Alcance.** El copy que **si** ve el cliente sigue saliendo de `locales/es.default.json` o
+de settings. Ni un solo string de storefront esta hardcodeado en estas secciones.
+
+---
+
+## D-019 · 2026-08-22 · La seccion de resenas queda en el template pero desactivada
+
+**Decision.** El bloque 13 esta en `product.cauce-landing.json` como seccion
+`testimonials` con `"disabled": true` y sin bloques.
+
+**Alternativa descartada.** Dejarla afuera del template, o ponerle testimonios de relleno.
+
+**Por que.** Todavia no hay resenas reales. Un testimonio inventado es publicidad enganosa
+bajo Ley 24.240, y "lorem ipsum" en una seccion activa es exactamente lo que se publica por
+accidente. Con `disabled` la seccion aparece en el editor, ya configurada con el esquema de
+color y el layout correctos, y alcanza con destildarla el dia que haya resenas.
+
+**Cuando se activa.** Cuando existan resenas reales. Ahi tambien se reevalua el
+`AggregateRating` del JSON-LD (ver D-006), que hoy no se emite.
+
+---
+
+## D-020 · 2026-08-22 · El detalle de producto sale del hero y pasa a las pestanas
+
+**Decision.** Los acordeones de composicion, modo de uso y analisis se sacan del hero. El
+hero queda con dos acordeones de compra: envios y devoluciones. El detalle del producto
+vive en el bloque 14 (`cauce-tabs`).
+
+**Se aparta del brief**, que en el bloque 3 pedia "4-5 acordeones cortos debajo del boton
+(composicion, uso, envios, garantia)".
+
+**Por que.** El brief pide composicion y modo de uso en el hero (bloque 3) y otra vez en las
+pestanas (bloque 14). Como las dos piezas leen el **mismo metafield**, el resultado no era
+un resumen y un detalle: era el mismo texto dos veces en la misma pagina. Habia que elegir
+uno.
+
+Se eligio las pestanas por dos razones. La primera es de mobile: el hero es la pantalla
+donde se decide la compra y cinco acordeones empujan el boton y las objeciones de compra
+fuera de vista. La segunda es que junto al boton conviene lo que destraba la compra —
+cuando llega, que pasa si no me gusta — y no la ficha tecnica.
+
+**Como revertirlo.** Los tres bloques `custom_liquid` con `cauce-acordeon` estan en el
+historial del template (commit de la fase 3). Es copiar y pegar tres entradas en
+`blocks` y tres ids en `block_order`.
+
+---
+
+## D-021 · 2026-08-22 · La card de "biodisponibilidad" se reemplaza por "origen del ingrediente"
+
+**Decision.** El bloque 6 (`cauce-beneficios-cards`) usa composicion, dosis, **origen del
+ingrediente** y control de lote.
+
+**Se aparta del brief**, que listaba "composicion, dosis, biodisponibilidad, control de
+calidad".
+
+**Por que.** Biodisponibilidad no es un dato de composicion, es una afirmacion sobre lo que
+el cuerpo hace con el compuesto. Cualquier redaccion util de esa card ("se absorbe mejor",
+"mayor biodisponibilidad que la mezcla racemica") es un claim de eficacia comparativa, que
+es justo lo que prohibe la regla 3.1 y lo que no podriamos sostener con el COA — el
+certificado dice que hay 600 mg de isomero R, no que se absorba mejor.
+
+"Origen del ingrediente" ocupa el mismo lugar argumental (por que esta formula y no otra) y
+se respalda con un documento: el certificado de la materia prima.
+
+**Queda anotado en `docs/CLAIMS-AUDIT.md`** como sustitucion deliberada, para que no se
+lea como un olvido.
+
+---
+
+## D-022 · 2026-08-22 · Sin libreria de carrusel: scroll-snap y `<details>` nativos
+
+**Decision.** `assets/cauce.js` son 5,6 KB sin comprimir (**1,9 KB gzip**) y contiene
+exactamente dos custom elements: `<cauce-tabs>` y `<cauce-ugc>`.
+
+**Por que tan poco.** Todo lo que el navegador ya hace bien quedo en HTML y CSS:
+
+| Necesidad | Resuelto con | JS |
+|---|---|---|
+| Acordeones | `<details>` / `<summary>` | 0 |
+| Carrusel de videos | `scroll-snap-type: x mandatory` | 0 |
+| Estado expandido para lectores de pantalla | nativo de `<details>` | 0 |
+| Pestanas con teclado | `<cauce-tabs>` | si |
+| Play, silenciar, pausar fuera de pantalla | `<cauce-ugc>` | si |
+
+**Degradacion sin JS.** Los paneles de pestanas quedan todos visibles y el carrusel sigue
+scrolleando con el poster. Nada desaparece.
+
+**Presupuesto.** El brief pedia menos de 30 KB comprimidos de JS propio. Estamos en 1,9 KB.
+
+---
+
+## D-023 · 2026-08-22 · `cauce-datos` acepta cualquier clave del namespace
+
+**Decision.** Cada fila de `cauce-datos` tiene un campo *clave del metafield* de texto
+libre, no un select con claves fijas.
+
+**Por que.** Las filas de la ficha cambian por categoria: una capsula muestra "activo por
+capsula", un shampoo muestra "rinde" y un polvo muestra "porcion". Un select cerrado
+obligaria a tocar el `.liquid` cada vez que aparece una categoria nueva, que es justo lo que
+la arquitectura tiene que evitar.
+
+**Contrapartida.** Una clave mal escrita no da error, simplemente cae al valor fijo. Es la
+degradacion correcta: se ve el valor de respaldo, no un hueco.

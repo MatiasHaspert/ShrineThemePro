@@ -1,0 +1,197 @@
+{% comment %}
+  CAUCE — carrusel de videos verticales.
+
+  Carrusel con scroll-snap puro CSS. El JS de assets/cauce.js solo maneja
+  reproducir, silenciar y pausar lo que sale de pantalla; sin JS las tarjetas
+  siguen siendo un carrusel scrolleable con el poster visible.
+
+  Reglas que la seccion impone por construccion:
+  - preload="none": ningun byte de video se descarga hasta que alguien toca play.
+    Es la diferencia entre entrar en presupuesto de LCP y no entrar.
+  - muted por defecto y sin autoplay con audio.
+  - una tarjeta sin video renderiza igual con el poster, asi se puede maquetar
+    con placeholders antes de tener UGC real.
+
+  El texto de cada tarjeta es contenido de bloque. No puede mencionar patologias,
+  plazos de resultado ni profesionales de la salud (Disp. ANMAT 4980/05).
+{% endcomment %}
+
+{%- liquid
+  assign cauce_hay = false
+  for block in section.blocks
+    if block.settings.video != blank or block.settings.poster != blank
+      assign cauce_hay = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if cauce_hay -%}
+  <div class="cauce-ugc color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="cauce-ugc__inner"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-ugc-ancho: {{ section.settings.ancho_tarjeta }}px;"
+    >
+      {%- if section.settings.titulo != blank or section.settings.volanta != blank -%}
+        <div class="page-width cauce-ugc__encabezado">
+          {%- if section.settings.volanta != blank -%}
+            <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+          {%- endif -%}
+          {%- if section.settings.titulo != blank -%}
+            <h2 class="cauce-ugc__titulo {{ section.settings.heading_size }}">{{ section.settings.titulo }}</h2>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <cauce-ugc
+        class="cauce-ugc__pista"
+        role="region"
+        aria-label="{{ section.settings.etiqueta_a11y | escape }}"
+        tabindex="0"
+      >
+        {%- for block in section.blocks -%}
+          {%- if block.settings.video == blank and block.settings.poster == blank -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- liquid
+            assign cauce_poster = block.settings.poster
+            if cauce_poster == blank
+              assign cauce_poster = block.settings.video.preview_image
+            endif
+          -%}
+
+          <article class="cauce-ugc__card" {{ block.shopify_attributes }}>
+            <div class="cauce-ugc__media">
+              {%- if cauce_poster != blank -%}
+                {{
+                  cauce_poster
+                  | image_url: width: 720
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '360, 540, 720',
+                    sizes: '(min-width: 750px) 300px, 70vw',
+                    class: 'cauce-ugc__poster',
+                    alt: block.settings.alt | default: block.settings.autor | escape
+                }}
+              {%- endif -%}
+
+              {%- if block.settings.video != blank -%}
+                <video
+                  class="cauce-ugc__video"
+                  preload="none"
+                  playsinline
+                  muted
+                  loop
+                  {% if cauce_poster != blank %}
+                    poster="{{ cauce_poster | image_url: width: 720 }}"
+                  {% endif %}
+                >
+                  {%- for cauce_src in block.settings.video.sources -%}
+                    {%- if cauce_src.format == 'mp4' -%}
+                      <source src="{{ cauce_src.url }}" type="{{ cauce_src.mime_type }}">
+                    {%- endif -%}
+                  {%- endfor -%}
+                </video>
+
+                <button
+                  type="button"
+                  class="cauce-ugc__play"
+                  aria-label="{{ 'cauce.a11y.reproducir_video' | t }}"
+                  data-play="{{ 'cauce.a11y.reproducir_video' | t | escape }}"
+                  data-pause="{{ 'cauce.a11y.pausar_video' | t | escape }}"
+                >
+                  {% render 'icon-play' %}
+                </button>
+
+                <button
+                  type="button"
+                  class="cauce-ugc__sonido"
+                  aria-pressed="false"
+                  aria-label="{{ 'cauce.a11y.activar_sonido' | t }}"
+                  data-on="{{ 'cauce.a11y.activar_sonido' | t | escape }}"
+                  data-off="{{ 'cauce.a11y.silenciar' | t | escape }}"
+                >
+                  <span aria-hidden="true" class="cauce-ugc__sonido-icono"></span>
+                </button>
+              {%- endif -%}
+            </div>
+
+            {%- if block.settings.autor != blank or block.settings.texto != blank -%}
+              <div class="cauce-ugc__pie">
+                {%- if block.settings.autor != blank -%}
+                  <p class="cauce-ugc__autor cauce-dato">{{ block.settings.autor }}</p>
+                {%- endif -%}
+                {%- if block.settings.texto != blank -%}
+                  <p class="cauce-ugc__texto">{{ block.settings.texto }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      </cauce-ugc>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Videos",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "PROHIBIDO en el texto de las tarjetas: patologias, sintomas, plazos de resultado, comparaciones con medicamentos y menciones a medicos o profesionales de la salud. Un testimonio que diga cualquiera de esas cosas es claim terapeutico (Disp. ANMAT 4980/05) aunque lo diga un cliente."
+    },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo", "default": "Quienes ya lo toman" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    { "type": "text", "id": "etiqueta_a11y", "label": "Etiqueta para lectores de pantalla", "default": "Videos de clientes" },
+    { "type": "range", "id": "ancho_tarjeta", "min": 200, "max": 400, "step": 20, "unit": "px", "label": "Ancho de tarjeta", "default": 280 },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "background-1"
+    },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video vertical", "info": "9:16. Si lo dejas vacio, la tarjeta muestra solo el poster." },
+        { "type": "image_picker", "id": "poster", "label": "Poster" },
+        { "type": "text", "id": "alt", "label": "Texto alternativo del poster" },
+        { "type": "text", "id": "autor", "label": "Nombre" },
+        { "type": "text", "id": "texto", "label": "Texto", "info": "Sin patologias, sintomas ni plazos de resultado." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Videos",
+      "blocks": [{ "type": "video" }, { "type": "video" }, { "type": "video" }, { "type": "video" }]
+    }
+  ]
+}
+{% endschema %}

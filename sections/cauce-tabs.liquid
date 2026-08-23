@@ -1,0 +1,188 @@
+{% comment %}
+  CAUCE — pestanas con contenido de metafields.
+
+  Cada pestana saca su contenido de un metafield del producto (namespace cauce) o,
+  si no hay, de un richtext propio. Una pestana sin contenido no se renderiza, ni
+  su boton ni su panel: la fila de pestanas nunca queda con un boton muerto.
+
+  Accesibilidad: roles tab/tablist/tabpanel con aria-selected y roving tabindex.
+  La navegacion por flechas la maneja <cauce-tabs> en assets/cauce.js. Sin JS los
+  paneles quedan todos visibles, que es la degradacion correcta.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_prod = product
+  if section.settings.producto != blank
+    assign cauce_prod = section.settings.producto
+  endif
+
+  # Primera pasada: que bloques tienen contenido. Se necesita antes de dibujar la
+  # lista de pestanas para saber cual es la primera visible.
+  assign cauce_visibles = ''
+  for block in section.blocks
+    assign cauce_ok = false
+    if block.settings.titulo != blank
+      if block.settings.clave != blank and cauce_prod != blank
+        assign cauce_mf = cauce_prod.metafields.cauce[block.settings.clave]
+        if cauce_mf != blank
+          assign cauce_ok = true
+        endif
+      endif
+      if block.settings.contenido != blank
+        assign cauce_ok = true
+      endif
+    endif
+    if cauce_ok
+      # Se guarda la posicion y no block.id: el id lo genera Shopify y no conviene
+      # apoyarse en su valor literal.
+      assign cauce_visibles = cauce_visibles | append: forloop.index0 | append: ','
+    endif
+  endfor
+  assign cauce_visibles = cauce_visibles | split: ','
+  assign cauce_primera = cauce_visibles | first
+-%}
+
+{%- if cauce_visibles.size > 0 -%}
+  <div class="cauce-tabs-wrap color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+    >
+      {%- if section.settings.titulo != blank -%}
+        <h2 class="cauce-tabs__titulo {{ section.settings.heading_size }}">{{ section.settings.titulo }}</h2>
+      {%- endif -%}
+
+      <cauce-tabs class="cauce-tabs">
+        <div
+          class="cauce-tabs__lista"
+          role="tablist"
+          aria-label="{{ section.settings.titulo | default: section.settings.etiqueta_a11y | strip_html | escape }}"
+        >
+          {%- for block in section.blocks -%}
+            {%- assign cauce_i = forloop.index0 | append: '' -%}
+            {%- if cauce_visibles contains cauce_i -%}
+              {%- assign cauce_sel = false -%}
+              {%- if cauce_i == cauce_primera -%}
+                {%- assign cauce_sel = true -%}
+              {%- endif -%}
+              <button
+                type="button"
+                class="cauce-tabs__boton"
+                role="tab"
+                id="CauceTab-{{ section.id }}-{{ cauce_i }}"
+                aria-controls="CaucePanel-{{ section.id }}-{{ cauce_i }}"
+                aria-selected="{{ cauce_sel }}"
+                tabindex="{% if cauce_sel %}0{% else %}-1{% endif %}"
+              >
+                {{ block.settings.titulo }}
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- for block in section.blocks -%}
+          {%- assign cauce_i = forloop.index0 | append: '' -%}
+          {%- if cauce_visibles contains cauce_i -%}
+            {%- liquid
+              assign cauce_mf = null
+              if block.settings.clave != blank and cauce_prod != blank
+                assign cauce_mf = cauce_prod.metafields.cauce[block.settings.clave]
+              endif
+            -%}
+            <div
+              class="cauce-tabs__panel rte"
+              role="tabpanel"
+              id="CaucePanel-{{ section.id }}-{{ cauce_i }}"
+              aria-labelledby="CauceTab-{{ section.id }}-{{ cauce_i }}"
+              {% unless cauce_i == cauce_primera %}
+                hidden
+              {% endunless %}
+              {{ block.shopify_attributes }}
+            >
+              {%- if cauce_mf != blank -%}
+                {{ cauce_mf | metafield_tag }}
+              {%- else -%}
+                {{ block.settings.contenido }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </cauce-tabs>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Pestanas",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "El contenido sale de metafields del producto. Cargalos en el producto, no acá: asi el mismo template sirve para otro SKU sin tocar nada."
+    },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo", "default": "Todo lo que hay que saber" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "text",
+      "id": "etiqueta_a11y",
+      "label": "Etiqueta para lectores de pantalla",
+      "info": "Se usa solo si no hay titulo.",
+      "default": "Detalle del producto"
+    },
+    {
+      "type": "product",
+      "id": "producto",
+      "label": "Producto",
+      "info": "Solo hace falta fuera de una pagina de producto."
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "background-1"
+    },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Pestana",
+      "settings": [
+        { "type": "text", "id": "titulo", "label": "Titulo", "default": "Pestana" },
+        {
+          "type": "text",
+          "id": "clave",
+          "label": "Clave del metafield",
+          "info": "Clave dentro del namespace cauce. Ej: composicion, modo_uso, analisis."
+        },
+        { "type": "richtext", "id": "contenido", "label": "Contenido fijo", "info": "Se usa si el producto no tiene el metafield." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Pestanas",
+      "blocks": [{ "type": "tab" }, { "type": "tab" }, { "type": "tab" }]
+    }
+  ]
+}
+{% endschema %}
