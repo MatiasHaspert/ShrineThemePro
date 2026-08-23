@@ -506,7 +506,8 @@
       "data_fiscal_alt": "Data Fiscal AFIP",
       "vendedor_titulo": "Datos del vendedor",
       "precio_iva": "Precios en pesos argentinos con IVA incluido.",
-      "defensa_consumidor": "Defensa de las y los consumidores. Para reclamos ingresá acá."
+      "defensa_consumidor": "Defensa de las y los consumidores. Para reclamos ingresá acá.",
+      "arrepentimiento_resumen": "Podés arrepentirte dentro de los {{ dias }} días corridos de recibido el producto."
     },
     "pdp": {
       "duracion_dias": "{{ dias }} días de uso",
@@ -521,7 +522,8 @@
     "newsletter": {
       "consentimiento": "Acepto recibir emails de CAUCE y que mis datos se traten según la Política de Privacidad (Ley 25.326). Puedo darme de baja cuando quiera.",
       "consentimiento_error": "Necesitamos tu consentimiento para poder escribirte.",
-      "exito": "Listo. Te vamos a escribir poco y sólo cuando valga la pena."
+      "exito": "Listo. Te vamos a escribir poco y sólo cuando valga la pena.",
+      "ver_politica": "Ver la Política de Privacidad."
     },
     "a11y": {
       "carrusel_anterior": "Anterior",

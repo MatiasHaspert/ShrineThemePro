@@ -947,6 +947,364 @@
         "padding_top": 72,
         "padding_bottom": 72
       }
+    },
+    "garantia": {
+      "type": "custom-columns",
+      "blocks": {
+        "g0": {
+          "type": "heading",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "Si te arrepentís, se devuelve",
+            "heading_size": "h1",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g1": {
+          "type": "richtext",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "text": "<p>No es una promesa comercial: es un derecho que tenés por la Resolución SCI 424/2020 y que acá está escrito sin condiciones escondidas.</p>",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g2": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "schedule",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-2",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "10 días corridos",
+            "text": "<p>Se cuentan desde que recibís el pedido, no desde que lo comprás.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g3": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "payments",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-2",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Sin costo para vos",
+            "text": "<p>Se devuelve el importe pagado. El costo de la devolución lo asumimos nosotros.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g4": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "help",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-2",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Sin explicar por qué",
+            "text": "<p>No hace falta que des un motivo. Basta con que nos avises dentro del plazo.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        }
+      },
+      "block_order": [
+        "g0",
+        "g1",
+        "g2",
+        "g3",
+        "g4"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "columns_count": 2,
+        "column_gap_desktop": 64,
+        "row_gap_desktop": 24,
+        "desktop_vertical_alignment": "flex-start",
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 30,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 5,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 7,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "comparativa": {
+      "type": "comparison-table",
+      "blocks": {
+        "c1": {
+          "type": "row",
+          "settings": {
+            "benefit": "Declara si es isómero R o mezcla racémica",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c2": {
+          "type": "row",
+          "settings": {
+            "benefit": "600 mg de forma R por cápsula",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c3": {
+          "type": "row",
+          "settings": {
+            "benefit": "Certificado de análisis por lote, publicado",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c4": {
+          "type": "row",
+          "settings": {
+            "benefit": "Analizado por un laboratorio que no es el propio",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c5": {
+          "type": "row",
+          "settings": {
+            "benefit": "Trazabilidad del lote de materia prima",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c6": {
+          "type": "row",
+          "settings": {
+            "benefit": "Lista completa de excipientes en el rótulo",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "settings": {
+        "title": "Qué mirar antes de comparar precios",
+        "heading_size": "h1",
+        "text": "<p>La comparación es contra el ácido alfa lipoico en mezcla racémica, que es el formato más habitual de la categoría. No compara con ninguna marca ni con ningún medicamento en particular.</p>",
+        "button_label": "",
+        "atc_button_label": "",
+        "desktop_alignment": "left",
+        "mobile_alignment": "left",
+        "color_scheme": "background-1",
+        "layout": "table_second",
+        "style": "minimal",
+        "corner_radius": 4,
+        "number_of_competitors": 1,
+        "us_label": "CAUCE",
+        "us_label_size": 18,
+        "others_label": "Suplemento genérico",
+        "others_label_size": 18,
+        "checkmark_style": "regular",
+        "x_style": "regular",
+        "opposite_icon_colors": "original",
+        "highlighted_color_scheme": "background-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "faq": {
+      "type": "cauce-faq",
+      "blocks": {
+        "q1": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cuánto tarda en llegar?",
+            "respuesta": "<p>Despachamos desde [[PENDIENTE: ciudad_deposito]] y el plazo estimado es de [[PENDIENTE: plazo_envio]] días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
+          }
+        },
+        "q2": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Puedo devolverlo si me arrepiento?",
+            "respuesta": "<p>Sí. Tenés 10 días corridos desde que recibís el pedido para arrepentirte y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). Se inicia desde el botón de arrepentimiento que está en el pie de página.</p>"
+          }
+        },
+        "q3": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cómo verifico que es la forma R?",
+            "respuesta": "<p>Cada envase tiene un número de lote y para ese lote hay un certificado de análisis hecho por un laboratorio externo. El certificado indica identidad del compuesto y contenido por cápsula.</p>"
+          }
+        },
+        "q4": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cómo se conserva?",
+            "respuesta": "<p>En un lugar fresco y seco, lejos de la luz directa del sol, con el envase bien cerrado. No hace falta refrigerarlo.</p>"
+          }
+        },
+        "q5": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Puedo pagar en cuotas?",
+            "respuesta": "<p>[[PENDIENTE: cuotas]] Los medios de pago disponibles se ven en el checkout antes de confirmar la compra.</p>"
+          }
+        },
+        "q6": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Emiten factura?",
+            "respuesta": "<p>[[PENDIENTE: tipo_de_factura]] Si necesitás factura A, escribinos antes de comprar a [[PENDIENTE: email_contacto]].</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "settings": {
+        "volanta": "Antes de comprar",
+        "titulo": "Preguntas frecuentes",
+        "heading_size": "h1",
+        "pie": "",
+        "emitir_schema": true,
+        "color_scheme": "background-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "cierre": {
+      "type": "custom-columns",
+      "blocks": {
+        "x0": {
+          "type": "heading",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "Una cápsula por día, y listo",
+            "heading_size": "h0",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "x1": {
+          "type": "richtext",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "text": "<ul><li>Isómero R puro, sin mezcla racémica</li><li>600 mg por cápsula, una por día</li><li>Certificado de análisis por lote</li><li>Producción nacional, envío a todo el país</li><li>10 días para arrepentirte, sin costo</li></ul>",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "x2": {
+          "type": "atc_button",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "button_label": "Agregar al carrito",
+            "full_width": false,
+            "alignment": "flex-start",
+            "mobile_alignment": "center",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "x3": {
+          "type": "custom_liquid",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}\n{% render 'cauce-disclaimer', compacto: true %}",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "x0",
+        "x1",
+        "x2",
+        "x3"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "columns_count": 1,
+        "column_gap_desktop": 40,
+        "row_gap_desktop": 24,
+        "desktop_vertical_alignment": "center",
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 24,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 12,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "padding_top": 88,
+        "padding_bottom": 88
+      }
+    },
+    "suscripcion": {
+      "type": "cauce-newsletter",
+      "settings": {
+        "volanta": "Novedades",
+        "titulo": "Poco y cuando valga la pena",
+        "heading_size": "h2",
+        "bajada": "<p>Avisamos cuando sale una fórmula nueva y cuando se publica el análisis de un lote. Nada más que eso.</p>",
+        "boton": "Suscribirme",
+        "color_scheme": "background-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
@@ -961,6 +1319,11 @@
     "marquee",
     "timeline",
     "reviews",
-    "fichas"
+    "fichas",
+    "garantia",
+    "comparativa",
+    "faq",
+    "cierre",
+    "suscripcion"
   ]
 }

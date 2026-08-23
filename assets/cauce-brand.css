@@ -263,42 +263,68 @@ h1, h2, h3, h4,
   color: var(--cauce-bronce);
 }
 
-.cauce-legal__grid {
+.cauce-legal__inner {
   display: grid;
   gap: var(--cauce-aire-m);
-  grid-template-columns: 1fr;
-  padding: var(--cauce-aire-m) 0;
+  padding: var(--cauce-aire-m) 0 var(--cauce-aire-s);
 }
 
-@media screen and (min-width: 750px) {
-  .cauce-legal__grid {
-    grid-template-columns: 1.2fr 1fr auto;
+.cauce-legal__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cauce-aire-s);
+}
+
+/* El boton de arrepentimiento y el libro de quejas son obligatorios y tienen que
+   leerse como acciones, no como letra chica del pie. */
+.cauce-legal__boton {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(233, 230, 220, 0.45);
+  border-radius: 3px;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.cauce-legal a.cauce-legal__boton { text-decoration: none; }
+
+.cauce-legal__boton:hover {
+  border-color: var(--cauce-bronce);
+  color: var(--cauce-bronce);
+}
+
+/* Sin URL cargada el boton no es un link: no puede parecer que funciona. */
+.cauce-legal__boton--pendiente {
+  border-style: dashed;
+  opacity: 0.85;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.cauce-legal__fiscal img {
+  display: block;
+  width: 56px;
+  height: auto;
+}
+
+.cauce-legal__datos p { margin: 0 0 0.4rem; }
+.cauce-legal__precio { opacity: 0.8; }
+
+.cauce-legal__defensa {
+  margin: var(--cauce-aire-xs) 0 0;
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+@media screen and (min-width: 990px) {
+  .cauce-legal__inner {
+    grid-template-columns: auto 1fr;
     align-items: start;
   }
-}
-
-.cauce-legal__titulo {
-  font-family: var(--cauce-font-dato);
-  font-size: 1.1rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.65;
-  margin: 0 0 var(--cauce-aire-xs);
-}
-
-.cauce-legal__lista {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.cauce-legal__datafiscal img {
-  display: block;
-  width: 60px;
-  height: auto;
+  .cauce-legal__acciones { grid-column: 1 / -1; }
+  .cauce-legal__disclaimer { grid-column: 1 / -1; }
 }
 
 .cauce-legal__disclaimer {
@@ -776,3 +802,156 @@ h1, h2, h3, h4,
 .color-inverse .title-with-highlight { --hightlight-color: var(--cauce-bronce) !important; }
 .testimonial-card__stars { --stars-color: var(--cauce-bronce-texto) !important; }
 .color-inverse .testimonial-card__stars { --stars-color: var(--cauce-bronce) !important; }
+
+/* ==========================================================================
+   7. Cierre y legales (fase 5)
+   ========================================================================== */
+
+.cauce-faq__inner,
+.cauce-news__inner {
+  padding-top: var(--padding-top, 7.2rem);
+  padding-bottom: var(--padding-bottom, 7.2rem);
+}
+
+@media screen and (max-width: 749px) {
+  .cauce-faq__inner,
+  .cauce-news__inner {
+    padding-top: calc(var(--padding-top, 7.2rem) * 0.75);
+    padding-bottom: calc(var(--padding-bottom, 7.2rem) * 0.75);
+  }
+}
+
+/* Preguntas frecuentes ---------------------------------------------------- */
+
+.cauce-faq__titulo { margin: 0 0 var(--cauce-aire-m); }
+.cauce-faq__lista { max-width: 82ch; }
+
+.cauce-faq__item { border-top: 1px solid rgba(16, 38, 42, 0.15); }
+.cauce-faq__item:last-child { border-bottom: 1px solid rgba(16, 38, 42, 0.15); }
+
+.color-inverse .cauce-faq__item,
+.color-inverse .cauce-faq__item:last-child { border-color: rgba(233, 230, 220, 0.22); }
+
+.cauce-faq__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cauce-aire-s);
+  padding: var(--cauce-aire-s) 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.cauce-faq__summary::-webkit-details-marker { display: none; }
+
+.cauce-faq__pregunta {
+  font-family: var(--cauce-font-texto);
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.cauce-faq__summary svg {
+  flex: 0 0 auto;
+  width: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.cauce-faq__item[open] .cauce-faq__summary svg { transform: rotate(180deg); }
+
+.cauce-faq__respuesta {
+  padding: 0 0 var(--cauce-aire-s);
+  max-width: 72ch;
+}
+
+.cauce-faq__pie {
+  margin-top: var(--cauce-aire-m);
+  font-size: 1.3rem;
+  opacity: 0.75;
+}
+
+/* Suscripcion ------------------------------------------------------------- */
+
+.cauce-news__inner {
+  display: grid;
+  gap: var(--cauce-aire-m);
+}
+
+@media screen and (min-width: 990px) {
+  .cauce-news__inner {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: var(--cauce-aire-l);
+  }
+}
+
+.cauce-news__titulo { margin: 0 0 var(--cauce-aire-xs); }
+.cauce-news__bajada { max-width: 48ch; }
+.cauce-news__bajada p { margin: 0; }
+
+.cauce-news__campo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: stretch;
+}
+
+/* El label existe para lectores de pantalla; el placeholder alcanza en pantalla,
+   pero un input sin label accesible no pasa AA. */
+.cauce-news__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.cauce-news__input {
+  flex: 1 1 22rem;
+  min-width: 0;
+  border: 1px solid rgba(16, 38, 42, 0.35);
+  border-radius: 3px;
+  background-color: transparent;
+  color: inherit;
+  padding: 1.1rem 1.2rem;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.5rem;
+}
+
+.color-inverse .cauce-news__input { border-color: rgba(233, 230, 220, 0.4); }
+
+.cauce-news__boton { flex: 0 0 auto; }
+
+.cauce-news__consentimiento {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-top: var(--cauce-aire-s);
+  max-width: 62ch;
+}
+
+.cauce-news__check {
+  flex: 0 0 auto;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-top: 0.1rem;
+  accent-color: var(--cauce-bronce-texto);
+}
+
+.cauce-news__consent-label {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.cauce-news__error,
+.cauce-news__exito {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: var(--cauce-aire-s) 0 0;
+  font-size: 1.3rem;
+}
+
+.cauce-news__error svg,
+.cauce-news__exito svg { flex: 0 0 auto; width: 1.6rem; height: 1.6rem; }

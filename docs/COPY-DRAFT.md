@@ -308,6 +308,128 @@ rótulo aprobado y del certificado.
 
 ---
 
+## 8. Cierre y legales (fase 5)
+
+### 8.1 Garantía (bloque 15) · `custom-columns`
+
+Título: **Si te arrepentís, se devuelve**
+
+> No es una promesa comercial: es un derecho que tenés por la Resolución SCI 424/2020 y
+> que acá está escrito sin condiciones escondidas.
+
+| Ítem | Texto |
+|---|---|
+| 10 días corridos | Se cuentan desde que recibís el pedido, no desde que lo comprás. |
+| Sin costo para vos | Se devuelve el importe pagado. El costo de la devolución lo asumimos nosotros. |
+| Sin explicar por qué | No hace falta que des un motivo. Basta con que nos avises dentro del plazo. |
+
+> **Revisar.** "El costo de la devolución lo asumimos nosotros" va más allá del mínimo
+> legal y es una decisión comercial, no una obligación. Si no se va a sostener, hay que
+> sacarlo de acá **y** de la política de devoluciones.
+>
+> Además: el acordeón del hero dice *"El producto tiene que estar sin abrir"* y esta
+> sección dice *"sin explicar por qué"*. No se contradicen, pero conviene que la política
+> escrita diga exactamente lo mismo que las dos.
+
+### 8.2 Comparativa (bloque 16) · `comparison-table`
+
+Título: **Qué mirar antes de comparar precios**. Columnas: CAUCE / Suplemento genérico.
+
+| Fila | Verdadera por |
+|---|---|
+| Declara si es isómero R o mezcla racémica | práctica de divulgación |
+| 600 mg de forma R por cápsula | definición química |
+| Certificado de análisis por lote, publicado | práctica |
+| Analizado por un laboratorio que no es el propio | práctica |
+| Trazabilidad del lote de materia prima | práctica |
+| Lista completa de excipientes en el rótulo | práctica |
+
+Al pie: *La comparación es contra el ácido alfa lipoico en mezcla racémica, que es el
+formato más habitual de la categoría. No compara con ninguna marca ni con ningún
+medicamento en particular.*
+
+**Es la sección de mayor exposición legal de la página.** Ver `CLAIMS-AUDIT.md` R5.
+
+### 8.3 Preguntas frecuentes (bloque 17) · `cauce-faq`
+
+Volanta **Antes de comprar**. Seis preguntas, todas de compra. Emite `FAQPage` recorriendo
+la misma fuente que el HTML, así que el marcado no puede declarar una pregunta invisible.
+
+| Pregunta | Riesgo |
+|---|---|
+| ¿Cuánto tarda en llegar? | `pendiente` ×2 |
+| ¿Puedo devolverlo si me arrepiento? | `dato` |
+| ¿Cómo verifico que es la forma R? | `dato` — depende del COA por lote |
+| ¿Cómo se conserva? | `forma` |
+| ¿Puedo pagar en cuotas? | `pendiente` |
+| ¿Emiten factura? | `pendiente` ×2 |
+
+Ninguna es del tipo "sirve para X". La advertencia está escrita en el editor.
+
+### 8.4 Cierre (bloque 18) · `custom-columns`
+
+Título: **Una cápsula por día, y listo**. Checklist que repite el eje, botón de agregar al
+carrito conectado al formulario principal (respeta el escalón elegido arriba), medios de
+pago y la leyenda de suplemento en versión compacta.
+
+- Isómero R puro, sin mezcla racémica
+- 600 mg por cápsula, una por día
+- Certificado de análisis por lote
+- Producción nacional, envío a todo el país
+- 10 días para arrepentirte, sin costo
+
+### 8.5 Suscripción (bloque 19) · `cauce-newsletter`
+
+Título **Poco y cuando valga la pena**.
+
+> Avisamos cuando sale una fórmula nueva y cuando se publica el análisis de un lote. Nada
+> más que eso.
+
+Consentimiento (locale `cauce.newsletter.consentimiento`):
+
+> Acepto recibir emails de CAUCE y que mis datos se traten según la Política de Privacidad
+> (Ley 25.326). Puedo darme de baja cuando quiera.
+
+Casilla obligatoria y sin premarcar. El formulario no se envía sin ella.
+
+### 8.6 Barra legal (bloque 20) · `cauce-legal-bar`
+
+Aparece en **todas** las páginas por estar en `footer-group`. Botón de arrepentimiento,
+Libro de Quejas Online, Data Fiscal, razón social + CUIT + domicilio, email y teléfono,
+leyenda de precio en pesos con IVA, y la leyenda de suplemento dietario con RNPA.
+
+Lo que falte se muestra como **pendiente visible en la página**, no oculto. Es a propósito:
+un CUIT vacío que se esconde solo es un incumplimiento que nadie ve en un QA.
+
+### 8.7 Página de arrepentimiento · `templates/page.arrepentimiento.json`
+
+> Si te arrepentiste de tu compra, tenés 10 días corridos desde que recibiste el pedido
+> para pedir la devolución del importe pagado, sin costo. Es un derecho que te da la
+> Resolución SCI 424/2020 y el artículo 34 de la Ley 24.240.
+>
+> No hace falta que expliques el motivo. Completá el formulario y te respondemos con las
+> instrucciones para devolver el producto.
+
+Formulario: nombre, email, número de pedido, teléfono opcional y un comentario **opcional**
+que dice explícitamente que no hace falta dar un motivo.
+
+**Falta crear la página en Shopify** (Contenido → Páginas, con la plantilla
+`arrepentimiento`) y pegar su URL en Configuración → CAUCE.
+
+---
+
+## 9. Pendientes que agregó la fase 5
+
+| # | Dato | Dónde |
+|---|---|---|
+| 16 | Tipo de factura que emiten (A / B / C) | FAQ |
+| 17 | Horario de atención | footer |
+| 18 | Crear la página de arrepentimiento y cargar su URL | Shopify + settings CAUCE |
+| 19 | Escribir las cuatro políticas en Configuración → Políticas | Shopify |
+| 20 | Decidir si el costo de la devolución lo paga la marca | garantía + política |
+
+---
+
 ## 5. Lo que hay que decidir para poder publicar
 
 | # | Dato | Dónde se carga |

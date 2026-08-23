@@ -454,3 +454,90 @@ la arquitectura tiene que evitar.
 
 **Contrapartida.** Una clave mal escrita no da error, simplemente cae al valor fijo. Es la
 degradacion correcta: se ve el valor de respaldo, no un hueco.
+
+---
+
+## D-024 · 2026-08-22 · Seccion de suscripcion propia, por el consentimiento
+
+**Decision.** Se crea `sections/cauce-newsletter.liquid` en vez de usar `newsletter`,
+`email-signup-banner` o el block `email_signup` del footer.
+
+**Por que.** Los cinco formularios de newsletter que trae Shrine mandan `contact[email]`
+y una etiqueta fija, y **ninguno pide consentimiento**. La Ley 25.326 exige consentimiento
+libre, expreso e informado; una casilla ausente no lo es, y una premarcada tampoco.
+
+**Como lo resuelve.** Casilla `required` sin premarcar, texto del consentimiento en el
+locale (auditable en un solo lugar), link a la politica de privacidad, y la etiqueta que
+recibe el contacto deja constancia (`consentimiento-ley-25326`) para que el dato quede
+trazable del lado de Shopify.
+
+**Limite conocido.** `required` es validacion de navegador. Para un alta de newsletter
+alcanza; si mañana el formulario pide mas datos personales, hay que validarlo del lado del
+servidor con una app.
+
+---
+
+## D-025 · 2026-08-22 · No se escribe un snippet de datos estructurados de producto
+
+**Decision.** No se crea `cauce-product-schema.liquid`. Se usa el JSON-LD que ya emite
+`main-product.liquid`.
+
+**Por que.** Al auditarlo cumple lo que pedia el brief: `Product` con `offers`, precio
+tomado de `cart.currency.iso_code` (ARS), disponibilidad por variante, y **sin
+`AggregateRating`**. Escribir uno propio habria duplicado el marcado en la misma pagina,
+que es peor que no tener ninguno.
+
+**Lo que si hay que arreglar, y no es del tema.** Ese JSON-LD publica
+`"brand": product.vendor`, y el proveedor cargado en Shopify es *Vitalab*. Se corrige en el
+admin del producto. Ver `CLAIMS-AUDIT.md` R2.
+
+---
+
+## D-026 · 2026-08-22 · La comparativa compara formatos, no competidores
+
+**Decision.** La columna de comparacion se llama "Suplemento generico" y el texto de la
+seccion aclara que la comparacion es **contra el acido alfa lipoico en mezcla racemica**,
+que es el formato habitual de la categoria, y no contra ninguna marca ni medicamento.
+
+**Alternativa descartada.** Nombrar marcas, que es lo que hace la referencia.
+
+**Por que.** El brief lo prohibe y ademas es publicidad comparativa con nombre propio, que
+en Argentina exige un estandar de prueba que no tenemos.
+
+**Riesgo que queda.** Sigue siendo publicidad comparativa. Las dos primeras filas son
+verdaderas por definicion quimica y se sostienen solas; las otras cuatro son sobre
+practicas de divulgacion y son las discutibles. Anotado como R5 en `CLAIMS-AUDIT.md`.
+
+---
+
+## D-027 · 2026-08-22 · El CTA de cierre usa `atc_button` sin producto asignado
+
+**Decision.** El bloque 18 usa el block `atc_button` de `custom-columns` **dejando vacio**
+el selector de producto.
+
+**Por que.** Con el selector vacio, Shrine renderiza un boton con la clase
+`main-product-atc`, que su JS conecta al formulario del producto de la pagina. Eso da tres
+cosas a la vez: respeta el escalon de cantidad que el cliente eligio arriba, no obliga a
+cargar el producto en el template, y por lo tanto duplicar el template para otro SKU no
+requiere tocar este bloque.
+
+**Alternativa descartada.** Un link ancla al selector de ofertas. El id que genera Shopify
+incluye el id de la seccion, que no se puede escribir en un JSON de otra seccion.
+
+---
+
+## D-028 · 2026-08-22 · Footer sin selector de pais, idioma ni medios de pago nativos
+
+**Decision.** En `sections/footer-group.json`: `enable_country_selector: false`,
+`enable_language_selector: false`, `payment_enable: false`, `show_policy: true`.
+
+**Por que.**
+- Pais e idioma: un solo mercado y un solo idioma (regla 3.1). Un selector de pais ademas
+  habilita conversion de moneda, que la regla prohibe explicitamente.
+- Medios de pago: el block nativo usa `payment_type_svg_tag`, que no conoce Mercado Pago
+  (D-012). Se muestran con `cauce-medios-pago` en la PDP y en el cierre.
+- `show_policy` en true hace que Shopify liste solas las politicas apenas se escriban, sin
+  depender de que alguien arme un menu.
+
+**Nota.** `branding_text` quedo vacio: el "Powered by Shrine" del pie no aporta y compite
+con la firma de la marca.
