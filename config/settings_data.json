@@ -1,9 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "animations_type": "GGkLhoTOiV67l21Pb1r8JxbwGAkXLmer7YrABSJ9+A9EXpMu2rSrjF9lHa0vqrWGeeDHu7qtpr+mgxIPPKrM0ejIby9ZNuJF4dFk6amcBZ0jotWApqjdOhQIhMWQVZ0794EEN3Gp6q+hiFhBjWHj1+pTBR3xtiz1jODSHRCNTCGlXN7Iu8CDFs/VLut3g5H43vDSZMIwAJMurqV3IK5GOHTrH1NdIVG0H3QcA9//zSQlxswDRMsm5bamaw9MygihDMlZQ6QlPFSP2VFmaUrRhvwHgDWkOcFtLkvV1HQqnzdRA3AbzmzffCiXn1Gkd7DwMBp/kXuCvSCHt9TT0ZQbA5CyZBX5SXu5n3utfkf4ZEYF+ckSufFydtJWhrRuDGuKYruLRto9jNPdruIZvchs7Q==",
     "disable_inspect": false,
     "country_list_function": "block",
     "country_list": "",
+    "logo": "shopify://shop_images/09-lockup-vertical-tinta.png",
     "logo_width": 200,
     "mobile_logo_width": 130,
     "colors_solid_button_labels": "#10262a",
@@ -19,9 +29,12 @@
     "gradient_background_2": "",
     "type_header_font": "poppins_n7",
     "heading_scale": 120,
-    "heading_letter_spacing": 0.0,
+    "heading_line_height": 1.2,
+    "heading_letter_spacing": 0,
     "type_body_font": "harmonia_sans_n4",
     "body_scale": 100,
+    "body_line_height": 1.7,
+    "body_letter_spacing": 0,
     "enable_load_animations": true,
     "repeat_section_animations": false,
     "badge_position": "bottom left",
@@ -515,17 +528,7 @@
         }
       }
     },
-    "content_for_index": [],
-    "blocks": {
-      "11532412952436166569": {
-        "type": "shopify://apps/loox-reviews/blocks/loox-inject/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-        "disabled": false,
-        "settings": {}
-      }
-    },
-    "heading_line_height": 1.2,
-    "body_line_height": 1.7,
-    "body_letter_spacing": 0.0
+    "content_for_index": []
   },
   "presets": {
     "Default": {
