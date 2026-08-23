@@ -54,9 +54,7 @@
             loading="lazy"
           >
         {% elsif block.settings.icon != blank %}
-          <span class="material-symbols-outlined{% if block.settings.icon_filled %} filled{% endif %}">
-            {{ block.settings.icon | strip | downcase | replace: ' ', '_' }}
-          </span>
+          {% render 'material-icon', icon: block.settings.icon, filled: block.settings.icon_filled %}
         {%- endif -%}
       </div>
     </div>

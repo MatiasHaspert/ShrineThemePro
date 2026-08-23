@@ -541,3 +541,43 @@ incluye el id de la seccion, que no se puede escribir en un JSON de otra seccion
 
 **Nota.** `branding_text` quedo vacio: el "Powered by Shrine" del pie no aporta y compite
 con la firma de la marca.
+
+---
+
+## D-029 · 2026-08-23 · Todo el tema pasa a SVG inline, se elimina Material Symbols
+
+**Decision.** `snippets/material-icon.liquid` emite SVG inline con `currentColor` en vez del
+nombre del icono como texto. Se borro el `@font-face` de Material Symbols de `layout/theme.liquid`
+y con el la ultima descarga de fuente de iconos del tema. Extiende D-005 al tema completo.
+
+**Alternativa descartada.** Un script que regenerara la URL del subset de gstatic escaneando
+`.liquid` y `.json` y reescribiendo `theme.liquid`.
+
+**Por que.** El subset de la fase 6 dejo el LCP en 2,7 s pero creo un modo de falla silencioso:
+la lista de iconos vive en el `@font-face` y el editor deja elegir cualquiera de los ~3.000 de
+Material Symbols. Al elegir uno afuera del subset la ligadura no resuelve y el nombre se imprime
+como texto, recortado a 1em por `max-width` + `overflow: hidden`, o sea una unica letra. Paso al
+cambiar un icono a `water_drop` y se vio una "W". El script tapaba el sintoma pero mantenia la
+dependencia de red y el paso manual de regeneracion. Con SVG inline no hay fuente, no hay URL que
+regenerar y un icono desconocido no renderiza nada en vez de romperse en pantalla.
+
+**Alcance.** Un solo chokepoint: los 54 `render 'material-icon'` del tema siguen igual. Se
+reescribio el snippet y se reemplazaron los 4 `<span class="material-symbols-outlined">` sueltos
+de `cart-checkpoints-bar.liquid` y `cart-progress-bar.liquid` por renders del snippet.
+
+**Compatibilidad.** El SVG lleva `width`/`height` en `1em` y `fill="currentColor"`, y el span
+conserva las clases `material-icon material-symbols-outlined`. Asi heredan el `font-size` y el
+`color` que ya setean `.icon-with-text .material-icon { font-size: var(--icon-size) }` y
+`.material-icon--custom-color { color: var(--color-icon) }`. Los sliders de tamano y el selector
+de color del editor siguen funcionando y no se toco una linea de `base.css`.
+
+**Nota.** Los paths son Material Symbols Outlined en `wght 300`, el mismo peso que declaraba el
+`font-variation-settings` de la fuente variable, asi que el render es identico al anterior. Solo
+se incluyen variantes rellenas donde el relleno cambia el dibujo y el tema las usa:
+`check_circle`, `pause`, `person`, `play_arrow`, `verified`. `check` se descarto porque su
+variante rellena es byte a byte igual a la delineada. Para el resto, `filled: true` cae en la
+delineada en vez de fallar.
+
+**Pendiente.** Conviven dos sets: `cauce-iconos` (trazo, `viewBox 0 0 24 24`) para las secciones
+CAUCE y `material-icon` (relleno, `viewBox 0 -960 960 960`) para los blocks reusados de Shrine.
+No se unificaron: son lenguajes graficos distintos y unificarlos es rediseno, no refactor.

@@ -16,7 +16,7 @@
         "subtitulo": {
           "type": "text",
           "settings": {
-            "text_1": "Isómero R puro, sin mezcla racémica. 30 cápsulas de producción nacional.",
+            "text_1": "El compuesto puro en forma R que ayuda a tu cuerpo a hacer lo que la comida moderna le hizo olvidar — sacar el azúcar de la sangre y convertirlo en energía estable. La dosis exacta de 600mg estudiada en investigaciones clínicas alemanas.",
             "icon_1": "",
             "icon_2": "",
             "icon_3": "",
@@ -54,9 +54,9 @@
             "mobile_icon_size": 24,
             "mobile_spacing": 8,
             "mobile_text_size": 14,
-            "icon_1": "science",
+            "icon_1": "water_drop",
             "icon_1_fill": false,
-            "heading_1": "Forma R pura, no racémica",
+            "heading_1": "Apoyo para un azúcar saludable",
             "icon_2": "medication",
             "icon_2_fill": false,
             "heading_2": "600 mg por cápsula",

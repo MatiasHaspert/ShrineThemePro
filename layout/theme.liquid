@@ -335,55 +335,27 @@
         }
       }
 
-      /* fallback */
-      @font-face {
-        font-family: 'Material Symbols Outlined';
-        /* CAUCE: la fuente completa de Material Symbols pesa 350 KB y se carga con
-           font-display: block, o sea que bloquea el render. Es el recurso mas pesado
-           de la pagina y en el Lighthouse mobile empujaba el LCP a 7,4 s.
-           Esta URL es la misma familia subseteada a los 31 iconos que el tema puede
-           emitir: 6,8 KB. Para regenerarla cuando se agregue un icono nuevo:
-           https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0..1,0&icon_names=LISTA&display=block
-           y copiar de ahi la url del woff2. Un icono que no este en la lista se ve
-           como su nombre en texto, que es un error visible y no silencioso.
-           Lista actual: add, add_circle, add_shopping_cart, biotech, check, check_box,
-           check_circle, chevron_left, chevron_right, close, content_copy, error,
-           factory, favorite, help, local_shipping, lock, mail, medication, pause,
-           payments, person, play_arrow, redeem, schedule, science, sell, storefront,
-           straighten, undo, verified. */
-        src: url(https://fonts.gstatic.com/l/font?kit=kJF4BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzBwG-RpA6RzaxHMPdY40KH8nGzv3fz_VFU22ZZLsYEpzC_1qmr5Y0Rzu4--fZoyVYAN67NK7cVw1BeqqFt6cOF5sT9Q0RHst4gYi-sHMW6s0elvjVMx8EAu32YHd13Rjy2lVbskdx8iSe8drt7GFQ&skey=b8dc2088854b122f&v=v367) format('woff2');
-        font-style: normal;
-        font-weight: 300;
-        font-display: block;
-      }
-
+      /* CAUCE: los iconos son SVG inline (snippets/material-icon.liquid), no una
+         fuente de iconos. Antes esto cargaba Material Symbols con font-display:
+         block: 350 KB bloqueantes que empujaban el LCP mobile a 7,4 s, y despues
+         un subset de 6,9 KB que habia que regenerar a mano en gstatic cada vez
+         que se elegia un icono nuevo desde el editor. Ya no se descarga nada.
+         Estas reglas se conservan con los mismos nombres de clase para que sigan
+         matcheando los selectores que ya existen en base.css y en las secciones.
+         font-size y color siguen siendo la API: el SVG los hereda via 1em y
+         currentColor. */
       .material-symbols-outlined {
-        font-family: 'Material Symbols Outlined';
-        font-weight: normal;
-        font-style: normal;
         font-size: 24px;
         line-height: 1;
-        letter-spacing: normal;
-        text-transform: none;
         display: inline-block;
-        white-space: nowrap;
-        word-wrap: normal;
-        direction: ltr;
-        -webkit-font-feature-settings: 'liga';
-        -webkit-font-smoothing: antialiased;
-        max-width: 1em;
-        overflow: hidden;
         flex-shrink: 0;
-        font-variation-settings:
-        'FILL' 0,
-        'wght' 300,
-        'GRAD' 0,
-        'opsz' 48;
         vertical-align: bottom;
       }
-      .material-symbols-outlined.filled {
-        font-variation-settings:
-        'FILL' 1
+      .material-symbols-outlined > svg {
+        display: block;
+        width: 1em;
+        height: 1em;
+        fill: currentColor;
       }
       {% if settings.scrollbar_style == 'customized' %}
         ::-webkit-scrollbar-track {
