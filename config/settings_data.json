@@ -13,7 +13,6 @@
     "disable_inspect": false,
     "country_list_function": "block",
     "country_list": "",
-    "logo": "shopify://shop_images/09-lockup-vertical-tinta.png",
     "logo_width": 200,
     "mobile_logo_width": 130,
     "colors_solid_button_labels": "#10262a",
