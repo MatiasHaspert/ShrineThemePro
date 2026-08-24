@@ -492,41 +492,6 @@
             "review_text": "\"<strong>La diabetes de mi papá me asustó y me hizo actuar.</strong> Esto es lo primero que de verdad ha movido mi número matutino — y sin problemas de estómago como me dio la berberina.\"",
             "review_rating": 5
           }
-        },
-        "image_7zNECD": {
-          "type": "Image",
-          "settings": {
-            "review_text": "Add awesome customer testimonial right here",
-            "review_rating": 5
-          }
-        },
-        "image_heUTwJ": {
-          "type": "Image",
-          "settings": {
-            "review_text": "Add awesome customer testimonial right here",
-            "review_rating": 5
-          }
-        },
-        "image_bzeNWq": {
-          "type": "Image",
-          "settings": {
-            "review_text": "Add awesome customer testimonial right here",
-            "review_rating": 5
-          }
-        },
-        "image_tAFjFq": {
-          "type": "Image",
-          "settings": {
-            "review_text": "Add awesome customer testimonial right here",
-            "review_rating": 5
-          }
-        },
-        "image_btgKVi": {
-          "type": "Image",
-          "settings": {
-            "review_text": "Add awesome customer testimonial right here",
-            "review_rating": 5
-          }
         }
       },
       "block_order": [
@@ -536,20 +501,15 @@
         "image_qBhXWe",
         "image_zAWNNH",
         "image_keirhT",
-        "image_4gRBjQ",
-        "image_7zNECD",
-        "image_heUTwJ",
-        "image_bzeNWq",
-        "image_tAFjFq",
-        "image_btgKVi"
+        "image_4gRBjQ"
       ],
       "name": "SS - Glow Testimonial",
       "settings": {
         "animation_time": 30,
         "loop_amount": 2,
-        "header_before_gradient": "Our customers",
-        "header_gradient": "love",
-        "header": "the product",
+        "header_before_gradient": "Escucha a los clientes que confían en",
+        "header_gradient": "Cause",
+        "header": "",
         "header_color": "#0B1128",
         "header_font_size": 42,
         "header_mob_font_size": 28,
