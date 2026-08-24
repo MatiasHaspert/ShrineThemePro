@@ -428,9 +428,21 @@ h1, h2, h3, h4,
   border-radius: 3px;
 }
 
-/* Chip tipografico para las marcas que Shopify no dibuja (Mercado Pago, Cabal,
-   Naranja X). Deliberadamente sobrio: la regla de marca prohibe la sopa de
-   sellos, y un logo redibujado a mano seria un logo mal dibujado. */
+/* Logo propio desde assets/ para las marcas que Shopify no dibuja. Se fija la
+   altura y no el ancho, porque Mercado Pago y Naranja X son mucho mas anchos
+   que un plastico: igualar el ancho los dejaria diminutos al lado de Visa. */
+.cauce-pagos__logo {
+  height: 2.4rem;
+  width: auto;
+  max-width: 10rem;
+  display: block;
+  object-fit: contain;
+}
+
+/* Chip tipografico: ultimo recurso para una marca que no tiene ni SVG nativo de
+   Shopify ni logo propio en assets/. Deliberadamente sobrio: la regla de marca
+   prohibe la sopa de sellos, y un logo redibujado a mano seria un logo mal
+   dibujado. */
 .cauce-pagos__chip {
   font-family: var(--cauce-font-dato);
   font-size: 1.1rem;
