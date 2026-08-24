@@ -434,6 +434,135 @@
         "desktop_padding_bottom": 48
       }
     },
+    "ss_glow_testimonial_3jmxKc": {
+      "type": "ss-glow-testimonial",
+      "blocks": {
+        "image_j9AiBz": {
+          "type": "Image",
+          "settings": {
+            "review_icon": "shopify://shop_images/margaret.png",
+            "review_text": "\"<strong>Por fin me siento yo de nuevo.</strong> Me preparaba antes de cada análisis de sangre por años. Seis semanas con Cauce y mi número matutino fue el más bajo en mucho tiempo. El miedo… se fue.\"",
+            "review_rating": 5
+          }
+        },
+        "image_Qd4MPf": {
+          "type": "Image",
+          "settings": {
+            "review_icon": "shopify://shop_images/frank.png",
+            "review_text": "\"<strong>Se acabó el bajón de las 3 pm.</strong>  Antes me estrellaba cada tarde y buscaba azúcar. Ahora estoy estable todo el día, y mis análisis van por buen camino por primera vez en años.\"",
+            "review_rating": 5
+          }
+        },
+        "image_cWgPTT": {
+          "type": "Image",
+          "settings": {
+            "review_icon": "shopify://shop_images/hf_20260628_102247_90f66a35-b29e-43e6-8ce2-6ca63e24c29f.png",
+            "review_text": "\"<strong>Fuera de la montaña rusa de la berberina. </strong> La berberina me destrozó el estómago y no hizo nada. Esto sí movió mi número matutino — y cero problemas digestivos. Ojalá lo hubiera encontrado antes.\"",
+            "review_rating": 5
+          }
+        },
+        "image_qBhXWe": {
+          "type": "Image",
+          "settings": {
+            "review_icon": "shopify://shop_images/hf_20260628_112952_3d2349d9-6160-42be-8604-418a887fa2c4.png",
+            "review_text": "\"<strong>Mi doctor se sorprendió.</strong> En mi último control miró mis análisis, hizo una pausa y dijo: 'lo que sea que estés haciendo, sigue haciéndolo.' Ese momento valió todo.\"",
+            "review_rating": 5
+          }
+        },
+        "image_zAWNNH": {
+          "type": "Image",
+          "settings": {
+            "review_icon": "shopify://shop_images/hf_20260628_102245_6d9f9063-097c-4700-a378-053f32946d52.png",
+            "review_text": "\"<strong> Antes necesitaba tres tazas de café solo para sobrevivir la tarde.</strong>  Ahora estoy estable y tranquilo, sin nervios — y mis análisis se ven mejor también.\"",
+            "review_rating": 5
+          }
+        },
+        "image_keirhT": {
+          "type": "Image",
+          "settings": {
+            "review_icon": "shopify://shop_images/hf_20260628_102244_98f1fb20-cc3b-428d-b8ac-2f5790a0ded0.png",
+            "review_text": "\"<strong>Mi número estuvo atascado en los 110 por dos años sin importar lo que intentara. </strong> Ocho semanas con Cauce y amanezco con 90 y 92. De verdad se me salieron las lágrimas.\"",
+            "review_rating": 5
+          }
+        },
+        "image_4gRBjQ": {
+          "type": "Image",
+          "settings": {
+            "review_text": "Add awesome customer testimonial right here",
+            "review_rating": 5
+          }
+        },
+        "image_7zNECD": {
+          "type": "Image",
+          "settings": {
+            "review_text": "Add awesome customer testimonial right here",
+            "review_rating": 5
+          }
+        },
+        "image_heUTwJ": {
+          "type": "Image",
+          "settings": {
+            "review_text": "Add awesome customer testimonial right here",
+            "review_rating": 5
+          }
+        },
+        "image_bzeNWq": {
+          "type": "Image",
+          "settings": {
+            "review_text": "Add awesome customer testimonial right here",
+            "review_rating": 5
+          }
+        },
+        "image_tAFjFq": {
+          "type": "Image",
+          "settings": {
+            "review_text": "Add awesome customer testimonial right here",
+            "review_rating": 5
+          }
+        },
+        "image_btgKVi": {
+          "type": "Image",
+          "settings": {
+            "review_text": "Add awesome customer testimonial right here",
+            "review_rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "image_j9AiBz",
+        "image_Qd4MPf",
+        "image_cWgPTT",
+        "image_qBhXWe",
+        "image_zAWNNH",
+        "image_keirhT",
+        "image_4gRBjQ",
+        "image_7zNECD",
+        "image_heUTwJ",
+        "image_bzeNWq",
+        "image_tAFjFq",
+        "image_btgKVi"
+      ],
+      "name": "SS - Glow Testimonial",
+      "settings": {
+        "animation_time": 30,
+        "loop_amount": 2,
+        "header_before_gradient": "Our customers",
+        "header_gradient": "love",
+        "header": "the product",
+        "header_color": "#0B1128",
+        "header_font_size": 42,
+        "header_mob_font_size": 28,
+        "review_font_size": 16,
+        "review_font_color": "#0B1128",
+        "gradient_color_1": "#4222DE",
+        "gradient_color_2": "#659BFF",
+        "gradient_color_3": "#7FF6E8",
+        "blur_color": "#B8B1DC",
+        "background-color": "#ffffff",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "pilares": {
       "type": "icon-bar",
       "blocks": {
@@ -1694,6 +1823,7 @@
   },
   "order": [
     "main",
+    "ss_glow_testimonial_3jmxKc",
     "pilares",
     "ugc",
     "beneficios",
