@@ -16,7 +16,7 @@
           "type": "rating_stars",
           "settings": {
             "rating": 4.8,
-            "star_color": "#ffcc00",
+            "star_color": "#6F9BA1",
             "bg_stars_style": "full",
             "bg_star_color": "#ececec",
             "label": "Calificación de <strong>4.8 Excelente</strong> 1574+ Reseñas",
