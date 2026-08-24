@@ -12,6 +12,21 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "rating_stars_pFwTTD": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "Calificación de <strong>4.8 Excelente</strong> 1574+ Reseñas",
+            "size": 12,
+            "alignment": "flex-start",
+            "scroll_id": "",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
         "titulo": {
           "type": "title",
           "settings": {
@@ -356,6 +371,7 @@
         }
       },
       "block_order": [
+        "rating_stars_pFwTTD",
         "titulo",
         "subtitulo",
         "precio",
