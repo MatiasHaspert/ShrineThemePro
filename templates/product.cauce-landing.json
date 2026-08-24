@@ -252,6 +252,38 @@
             "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}"
           }
         },
+        "collapsible_tab_aqXdqx": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Descripción",
+            "heading_size": "medium",
+            "icon": "subject",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Noverly Ácido Alfa Lipoico R entrega<strong>600mg de ácido alfa lipoico puro en forma R-(+)</strong>— el isómero biológicamente activo que tu cuerpo realmente usa — en una cápsula blanda pequeña hecha con aceite de coco para mejor absorción. El R-ALA ayuda a sacar el azúcar de la sangre y llevarlo a los músculos, apoyando un azúcar saludable dentro del rango normal, energía estable todo el día y protección antioxidante. Sin transgénicos, sin gluten, probado por terceros, hecho en EE. UU. 30 cápsulas por bolsa (suministro para 30 días).<br/><br/></p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_6yhWGL": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Los resultados",
+            "heading_size": "medium",
+            "icon": "trending_up",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
         "acordeon_envios": {
           "type": "collapsible_tab",
           "settings": {
@@ -281,22 +313,6 @@
             "content": "<p>Tenés 10 días corridos desde que recibís el pedido para arrepentirte de la compra y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). El producto tiene que estar sin abrir.</p><p>Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a [[PENDIENTE: email_contacto]].</p>",
             "page": "",
             "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        "collapsible_tab_aqXdqx": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Descripción",
-            "heading_size": "medium",
-            "icon": "subject",
-            "filled_icon": false,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>Noverly Ácido Alfa Lipoico R entrega<strong>600mg de ácido alfa lipoico puro en forma R-(+)</strong>— el isómero biológicamente activo que tu cuerpo realmente usa — en una cápsula blanda pequeña hecha con aceite de coco para mejor absorción. El R-ALA ayuda a sacar el azúcar de la sangre y llevarlo a los músculos, apoyando un azúcar saludable dentro del rango normal, energía estable todo el día y protección antioxidante. Sin transgénicos, sin gluten, probado por terceros, hecho en EE. UU. 30 cápsulas por bolsa (suministro para 30 días).<br/><br/></p>",
-            "page": "",
-            "margin_top": 24,
             "margin_bottom": 0
           }
         },
@@ -350,9 +366,10 @@
         "suscripcion",
         "comprar",
         "pagos",
+        "collapsible_tab_aqXdqx",
+        "collapsible_tab_6yhWGL",
         "acordeon_envios",
         "acordeon_garantia",
-        "collapsible_tab_aqXdqx",
         "disclaimer",
         "sticky"
       ],
