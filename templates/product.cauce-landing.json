@@ -473,7 +473,7 @@
           "type": "Image",
           "settings": {
             "review_icon": "shopify://shop_images/hf_20260628_102245_6d9f9063-097c-4700-a378-053f32946d52.png",
-            "review_text": "\"<strong> Antes necesitaba tres tazas de café solo para sobrevivir la tarde.</strong>  Ahora estoy estable y tranquilo, sin nervios — y mis análisis se ven mejor también.\"",
+            "review_text": "\"<strong>Antes necesitaba tres tazas de café solo para sobrevivir la tarde.</strong>  Ahora estoy estable y tranquilo, sin nervios — y mis análisis se ven mejor también.\"",
             "review_rating": 5
           }
         },
@@ -488,7 +488,8 @@
         "image_4gRBjQ": {
           "type": "Image",
           "settings": {
-            "review_text": "Add awesome customer testimonial right here",
+            "review_icon": "shopify://shop_images/hf_20260628_102248_3e4f441f-880c-410b-b612-b3249ed2b226.png",
+            "review_text": "\"<strong>La diabetes de mi papá me asustó y me hizo actuar.</strong> Esto es lo primero que de verdad ha movido mi número matutino — y sin problemas de estómago como me dio la berberina.\"",
             "review_rating": 5
           }
         },
