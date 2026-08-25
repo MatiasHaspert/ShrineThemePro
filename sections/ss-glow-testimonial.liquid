@@ -1,480 +1,340 @@
-<div class="{{ section.id }}"style="background-color:{{section.settings.background-color}};">
- <div class="section-{{ section.id }}-padding">
-  <div class="reviews">
-    <div class="reviews_title">
-      <p>
-        {{ section.settings.header_before_gradient }}
-        <span>{{ section.settings.header_gradient }}</span>
-        {{ section.settings.header }}
-      </p>
-    </div>
-  
+{% comment %}
+  SS - Glow Testimonial — resenas en marquesina, reescrita contra el sistema CAUCE.
+
+  La version del pack ss-* traia todo su estilo en un <style> inline con un hex por
+  setting (tres colores de degradado, color de sombra, fondo, color de texto), no
+  implementaba color_scheme y sus clases (.reviews, .parer, .reviews_item) eran
+  globales: dos instancias en la misma pagina se pisaban. Ver docs/DECISIONS.md D-001
+  y D-030.
+
+  Que se conserva del original: el nombre, la marquesina de dos filas en sentidos
+  opuestos y el halo alrededor de la tarjeta.
+
+  Que cambia:
+  - Estilo en assets/cauce-brand.css, bloque 9. La seccion no declara ni un hex.
+  - El degradado de tres colores del titulo pasa a VADO. El bronce no se toca: esta
+    reservado al boton de compra y al precio, y el titulo nunca es bronce.
+  - El halo pasa a una sola sombra difusa en VADO.
+  - Sin JS. El original medía la altura del carril con getBoundingClientRect en
+    DOMContentLoaded y resize; el desplazamiento ahora es translate3d(-50%) sobre un
+    carril duplicado, que no necesita medir nada.
+  - La estrella era un SVG servido desde el CDN de otra tienda. Ahora es inline.
+  - Respeta prefers-reduced-motion: sin animacion, las tarjetas se acomodan en grilla.
+  - Pausa al pasar el mouse y al tabular adentro.
+
+  El texto de cada resena es contenido de bloque. No puede mencionar patologias,
+  plazos de resultado ni profesionales de la salud (Disp. ANMAT 4980/05).
+{% endcomment %}
+
+{%- liquid
+  comment
+    Una resena sin texto no es una resena: no se renderiza. Asi la seccion se puede
+    dejar maquetada con los bloques vacios hasta que haya testimonios reales, sin
+    publicar tarjetas en blanco.
+  endcomment
+  assign cauce_validos = 0
+  for block in section.blocks
+    if block.settings.texto != blank
+      assign cauce_validos = cauce_validos | plus: 1
+    endif
+  endfor
+
+  assign cauce_filas = 1
+  assign cauce_corte = cauce_validos
+  if section.settings.filas == '2' and cauce_validos > 1
+    assign cauce_filas = 2
+    assign cauce_corte = cauce_validos | plus: 1 | divided_by: 2
+  endif
+
+  comment
+    El carril se duplica un numero PAR de veces para que translate3d(-50%) caiga
+    siempre en un punto identico al inicio. Con pocas resenas hacen falta mas copias
+    para cubrir el ancho de pantalla sin huecos.
+  endcomment
+  assign cauce_copias = 2
+  if cauce_corte < 4
+    assign cauce_copias = 4
+  endif
+  if cauce_corte < 2
+    assign cauce_copias = 8
+  endif
+-%}
+
+{%- if cauce_validos > 0 -%}
+  <div class="cauce-glow color-{{ section.settings.color_scheme }} gradient">
     <div
-      class="parer-wrapper-{{ section.id }}"
-      style="position: relative; height: 172px;"
+      class="cauce-glow__inner"
+      style="
+        --padding-top: {{ section.settings.padding_top }}px;
+        --padding-bottom: {{ section.settings.padding_bottom }}px;
+        --cauce-glow-ancho: {{ section.settings.ancho_tarjeta }}px;
+        --cauce-glow-radio: {{ section.settings.radio }}px;
+        --cauce-glow-vel: {{ section.settings.velocidad }}s;
+      "
     >
-      <div class="parer">
-        <div class="reviews_block">
+      {%- if section.settings.volanta != blank
+        or section.settings.titulo_antes != blank
+        or section.settings.destacado != blank
+        or section.settings.titulo_despues != blank
+      -%}
+        <div class="page-width cauce-glow__encabezado">
+          {%- if section.settings.volanta != blank -%}
+            <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+          {%- endif -%}
+
+          <h2 class="cauce-glow__titulo {{ section.settings.heading_size }}">
+            {%- if section.settings.titulo_antes != blank -%}
+              {{ section.settings.titulo_antes }}
+            {%- endif -%}
+            {%- if section.settings.destacado != blank -%}
+              <span class="cauce-glow__destacado">{{ section.settings.destacado }}</span>
+            {%- endif -%}
+            {%- if section.settings.titulo_despues != blank -%}
+              {{ section.settings.titulo_despues }}
+            {%- endif -%}
+          </h2>
+        </div>
+      {%- endif -%}
+
+      <div
+        class="cauce-glow__filas"
+        role="region"
+        aria-label="{{ section.settings.etiqueta_a11y | escape }}"
+      >
+        {%- for cauce_fila in (1..cauce_filas) -%}
           {%- liquid
-            assign block_size = section.blocks.size | divided_by: 2
-            assign section_width = block_size | times: 463
-            assign animatuion_time = section.settings.animation_time | default: 25
+            assign cauce_en_fila = cauce_corte
+            if cauce_fila == 2
+              assign cauce_en_fila = cauce_validos | minus: cauce_corte
+            endif
           -%}
-          {% comment %} loop twice: {% endcomment %}
-          {% for i in (1..section.settings.loop_amount) %}
-            {%- for block in section.blocks limit: block_size -%}
-              <div class="reviews_item">
-                <div class="item_wrap">
-                  <div class="item_wrap-icon">
-                    <img
-                      src="{{ block.settings.review_icon | img_url: '50x' }}"
-                      class="item_wrap-icon__icon"
-                    >
-                    <div class="item_icon-review">
-                      {{ block.settings.review_rating }}
-                      <img
-                        style="width:9px;height:9px;"
-                        src="https://cdn.shopify.com/s/files/1/0581/1306/5129/t/1/assets/review-star.svg?v=8681932030933659819"
-                        alt=""
-                      >
-                    </div>
-                  </div>
-                  <div class="item_wrap-text">
-                    <p>{{ block.settings.review_text }}</p>
-                  </div>
-                </div>
-              </div>
-            {%- endfor -%}
-          {% endfor %}
-        </div>
-        <div class="reviews_block-bottom">
-          {% comment %} loop twice: {% endcomment %}
-          {% for i in (1..section.settings.loop_amount) %}
-            {%- for block in section.blocks offset: block_size -%}
-              <div class="reviews_item">
-                <div class="item_wrap">
-                  <div class="item_wrap-icon">
-                    <img
-                      class="item_wrap-icon__icon"
-                      src="{{ block.settings.review_icon | img_url: '50x' }}"
-                    >
-                    <div class="item_icon-review">
-                      {{ block.settings.review_rating }}
-                      <img
-                        style="width:9px;height:9px;"
-                        src="https://cdn.shopify.com/s/files/1/0581/1306/5129/t/1/assets/review-star.svg?v=8681932030933659819"
-                        alt=""
-                      >
-                    </div>
-                  </div>
-                  <div class="item_wrap-text">
-                    <p>{{ block.settings.review_text }}</p>
-                  </div>
-                </div>
-              </div>
-            {%- endfor -%}
-          {%- endfor -%}
-        </div>
+
+          <div class="cauce-glow__fila{% if cauce_fila == 2 %} cauce-glow__fila--b{% endif %}">
+            <ul
+              class="cauce-glow__pista"
+              role="list"
+              style="--cauce-glow-items: {{ cauce_en_fila }};"
+            >
+              {%- for cauce_copia in (1..cauce_copias) -%}
+                {%- assign cauce_n = 0 -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.settings.texto == blank -%}
+                    {%- continue -%}
+                  {%- endif -%}
+
+                  {%- assign cauce_n = cauce_n | plus: 1 -%}
+                  {%- if cauce_fila == 1 and cauce_n > cauce_corte -%}
+                    {%- continue -%}
+                  {%- endif -%}
+                  {%- if cauce_fila == 2 and cauce_n <= cauce_corte -%}
+                    {%- continue -%}
+                  {%- endif -%}
+
+                  {%- comment -%}
+                    Solo la primera copia lleva shopify_attributes y queda expuesta al
+                    arbol de accesibilidad. Las demas son decoracion: repetirlas en el
+                    lector de pantalla seria leer la misma resena N veces.
+                  {%- endcomment -%}
+                  <li
+                    class="cauce-glow__item{% unless cauce_copia == 1 %} cauce-glow__item--clon{% endunless %}"
+                    {% if cauce_copia == 1 %}
+                      {{ block.shopify_attributes }}
+                    {% else %}
+                      aria-hidden="true"
+                    {% endif %}
+                  >
+                    <figure class="cauce-glow__tarjeta">
+                      <div class="cauce-glow__avatar">
+                        {%- if block.settings.foto != blank -%}
+                          {{
+                            block.settings.foto
+                            | image_url: width: 160
+                            | image_tag:
+                              loading: 'lazy',
+                              widths: '80, 120, 160',
+                              sizes: '56px',
+                              class: 'cauce-glow__foto',
+                              alt: block.settings.autor | escape
+                          }}
+                        {%- else -%}
+                          {%- comment -%}
+                            Sin foto la tarjeta no se rompe: la inicial del nombre en VADO
+                            ocupa el mismo lugar. Permite maquetar antes de tener las fotos.
+                          {%- endcomment -%}
+                          <span class="cauce-glow__inicial cauce-dato" aria-hidden="true">
+                            {{- block.settings.autor | strip | slice: 0 | upcase -}}
+                          </span>
+                        {%- endif -%}
+
+                        {%- if section.settings.mostrar_puntaje and block.settings.puntaje != blank -%}
+                          <span class="cauce-glow__puntaje cauce-dato">
+                            {{- block.settings.puntaje -}}
+                            {% render 'cauce-iconos', icono: 'estrella', clase: 'cauce-glow__estrella' %}
+                          </span>
+                        {%- endif -%}
+                      </div>
+
+                      <div class="cauce-glow__cuerpo">
+                        <blockquote class="cauce-glow__texto">
+                          <p>{{ block.settings.texto }}</p>
+                        </blockquote>
+
+                        {%- if block.settings.autor != blank -%}
+                          <figcaption class="cauce-glow__autor cauce-dato">
+                            {{- block.settings.autor -}}
+                          </figcaption>
+                        {%- endif -%}
+                      </div>
+                    </figure>
+                  </li>
+                {%- endfor -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endfor -%}
       </div>
+
+      {%- if section.settings.nota != blank -%}
+        <div class="page-width">
+          <p class="cauce-glow__nota">{{ section.settings.nota }}</p>
+        </div>
+      {%- endif -%}
     </div>
   </div>
-</div>
-  <script>
-    (function () {
-      // set the .parer-wrapper-{{ section.id }} height to the height of the .parer:
-      function setHeight() {
-        var parer = document.querySelector(
-          '.parer-wrapper-{{ section.id }} .parer'
-        );
-        var parerHeight = parer.getBoundingClientRect().height;
-        var parerWrapper = document.querySelector(
-          '.parer-wrapper-{{ section.id }}'
-        );
-        parerWrapper.style.height = parerHeight + 'px';
-      }
-      // DOMContentLoaded:
-      document.addEventListener('DOMContentLoaded', setHeight);
-      window.addEventListener('resize', setHeight);
-      document.addEventListener('shopify:section:load', setHeight);
-    })();
 
-    
-  </script>
+{%- elsif request.design_mode -%}
+  {%- comment -%}
+    Sin resenas cargadas la seccion no existe en la tienda, pero tiene que ser
+    seleccionable en el editor. Este aviso solo se renderiza en design mode.
+  {%- endcomment -%}
+  <div class="cauce-glow color-{{ section.settings.color_scheme }} gradient">
+    <div class="page-width cauce-glow__aviso">
+      <p class="cauce-eyebrow">SS · Glow Testimonial</p>
+      <p>
+        La seccion esta oculta en la tienda hasta que al menos un bloque tenga texto.
+        Carga resenas reales: inventarlas es publicidad enganosa (Res. SC 270/2020) y
+        un testimonio que mencione patologias, sintomas o plazos de resultado es claim
+        terapeutico aunque lo diga un cliente (Disp. ANMAT 4980/05).
+      </p>
+    </div>
+  </div>
+{%- endif -%}
 
-  <style>
+{% schema %}
+{
+  "name": "SS - Glow Testimonial",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Solo resenas reales, con consentimiento de quien las escribio. PROHIBIDO en el texto: patologias, sintomas, plazos de resultado, cifras de eficacia, comparaciones con medicamentos y menciones a medicos o profesionales de la salud. Un bloque sin texto no se renderiza."
+    },
+    { "type": "text", "id": "volanta", "label": "Volanta", "default": "Comunidad" },
+    { "type": "text", "id": "titulo_antes", "label": "Titulo — antes del destacado", "default": "Lo que nos " },
+    {
+      "type": "text",
+      "id": "destacado",
+      "label": "Palabra destacada",
+      "default": "escriben",
+      "info": "Se pinta en VADO. El bronce queda reservado al boton de compra y al precio."
+    },
+    { "type": "text", "id": "titulo_despues", "label": "Titulo — despues del destacado", "default": " quienes ya lo toman" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    { "type": "text", "id": "etiqueta_a11y", "label": "Etiqueta para lectores de pantalla", "default": "Resenas de clientes" },
+    { "type": "richtext", "id": "nota", "label": "Nota al pie" },
 
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-    overflow:hidden;
-  }
+    { "type": "header", "content": "Marquesina" },
+    {
+      "type": "select",
+      "id": "filas",
+      "label": "Filas",
+      "options": [
+        { "value": "1", "label": "Una" },
+        { "value": "2", "label": "Dos, en sentidos opuestos" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "velocidad",
+      "min": 2,
+      "max": 14,
+      "step": 0.5,
+      "unit": "s",
+      "label": "Segundos por resena",
+      "default": 6,
+      "info": "La duracion total se calcula sobre la cantidad de resenas de cada fila, asi las dos van a la misma velocidad."
+    },
+    { "type": "range", "id": "ancho_tarjeta", "min": 260, "max": 520, "step": 20, "unit": "px", "label": "Ancho de tarjeta", "default": 380 },
+    {
+      "type": "range",
+      "id": "radio",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Radio de esquina",
+      "default": 4,
+      "info": "4px es el radio del sistema. 100px devuelve la pastilla del pack original."
+    },
+    { "type": "checkbox", "id": "mostrar_puntaje", "label": "Mostrar puntaje sobre la foto", "default": true },
 
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-    
-    .reviews {
-      overflow: visible;
-      overflow-x: hidden; /* Add this */
-      padding: 0;
-      display: block;
-      margin: 0px auto;
-    }
-    .reviews * {
-      font-size: var(--font-size);
-    }
-    @media (max-width: 767px) {
-      .reviews * {
-        font-size: var(--mobile-font-size, calc(var(--font-size) * 0.85));
-      }
-    }
-    .reviews_title {
-      text-align: center;
-    }
-    .reviews_title p {
-      line-height: 1.3;
-      font-weight:600;
-      margin-bottom: 50px;
-      margin-top: 0px;
-      padding: 0px 3rem;
-      --font-size: {{ section.settings.header_font_size }}px;
-      color: {{ section.settings.header_color }};
-    }
-    .reviews_title span {
-      background: linear-gradient(to right, {{section.settings.gradient_color_1}} 0%,{{section.settings.gradient_color_2}} 50%, {{section.settings.gradient_color_3}});
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .parer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      animation: CarouselSlider 45s linear infinite;
-    }
-    .reviews_block {
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "background-2"
+    },
 
-      display: flex;
-      width: {{section_width}}px;
-      transform:translateX(50px);
-    }
-    .reviews_block-bottom {
-      transform:translateX(-180px);
-      display: flex;
-      width: {{section_width}}px;
-    }
-    .reviews_item {
-      min-width: 419px;
-      padding: 15px 0;
-      background-color: #fff;
-      display: flex;
-      align-items: center;
-      padding: 0 59px 0 22px;
-      margin-left: 22px;
-      margin-right: 22px;
-      margin-bottom: 30px;
-      box-shadow: 4px 4px 20px {{section.settings.blur_color}};
-      border-radius: 100px;
-    }
-    .item_wrap {
-      margin: 10px 0px;
-      display: flex;
-      align-items: center;
-    }
-    .item_wrap-icon {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .item_wrap-icon img {
-      border-radius: 50%;
-      width: 45px;
-      height: 45px; /* Make sure the height and width are the same */
-      max-width:unset;
-    }
-
-    .item_wrap-icon__icon {
-      max-width:unset;
-      object-fit: cover;
-    }
-    .item_icon-review {
-      --font-size: 8px;
-      --mobile-font-size: 8px;
-      color: #ffffff;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(to right, {{section.settings.gradient_color_1}} 0%,{{section.settings.gradient_color_2}} 50%, {{section.settings.gradient_color_3}});
-    }
-    .item_wrap-text {
-      line-height: 1.5;
-      padding-left: 18px;
-      --font-size: {{section.settings.review_font_size}}px;
-      color: {{section.settings.review_font_color}};
-    }
-
-    .item_wrap-text p {
-      color: {{section.settings.review_font_color}};
-      margin:0;
-      padding:0;
-    }
-
-    @media (max-width: 767px) {
-      .reviews_title p {
-        --mobile-font-size: {{ section.settings.header_mob_font_size }}px;
-      }
-
-    }
-
-    @keyframes CarouselSlider {
-      0%
-      {
-        transform:translateX(0)
-      }
-      to
-      {
-        transform:translateX(-100%)
-      }
-    }
-  </style>
-
-  {% schema %}
-  {
-    "name": "SS - Glow Testimonial",
-    "tag": "section",
-    "class": "reviews-section",
-    "settings": [
-      {
-        "type": "range",
-        "id": "animation_time",
-        "min": 1,
-        "max": 40,
-        "step": 0.5,
-        "unit": "s",
-        "label": "Animation time",
-        "default": 30
-      },
-      {
-        "type": "range",
-        "id": "loop_amount",
-        "min": 1,
-        "max": 6,
-        "step": 1,
-        "label": "Loop amount",
-        "default": 2
-      },
-      {
-        "type": "header",
-        "content": "Header"
-      },
-      {
-        "type": "text",
-        "id": "header_before_gradient",
-        "label": "Header Before Gradient part",
-        "default": "Our customers "
-      },
-      {
-        "type": "text",
-        "id": "header_gradient",
-        "label": "Gradient header part",
-        "default": "love"
-      },
-      {
-        "type": "text",
-        "id": "header",
-        "label": "Without gradient header",
-        "default": "the product"
-      },
-      {
-        "type": "color",
-        "id": "header_color",
-        "label": "Header Font color",
-        "default": "#0B1128"
-      },
-      {
-        "type": "range",
-        "id": "header_font_size",
-        "min": 12,
-        "max": 120,
-        "step": 2,
-        "unit": "px",
-        "label": "Header Font Size",
-        "default": 42
-      },
-      {
-        "type": "range",
-        "id": "header_mob_font_size",
-        "min": 12,
-        "max": 120,
-        "step": 2,
-        "unit": "px",
-        "label": "Header Mobile Font Size",
-        "default": 28
-      },
-      {
-        "type": "header",
-        "content": "Review Item Font settings"
-      },
-      {
-        "type": "range",
-        "id": "review_font_size",
-        "min": 10,
-        "max": 24,
-        "step": 1,
-        "unit": "px",
-        "label": "Review Font Size",
-        "default": 16
-      },
-      {
-        "type": "color",
-        "id": "review_font_color",
-        "label": "Review Font color",
-        "default": "#0B1128"
-      },
-      {
-        "type": "header",
-        "content": "Gradient settings"
-      },
-      {
-        "type": "color",
-        "id": "gradient_color_1",
-        "label": "Gradient color 1",
-        "default": "#4222DE"
-      },
-      {
-        "type": "color",
-        "id": "gradient_color_2",
-        "label": "Gradient color 2",
-        "default": "#659BFF"
-      },
-      {
-        "type": "color",
-        "id": "gradient_color_3",
-        "label": "Gradient color 3",
-        "default": "#7FF6E8"
-      },
-      {
-        "type": "header",
-        "content": "Review Item Blur color"
-      },
-      {
-        "type": "color",
-        "id": "blur_color",
-        "label": "Review Item  Blur color",
-        "default": "#B8B1DC"
-      },
-      {
-          "type": "header",
-          "content": "Background color"
-      },
-	  {
-		  "type": "color",
-		  "label": "Section background color",
-		  "id": "background-color",
-		  "default": "#ffffff"
-	  },
-      {
-          "type": "header",
-          "content": "Section padding"
-        },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "resena",
+      "name": "Resena",
+      "settings": [
         {
-          "type": "range",
-          "id": "padding_top",
-          "min": 0,
-          "max": 100,
-          "step": 4,
-          "unit": "px",
-          "label": "Padding top",
-          "default": 36
+          "type": "inline_richtext",
+          "id": "texto",
+          "label": "Texto",
+          "info": "Dos o tres lineas. Admite negrita para el arranque. Sin patologias, sintomas ni plazos de resultado. Si esta vacio la tarjeta no se renderiza."
         },
-        {
-          "type": "range",
-          "id": "padding_bottom",
-          "min": 0,
-          "max": 100,
-          "step": 4,
-          "unit": "px",
-          "label": "Padding bottom",
-          "default": 36
-        }
-    ],
-    "blocks": [
-      {
-        "type": "Image",
-        "name": "Review items",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "review_icon",
-            "label": "Review author photo"
-          },
-          {
-            "type": "text",
-            "id": "review_text",
-            "label": "Review text",
-            "default": "Add awesome customer testimonial right here"
-          },
-          {
-            "type": "number",
-            "id": "review_rating",
-            "label": "Review rating",
-            "default": 5
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "SS - Glow Testimonial",
-        "blocks": [
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          },
-          {
-            "type": "Image"
-          }
-        ]
-      }
-    ]
-  }
-  {% endschema %}
-</div>
+        { "type": "text", "id": "autor", "label": "Nombre" },
+        { "type": "image_picker", "id": "foto", "label": "Foto", "info": "Cuadrada. Si no hay foto se usa la inicial del nombre." },
+        { "type": "text", "id": "puntaje", "label": "Puntaje", "default": "5", "info": "Solo si la resena tiene una calificacion real detras." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS - Glow Testimonial",
+      "blocks": [
+        { "type": "resena" },
+        { "type": "resena" },
+        { "type": "resena" },
+        { "type": "resena" },
+        { "type": "resena" },
+        { "type": "resena" }
+      ]
+    }
+  ]
+}
+{% endschema %}

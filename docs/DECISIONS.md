@@ -581,3 +581,56 @@ delineada en vez de fallar.
 **Pendiente.** Conviven dos sets: `cauce-iconos` (trazo, `viewBox 0 0 24 24`) para las secciones
 CAUCE y `material-icon` (relleno, `viewBox 0 -960 960 960`) para los blocks reusados de Shrine.
 No se unificaron: son lenguajes graficos distintos y unificarlos es rediseno, no refactor.
+
+---
+
+## D-030 · 2026-08-25 · `ss-glow-testimonial` entra a la landing, pero reescrita
+
+**Decisión.** Se agrega `SS - Glow Testimonial` a `templates/product.cauce-landing.json`
+(handle `resenas`, entre `reviews` y `fichas`). La sección se reescribió entera contra el
+sistema CAUCE: markup en `sections/ss-glow-testimonial.liquid`, estilo en
+`assets/cauce-brand.css` bloque 9, `color_scheme` en vez de pickers de color, cero hex en el
+template.
+
+**Alternativa descartada.** Usar la sección del pack tal como venía y brandearla desde el
+theme editor cargando los hex de CAUCE en sus nueve settings de color.
+
+**Por qué.** Es la excepción pedida a D-001, y la única forma de que no lo sea de verdad es
+que la sección deje de comportarse como una `ss-*`. Sin reescribir habría quedado: los cuatro
+colores de marca repetidos en el template, un `<style>` inline por instancia, y —el problema
+real— clases globales (`.reviews`, `.parer`, `.reviews_item`) que hacen que dos instancias en
+la misma página se pisen entre sí.
+
+**Qué se conservó del original.** El nombre, la marquesina de dos filas en sentidos opuestos y
+el halo alrededor de la tarjeta. Es lo que hace reconocible a la sección.
+
+**Qué cambió, y por qué.**
+
+| Original | Ahora | Motivo |
+|---|---|---|
+| Degradado de 3 colores en una palabra del título | VADO plano | El bronce se usa una vez por pieza y el título nunca es bronce (bloque 1 de `cauce-brand.css`). El degradado no existe en el brandboard. |
+| Halo `box-shadow` en un color de setting | Una sombra difusa en VADO | Mismo gesto, un solo color de marca. |
+| `border-radius: 100px` fijo | Setting, default 4px | 4px es el radio del sistema. La pastilla sigue disponible. |
+| JS que medía el carril con `getBoundingClientRect` en `DOMContentLoaded` + `resize` | Sin JS | El carril se duplica un número par de veces y se anima con `translate3d(-50%)`. No hay nada que medir. |
+| `animation: CarouselSlider 45s` hardcodeado, con un setting `animation_time` que no se leía | `calc(var(--cauce-glow-vel) * var(--cauce-glow-items))` | El setting ahora hace algo, y las dos filas van a la misma velocidad lineal aunque tengan distinta cantidad de reseñas. |
+| Estrella servida desde el CDN de otra tienda | `cauce-iconos`, icono `estrella` | Era una dependencia de red a un dominio ajeno para un SVG de 300 bytes. |
+| Sin `prefers-reduced-motion` | Grilla estática, clones ocultos | Una marquesina detenida a mitad de camino deja tarjetas cortadas por el `overflow`. |
+| Sin pausa | Pausa en `:hover` y `:focus-within` | Para leer una reseña hay que poder detenerla. |
+| Las copias del carril repetidas en el árbol de accesibilidad | `aria-hidden` en todo lo que no sea la primera copia | Un lector de pantalla leía cada reseña N veces. |
+
+**Contenido.** La sección ya estaba cargada desde el theme editor con 7 testimonios y sus
+fotos, con el esquema del pack (bloques `Image`, settings `review_*`). Al cambiar el esquema
+esos bloques habrían dejado de renderizar, así que se migraron a `resena` conservando texto,
+foto y puntaje palabra por palabra, y se mantuvo la posición elegida en el editor (después de
+`main`). El setting `texto` es `inline_richtext` y no `textarea` porque el contenido ya usaba
+`<strong>` para el arranque de cada testimonio.
+
+**Lo que la migración NO resuelve, y hay que resolver antes de publicar.** Los 7 textos son
+exactamente lo que `docs/CLAIMS-AUDIT.md` §2 prohíbe, y son el único lugar de la tienda que
+hoy afirma un beneficio: cifras de glucemia, plazos de resultado, aval de un médico, una
+patología y una comparación con otro producto con efecto adverso incluido. Un testimonio no
+deja de ser claim terapéutico porque lo firme un cliente (Disp. ANMAT 4980/05), y si no hay
+cliente real detrás es además publicidad engañosa (Res. SC 270/2020). Se migró tal cual
+porque reescribir el copy de otro no es una decisión de implementación, pero queda anotado
+como bloqueante en el checklist de `CLAIMS-AUDIT.md` §6. La sección sigue soportando el caso
+vacío: sin texto en ningún bloque no se renderiza y en el editor muestra un aviso.

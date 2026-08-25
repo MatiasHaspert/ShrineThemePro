@@ -37,7 +37,7 @@ palabra, no hay que abrir secciones una por una.
 | Cifras de eficacia o porcentajes de resultado | bloque de porcentajes | Reemplazado por `cauce-datos`: ficha técnica verificable contra el rótulo (bloque 7). |
 | Mención o comparación con medicamentos | comparativa | La comparación es contra **mezcla racémica**, un formato, no un producto ni un fármaco. |
 | Sugerir reemplazo o reducción de medicación | — | No aparece. La leyenda de suplemento y "consultá a tu médico" están en todas las páginas. |
-| Testimonios con patologías, plazos o profesionales | UGC y reseñas | UGC vacío con la prohibición escrita en el editor. Reseñas **desactivadas**: no hay reales. |
+| Testimonios con patologías, plazos o profesionales | UGC y reseñas | UGC vacío con la prohibición escrita en el editor. Reseñas `testimonials` **desactivadas**: no hay reales. **PENDIENTE:** la marquesina `ss_glow_testimonial_3jmxKc` (D-030) sí tiene 7 testimonios cargados desde el editor y los 7 caen en esta prohibición. Ver §6. |
 | Sellos de aval oficial | hero | No hay ninguno. Tampoco los genéricos tipo *gluten free* o *lab tested* (regla 5 del brandboard). |
 | Plazos de resultado | timeline | El bloque 12 habla de **hábito y reposición**. Título: "Una rutina, no un tratamiento". |
 
@@ -195,6 +195,16 @@ Plantilla de tema → `cauce-landing`.
 
 **Revisión**
 
+- [ ] **BLOQUEANTE · Los 7 testimonios de `ss_glow_testimonial_3jmxKc`.** Es el único
+      lugar de la tienda que hoy afirma un beneficio. Entre los siete dicen: cifras de
+      glucemia ("amanezco con 90 y 92", "atascado en los 110"), plazos de resultado
+      ("seis semanas", "ocho semanas"), aval de un profesional ("mi doctor se
+      sorprendió"), patología ("la diabetes de mi papá"), y comparación con otro
+      producto más efecto adverso ("la berberina me destrozó el estómago"). Cada uno
+      es claim terapéutico bajo Disp. ANMAT 4980/05 aunque lo firme un cliente, y si
+      no hay clientes reales detrás es además Res. SC 270/2020. Reescribir o quitar.
+- [ ] Verificar que existan la persona y el consentimiento detrás de cada testimonio
+      que quede, y que la foto sea de quien lo firma
 - [ ] R5 · Tabla comparativa revisada con criterio legal
 - [ ] Leer `docs/COPY-DRAFT.md` completo y aprobar o corregir cada texto
 - [ ] Confirmar que ninguna imagen nueva, alt o metafield introduce un claim

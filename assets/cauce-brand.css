@@ -529,6 +529,7 @@ h1, h2, h3, h4,
 .cauce-datos__inner,
 .cauce-detalle__inner,
 .cauce-ugc__inner,
+.cauce-glow__inner,
 .cauce-tabs-wrap > .page-width {
   padding-top: var(--padding-top, 7.2rem);
   padding-bottom: var(--padding-bottom, 7.2rem);
@@ -538,6 +539,7 @@ h1, h2, h3, h4,
   .cauce-datos__inner,
   .cauce-detalle__inner,
   .cauce-ugc__inner,
+  .cauce-glow__inner,
   .cauce-tabs-wrap > .page-width {
     padding-top: calc(var(--padding-top, 7.2rem) * 0.75);
     padding-bottom: calc(var(--padding-bottom, 7.2rem) * 0.75);
@@ -1013,3 +1015,239 @@ h1, h2, h3, h4,
    richtext de las columnas. Se nota en el bloque de explicacion, que es el unico
    con dos parrafos por columna. */
 .multicolumn-card__info p + p { margin-top: 1em; }
+
+
+/* ==========================================================================
+   9. SS - Glow Testimonial — resenas en marquesina
+   Ver sections/ss-glow-testimonial.liquid y docs/DECISIONS.md D-030.
+
+   Unica seccion del pack ss-* que sobrevive a D-001, y solo porque se reescribio
+   con las mismas reglas que las cauce-*: markup en la seccion, estilo aca, cero
+   hex en el template.
+   ========================================================================== */
+
+.cauce-glow { overflow: hidden; }
+
+.cauce-glow__encabezado { padding-bottom: var(--cauce-aire-m); }
+
+.cauce-glow__titulo {
+  margin: 0;
+  max-width: 26ch;
+}
+
+/* El original pintaba una palabra del titulo con un degradado de tres colores.
+   Aca va en VADO plano: el bronce esta reservado al boton de compra y al precio,
+   y el titulo nunca es bronce (bloque 1). VADO-TEXTO da 5.39:1 sobre SEDIMENTO. */
+.cauce-glow__destacado { color: var(--cauce-vado-texto); }
+.cauce-glow.color-inverse .cauce-glow__destacado { color: var(--cauce-vado); }
+
+/* Superficie de la tarjeta: siempre un escalon de contraste contra el fondo de
+   la seccion. Un solo token por esquema, sin repetir la regla por propiedad. */
+.cauce-glow {
+  --cauce-glow-tarjeta: var(--cauce-sedimento-2);
+  /* El anillo del puntaje necesita el color de la tarjeta OPACO: sobre una
+     superficie translucida el borde deja pasar la foto y el pill se pega al
+     avatar en vez de despegarse de el. */
+  --cauce-glow-anillo: var(--cauce-sedimento-2);
+}
+
+.cauce-glow.color-background-2 {
+  --cauce-glow-tarjeta: var(--cauce-sedimento);
+  --cauce-glow-anillo: var(--cauce-sedimento);
+}
+
+.cauce-glow.color-inverse {
+  --cauce-glow-tarjeta: rgba(233, 230, 220, 0.05);
+  /* TINTA con 5% de SEDIMENTO encima: el equivalente opaco de la tarjeta. */
+  --cauce-glow-anillo: #1b3033;
+  --cauce-glow-linea: rgba(233, 230, 220, 0.22);
+}
+
+/* El degradado en los bordes evita que las tarjetas se corten en seco contra el
+   ancho de pagina. Es lo que hace que la marquesina se lea como un carril y no
+   como una fila recortada. */
+.cauce-glow__filas {
+  display: grid;
+  gap: var(--cauce-aire-xs);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.cauce-glow__fila { overflow: hidden; }
+
+/* El carril se duplica un numero par de veces en el Liquid, asi que -50% siempre
+   cae en un punto identico al inicio y el bucle no tiene costura.
+   La duracion se calcula sobre la cantidad de resenas de la fila: con 4 arriba y
+   3 abajo las dos filas mantienen la misma velocidad lineal. */
+.cauce-glow__pista {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  /* aire vertical para que la sombra no quede cortada contra el overflow */
+  padding: 1.6rem 0;
+  list-style: none;
+  will-change: transform;
+  animation: cauce-glow-desfile
+    calc(var(--cauce-glow-vel, 6s) * var(--cauce-glow-items, 6))
+    linear infinite;
+}
+
+.cauce-glow__fila--b .cauce-glow__pista {
+  animation-direction: reverse;
+  /* delay negativo en vez de un translate de arranque: desfasa el bucle sin
+     tocar el transform, que ya lo usa la animacion. */
+  animation-delay: calc(var(--cauce-glow-vel, 6s) * var(--cauce-glow-items, 6) * -0.37);
+}
+
+@keyframes cauce-glow-desfile {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Para leer una resena hay que poder detenerla. Tambien al tabular adentro. */
+.cauce-glow__fila:hover .cauce-glow__pista,
+.cauce-glow__fila:focus-within .cauce-glow__pista {
+  animation-play-state: paused;
+}
+
+.cauce-glow__item {
+  flex: 0 0 var(--cauce-glow-ancho, 380px);
+  max-width: var(--cauce-glow-ancho, 380px);
+  margin-right: var(--cauce-aire-s);
+}
+
+.cauce-glow__tarjeta {
+  display: flex;
+  align-items: center;
+  gap: var(--cauce-aire-s);
+  height: 100%;
+  margin: 0;
+  padding: 1.6rem 2rem;
+  border: 1px solid var(--cauce-glow-linea, var(--cauce-linea));
+  border-radius: var(--cauce-glow-radio, 4px);
+  background-color: var(--cauce-glow-tarjeta);
+  /* El "glow": una sola sombra difusa en VADO en vez del halo de tres colores
+     del pack. Es lo unico que separa la tarjeta del fondo. */
+  box-shadow: 0 0.2rem 2.8rem rgba(111, 155, 161, 0.3);
+}
+
+.cauce-glow.color-inverse .cauce-glow__tarjeta {
+  box-shadow: 0 0.2rem 3.2rem rgba(111, 155, 161, 0.18);
+}
+
+.cauce-glow__avatar {
+  position: relative;
+  flex: 0 0 auto;
+  width: 5.6rem;
+  height: 5.6rem;
+}
+
+.cauce-glow__foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cauce-glow__inicial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--cauce-vado);
+  color: var(--cauce-tinta);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+/* TINTA sobre VADO da 5.16:1. El borde del color de la tarjeta lo despega de la
+   foto sin agregar un color mas. */
+.cauce-glow__puntaje {
+  position: absolute;
+  right: -0.4rem;
+  bottom: -0.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 2rem;
+  padding: 0 0.55rem;
+  border: 2px solid var(--cauce-glow-anillo);
+  border-radius: 100px;
+  background-color: var(--cauce-vado);
+  color: var(--cauce-tinta);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.cauce-glow__estrella {
+  width: 1rem;
+  height: 1rem;
+  color: var(--cauce-tinta);
+}
+
+.cauce-glow__cuerpo { min-width: 0; }
+
+.cauce-glow__texto {
+  margin: 0;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.5rem;
+  line-height: 1.55;
+}
+
+.cauce-glow__texto p { margin: 0; }
+
+.cauce-glow__autor {
+  margin: 0.8rem 0 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.cauce-glow__nota {
+  margin: var(--cauce-aire-s) 0 0;
+  max-width: 70ch;
+  font-size: 1.2rem;
+  opacity: 0.85;
+}
+
+.cauce-glow__nota p { margin: 0; }
+
+.cauce-glow__aviso {
+  padding: var(--cauce-aire-m) 0;
+  max-width: 78ch;
+  font-size: 1.3rem;
+}
+
+@media screen and (max-width: 749px) {
+  .cauce-glow__item {
+    flex-basis: min(var(--cauce-glow-ancho, 380px), 84vw);
+    max-width: min(var(--cauce-glow-ancho, 380px), 84vw);
+  }
+  .cauce-glow__tarjeta { padding: 1.4rem 1.6rem; }
+  .cauce-glow__avatar { width: 4.8rem; height: 4.8rem; }
+  .cauce-glow__inicial { font-size: 1.7rem; }
+}
+
+/* Sin animacion las tarjetas se acomodan en grilla y las copias desaparecen: una
+   marquesina detenida a mitad de camino deja tarjetas cortadas por el overflow. */
+@media (prefers-reduced-motion: reduce) {
+  .cauce-glow__filas {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .cauce-glow__fila { overflow: visible; }
+  .cauce-glow__pista {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: var(--cauce-aire-s);
+    padding: 0;
+  }
+  .cauce-glow__item { margin-right: 0; }
+  .cauce-glow__item--clon { display: none; }
+}

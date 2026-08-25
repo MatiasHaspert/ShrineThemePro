@@ -84,6 +84,15 @@
       <rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>
     </svg>
 
+  {%- comment -%}
+    Unico icono del set con relleno: a 9 px una estrella de trazo se cierra y se lee
+    como una mancha. El resto sigue siendo stroke.
+  {%- endcomment -%}
+  {%- when 'estrella' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false">
+      <path d="m12 3.4 2.68 5.43 5.99.87-4.33 4.22 1.02 5.97L12 17.07l-5.36 2.82 1.02-5.97-4.33-4.22 5.99-.87Z"/>
+    </svg>
+
   {%- when 'balanza' -%}
     <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
       <path d="M12 4v16M6 20h12M4 8h16M7 8l-3 6h6ZM17 8l-3 6h6Z"/>
