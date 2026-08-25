@@ -1,42 +1,63 @@
 /* ==========================================================================
-   CAUCE — sistema de marca
+   CAUCE — sistema de marca (brandboard v2 · 2026)
    Unico lugar donde viven los tokens. Ninguna seccion cauce-* declara hex.
 
    Se carga DESPUES de base.css (ver layout/theme.liquid).
 
-   Los 4 colores tambien estan cargados en los settings globales del tema
-   (colors_text, colors_background_1, colors_accent_1, colors_accent_2) para que
-   las secciones nativas de Shrine los hereden via su sistema de color_scheme.
-   Ver docs/DECISIONS.md D-002.
+   Los colores tambien estan cargados en los settings globales del tema para que
+   las secciones nativas de Shrine los hereden via su sistema de color_scheme:
+
+     colors_background_1 ......... BLANCO      fondo dominante
+     colors_background_2 ......... SEDIMENTO   bandas y bloques sobre blanco
+     colors_text ................. CAUCE       tipografia (y fondo de .color-inverse)
+     colors_accent_1 ............. OXIDO       acento
+     colors_accent_2 ............. VADO        secundario
+     colors_solid_button_labels .. BLANCO      etiqueta sobre el boton de acento
+
+   Ver docs/DECISIONS.md D-002 y D-031.
    ========================================================================== */
 
 :root {
-  /* --- Paleta (brandboard v1) ------------------------------------------ */
-  --cauce-tinta:      #10262A; /* marca: fondos oscuros, tipografia */
-  --cauce-sedimento:  #E9E6DC; /* fondo dominante */
-  --cauce-bronce:     #B98A44; /* acento UNICO: boton de compra y precio */
-  --cauce-vado:       #6F9BA1; /* secundario: iconos, graficos, submarcas */
+  /* --- Paleta (brandboard v2) ------------------------------------------ */
+  --cauce-cauce:       #10262A; /* color de marca: frascos, bandas oscuras, tipografia */
+  --cauce-blanco:      #FFFFFF; /* fondo dominante en web. Solo digital.               */
+  --cauce-sedimento:   #E9E6DC; /* superficie: etiquetas, packaging, bloques sobre blanco */
+  --cauce-vado:        #5F99A2; /* secundario: graficos, iconos, submarcas             */
+  --cauce-oxido:       #B03A22; /* acento UNICO sobre claro. Texto blanco encima.      */
+  --cauce-oxido-claro: #D9603F; /* el mismo acento sobre CAUCE. Nunca sobre claro.     */
 
-  /* --- Variantes accesibles -------------------------------------------- *
-   * BRONCE y VADO puros no llegan a AA como texto sobre SEDIMENTO.
-   * Medido (WCAG 2.1, sRGB):
-   *   BRONCE sobre SEDIMENTO ............ 2.48:1  FALLA
-   *   VADO sobre SEDIMENTO .............. 2.44:1  FALLA
-   * Se ajusta el tono del texto, no el token de marca (brief 7).
-   * Mismo matiz (H 36 y H 187), solo baja la luminosidad:
-   *   BRONCE-TEXTO sobre SEDIMENTO ...... 5.00:1  AA texto
-   *   VADO-ICONO sobre SEDIMENTO ........ 3.66:1  AA componentes (1.4.11)
-   * Sobre TINTA los tokens puros SI pasan: BRONCE 5.09:1, VADO 5.16:1.        */
-  --cauce-bronce-texto: #7A5B2E;
-  --cauce-vado-icono:   #557C82;
-  /* VADO para texto chico: --cauce-vado-icono da 3.66:1, que alcanza para
-     iconos y componentes pero no para texto. Este da 5.39:1. */
-  --cauce-vado-texto:   #3F6167;
+  /* --- Contraste medido (WCAG 2.1, sRGB) --------------------------------- *
+   *                       sobre BLANCO   sobre SEDIMENTO   sobre CAUCE
+   *   CAUCE ...............  15.76 AAA      12.62 AAA          —
+   *   SEDIMENTO ...........   1.25 falla       —             12.62 AAA
+   *   OXIDO ...............   6.04 AA         4.84 AA         2.61 falla
+   *   OXIDO CLARO .........   3.69 grande     2.95 falla      4.27 grande
+   *   VADO ................   3.20 UI         2.56 falla      4.93 AA
+   *
+   * Tres consecuencias que cambian respecto de v1:
+   *
+   * 1. OXIDO pasa AA como texto sobre los dos fondos claros. El BRONCE de v1 no
+   *    llegaba (2.48:1) y por eso existia --cauce-bronce-texto. Ese token se
+   *    elimina: el acento ya se usa puro, como lo dibuja el brandboard.
+   *
+   * 2. Blanco sobre OXIDO da 6.04:1, asi que la etiqueta del boton vuelve a ser
+   *    blanca, tal como pide el brandboard. Con BRONCE daba 3.10:1 y habia que
+   *    ponerla en TINTA. Revierte D-011.
+   *
+   * 3. VADO sobre SEDIMENTO da 2.56:1. El brandboard ya lo prohibe ("sobre
+   *    blanco o cauce, no sobre sedimento"); aca ese limite se aplica solo, via
+   *    el token contextual --cauce-icono.                                     */
 
-  /* Superficie secundaria: tarjetas y bandas sobre SEDIMENTO.
-     TINTA sobre esta superficie mantiene 11.5:1. */
+  /* VADO no llega a AA como texto sobre claro (3.20:1 sobre blanco). Se ajusta
+     el valor del texto, no el token de marca: mismo matiz (H 188) y misma croma.
+       VADO-TEXTO sobre BLANCO ....... 5.63:1  AA texto
+       VADO-TEXTO sobre SEDIMENTO .... 4.50:1  AA texto                        */
+  --cauce-vado-texto:  #446E75;
+
+  /* Superficie de tercer nivel: tarjetas dentro de una banda SEDIMENTO.
+     CAUCE sobre esta superficie mantiene 11.5:1. */
   --cauce-sedimento-2: #DFDBCE;
-  --cauce-linea:       rgba(16, 38, 42, 0.14);
+  --cauce-linea:        rgba(16, 38, 42, 0.14);
   --cauce-linea-fuerte: rgba(16, 38, 42, 0.28);
 
   /* --- Tipografia ------------------------------------------------------- */
@@ -63,6 +84,87 @@
 }
 
 /* ==========================================================================
+   0. Tokens contextuales
+   El brandboard define el acento en DOS valores segun el fondo, y prohibe VADO
+   sobre SEDIMENTO. En vez de repetir cada regla dos veces (una clara y una
+   `.color-inverse`, que es como estaba resuelto en v1), el par se resuelve una
+   sola vez aca y todo lo de abajo usa el token contextual.
+
+   Consumidores: --cauce-acento, --cauce-acento-label, --cauce-icono,
+   --cauce-secundario.
+   ========================================================================== */
+
+:root,
+.color-background-1,
+.color-background-2 {
+  --cauce-acento:       var(--cauce-oxido);
+  --cauce-acento-label: var(--cauce-blanco);
+  --cauce-secundario:   var(--cauce-vado-texto);
+}
+
+/* Sobre BLANCO el VADO puro pasa 3.20:1, que alcanza para iconos y componentes
+   (1.4.11) y es el uso que dibuja el brandboard. */
+:root,
+.color-background-1 {
+  --cauce-icono: var(--cauce-vado);
+}
+
+/* Sobre SEDIMENTO no. Regla del brandboard, aplicada sola. */
+.color-background-2 {
+  --cauce-icono: var(--cauce-vado-texto);
+}
+
+/* Sobre CAUCE entran los valores puros: VADO da 4.93:1 y el acento cambia al
+   segundo valor. OXIDO CLARO sobre CAUCE da 4.27:1 — AA para texto grande y
+   componentes, que es el uso que tiene (relleno del boton, trazo del isotipo,
+   precio). CAUCE encima del relleno da 4.27:1 y blanco 3.69:1, asi que la
+   etiqueta va en CAUCE: es el maximo disponible y el brandboard no la fija. */
+.color-inverse,
+.color-text,
+.cauce-banda-oscura,
+.cauce-legal {
+  --cauce-acento:       var(--cauce-oxido-claro);
+  --cauce-acento-label: var(--cauce-cauce);
+  --cauce-icono:        var(--cauce-vado);
+  --cauce-secundario:   var(--cauce-vado);
+}
+
+/* Secciones cuyo FONDO es el acento o el secundario. Encima de OXIDO no hay
+   acento posible: lo que se pida como tal cae al color legible sobre el fondo
+   (blanco 6.04:1 sobre OXIDO, CAUCE 4.93:1 sobre VADO). Sin esto un icono
+   accent-1 dentro de una seccion accent-1 se dibuja de su propio color. */
+.color-accent-1 {
+  --cauce-acento:       var(--cauce-blanco);
+  --cauce-acento-label: var(--cauce-oxido);
+  --cauce-icono:        var(--cauce-blanco);
+  --cauce-secundario:   var(--cauce-blanco);
+}
+
+.color-accent-2 {
+  --cauce-acento:       var(--cauce-cauce);
+  --cauce-acento-label: var(--cauce-vado);
+  --cauce-icono:        var(--cauce-cauce);
+  --cauce-secundario:   var(--cauce-cauce);
+}
+
+/* Shrine hace salir el primer plano de los DOS esquemas de acento del mismo
+   setting:
+       .color-accent-1, .color-accent-2 {
+         --color-foreground: var(--color-base-solid-button-labels) }
+
+   Con un acento de dos valores ese setting no puede servir a los dos. Blanco es
+   el unico que funciona sobre OXIDO (6.04:1; CAUCE da 2.61:1) y es lo que pide
+   el brandboard, asi que colors_solid_button_labels es blanco. Pero blanco
+   sobre VADO da 3.20:1, que no pasa AA como texto.
+
+   Se separa aca, y solo para accent-2: sobre VADO el primer plano vuelve a
+   CAUCE (4.93:1). Misma especificidad que la regla de base.css, gana por orden
+   de carga. Arrastra --accent-color y --color-button, que se derivan de el. */
+.color-accent-2 {
+  --color-foreground: var(--color-base-text);
+}
+
+/* ==========================================================================
    1. Remapeo del tema
    Las secciones nativas de Shrine resuelven contra --color-base-*, que
    theme.liquid genera desde los settings globales. Aca solo reforzamos lo
@@ -71,7 +173,7 @@
 
 body {
   font-family: var(--cauce-font-texto);
-  background-color: var(--cauce-sedimento);
+  background-color: var(--cauce-blanco);
 }
 
 h1, h2, h3, h4,
@@ -81,8 +183,8 @@ h1, h2, h3, h4,
   letter-spacing: -0.01em;
 }
 
-/* Regla de marca: el bronce se usa una vez por pieza. El titulo nunca es
-   bronce; el bronce queda reservado al boton de compra y al precio.
+/* Regla de marca: el oxido se usa una vez por pieza. El titulo nunca es
+   oxido; el oxido queda reservado al boton de compra y al precio.
    Esto neutraliza los "title_highlight_color" que traen las secciones de
    Shrine si alguien los pone en accent-1 por error. */
 .cauce-page h1, .cauce-page h2, .cauce-page h3 {
@@ -153,15 +255,16 @@ h1, h2, h3, h4,
   margin: 0 0 var(--cauce-aire-s);
 }
 
-/* El unico bronce de la pieza. Usar como maximo una vez por seccion visible. */
-.cauce-acento {
-  color: var(--cauce-bronce-texto);
-}
+/* El unico oxido de la pieza. Usar como maximo una vez por seccion visible.
+   El token ya trae el valor que corresponde al fondo (bloque 0).
 
-/* Sobre fondo TINTA el bronce puro si pasa AA, no hace falta oscurecerlo. */
-.color-inverse .cauce-acento,
-.cauce-banda-oscura .cauce-acento {
-  color: var(--cauce-bronce);
+   LIMITE: sobre CAUCE el token vale OXIDO CLARO, que da 4.27:1. Eso es AA para
+   texto grande (>=2.4rem, o >=1.87rem en negrita) y para componentes, pero no
+   para texto chico. Sobre banda oscura este utilitario va en titulos, precios y
+   datos grandes. Para texto chico sobre CAUCE, usar --cauce-secundario (VADO,
+   4.93:1) o blanco. Ver docs/DECISIONS.md D-031. */
+.cauce-acento {
+  color: var(--cauce-acento);
 }
 
 /* Iconos VADO. currentColor deja que hereden el tono correcto por contexto. */
@@ -169,13 +272,8 @@ h1, h2, h3, h4,
   width: 2.4rem;
   height: 2.4rem;
   flex: 0 0 auto;
-  color: var(--cauce-vado-icono);
+  color: var(--cauce-icono);
   stroke-width: 1.4;
-}
-
-.color-inverse .cauce-icono,
-.cauce-banda-oscura .cauce-icono {
-  color: var(--cauce-vado);
 }
 
 /* Reglas finas editoriales. */
@@ -194,32 +292,19 @@ h1, h2, h3, h4,
 
    Las secciones nativas de Shrine ofrecen `icon_color` / `title_highlight_color`
    con opciones accent-1 y accent-2, que resuelven al token puro:
-       .text-color-accent-1 { color: rgb(var(--color-base-accent-1)) }  BRONCE
+       .text-color-accent-1 { color: rgb(var(--color-base-accent-1)) }  OXIDO
        .text-color-accent-2 { color: rgb(var(--color-base-accent-2)) }  VADO
-   Sobre SEDIMENTO eso da 2.48:1 y 2.44:1 y no pasa AA.
+   OXIDO puro ya pasa AA sobre los dos fondos claros, pero sobre CAUCE da
+   2.61:1; y VADO da 2.56:1 sobre SEDIMENTO. O sea que el token puro falla en
+   un fondo distinto en cada caso.
 
    En vez de prohibir esas opciones en el theme editor (que nadie va a recordar),
-   se remapean aca: sobre fondo claro entran las variantes oscurecidas, sobre
-   TINTA vuelven los tokens puros, que ahi si pasan. Un solo lugar, sin tocar
-   ninguna seccion. */
-.color-background-1 .text-color-accent-1,
-.color-background-2 .text-color-accent-1 {
-  color: var(--cauce-bronce-texto);
-}
-
-.color-background-1 .text-color-accent-2,
-.color-background-2 .text-color-accent-2 {
-  color: var(--cauce-vado-icono);
-}
-
-.color-inverse .text-color-accent-1,
-.color-accent-1 .text-color-accent-1 {
-  color: var(--cauce-bronce);
-}
-
-.color-inverse .text-color-accent-2 {
-  color: var(--cauce-vado);
-}
+   se remapean al token contextual, que ya trae el valor correcto para el fondo
+   de la seccion (bloque 0). Sin prefijo de esquema y a proposito: la columna de
+   info del producto no esta envuelta en ningun .color-*, y ademas asi la regla
+   empata en especificidad con la de base.css y gana por orden de carga. */
+.text-color-accent-1 { color: var(--cauce-acento); }
+.text-color-accent-2 { color: var(--cauce-secundario); }
 
 /* horizontal-ticker no respeta prefers-reduced-motion (AUDIT 2, bloque 11). */
 @media (prefers-reduced-motion: reduce) {
@@ -239,7 +324,7 @@ h1, h2, h3, h4,
 /* Foco visible propio: el tema lo apaga en varios componentes. */
 .cauce-page :focus-visible,
 .cauce-legal :focus-visible {
-  outline: 2px solid var(--cauce-vado-icono);
+  outline: 2px solid var(--cauce-icono);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -249,7 +334,7 @@ h1, h2, h3, h4,
    ========================================================================== */
 
 .cauce-legal {
-  background-color: var(--cauce-tinta);
+  background-color: var(--cauce-cauce);
   color: var(--cauce-sedimento);
   font-family: var(--cauce-font-texto);
   font-size: 1.3rem;
@@ -262,8 +347,12 @@ h1, h2, h3, h4,
   text-underline-offset: 0.25em;
 }
 
+/* No lleva el acento, por dos razones que coinciden. La de marca: el oxido se
+   usa una vez por pieza y ese uso es el boton de compra, no un link del pie.
+   La medida: este texto es de 1.3rem y OXIDO CLARO sobre CAUCE da 4.27:1, que
+   no pasa AA a ese tamano. Blanco da 15.76:1. */
 .cauce-legal a:hover {
-  color: var(--cauce-bronce);
+  color: var(--cauce-blanco);
 }
 
 .cauce-legal__inner {
@@ -294,8 +383,8 @@ h1, h2, h3, h4,
 .cauce-legal a.cauce-legal__boton { text-decoration: none; }
 
 .cauce-legal__boton:hover {
-  border-color: var(--cauce-bronce);
-  color: var(--cauce-bronce);
+  border-color: var(--cauce-blanco);
+  color: var(--cauce-blanco);
 }
 
 /* Sin URL cargada el boton no es un link: no puede parecer que funciona. */
@@ -340,8 +429,8 @@ h1, h2, h3, h4,
 
 /* Placeholder visible: los datos que faltan no pueden pasar desapercibidos. */
 .cauce-pendiente {
-  background: rgba(185, 138, 68, 0.22);
-  border-bottom: 1px dashed var(--cauce-bronce);
+  background: rgba(176, 58, 34, 0.16);
+  border-bottom: 1px dashed var(--cauce-acento);
   padding: 0 0.3em;
   font-family: var(--cauce-font-dato);
   font-size: 0.92em;
@@ -356,8 +445,8 @@ h1, h2, h3, h4,
    crudos y los baja por style inline. Se fuerzan a los tokens: ningun hex suelto
    decide un color de marca, y en el theme editor nadie va a recordar la paleta. */
 .product__text-container .product__text {
-  --text-color: var(--cauce-tinta) !important;
-  --icon-color: var(--cauce-vado-icono) !important;
+  --text-color: var(--cauce-cauce) !important;
+  --icon-color: var(--cauce-icono) !important;
 }
 
 /* Subtitulo del hero: una linea, sin competir con el h1. */
@@ -451,7 +540,7 @@ h1, h2, h3, h4,
   padding: 0.55em 0.7em;
   border: 1px solid rgba(16, 38, 42, 0.22);
   border-radius: 3px;
-  color: var(--cauce-tinta);
+  color: var(--cauce-cauce);
   white-space: nowrap;
 }
 
@@ -514,7 +603,7 @@ h1, h2, h3, h4,
    escalones ni en los acordeones propios. */
 .product__info-container :focus-visible,
 .cauce-acordeon :focus-visible {
-  outline: 2px solid var(--cauce-vado-icono);
+  outline: 2px solid var(--cauce-icono);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -555,7 +644,7 @@ h1, h2, h3, h4,
 
 /* El gap de 1px pintado hace que la grilla se lea como una tabla con reglas
    finas sin declarar un borde por celda. currentColor la mantiene legible
-   tanto sobre SEDIMENTO como sobre TINTA sin duplicar la regla. */
+   tanto sobre los fondos claros como sobre CAUCE sin duplicar la regla. */
 .cauce-datos__grilla {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -571,7 +660,7 @@ h1, h2, h3, h4,
 }
 
 .color-background-2 .cauce-datos__item { --cauce-fondo-celda: var(--cauce-sedimento-2); }
-.color-inverse .cauce-datos__item { --cauce-fondo-celda: var(--cauce-tinta); }
+.color-inverse .cauce-datos__item { --cauce-fondo-celda: var(--cauce-cauce); }
 
 .cauce-datos__etiqueta {
   font-family: var(--cauce-font-texto);
@@ -749,7 +838,7 @@ h1, h2, h3, h4,
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--cauce-tinta);
+  color: var(--cauce-cauce);
 }
 
 .cauce-ugc__play {
@@ -789,7 +878,12 @@ h1, h2, h3, h4,
   clip-path: polygon(0 35%, 35% 35%, 65% 5%, 65% 95%, 35% 65%, 0 65%);
 }
 
-.cauce-ugc__sonido--activo { background-color: var(--cauce-bronce); }
+/* CAUCE sobre OXIDO da 2.61:1, asi que el icono del estado activo va con la
+   etiqueta del acento (blanco, 6.04:1) y no con el color base del boton. */
+.cauce-ugc__sonido--activo {
+  background-color: var(--cauce-acento);
+  color: var(--cauce-acento-label);
+}
 
 .cauce-ugc__pie { padding: var(--cauce-aire-xs) 0 0; }
 
@@ -816,10 +910,8 @@ h1, h2, h3, h4,
 /* Shrine trae un violeta #6D388B para el resaltado del titulo y un amarillo
    para las estrellas, como hex sueltos en settings que nadie va a recordar
    cambiar seccion por seccion. Se fuerzan al token. */
-.title-with-highlight { --hightlight-color: var(--cauce-bronce-texto) !important; }
-.color-inverse .title-with-highlight { --hightlight-color: var(--cauce-bronce) !important; }
-.testimonial-card__stars { --stars-color: var(--cauce-bronce-texto) !important; }
-.color-inverse .testimonial-card__stars { --stars-color: var(--cauce-bronce) !important; }
+.title-with-highlight { --hightlight-color: var(--cauce-acento) !important; }
+.testimonial-card__stars { --stars-color: var(--cauce-acento) !important; }
 
 /* ==========================================================================
    7. Cierre y legales (fase 5)
@@ -953,7 +1045,7 @@ h1, h2, h3, h4,
   width: 1.8rem;
   height: 1.8rem;
   margin-top: 0.1rem;
-  accent-color: var(--cauce-bronce-texto);
+  accent-color: var(--cauce-acento);
 }
 
 .cauce-news__consent-label {
@@ -1001,15 +1093,13 @@ h1, h2, h3, h4,
 }
 
 /* Los pills de los escalones usan --accent-color, que Shrine resuelve al token
-   puro. VADO sobre SEDIMENTO da 2.44:1. Mismo remapeo que ya se hizo para
+   puro. VADO sobre SEDIMENTO da 2.56:1. Mismo remapeo que ya se hizo para
    .text-color-accent-*, que no cubria esta clase. */
 /* Sin prefijo de esquema: la columna de info del producto no esta envuelta en
    ningun .color-*, asi que la version con ancestro no aplicaba justo donde hacia
    falta. Misma especificidad que la regla de base.css, pero carga despues. */
-.accent-color-accent-1 { --accent-color: var(--cauce-bronce-texto); }
-.accent-color-accent-2 { --accent-color: var(--cauce-vado-texto); }
-.color-inverse .accent-color-accent-1 { --accent-color: var(--cauce-bronce); }
-.color-inverse .accent-color-accent-2 { --accent-color: var(--cauce-vado); }
+.accent-color-accent-1 { --accent-color: var(--cauce-acento); }
+.accent-color-accent-2 { --accent-color: var(--cauce-secundario); }
 
 /* Los parrafos de multicolumn venian pegados: el tema pone margin 0 en los p del
    richtext de las columnas. Se nota en el bloque de explicacion, que es el unico
@@ -1036,29 +1126,32 @@ h1, h2, h3, h4,
 }
 
 /* El original pintaba una palabra del titulo con un degradado de tres colores.
-   Aca va en VADO plano: el bronce esta reservado al boton de compra y al precio,
-   y el titulo nunca es bronce (bloque 1). VADO-TEXTO da 5.39:1 sobre SEDIMENTO. */
-.cauce-glow__destacado { color: var(--cauce-vado-texto); }
-.cauce-glow.color-inverse .cauce-glow__destacado { color: var(--cauce-vado); }
+   Aca va en VADO plano: el oxido esta reservado al boton de compra y al precio,
+   y el titulo nunca es oxido (bloque 1). El token contextual da VADO-TEXTO
+   sobre claro (5.63:1 en blanco) y VADO puro sobre CAUCE (4.93:1). */
+.cauce-glow__destacado { color: var(--cauce-secundario); }
 
 /* Superficie de la tarjeta: siempre un escalon de contraste contra el fondo de
-   la seccion. Un solo token por esquema, sin repetir la regla por propiedad. */
+   la seccion. Un solo token por esquema, sin repetir la regla por propiedad.
+   Con BLANCO como fondo dominante el escalon sobre una seccion sin banda es
+   SEDIMENTO, que es exactamente lo que el brandboard llama "bloques sobre
+   blanco"; dentro de una banda SEDIMENTO baja un escalon mas. */
 .cauce-glow {
-  --cauce-glow-tarjeta: var(--cauce-sedimento-2);
+  --cauce-glow-tarjeta: var(--cauce-sedimento);
   /* El anillo del puntaje necesita el color de la tarjeta OPACO: sobre una
      superficie translucida el borde deja pasar la foto y el pill se pega al
      avatar en vez de despegarse de el. */
-  --cauce-glow-anillo: var(--cauce-sedimento-2);
+  --cauce-glow-anillo: var(--cauce-sedimento);
 }
 
 .cauce-glow.color-background-2 {
-  --cauce-glow-tarjeta: var(--cauce-sedimento);
-  --cauce-glow-anillo: var(--cauce-sedimento);
+  --cauce-glow-tarjeta: var(--cauce-sedimento-2);
+  --cauce-glow-anillo: var(--cauce-sedimento-2);
 }
 
 .cauce-glow.color-inverse {
   --cauce-glow-tarjeta: rgba(233, 230, 220, 0.05);
-  /* TINTA con 5% de SEDIMENTO encima: el equivalente opaco de la tarjeta. */
+  /* CAUCE con 5% de SEDIMENTO encima: el equivalente opaco de la tarjeta. */
   --cauce-glow-anillo: #1b3033;
   --cauce-glow-linea: rgba(233, 230, 220, 0.22);
 }
@@ -1128,11 +1221,11 @@ h1, h2, h3, h4,
   background-color: var(--cauce-glow-tarjeta);
   /* El "glow": una sola sombra difusa en VADO en vez del halo de tres colores
      del pack. Es lo unico que separa la tarjeta del fondo. */
-  box-shadow: 0 0.2rem 2.8rem rgba(111, 155, 161, 0.3);
+  box-shadow: 0 0.2rem 2.8rem rgba(95, 153, 162, 0.3);
 }
 
 .cauce-glow.color-inverse .cauce-glow__tarjeta {
-  box-shadow: 0 0.2rem 3.2rem rgba(111, 155, 161, 0.18);
+  box-shadow: 0 0.2rem 3.2rem rgba(95, 153, 162, 0.18);
 }
 
 .cauce-glow__avatar {
@@ -1158,12 +1251,12 @@ h1, h2, h3, h4,
   height: 100%;
   border-radius: 50%;
   background-color: var(--cauce-vado);
-  color: var(--cauce-tinta);
+  color: var(--cauce-cauce);
   font-size: 2rem;
   line-height: 1;
 }
 
-/* TINTA sobre VADO da 5.16:1. El borde del color de la tarjeta lo despega de la
+/* CAUCE sobre VADO da 4.93:1. El borde del color de la tarjeta lo despega de la
    foto sin agregar un color mas. */
 .cauce-glow__puntaje {
   position: absolute;
@@ -1177,7 +1270,7 @@ h1, h2, h3, h4,
   border: 2px solid var(--cauce-glow-anillo);
   border-radius: 100px;
   background-color: var(--cauce-vado);
-  color: var(--cauce-tinta);
+  color: var(--cauce-cauce);
   font-size: 1rem;
   line-height: 1;
 }
@@ -1185,7 +1278,7 @@ h1, h2, h3, h4,
 .cauce-glow__estrella {
   width: 1rem;
   height: 1rem;
-  color: var(--cauce-tinta);
+  color: var(--cauce-cauce);
 }
 
 .cauce-glow__cuerpo { min-width: 0; }

@@ -181,6 +181,10 @@ conecte. Nada del roadmap de CAUCE lo necesita.
 
 ## D-011 · 2026-08-21 · El label del boton solido es TINTA, no blanco
 
+> **REVERTIDA por D-031 (2026-08-25).** Valia mientras el acento era BRONCE. Sobre OXIDO los
+> numeros se dan vuelta: blanco da 6.04:1 y TINTA 2.61:1. La etiqueta del boton es blanca.
+> Lo que sigue queda como registro del razonamiento, no como regla vigente.
+
 **Decision.** `colors_solid_button_labels` = `#10262A` (TINTA).
 
 **Alternativa descartada.** Blanco o SEDIMENTO sobre el boton BRONCE, que es lo que se ve en la
@@ -306,6 +310,9 @@ dosis pasan a nivel variante y el calculo se hace por variante. No antes.
 ---
 
 ## D-016 · 2026-08-22 · Un solo elemento BRONCE en el hero: el boton de compra
+
+> **VIGENTE, con el color cambiado por D-031 (2026-08-25).** Donde dice BRONCE, leer OXIDO
+> (`#B03A22` sobre claro, `#D9603F` sobre CAUCE). La regla no cambio; el acento si.
 
 **Decision.** En `templates/product.cauce-landing.json`, el unico elemento que resuelve a
 BRONCE es el boton de agregar al carrito. El precio va en `text` (TINTA), los escalones de
@@ -634,3 +641,99 @@ cliente real detrás es además publicidad engañosa (Res. SC 270/2020). Se migr
 porque reescribir el copy de otro no es una decisión de implementación, pero queda anotado
 como bloqueante en el checklist de `CLAIMS-AUDIT.md` §6. La sección sigue soportando el caso
 vacío: sin texto en ningún bloque no se renderiza y en el editor muestra un aviso.
+
+---
+
+## D-031 · 2026-08-25 · Rebrandeo a la brandboard v2
+
+**Decisión.** Se aplica la paleta v2 completa. El acento pasa de BRONCE `#B98A44` a ÓXIDO
+`#B03A22` en dos valores, y **el fondo dominante pasa de SEDIMENTO a BLANCO**. SEDIMENTO baja
+a `colors_background_2` y queda como superficie de bloques sobre blanco, que es como lo
+describe la brandboard. La tipografía no cambió entre v1 y v2, así que no se tocó.
+
+| | v1 | v2 | Setting |
+|---|---|---|---|
+| Marca | TINTA `#10262A` | CAUCE `#10262A` | `colors_text` |
+| Fondo dominante | SEDIMENTO `#E9E6DC` | BLANCO `#FFFFFF` | `colors_background_1` |
+| Superficie | sedimento-2 `#DFDBCE` | SEDIMENTO `#E9E6DC` | `colors_background_2` |
+| Acento sobre claro | BRONCE `#B98A44` | ÓXIDO `#B03A22` | `colors_accent_1` |
+| Acento sobre oscuro | — | ÓXIDO CLARO `#D9603F` | sin setting |
+| Secundario | VADO `#6F9BA1` | VADO `#5F99A2` | `colors_accent_2` |
+
+---
+
+### 1. El acento de dos valores se resuelve con tokens contextuales, no con reglas pareadas
+
+La brandboard define el acento en dos valores según el fondo (`#B03A22` sobre claro,
+`#D9603F` sobre CAUCE) y prohíbe VADO sobre SEDIMENTO. En v1 eso estaba resuelto repitiendo
+cada regla dos veces: una clara y una `.color-inverse`. Con un acento de dos valores más la
+prohibición de VADO, esa forma escalaba a cuatro variantes por regla.
+
+Se reemplaza por cuatro tokens que cambian de valor según el esquema, declarados una sola vez
+en el bloque 0 de `cauce-brand.css`: `--cauce-acento`, `--cauce-acento-label`, `--cauce-icono`
+y `--cauce-secundario`. Diez pares de reglas colapsaron a diez reglas simples, y la prohibición
+de VADO sobre SEDIMENTO dejó de ser una nota en un comentario para pasar a aplicarse sola
+(`.color-background-2 { --cauce-icono: var(--cauce-vado-texto) }`).
+
+**Efecto colateral bueno.** `--cauce-bronce-texto` y `--cauce-vado-icono` desaparecen. El
+primero existía porque BRONCE daba 2.48:1 sobre SEDIMENTO; ÓXIDO da 4.84:1 y 6.04:1 sobre
+blanco, así que el acento ya se usa puro, como lo dibuja la brandboard.
+
+### 2. Revierte D-011: la etiqueta del botón vuelve a ser blanca
+
+D-011 puso `colors_solid_button_labels` en TINTA porque blanco sobre BRONCE daba 3.10:1. Sobre
+ÓXIDO, blanco da **6.04:1** y TINTA da 2.61:1: los dos números se dieron vuelta. La brandboard
+además lo pide explícito ("botón, precio, texto blanco encima"). `colors_solid_button_labels`
+= `#FFFFFF`.
+
+### 3. ÓXIDO CLARO se conserva tal cual, con su límite anotado
+
+ÓXIDO CLARO sobre CAUCE da **4.27:1**: AA para texto grande (≥2.4rem, o ≥1.87rem en negrita) y
+para componentes, corto de AA para texto chico. Manteniendo matiz y croma **no existe** un
+valor que llegue a 4.5:1 sobre CAUCE — se verificó barriendo la luminosidad a matiz y croma
+fijos.
+
+**Decisión tomada: se prioriza la fidelidad a la brandboard.** El hex queda intacto. Lo que se
+acota es dónde puede aterrizar: sobre banda oscura el acento va en títulos, precios, datos
+grandes y trazo del isotipo, todos usos donde 4.27:1 pasa. Queda anotado como LÍMITE en el
+comentario de `.cauce-acento`, al lado del token, no solo acá.
+
+**Un uso violaba ese límite y se corrigió.** El hover de los links de la barra legal es texto
+de 1.3rem sobre CAUCE. Pasa a blanco (15.76:1), que además es lo correcto de marca: el óxido se
+usa una vez por pieza y ese uso es el botón de compra, no un link del pie.
+
+### 4. Shrine acopla el primer plano de los dos esquemas de acento
+
+`base.css` trae `.color-accent-1, .color-accent-2 { --color-foreground: var(--color-base-solid-button-labels) }`.
+O sea que un solo setting decide el texto sobre ÓXIDO **y** sobre VADO. Con acento de dos
+valores no alcanza: blanco es el único que funciona sobre ÓXIDO (6.04:1) pero sobre VADO da
+3.20:1 y no pasa.
+
+Se separa en `cauce-brand.css` y solo para `accent-2`: `--color-foreground: var(--color-base-text)`,
+o sea CAUCE sobre VADO, 4.93:1. Misma especificidad que la regla de `base.css`, gana por orden
+de carga. Arrastra `--accent-color` y `--color-button`, que se derivan de él.
+
+**Cómo se encontró.** No lo reportó `theme check` — es contraste, no sintaxis. Salió de auditar
+las combinaciones *resueltas* (esquema × rol), no la paleta suelta. Sin ese paso el rebrandeo
+habría dejado texto blanco a 3.20:1 en el badge de oferta y en las citas de la landing.
+
+### 5. Las tildes de la comparativa pasan a VADO
+
+`checkmark_bg_color` pasa de BRONCE a **VADO `#5F99A2`**, no a ÓXIDO. Con ÓXIDO habría dos
+elementos en óxido en la misma página — el botón de compra y una tabla entera de tildes — y la
+regla de la brandboard es un solo elemento en óxido por pieza. Con BRONCE el problema no se
+notaba porque el bronce era mucho menos saturado; el óxido compite de verdad con el CTA. VADO
+es el token de gráficos e íconos, y CAUCE encima da 4.93:1.
+
+---
+
+**Verificación.** Auditoría de contraste sobre las 5 combinaciones esquema × 4 roles + botón:
+todas pasan AA salvo el acento sobre CAUCE (4.27:1, punto 3). `theme check`: 61 offenses antes
+y 61 después, ninguna nueva. Render en Chrome headless de las cinco bandas con el CSS real.
+
+**Pendiente de vos.** El setting `logo` apunta a `shopify://shop_images/05-wordmark-descriptor-tinta.png`.
+El header no lo usa (renderiza `snippets/cauce-logo.liquid`, que es texto y ya toma los tokens),
+pero sigue cargado en el theme editor y lo usan los metadatos sociales. Si ese PNG tiene fondo
+SEDIMENTO en vez de transparente, ahora se ve como un recuadro sobre blanco: hay que resubir el
+export de v2. Lo mismo con el favicon si alguna vez se sube uno; el fallback inline de
+`theme.liquid` ya está en ÓXIDO.

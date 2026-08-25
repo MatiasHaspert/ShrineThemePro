@@ -60,16 +60,29 @@ partir de los settings globales:
 Las secciones nativas exponen un select `color_scheme` (`background-1`, `background-2`, `accent-1`,
 `accent-2`, `inverse`) que resuelve contra esos tokens.
 
-**Consecuencia para el branding:** los 4 colores CAUCE se mapean directo a settings globales.
+**Consecuencia para el branding:** los colores CAUCE se mapean directo a settings globales.
 `cauce-brand.css` no reescribe colores sección por sección — declara los tokens `--cauce-*` y
 remapea las variables del tema una sola vez.
 
+Mapeo vigente (brandboard **v2**, ver `DECISIONS.md` D-031):
+
 | Token CAUCE | Hex | Setting del tema |
 |---|---|---|
-| TINTA | `#10262A` | `colors_text`, `colors_outline_button_labels` |
-| SEDIMENTO | `#E9E6DC` | `colors_background_1` |
-| BRONCE | `#B98A44` | `colors_accent_1` (= botón de compra y precio) |
-| VADO | `#6F9BA1` | `colors_accent_2` (= íconos, gráficos) |
+| CAUCE | `#10262A` | `colors_text`, `colors_outline_button_labels` (y fondo de `.color-inverse`) |
+| BLANCO | `#FFFFFF` | `colors_background_1` (= fondo dominante), `colors_solid_button_labels` |
+| SEDIMENTO | `#E9E6DC` | `colors_background_2` (= bandas y bloques sobre blanco) |
+| ÓXIDO | `#B03A22` | `colors_accent_1` (= botón de compra y precio, sobre claro) |
+| ÓXIDO CLARO | `#D9603F` | sin setting: `--cauce-acento` lo resuelve sobre fondo CAUCE |
+| VADO | `#5F99A2` | `colors_accent_2` (= íconos, gráficos) |
+
+El acento de dos valores no cabe en un setting, porque Shrine tiene uno solo por rol. Se
+resuelve con tokens contextuales en el bloque 0 de `cauce-brand.css`: `--cauce-acento`,
+`--cauce-acento-label`, `--cauce-icono` y `--cauce-secundario` cambian de valor según el
+esquema de la sección, y todo lo demás los consume sin repetir la regla por esquema.
+
+Mapeo anterior (v1), para leer commits viejos: TINTA `#10262A` = `colors_text`; SEDIMENTO
+`#E9E6DC` = `colors_background_1`; BRONCE `#B98A44` = `colors_accent_1`; VADO `#6F9BA1` =
+`colors_accent_2`.
 
 ### Tipografías
 
