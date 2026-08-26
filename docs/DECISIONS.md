@@ -737,3 +737,56 @@ pero sigue cargado en el theme editor y lo usan los metadatos sociales. Si ese P
 SEDIMENTO en vez de transparente, ahora se ve como un recuadro sobre blanco: hay que resubir el
 export de v2. Lo mismo con el favicon si alguna vez se sube uno; el fallback inline de
 `theme.liquid` ya está en ÓXIDO.
+
+---
+
+## D-032 · 2026-08-25 · La firma de la reseña baja al pie y suma sello de verificación
+
+**Decisión.** En `ss-glow-testimonial` la atribución deja de ser una etiqueta suelta al final
+del párrafo. Foto, nombre y sello "Cliente verificado" pasan juntos a un `<figcaption>` al pie
+de la tarjeta, y la tarjeta pasa de fila (`foto | texto`) a columna (`texto` sobre `firma`).
+El sello es un setting de sección (`etiqueta_verificado`, default `Cliente verificado`) más un
+checkbox por bloque (`verificado`, default sí).
+
+**Alternativa descartada.** Dejar la foto centrada a la izquierda y colgar el sello debajo del
+nombre, donde ya estaba el nombre.
+
+**Por qué.** Cara, nombre y sello son una sola unidad de atribución: son lo que hace que la
+reseña se lea como escrita por una persona y no como copy de la marca. Con la foto a la
+izquierda y el nombre al final del párrafo esa unidad quedaba partida por el ancho de la
+tarjeta, y el sello agregado lo empeoraba. Es además la estructura de la referencia que se usó
+para pedir el cambio. `justify-content: space-between` pega la firma al borde inferior, así que
+dentro de una fila todas las firmas quedan a la misma altura aunque las reseñas tengan distinto
+largo — la tarjeta ya se estiraba a la más alta, antes ese espacio sobrante quedaba abajo.
+
+**El sello no puede ir entero en VADO**, que es lo que pedía la referencia (su línea de
+"Cliente Verificado" va en el color secundario). El número que importa no es el del fondo de la
+sección sino el de la **superficie de la tarjeta**, que es un escalón más:
+
+| Esquema | Superficie de la tarjeta | Color del sello | Contraste |
+|---|---|---|---|
+| `background-1` | SEDIMENTO `#E9E6DC` | VADO-TEXTO | 4.50:1 ✓ |
+| `background-2` | SEDIMENTO-2 `#DFDBCE` | VADO-TEXTO | **4.06:1** ✗ |
+| `inverse` | `#1b3033` | VADO | **4.33:1** ✗ |
+
+Dos de los tres esquemas quedan cortos de AA para texto de 1.2rem, y `background-2` es
+justamente el que usa la landing. Se separa color de peso: la **tilde** lleva el VADO
+contextual y como ícono le alcanza con 3:1 (1.4.11), umbral que pasa en los tres esquemas; el
+**texto** se queda en `currentColor` a `opacity: 0.85`, que es el mismo remedio del bloque 8 de
+`cauce-brand.css` y da 7.75:1. La tilde es `cauce-iconos` → `chequeo`, no un glifo `✓`, así
+hereda el color por contexto y no hay una fuente de emoji decidiendo cómo se ve.
+
+**El nombre sale del mono de datos.** Pasa de `.cauce-dato` 1.1rem mayúsculas a Archivo 1.4rem
+peso 600. Como etiqueta al final del párrafo el mono funcionaba; ahora encabeza la firma, y una
+persona no es un dato. Archivo ya está cargada como variable `400..600`, así que el 600 es un
+peso real y no un bold sintético.
+
+**Los nombres cargados son deuda, no dato.** Tres de los siete bloques quedaron con el nombre
+que la referencia muestra junto a ese mismo testimonio y esa misma cara (`margaret.png`,
+`frank.png`): Margaret E., Frank D., Carol V. Los otros cuatro quedan como
+`[[PENDIENTE: nombre_resena_*]]` según D-014 — son datos que no tengo, no datos que invento.
+Nada de esto sale del bloqueante que ya abrió D-030: los siete textos siguen siendo los de otra
+tienda. Un sello de "cliente verificado" sobre una reseña sin compra detrás es publicidad
+engañosa por sí solo (Res. SC 270/2020), así que el checkbox por bloque existe para poder
+apagarlo reseña por reseña, y el setting de sección vacío lo saca de toda la sección de una vez.
+Anotado en el checklist de `CLAIMS-AUDIT.md` §6.

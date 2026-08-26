@@ -21,6 +21,9 @@
   - La estrella era un SVG servido desde el CDN de otra tienda. Ahora es inline.
   - Respeta prefers-reduced-motion: sin animacion, las tarjetas se acomodan en grilla.
   - Pausa al pasar el mouse y al tabular adentro.
+  - La firma (foto, nombre y sello de cliente verificado) baja al pie de la
+    tarjeta y se lee como una sola unidad de atribucion. El original solo tenia
+    el nombre, y suelto al final del parrafo.
 
   El texto de cada resena es contenido de bloque. No puede mencionar patologias,
   plazos de resultado ni profesionales de la salud (Disp. ANMAT 4980/05).
@@ -143,48 +146,81 @@
                       aria-hidden="true"
                     {% endif %}
                   >
+                    {%- liquid
+                      comment
+                        La firma se resuelve antes de dibujarla: si no hay nada que
+                        atribuir no se renderiza la fila entera, para que un bloque a
+                        medio cargar no deje un circulo vacio al pie de la tarjeta.
+                      endcomment
+                      assign cauce_sello = ''
+                      if block.settings.verificado and section.settings.etiqueta_verificado != blank
+                        assign cauce_sello = section.settings.etiqueta_verificado
+                      endif
+
+                      assign cauce_avatar = false
+                      if block.settings.foto != blank or block.settings.autor != blank
+                        assign cauce_avatar = true
+                      endif
+                    -%}
+
                     <figure class="cauce-glow__tarjeta">
-                      <div class="cauce-glow__avatar">
-                        {%- if block.settings.foto != blank -%}
-                          {{
-                            block.settings.foto
-                            | image_url: width: 160
-                            | image_tag:
-                              loading: 'lazy',
-                              widths: '80, 120, 160',
-                              sizes: '56px',
-                              class: 'cauce-glow__foto',
-                              alt: block.settings.autor | escape
-                          }}
-                        {%- else -%}
-                          {%- comment -%}
-                            Sin foto la tarjeta no se rompe: la inicial del nombre en VADO
-                            ocupa el mismo lugar. Permite maquetar antes de tener las fotos.
-                          {%- endcomment -%}
-                          <span class="cauce-glow__inicial cauce-dato" aria-hidden="true">
-                            {{- block.settings.autor | strip | slice: 0 | upcase -}}
+                      <blockquote class="cauce-glow__texto">
+                        <p>{{ block.settings.texto }}</p>
+                      </blockquote>
+
+                      {%- if cauce_avatar or cauce_sello != blank -%}
+                        <figcaption class="cauce-glow__firma">
+                          {%- if cauce_avatar -%}
+                            <div class="cauce-glow__avatar">
+                              {%- if block.settings.foto != blank -%}
+                                {{
+                                  block.settings.foto
+                                  | image_url: width: 160
+                                  | image_tag:
+                                    loading: 'lazy',
+                                    widths: '80, 120, 160',
+                                    sizes: '48px',
+                                    class: 'cauce-glow__foto',
+                                    alt: block.settings.autor | escape
+                                }}
+                              {%- else -%}
+                                {%- comment -%}
+                                  Sin foto la tarjeta no se rompe: la inicial del nombre en VADO
+                                  ocupa el mismo lugar. Permite maquetar antes de tener las fotos.
+                                {%- endcomment -%}
+                                <span class="cauce-glow__inicial cauce-dato" aria-hidden="true">
+                                  {{- block.settings.autor | strip | slice: 0 | upcase -}}
+                                </span>
+                              {%- endif -%}
+
+                              {%- if section.settings.mostrar_puntaje and block.settings.puntaje != blank -%}
+                                <span class="cauce-glow__puntaje cauce-dato">
+                                  {{- block.settings.puntaje -}}
+                                  {% render 'cauce-iconos', icono: 'estrella', clase: 'cauce-glow__estrella' %}
+                                </span>
+                              {%- endif -%}
+                            </div>
+                          {%- endif -%}
+
+                          <span class="cauce-glow__identidad">
+                            {%- if block.settings.autor != blank -%}
+                              <span class="cauce-glow__autor">{{ block.settings.autor }}</span>
+                            {%- endif -%}
+
+                            {%- comment -%}
+                              El sello es una afirmacion de hecho, no decoracion: se dibuja
+                              solo si el bloque lo tiene tildado. La tilde es el icono del
+                              set, no un glifo de texto, asi hereda el color por contexto.
+                            {%- endcomment -%}
+                            {%- if cauce_sello != blank -%}
+                              <span class="cauce-glow__verificado">
+                                {%- render 'cauce-iconos', icono: 'chequeo', clase: 'cauce-glow__tilde' -%}
+                                {{ cauce_sello }}
+                              </span>
+                            {%- endif -%}
                           </span>
-                        {%- endif -%}
-
-                        {%- if section.settings.mostrar_puntaje and block.settings.puntaje != blank -%}
-                          <span class="cauce-glow__puntaje cauce-dato">
-                            {{- block.settings.puntaje -}}
-                            {% render 'cauce-iconos', icono: 'estrella', clase: 'cauce-glow__estrella' %}
-                          </span>
-                        {%- endif -%}
-                      </div>
-
-                      <div class="cauce-glow__cuerpo">
-                        <blockquote class="cauce-glow__texto">
-                          <p>{{ block.settings.texto }}</p>
-                        </blockquote>
-
-                        {%- if block.settings.autor != blank -%}
-                          <figcaption class="cauce-glow__autor cauce-dato">
-                            {{- block.settings.autor -}}
-                          </figcaption>
-                        {%- endif -%}
-                      </div>
+                        </figcaption>
+                      {%- endif -%}
                     </figure>
                   </li>
                 {%- endfor -%}
@@ -288,7 +324,15 @@
       "default": 4,
       "info": "4px es el radio del sistema. 100px devuelve la pastilla del pack original."
     },
+    { "type": "header", "content": "Firma" },
     { "type": "checkbox", "id": "mostrar_puntaje", "label": "Mostrar puntaje sobre la foto", "default": true },
+    {
+      "type": "text",
+      "id": "etiqueta_verificado",
+      "label": "Sello de verificacion",
+      "default": "Cliente verificado",
+      "info": "Aparece bajo el nombre, solo en las resenas que tengan tildado 'Cliente verificado'. Vacio lo saca de toda la seccion. Usar unicamente si podes probar la compra de quien escribio: decir verificado sin verificacion es publicidad enganosa (Res. SC 270/2020)."
+    },
 
     {
       "type": "select",
@@ -317,7 +361,19 @@
           "label": "Texto",
           "info": "Dos o tres lineas. Admite negrita para el arranque. Sin patologias, sintomas ni plazos de resultado. Si esta vacio la tarjeta no se renderiza."
         },
-        { "type": "text", "id": "autor", "label": "Nombre" },
+        {
+          "type": "text",
+          "id": "autor",
+          "label": "Nombre",
+          "info": "Nombre y inicial del apellido, como lo firmo quien escribio la resena y con su consentimiento."
+        },
+        {
+          "type": "checkbox",
+          "id": "verificado",
+          "label": "Cliente verificado",
+          "default": true,
+          "info": "Destildar si no hay una compra real detras de esta resena."
+        },
         { "type": "image_picker", "id": "foto", "label": "Foto", "info": "Cuadrada. Si no hay foto se usa la inicial del nombre." },
         { "type": "text", "id": "puntaje", "label": "Puntaje", "default": "5", "info": "Solo si la resena tiene una calificacion real detras." }
       ]

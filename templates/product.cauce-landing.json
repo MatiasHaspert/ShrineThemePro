@@ -475,63 +475,70 @@
           "type": "resena",
           "settings": {
             "texto": "\"<strong>Por fin me siento yo de nuevo.</strong> Me preparaba antes de cada análisis de sangre por años. Seis semanas con Cauce y mi número matutino fue el más bajo en mucho tiempo. El miedo… se fue.\"",
-            "autor": "",
+            "autor": "Margaret E.",
             "foto": "shopify://shop_images/margaret.png",
-            "puntaje": "5"
+            "puntaje": "5",
+            "verificado": true
           }
         },
         "image_Qd4MPf": {
           "type": "resena",
           "settings": {
             "texto": "\"<strong>Se acabó el bajón de las 3 pm.</strong>  Antes me estrellaba cada tarde y buscaba azúcar. Ahora estoy estable todo el día, y mis análisis van por buen camino por primera vez en años.\"",
-            "autor": "",
+            "autor": "Frank D.",
             "foto": "shopify://shop_images/frank.png",
-            "puntaje": "5"
+            "puntaje": "5",
+            "verificado": true
           }
         },
         "image_cWgPTT": {
           "type": "resena",
           "settings": {
             "texto": "\"<strong>Fuera de la montaña rusa de la berberina. </strong> La berberina me destrozó el estómago y no hizo nada. Esto sí movió mi número matutino — y cero problemas digestivos. Ojalá lo hubiera encontrado antes.\"",
-            "autor": "",
+            "autor": "Carol V.",
             "foto": "shopify://shop_images/hf_20260628_102247_90f66a35-b29e-43e6-8ce2-6ca63e24c29f.png",
-            "puntaje": "5"
+            "puntaje": "5",
+            "verificado": true
           }
         },
         "image_qBhXWe": {
           "type": "resena",
           "settings": {
             "texto": "\"<strong>Mi doctor se sorprendió.</strong> En mi último control miró mis análisis, hizo una pausa y dijo: 'lo que sea que estés haciendo, sigue haciéndolo.' Ese momento valió todo.\"",
-            "autor": "",
+            "autor": "[[PENDIENTE: nombre_resena_doctor]]",
             "foto": "shopify://shop_images/hf_20260628_112952_3d2349d9-6160-42be-8604-418a887fa2c4.png",
-            "puntaje": "5"
+            "puntaje": "5",
+            "verificado": true
           }
         },
         "image_zAWNNH": {
           "type": "resena",
           "settings": {
             "texto": "\"<strong>Antes necesitaba tres tazas de café solo para sobrevivir la tarde.</strong>  Ahora estoy estable y tranquilo, sin nervios — y mis análisis se ven mejor también.\"",
-            "autor": "",
+            "autor": "[[PENDIENTE: nombre_resena_cafe]]",
             "foto": "shopify://shop_images/hf_20260628_102245_6d9f9063-097c-4700-a378-053f32946d52.png",
-            "puntaje": "5"
+            "puntaje": "5",
+            "verificado": true
           }
         },
         "image_keirhT": {
           "type": "resena",
           "settings": {
             "texto": "\"<strong>Mi número estuvo atascado en los 110 por dos años sin importar lo que intentara. </strong> Ocho semanas con Cauce y amanezco con 90 y 92. De verdad se me salieron las lágrimas.\"",
-            "autor": "",
+            "autor": "[[PENDIENTE: nombre_resena_110]]",
             "foto": "shopify://shop_images/hf_20260628_102244_98f1fb20-cc3b-428d-b8ac-2f5790a0ded0.png",
-            "puntaje": "5"
+            "puntaje": "5",
+            "verificado": true
           }
         },
         "image_4gRBjQ": {
           "type": "resena",
           "settings": {
             "texto": "\"<strong>La diabetes de mi papá me asustó y me hizo actuar.</strong> Esto es lo primero que de verdad ha movido mi número matutino — y sin problemas de estómago como me dio la berberina.\"",
-            "autor": "",
+            "autor": "[[PENDIENTE: nombre_resena_papa]]",
             "foto": "shopify://shop_images/hf_20260628_102248_3e4f441f-880c-410b-b612-b3249ed2b226.png",
-            "puntaje": "5"
+            "puntaje": "5",
+            "verificado": true
           }
         }
       },
@@ -558,6 +565,7 @@
         "ancho_tarjeta": 400,
         "radio": 4,
         "mostrar_puntaje": true,
+        "etiqueta_verificado": "Cliente verificado",
         "color_scheme": "background-2",
         "padding_top": 40,
         "padding_bottom": 40

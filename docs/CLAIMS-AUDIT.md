@@ -205,6 +205,12 @@ Plantilla de tema → `cauce-landing`.
       no hay clientes reales detrás es además Res. SC 270/2020. Reescribir o quitar.
 - [ ] Verificar que existan la persona y el consentimiento detrás de cada testimonio
       que quede, y que la foto sea de quien lo firma
+- [ ] **El sello "Cliente verificado"** de `ss_glow_testimonial_3jmxKc` (D-032). Decir
+      verificado sin poder probar la compra es Res. SC 270/2020 por sí solo, aparte de lo
+      que diga el texto. Destildar `verificado` en cada reseña que no tenga pedido detrás,
+      o vaciar `etiqueta_verificado` para sacarlo de toda la sección.
+- [ ] Los cuatro `[[PENDIENTE: nombre_resena_*]]` del mismo bloque, y confirmar que
+      Margaret E., Frank D. y Carol V. corresponden a personas reales o reemplazarlos
 - [ ] R5 · Tabla comparativa revisada con criterio legal
 - [ ] Leer `docs/COPY-DRAFT.md` completo y aprobar o corregir cada texto
 - [ ] Confirmar que ninguna imagen nueva, alt o metafield introduce un claim

@@ -1209,9 +1209,16 @@ h1, h2, h3, h4,
   margin-right: var(--cauce-aire-s);
 }
 
+/* La tarjeta pasa de fila (foto | texto) a columna (texto sobre firma). Con el
+   sello de verificacion, cara + nombre + sello son una sola unidad de atribucion
+   y separarla por el ancho de la tarjeta la desarma: la firma entera baja al pie.
+
+   space-between la pega al borde inferior aunque las resenas tengan distinto
+   largo, asi que dentro de una fila todas las firmas quedan a la misma altura. */
 .cauce-glow__tarjeta {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
   gap: var(--cauce-aire-s);
   height: 100%;
   margin: 0;
@@ -1228,11 +1235,13 @@ h1, h2, h3, h4,
   box-shadow: 0 0.2rem 3.2rem rgba(95, 153, 162, 0.18);
 }
 
+/* Baja de 5.6rem a 4.8rem: al pie de la tarjeta la foto acompana dos lineas de
+   texto (nombre + sello), no un parrafo entero como cuando estaba al costado. */
 .cauce-glow__avatar {
   position: relative;
   flex: 0 0 auto;
-  width: 5.6rem;
-  height: 5.6rem;
+  width: 4.8rem;
+  height: 4.8rem;
 }
 
 .cauce-glow__foto {
@@ -1252,7 +1261,7 @@ h1, h2, h3, h4,
   border-radius: 50%;
   background-color: var(--cauce-vado);
   color: var(--cauce-cauce);
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 1;
 }
 
@@ -1281,8 +1290,6 @@ h1, h2, h3, h4,
   color: var(--cauce-cauce);
 }
 
-.cauce-glow__cuerpo { min-width: 0; }
-
 .cauce-glow__texto {
   margin: 0;
   font-family: var(--cauce-font-texto);
@@ -1292,12 +1299,58 @@ h1, h2, h3, h4,
 
 .cauce-glow__texto p { margin: 0; }
 
+/* --- Firma de la resena ---------------------------------------------------
+   Foto, nombre y sello de cliente verificado. Ver sections/ss-glow-testimonial
+   y docs/DECISIONS.md D-032. */
+
+.cauce-glow__firma {
+  display: flex;
+  align-items: center;
+  gap: var(--cauce-aire-s);
+}
+
+/* min-width: 0 para que un nombre largo corte linea en vez de empujar la foto
+   fuera de la tarjeta. */
+.cauce-glow__identidad {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+/* El nombre sale del mono de datos y pasa al tipo de texto. Como etiqueta al
+   final del parrafo el mono funcionaba; ahora encabeza la firma, y una persona
+   no es un dato. Archivo esta cargada como variable 400..600 (theme.liquid), asi
+   que el 600 es un peso real y no un bold sintetico. */
 .cauce-glow__autor {
-  margin: 0.8rem 0 0;
-  font-size: 1.1rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* El sello no puede ir entero en VADO. Sobre la SUPERFICIE DE LA TARJETA —que no
+   es el fondo de la seccion— VADO-TEXTO da 4.06:1 en SEDIMENTO-2 y VADO da
+   4.33:1 en la tarjeta de la banda oscura: los dos cortos de AA para 1.2rem.
+   Se separa color de peso. La tilde lleva el VADO contextual y como icono le
+   alcanza con 3:1 (1.4.11), que pasa en los tres esquemas; el texto se queda en
+   currentColor a 0.85, el mismo remedio del bloque 8, y da 7.75:1. */
+.cauce-glow__verificado {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.2rem;
+  line-height: 1.3;
   opacity: 0.85;
+}
+
+.cauce-glow__tilde {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--cauce-secundario);
+  /* a 14px el trazo de 1.4 del set se deshilacha */
+  stroke-width: 1.8;
 }
 
 .cauce-glow__nota {
@@ -1321,8 +1374,9 @@ h1, h2, h3, h4,
     max-width: min(var(--cauce-glow-ancho, 380px), 84vw);
   }
   .cauce-glow__tarjeta { padding: 1.4rem 1.6rem; }
-  .cauce-glow__avatar { width: 4.8rem; height: 4.8rem; }
-  .cauce-glow__inicial { font-size: 1.7rem; }
+  .cauce-glow__avatar { width: 4.4rem; height: 4.4rem; }
+  .cauce-glow__inicial { font-size: 1.6rem; }
+  .cauce-glow__firma { gap: 1.2rem; }
 }
 
 /* Sin animacion las tarjetas se acomodan en grilla y las copias desaparecen: una
