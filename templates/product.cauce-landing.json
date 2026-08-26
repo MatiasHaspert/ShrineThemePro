@@ -325,7 +325,7 @@
             "collapse_icon": "carret",
             "display_top_border": true,
             "open": false,
-            "content": "<p>Tome dos cápsulas al día con un vaso de agua, preferiblemente con una comida. Esta fórmula pura de ácido R-alfa lipoico contribuye a la salud del sistema nervioso, proporciona protección antioxidante mitocondrial y ayuda a mantener niveles saludables de azúcar en sangre dentro del rango normal, lo que le permitirá dormir mejor, moverse con confianza y pensar con claridad.</p>",
+            "content": "<p>Tome una cápsula al día con un vaso de agua, preferiblemente con una comida. Esta fórmula pura de ácido R-alfa lipoico contribuye a la salud del sistema nervioso, proporciona protección antioxidante mitocondrial y ayuda a mantener niveles saludables de azúcar en sangre dentro del rango normal, lo que le permitirá dormir mejor, moverse con confianza y pensar con claridad.</p>",
             "page": "",
             "margin_top": 24,
             "margin_bottom": 0
@@ -569,6 +569,65 @@
         "color_scheme": "background-2",
         "padding_top": 40,
         "padding_bottom": 40
+      }
+    },
+    "cauce_faq_nNHY4y": {
+      "type": "cauce-faq",
+      "blocks": {
+        "pregunta_N3EzqD": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cómo tomo Cauce?",
+            "respuesta": "<p>Una cápsula al día con un vaso de agua, de preferencia con una comida. Suave para el estómago.</p>"
+          }
+        },
+        "pregunta_3MTnDn": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cuándo veré resultados?",
+            "respuesta": "<p>La mayoría nota un cambio en 3 a 5 semanas, con beneficio completo en 2 a 3 meses.</p>"
+          }
+        },
+        "pregunta_GEFRqQ": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "Ya probé el ácido alfa lipoico y no hizo nada. ¿Por qué este es diferente?",
+            "respuesta": "<p>La mayoría del ALA es una mezcla racémica 50/50 — la mitad es el isómero S inactivo. Cauce es 100% forma R pura a la dosis clínica completa de 600mg.</p>"
+          }
+        },
+        "pregunta_wbfExg": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿En qué se diferencia de la berberina?",
+            "respuesta": "<p>La berberina actúa en el \"grifo\" del hígado. El R-ALA ayuda a llevar el azúcar al músculo — el \"desagüe\". Mecanismo diferente y más suave para el estómago.</p>"
+          }
+        },
+        "pregunta_pkHfAT": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cuál es la descripción del producto?",
+            "respuesta": "<p>Noverly Ácido Alfa Lipoico R entrega <strong>600mg de ácido alfa lipoico puro en forma R-(+)</strong>— el isómero biológicamente activo que tu cuerpo realmente usa — en una cápsula pequeña hecha con aceite de coco para mejor absorción. El R-ALA ayuda a sacar el azúcar de la sangre y llevarlo a los músculos, apoyando un azúcar saludable dentro del rango normal, energía estable todo el día y protección antioxidante. Sin transgénicos, sin gluten, probado por terceros, hecho en Argentina. 30 cápsulas por bolsa (suministro para 30 días).<br/><br/></p>"
+          }
+        }
+      },
+      "block_order": [
+        "pregunta_N3EzqD",
+        "pregunta_3MTnDn",
+        "pregunta_GEFRqQ",
+        "pregunta_wbfExg",
+        "pregunta_pkHfAT"
+      ],
+      "name": "CAUCE · Preguntas",
+      "settings": {
+        "volanta": "PREGUNTAS FRECUENTES",
+        "titulo": "Preguntas comunes de nuestros clientes",
+        "heading_size": "h1",
+        "pie": "",
+        "producto": "",
+        "emitir_schema": true,
+        "color_scheme": "background-1",
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     },
     "pilares": {
@@ -1832,6 +1891,7 @@
   "order": [
     "main",
     "ss_glow_testimonial_3jmxKc",
+    "cauce_faq_nNHY4y",
     "pilares",
     "ugc",
     "beneficios",
