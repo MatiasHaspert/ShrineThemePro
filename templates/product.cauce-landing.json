@@ -267,22 +267,6 @@
             "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}"
           }
         },
-        "collapsible_tab_aqXdqx": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Descripción",
-            "heading_size": "medium",
-            "icon": "subject",
-            "filled_icon": false,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>Cauce Ácido Alfa Lipoico R entrega <strong>600mg de ácido alfa lipoico puro en forma R-(+)</strong>— el isómero biológicamente activo que tu cuerpo realmente usa — en una cápsula blanda pequeña hecha con aceite de coco para mejor absorción. El R-ALA ayuda a sacar el azúcar de la sangre y llevarlo a los músculos, apoyando un azúcar saludable dentro del rango normal, energía estable todo el día y protección antioxidante. Sin transgénicos, sin gluten, probado por terceros, hecho en Argentina, 30 cápsulas por frasco (suministro para 30 días).<br/><br/></p>",
-            "page": "",
-            "margin_top": 24,
-            "margin_bottom": 0
-          }
-        },
         "collapsible_tab_VtLRkn": {
           "type": "collapsible_tab",
           "settings": {
@@ -299,17 +283,49 @@
             "margin_bottom": 0
           }
         },
+        "collapsible_tab_FCtjKz": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "¿Por qué necesitas el ácido R-alfa lipoico de Cauce?",
+            "heading_size": "medium",
+            "icon": "extension",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Si sientes que te arden los pies, no puedes dormir por la noche o estás cansado de medicamentos que te hacen sentir como un zombi mientras tus nervios se van muriendo, Cauce es para ti.</p><p>El ácido R-alfa lipoico se utiliza en Alemania como tratamiento con receta para la neuropatía diabética desde 1966. La forma R pura cuenta con un sólido respaldo clínico, con estudios realizados en más de 4000 participantes que examinan sus efectos sobre la función nerviosa, la salud mitocondrial, el estrés oxidativo y el mantenimiento de niveles saludables de azúcar en sangre.</p><p>Un antioxidante mitocondrial, una dosis clínica, ambos actuando para tus nervios cada mañana.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
         "collapsible_tab_6yhWGL": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Los resultados",
+            "heading": "¿Cuánto tiempo tardaré en ver resultados?",
             "heading_size": "medium",
             "icon": "trending_up",
             "filled_icon": false,
             "collapse_icon": "carret",
             "display_top_border": true,
             "open": false,
-            "content": "<p>La mayoría nota más energía estable en las primeras semanas, con apoyo para su número de azúcar en ayunas desarrollándose en 3 a 8 semanas de uso diario. El R-ALA funciona restaurando un mecanismo que disminuye con la edad y la comida moderna — así que los resultados son graduales, estables y duraderos. Para mejores resultados, toma una cápsula al día por al menos 8 a 12 semanas.<br/><br/></p>",
+            "content": "<p>La mayoría de las personas notan cambios sutiles entre 3 y 5 semanas después de su uso diario. Para obtener todos los beneficios, incluyendo una mayor comodidad para los nervios y una mejor calidad del sueño, se recomienda un uso constante durante 2 o 3 meses.<br/>Muchos clientes reportan una mejoría en su bienestar general durante el primer mes, mientras que los beneficios relacionados con el sistema nervioso tienden a desarrollarse de forma más gradual con el tiempo. Dado que este suplemento favorece los procesos mitocondriales naturales del cuerpo, los resultados son constantes y duraderos.<br/><br/></p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_aqXdqx": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Como funciona",
+            "heading_size": "medium",
+            "icon": "settings_accessibility",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Tome dos cápsulas al día con un vaso de agua, preferiblemente con una comida. Esta fórmula pura de ácido R-alfa lipoico contribuye a la salud del sistema nervioso, proporciona protección antioxidante mitocondrial y ayuda a mantener niveles saludables de azúcar en sangre dentro del rango normal, lo que le permitirá dormir mejor, moverse con confianza y pensar con claridad.</p>",
             "page": "",
             "margin_top": 24,
             "margin_bottom": 0
@@ -398,9 +414,10 @@
         "suscripcion",
         "comprar",
         "pagos",
-        "collapsible_tab_aqXdqx",
         "collapsible_tab_VtLRkn",
+        "collapsible_tab_FCtjKz",
         "collapsible_tab_6yhWGL",
+        "collapsible_tab_aqXdqx",
         "acordeon_envios",
         "acordeon_garantia",
         "disclaimer",
