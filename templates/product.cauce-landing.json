@@ -283,6 +283,22 @@
             "margin_bottom": 0
           }
         },
+        "collapsible_tab_VtLRkn": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Beneficios clínicamente comprobados",
+            "heading_size": "medium",
+            "icon": "verified",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p><em>Respaldado por investigaciones clínicas sobre el ácido R-alfa lipoico.</em></p><ul><li>Favorece la función nerviosa saludable en adultos.</li><li>Favorece la producción de energía mitocondrial.</li><li>Ayuda a mantener niveles saludables de azúcar en sangre dentro del rango normal.</li><li>Proporciona apoyo antioxidante para la salud celular.</li><li>Forma R pura con biodisponibilidad mejorada para una absorción óptima.</li></ul><p><em>Beneficios observados en estudios clínicos del ácido R-alfa lipoico cuando se usa de forma constante como parte de un estilo de vida saludable. Los resultados individuales varían.</em></p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
         "collapsible_tab_6yhWGL": {
           "type": "collapsible_tab",
           "settings": {
@@ -383,6 +399,7 @@
         "comprar",
         "pagos",
         "collapsible_tab_aqXdqx",
+        "collapsible_tab_VtLRkn",
         "collapsible_tab_6yhWGL",
         "acordeon_envios",
         "acordeon_garantia",
@@ -513,7 +530,7 @@
       "name": "SS - Glow Testimonial",
       "settings": {
         "volanta": "",
-        "titulo_antes": "Escucha a los clientes que confían en ",
+        "titulo_antes": "Escucha a los clientes que confían en",
         "destacado": "Cauce",
         "titulo_despues": "",
         "heading_size": "h1",
