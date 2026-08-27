@@ -665,7 +665,7 @@
         "d4"
       ],
       "settings": {
-        "imagen": "",
+        "imagen": "shopify://shop_images/dolor1.png",
         "alt": "Mujer sentada a la mesa de su cocina, con la cabeza apoyada en la mano.",
         "posicion_imagen": "arriba",
         "relacion": "21 / 9",
