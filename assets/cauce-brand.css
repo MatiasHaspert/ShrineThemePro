@@ -617,6 +617,7 @@ h1, h2, h3, h4,
    reduccion de 0.75 en mobile que usa el tema. */
 .cauce-datos__inner,
 .cauce-detalle__inner,
+.cauce-dolor__inner,
 .cauce-ugc__inner,
 .cauce-glow__inner,
 .cauce-tabs-wrap > .page-width {
@@ -627,6 +628,7 @@ h1, h2, h3, h4,
 @media screen and (max-width: 749px) {
   .cauce-datos__inner,
   .cauce-detalle__inner,
+  .cauce-dolor__inner,
   .cauce-ugc__inner,
   .cauce-glow__inner,
   .cauce-tabs-wrap > .page-width {
@@ -1397,4 +1399,164 @@ h1, h2, h3, h4,
   }
   .cauce-glow__item { margin-right: 0; }
   .cauce-glow__item--clon { display: none; }
+}
+
+/* ==========================================================================
+   10. PDP — bloque de dolor
+   Ver sections/cauce-dolor.liquid y docs/DECISIONS.md D-033.
+
+   La seccion vive dentro de .page-width pero se estrecha por su cuenta: el copy
+   de agitacion es una columna editorial, no una grilla de ancho completo. El
+   min() deja que --cauce-dolor-ancho baje del ancho de pagina pero nunca lo pase.
+   ========================================================================== */
+
+.cauce-dolor__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-dolor-ancho, 1120px), var(--page-width, 1440px));
+}
+
+/* Media ------------------------------------------------------------------- */
+
+.cauce-dolor__media {
+  margin: 0;
+  min-width: 0;
+}
+
+.cauce-dolor__imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--cauce-dolor-ratio, 21 / 9);
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Un recorte 21:9 a 345 px de ancho — un telefono — es una franja de 148 px. El
+   piso de altura deja que el object-fit recorte a lo ancho en vez de aplastar la
+   escena; arriba de ese piso la relacion elegida manda igual. */
+@media screen and (max-width: 749px) {
+  .cauce-dolor__imagen { min-height: 22rem; }
+}
+
+.cauce-dolor__epigrafe {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.2rem;
+  opacity: 0.7;
+  margin: var(--cauce-aire-xs) 0 0;
+}
+
+/* Texto ------------------------------------------------------------------- */
+
+.cauce-dolor__cuerpo { min-width: 0; }
+
+.cauce-dolor__titulo {
+  margin: 0 0 var(--cauce-aire-s);
+  text-wrap: balance;
+}
+
+.cauce-dolor__bajada {
+  max-width: 72ch;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+.cauce-dolor__bajada > :first-child { margin-top: 0; }
+.cauce-dolor__bajada > :last-child { margin-bottom: 0; }
+
+@media screen and (min-width: 750px) {
+  .cauce-dolor__bajada { font-size: 1.7rem; }
+}
+
+/* Lista ------------------------------------------------------------------- */
+
+.cauce-dolor__lista {
+  list-style: none;
+  display: grid;
+  gap: var(--cauce-aire-s);
+  margin: var(--cauce-aire-m) 0 0;
+  padding: 0;
+}
+
+/* align-items: flex-start y no center. Con una sola linea las dos opciones dan
+   casi lo mismo, pero un item que se parte en dos renglones —y en mobile se parten
+   casi todos— deja la marca flotando en el medio del bloque de texto. */
+.cauce-dolor__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+/* El recuadro es el UNICO oxido del bloque junto al cierre del titulo. Va como
+   borde y no como relleno a proposito: sobre CAUCE el token vale OXIDO CLARO y da
+   4.27:1, que alcanza para un componente (1.4.11) pero no para texto chico. Por
+   eso el texto del item se queda en currentColor y solo la marca lleva el acento.
+   Ver el limite documentado en .cauce-acento, bloque 2. */
+.cauce-dolor__marca {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid var(--cauce-acento);
+  border-radius: 4px;
+  color: var(--cauce-acento);
+}
+
+/* .cauce-icono trae el VADO contextual; dentro del recuadro el glifo tiene que
+   ser del mismo color que el marco. */
+.cauce-dolor__marca .cauce-icono {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: currentColor;
+  stroke-width: 2;
+}
+
+.cauce-dolor__texto {
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.cauce-dolor__pie {
+  max-width: 72ch;
+  font-size: 1.3rem;
+  opacity: 0.75;
+  margin-top: var(--cauce-aire-s);
+}
+
+.cauce-dolor__cta {
+  display: inline-flex;
+  margin-top: var(--cauce-aire-m);
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-dolor__texto { font-size: 1.7rem; }
+  .cauce-dolor__marca { width: 2.6rem; height: 2.6rem; }
+  .cauce-dolor__marca .cauce-icono { width: 1.8rem; height: 1.8rem; }
+}
+
+/* Imagen al costado ------------------------------------------------------- */
+
+/* Todo lo que parte el ancho en dos espera a 990px, no a los 750px habituales del
+   tema. Medido a 768: la columna de texto del layout al costado queda en 32
+   caracteres por linea, y cada columna de la lista en 310px, donde una frase de
+   17px se parte en tres renglones. Una sola columna larga se lee mejor. */
+@media screen and (min-width: 990px) {
+  .cauce-dolor__lista {
+    grid-template-columns: repeat(var(--cauce-dolor-cols, 1), minmax(0, 1fr));
+    column-gap: var(--cauce-aire-m);
+  }
+
+  .cauce-dolor__inner--izquierda,
+  .cauce-dolor__inner--derecha {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--cauce-aire-m);
+  }
+
+  .cauce-dolor__inner--derecha .cauce-dolor__media { order: 2; }
 }

@@ -790,3 +790,55 @@ tienda. Un sello de "cliente verificado" sobre una reseña sin compra detrás es
 engañosa por sí solo (Res. SC 270/2020), así que el checkbox por bloque existe para poder
 apagarlo reseña por reseña, y el setting de sección vacío lo saca de toda la sección de una vez.
 Anotado en el checklist de `CLAIMS-AUDIT.md` §6.
+
+---
+
+## D-033 · 2026-08-26 · Bloque de dolor: sección propia, no `multicolumn` con íconos
+
+**Decisión.** Entra `sections/cauce-dolor.liquid` — foto, título con el cierre en acento,
+bajada y lista de items marcados con cruz — y se instancia en `product.cauce-landing` como
+`dolor`, entre la FAQ de entrada (`cauce_faq_nNHY4y`) y los pilares. El texto vive entero en
+el template; el `.liquid` no tiene una sola palabra de copy.
+
+**Alternativa descartada.** Armarlo con `multicolumn` + `icon-bar`, que es como están resueltos
+`beneficios`, `explicacion` y `timeline`. Tres cosas no salen de ahí: los items serían cuatro
+tarjetas en grilla y no una lista de una línea con la marca al costado; el título a dos colores
+necesitaría el `title_highlight_color` de Shrine, que es un color picker donde alguien puede
+cargar cualquier hex y que el bloque 3 de `cauce-brand.css` justamente neutraliza; y la imagen
+quedaría como una columna más, sin control de `loading` ni de relación de aspecto.
+
+**El acento del título es un setting aparte, no un richtext con color.** `titulo` +
+`titulo_acento` se concatenan y el segundo va en `.cauce-acento`. Así el par claro/oscuro lo
+resuelve el token contextual del bloque 0 y no hay un hex guardado en el JSON del template que
+quede mal el día que cambie la paleta. Es la misma razón de D-031.
+
+**El recuadro de cada item va como borde y el texto no.** Sobre CAUCE `--cauce-acento` vale
+ÓXIDO CLARO, que da 4.27:1: alcanza para un componente (1.4.11) pero no para texto de 1.7rem.
+El marco y la cruz llevan el acento; la frase se queda en `currentColor`. Es el mismo reparto
+"color en el ícono, peso en el texto" que resolvió D-032 para el sello de verificado.
+
+**`loading` es un setting.** La sección puede quedar arriba o abajo del pliegue según dónde la
+pongan, y una imagen de 21:9 a ancho de columna es candidata a LCP. `carga_prioritaria` marca
+`eager` + `fetchpriority="high"`; apagado — el default, y cómo quedó en la landing, donde la
+sección es la cuarta — se queda en `lazy` para no competir con la imagen del hero.
+
+**El `sizes` se arma en Liquid y no con `var()`.** El atributo `sizes` lo parsea el HTML, no el
+CSS: una custom property ahí no resuelve y el browser descarta el media query entero, con lo
+que baja siempre la variante más grande del `srcset`. Los cortes salen del padding real de
+`.page-width` (1.5rem hasta 750px, 5rem después).
+
+**En mobile la relación de aspecto tiene piso.** Un recorte 21:9 a 345px de ancho es una franja
+de 148px. `min-height: 22rem` deja que `object-fit: cover` recorte a lo ancho en vez de aplastar
+la escena; arriba de ese piso manda la relación elegida.
+
+**Dos íconos nuevos en `cauce-iconos`:** `cruz` y `alerta`. Van sin recuadro — el marco lo
+dibuja quien los usa — así el mismo glifo sirve suelto en una comparativa y enmarcado en esta
+lista.
+
+**El copy es un bloqueante abierto.** La sección es, por construcción, la más expuesta del
+tema: una lista de síntomas arriba de un suplemento sugiere que el suplemento los resuelve
+aunque ninguna línea lo diga. El texto cargado es el de la referencia y cae en eso. Está
+anotado en el checklist de `CLAIMS-AUDIT.md` §6, junto con la nota de §3.3: la landing ya
+venía diciendo esas cosas desde el theme editor, esta sección no lo inaugura. Vaciar título,
+bajada e items apaga la sección entera sin tocar código.
+

@@ -97,4 +97,21 @@
     <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
       <path d="M12 4v16M6 20h12M4 8h16M7 8l-3 6h6ZM17 8l-3 6h6Z"/>
     </svg>
+
+  {%- comment -%}
+    La cruz y el triangulo son los dos unicos iconos del set que marcan algo negativo.
+    Van SIN recuadro: el marco lo dibuja quien los usa (ver .cauce-dolor__marca), asi el
+    mismo glifo sirve suelto dentro de una comparativa y enmarcado dentro de una lista.
+    Trazo mas corto que el viewBox para que, dentro de un recuadro de 2.4rem, la cruz no
+    toque los bordes.
+  {%- endcomment -%}
+  {%- when 'cruz' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M7.5 7.5 16.5 16.5M16.5 7.5 7.5 16.5"/>
+    </svg>
+
+  {%- when 'alerta' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M12 4.2 2.8 20h18.4Z"/><path d="M12 10.2v4M12 17.2h.01"/>
+    </svg>
 {%- endcase -%}

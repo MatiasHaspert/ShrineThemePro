@@ -89,6 +89,16 @@ Vale registrarlo: la ausencia es una decisión, no un olvido.
 - Comparaciones con marcas o con medicamentos.
 - Cantidad de clientes, unidades vendidas o reseñas.
 
+> **Esta lista dejó de ser cierta.** Se escribió cuando el copy de la landing salía entero
+> de este repo. Desde entonces el template `product.cauce-landing` se editó desde el theme
+> editor y hoy contradice cuatro de los cinco puntos: la descripción del producto habla de
+> "sacar el azúcar de la sangre", "energía estable" y "protección antioxidante"; una FAQ
+> promete resultados "en 3 a 5 semanas"; otra compara con la berberina; el bloque de reseñas
+> declara "1574+ Reseñas" y 4.8 de calificación. La sección `dolor` (D-033) se suma a eso, no
+> lo inaugura. **La lista queda como estaba a propósito**: es el estado al que hay que volver
+> si la revisión legal decide sostener el criterio original. Lo que hay que auditar hoy es el
+> template, no este documento.
+
 ---
 
 ## 4. Claims que se descartaron, y por qué
@@ -205,6 +215,17 @@ Plantilla de tema → `cauce-landing`.
       no hay clientes reales detrás es además Res. SC 270/2020. Reescribir o quitar.
 - [ ] Verificar que existan la persona y el consentimiento detrás de cada testimonio
       que quede, y que la foto sea de quien lo firma
+- [ ] **BLOQUEANTE · La sección `dolor` de `cauce-landing` (D-033).** Es una lista de
+      síntomas puesta arriba de un suplemento: "un número matutino que no baja",
+      "bajones de energía y antojos de azúcar en la tarde", "peso terco alrededor del
+      abdomen", "esa sensación de «¿sigo yo?» en cada análisis", y una bajada que dice
+      que la comida moderna quita "el compuesto que tu cuerpo usa para limpiar el
+      azúcar de la sangre". Ninguna línea afirma que el producto lo resuelva, pero la
+      yuxtaposición lo sugiere, que es lo que Disp. ANMAT 4980/05 mira. Contradice
+      además el §3.3 de este documento (glucemia, energía y metabolismo estaban en la
+      lista de lo que la página deliberadamente no decía). Aprobar con criterio legal,
+      reescribir sin síntoma, o quitar la sección. La sección se puede vaciar entera
+      desde el editor sin tocar código: sin título, bajada ni items no renderiza nada.
 - [ ] **El sello "Cliente verificado"** de `ss_glow_testimonial_3jmxKc` (D-032). Decir
       verificado sin poder probar la compra es Res. SC 270/2020 por sí solo, aparte de lo
       que diga el texto. Destildar `verificado` en cada reseña que no tenga pedido detrás,

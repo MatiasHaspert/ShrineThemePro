@@ -1,0 +1,324 @@
+{% comment %}
+  CAUCE — bloque de dolor (agitacion de problema).
+
+  Foto + titulo con el cierre en acento + bajada + lista de items marcados con
+  cruz. Va arriba en la landing, entre las preguntas de entrada y los pilares:
+  nombra el problema justo antes de que la pagina empiece a argumentar la formula.
+
+  Tres cosas que la seccion resuelve por construccion:
+
+  - La imagen es lo primero del bloque y puede quedar cerca del pliegue, asi que
+    el loading es un setting y no una constante. Ver `carga_prioritaria`: arriba
+    del pliegue se marca eager + fetchpriority high; mas abajo se queda en lazy,
+    que es el default, para no competir con la imagen del hero.
+  - Sin imagen la seccion NO deja un hueco: cae en placeholder_svg_tag, igual que
+    las secciones nativas del tema, asi se puede maquetar antes de tener la foto.
+  - La lista es un <ul> real. Cada item es un <li>, no un parrafo con un glifo
+    adelante: un lector de pantalla tiene que poder decir "lista de 4 elementos".
+
+  ADVERTENCIA DE CLAIMS (Disp. ANMAT 4980/05 · CAA art. 1381). Esta es, por
+  construccion, la seccion mas expuesta del tema: describir un sintoma y ponerlo
+  arriba de un suplemento sugiere que el suplemento lo resuelve, aunque ninguna
+  linea lo diga. Por eso el texto vive entero en templates/*.json y no aca: la
+  regla 1 de docs/CLAIMS-AUDIT.md pide que todo claim se pueda listar con un grep.
+  No escribas copy adentro de este archivo.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_hay_lista = false
+  for block in section.blocks
+    if block.settings.texto != blank
+      assign cauce_hay_lista = true
+      break
+    endif
+  endfor
+
+  assign cauce_hay = cauce_hay_lista
+  if section.settings.titulo != blank or section.settings.bajada != blank
+    assign cauce_hay = true
+  endif
+
+  assign cauce_con_imagen = true
+  if section.settings.posicion_imagen == 'sin'
+    assign cauce_con_imagen = false
+  endif
+
+  assign cauce_loading = 'lazy'
+  assign cauce_fetch = 'auto'
+  if section.settings.carga_prioritaria
+    assign cauce_loading = 'eager'
+    assign cauce_fetch = 'high'
+  endif
+
+  comment
+    Si el campo de la seccion esta vacio se cae al alt cargado en Shopify. Pasarle
+    un string vacio a image_tag escribiria alt="" y marcaria la foto como decorativa,
+    que es justo lo contrario de lo que es aca.
+  endcomment
+  assign cauce_alt = section.settings.alt | default: section.settings.imagen.alt
+
+  comment
+    El `sizes` se arma aca por dos motivos.
+
+    1. No puede usar var(): el atributo sizes lo parsea el HTML, no el CSS, y ahi una
+       custom property no resuelve. El browser descarta el media query entero y se
+       queda con el fallback, que es la variante mas grande del srcset.
+    2. Va todo en px y ningun rem. Dentro de sizes las unidades relativas se resuelven
+       contra el font-size INICIAL (16px), no contra el root del documento, que aca es
+       10px por el 62.5% de theme.liquid. Un `10rem` copiado del CSS valdria 160px en
+       vez de los 50+50 reales y el calculo saldria corto: imagen chica, estirada.
+
+    Los numeros son el padding real de .page-width (15px en mobile, 50px desde 750px),
+    el ancho del bloque, y para el layout al costado el gap de --cauce-aire-m (32px).
+    El max-width del contenedor es border-box, asi que el contenido mide ancho - 100.
+  endcomment
+  assign cauce_tope = section.settings.ancho_maximo
+  assign cauce_util = cauce_tope | minus: 100
+
+  if section.settings.posicion_imagen == 'izquierda' or section.settings.posicion_imagen == 'derecha'
+    assign cauce_col = cauce_util | minus: 32 | divided_by: 2
+    assign cauce_sizes = '(min-width: ' | append: cauce_tope | append: 'px) ' | append: cauce_col | append: 'px, (min-width: 990px) calc((100vw - 132px) / 2), (min-width: 750px) calc(100vw - 100px), calc(100vw - 30px)'
+  else
+    assign cauce_sizes = '(min-width: ' | append: cauce_tope | append: 'px) ' | append: cauce_util | append: 'px, (min-width: 750px) calc(100vw - 100px), calc(100vw - 30px)'
+  endif
+-%}
+
+{%- if cauce_hay -%}
+  <div class="cauce-dolor color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width cauce-dolor__inner cauce-dolor__inner--{{ section.settings.posicion_imagen }}"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-dolor-ancho: {{ section.settings.ancho_maximo }}px; --cauce-dolor-ratio: {{ section.settings.relacion }}; --cauce-dolor-cols: {{ section.settings.columnas_lista }};"
+    >
+      {%- if cauce_con_imagen -%}
+        <figure class="cauce-dolor__media">
+          {%- if section.settings.imagen != blank -%}
+            {{
+              section.settings.imagen
+              | image_url: width: 1600
+              | image_tag:
+                loading: cauce_loading,
+                fetchpriority: cauce_fetch,
+                widths: '480, 720, 960, 1200, 1600',
+                sizes: cauce_sizes,
+                class: 'cauce-dolor__imagen',
+                alt: cauce_alt
+            }}
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'cauce-dolor__imagen placeholder-svg placeholder' }}
+          {%- endif -%}
+
+          {%- if section.settings.epigrafe != blank -%}
+            <figcaption class="cauce-dolor__epigrafe">{{ section.settings.epigrafe }}</figcaption>
+          {%- endif -%}
+        </figure>
+      {%- endif -%}
+
+      <div class="cauce-dolor__cuerpo">
+        {%- if section.settings.volanta != blank -%}
+          <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.titulo != blank -%}
+          {%- comment -%}
+            El cierre en acento es un setting aparte y no un color picker dentro de un
+            richtext: asi el hex no se puede elegir mal y el par claro/oscuro lo resuelve
+            --cauce-acento (bloque 0 de cauce-brand.css). Ver D-031.
+          {%- endcomment -%}
+          <h2 class="cauce-dolor__titulo {{ section.settings.heading_size }}">
+            {{- section.settings.titulo -}}
+            {%- if section.settings.titulo_acento != blank -%}
+              <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+            {%- endif -%}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.bajada != blank -%}
+          <div class="cauce-dolor__bajada rte">{{ section.settings.bajada }}</div>
+        {%- endif -%}
+
+        {%- if cauce_hay_lista -%}
+          <ul class="cauce-dolor__lista" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.texto == blank -%}
+                {%- continue -%}
+              {%- endif -%}
+              <li class="cauce-dolor__item" {{ block.shopify_attributes }}>
+                <span class="cauce-dolor__marca">
+                  {%- render 'cauce-iconos', icono: section.settings.icono -%}
+                </span>
+                <span class="cauce-dolor__texto">{{ block.settings.texto }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.pie != blank -%}
+          <div class="cauce-dolor__pie rte">{{ section.settings.pie }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.boton_texto != blank and section.settings.boton_link != blank -%}
+          <a class="cauce-dolor__cta button" href="{{ section.settings.boton_link }}">
+            {{- section.settings.boton_texto -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Dolor",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Seccion de agitacion de problema. Describe la situacion del cliente, NUNCA lo que el producto hace con ella: en cuanto un item de la lista se lee como «esto se te soluciona tomando esto», es claim terapeutico (Disp. ANMAT 4980/05). Sin patologias con nombre, sin plazos de resultado y sin comparaciones con medicamentos."
+    },
+
+    { "type": "header", "content": "Imagen" },
+    { "type": "image_picker", "id": "imagen", "label": "Imagen" },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Texto alternativo",
+      "info": "Describi la escena. Si lo dejas vacio se usa el alt cargado en Shopify."
+    },
+    {
+      "type": "select",
+      "id": "posicion_imagen",
+      "label": "Posicion",
+      "options": [
+        { "value": "arriba", "label": "Arriba del texto" },
+        { "value": "izquierda", "label": "A la izquierda" },
+        { "value": "derecha", "label": "A la derecha" },
+        { "value": "sin", "label": "Sin imagen" }
+      ],
+      "default": "arriba"
+    },
+    {
+      "type": "select",
+      "id": "relacion",
+      "label": "Relacion de aspecto",
+      "options": [
+        { "value": "auto", "label": "La de la imagen" },
+        { "value": "21 / 9", "label": "21:9 panoramica" },
+        { "value": "16 / 9", "label": "16:9" },
+        { "value": "3 / 2", "label": "3:2" },
+        { "value": "4 / 5", "label": "4:5 vertical" }
+      ],
+      "default": "21 / 9"
+    },
+    { "type": "text", "id": "epigrafe", "label": "Epigrafe" },
+    {
+      "type": "checkbox",
+      "id": "carga_prioritaria",
+      "label": "Cargar la imagen con prioridad",
+      "info": "Marcalo SOLO si la seccion queda arriba del pliegue. Mas abajo, dejalo apagado: le roba ancho de banda a la imagen del hero.",
+      "default": false
+    },
+
+    { "type": "header", "content": "Texto" },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo" },
+    {
+      "type": "inline_richtext",
+      "id": "titulo_acento",
+      "label": "Cierre del titulo en acento",
+      "info": "Se agrega al final del titulo, en el color de acento. Vacio = titulo de un solo color."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    { "type": "richtext", "id": "bajada", "label": "Bajada" },
+    { "type": "richtext", "id": "pie", "label": "Texto al pie" },
+
+    { "type": "header", "content": "Lista" },
+    {
+      "type": "select",
+      "id": "icono",
+      "label": "Marca de cada item",
+      "options": [
+        { "value": "cruz", "label": "Cruz" },
+        { "value": "alerta", "label": "Triangulo" }
+      ],
+      "default": "cruz"
+    },
+    {
+      "type": "select",
+      "id": "columnas_lista",
+      "label": "Columnas en desktop",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
+    },
+
+    { "type": "header", "content": "Boton" },
+    { "type": "text", "id": "boton_texto", "label": "Texto", "info": "Vacio = sin boton." },
+    { "type": "url", "id": "boton_link", "label": "Enlace" },
+
+    { "type": "header", "content": "Presentacion" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "inverse"
+    },
+    {
+      "type": "range",
+      "id": "ancho_maximo",
+      "min": 720,
+      "max": 1400,
+      "step": 40,
+      "unit": "px",
+      "label": "Ancho del bloque",
+      "default": 1120
+    },
+
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "sintoma",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "texto",
+          "label": "Texto",
+          "info": "Una linea. Situacion del cliente, no beneficio del producto."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Dolor",
+      "blocks": [
+        { "type": "sintoma" },
+        { "type": "sintoma" },
+        { "type": "sintoma" },
+        { "type": "sintoma" }
+      ]
+    }
+  ]
+}
+{% endschema %}

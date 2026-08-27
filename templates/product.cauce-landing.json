@@ -630,6 +630,63 @@
         "padding_bottom": 72
       }
     },
+    "dolor": {
+      "type": "cauce-dolor",
+      "blocks": {
+        "d1": {
+          "type": "sintoma",
+          "settings": {
+            "texto": "Un número matutino que no baja"
+          }
+        },
+        "d2": {
+          "type": "sintoma",
+          "settings": {
+            "texto": "Bajones de energía y antojos de azúcar en la tarde"
+          }
+        },
+        "d3": {
+          "type": "sintoma",
+          "settings": {
+            "texto": "Peso terco alrededor del abdomen"
+          }
+        },
+        "d4": {
+          "type": "sintoma",
+          "settings": {
+            "texto": "Esa sensación de «¿sigo yo?» en cada análisis"
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "settings": {
+        "imagen": "",
+        "alt": "Mujer sentada a la mesa de su cocina, con la cabeza apoyada en la mano.",
+        "posicion_imagen": "arriba",
+        "relacion": "21 / 9",
+        "epigrafe": "",
+        "carga_prioritaria": false,
+        "volanta": "",
+        "titulo": "Por Qué un Número que Sube No Es",
+        "titulo_acento": "Falta de Voluntad",
+        "heading_size": "h1",
+        "bajada": "<p>La comida moderna le quita poco a poco el compuesto que tu cuerpo usa para limpiar el azúcar de la sangre. Con el tiempo, el desagüe se tapa, tu número sube, y los efectos se acumulan — sin importar cuánto te esfuerces.</p>",
+        "pie": "",
+        "icono": "cruz",
+        "columnas_lista": "1",
+        "boton_texto": "",
+        "boton_link": "",
+        "color_scheme": "inverse",
+        "ancho_maximo": 1120,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
     "pilares": {
       "type": "icon-bar",
       "blocks": {
@@ -1892,6 +1949,7 @@
     "main",
     "ss_glow_testimonial_3jmxKc",
     "cauce_faq_nNHY4y",
+    "dolor",
     "pilares",
     "ugc",
     "beneficios",
