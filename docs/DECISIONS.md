@@ -958,3 +958,69 @@ menciona medicamentos ("la cita que tanto temías — la de los medicamentos"). 
 de un suplemento, la secuencia sugiere que el suplemento la frena, que es exactamente lo que
 mira la Disp. ANMAT 4980/05. Anotado en el checklist de `CLAIMS-AUDIT.md` §6. Vaciar el título de
 sección y las tres etapas apaga la sección entera sin tocar código.
+
+---
+
+## D-036 · 2026-08-27 · Bloque de progreso: línea de tiempo con pseudo-elementos
+
+**Decisión.** Entra `sections/cauce-progreso.liquid` — título de sección y una lista de hitos
+colgados de una línea vertical, cada uno con pastilla, párrafo y una lista corta de ítems con
+tilde — instanciada como `progreso`, debajo de `solucion`. La landing queda `dolor` → `etapas`
+→ `solucion` → `progreso`. Como en D-033, D-034 y D-035, el `.liquid` no tiene copy.
+
+**Es la contracara de `etapas`, y por eso es una sección aparte y no un preset de aquella.**
+`etapas` cuenta lo que pasa sin hacer nada y describe al cliente; `progreso` cuenta qué esperar
+después de empezar y habla del producto. Se parecen en la forma y no se parecen en nada más: el
+riesgo legal de una y de otra no es el mismo, y mezclarlas en una sola sección haría que
+apagar una apague la otra.
+
+**La línea y los marcadores son pseudo-elementos del `<li>`.** La alternativa era un `<span>`
+decorativo por hito, que es markup que un lector de pantalla tiene que saltear para nada. El
+tramo de línea de cada hito se estira un `--cauce-aire-m` de más para cruzar el gap y tocar el
+tramo del siguiente, así los cuatro tramos se leen como una sola línea; el último corta en el
+borde de su propio contenido, porque una línea que sigue más allá del último hito promete un
+hito que no existe.
+
+**El marcador se pinta con `rgb(var(--color-background))`.** Necesita ser opaco para tapar la
+línea que le pasa por atrás, y ese token es el fondo que el esquema de color ya calculó: el
+cuadrado sale hueco en los tres esquemas sin una regla por esquema.
+
+**La pastilla redeclara `--cauce-acento`, y esto es lo más importante de la sección.** El token
+del bloque 0 se define **por superficie**, no por sección: adentro de la pastilla el fondo ya no
+es CAUCE sino blanco, así que ahí el acento vuelve a valer ÓXIDO puro (6.04:1 sobre blanco,
+4.84:1 sobre SEDIMENTO). Heredar el ÓXIDO CLARO de la banda oscura daría 3.69:1 sobre blanco y
+no pasaría AA. Es el primer lugar del tema donde una superficie clara vive adentro de una
+sección oscura, y deja el patrón sentado para la próxima.
+
+**Las tildes van en el secundario, no en el acento.** Con ocho tildes más cuatro pastillas, el
+óxido dejaría de ser un acento y pasaría a ser el color de la sección. El único óxido del
+bloque es la etiqueta de cada pastilla, que es la que marca jerarquía; VADO sobre CAUCE da
+4.93:1, de sobra para una viñeta.
+
+**La pastilla va en Archivo y no en Newsreader**, aunque sea un `<h3>`. Es una etiqueta de
+interfaz, del mismo orden que `.cauce-eyebrow` o `.cauce-dato`, no un título de sección. Y lleva
+selector de dos clases —`.cauce-progreso .cauce-progreso__pastilla`— porque la regla del bloque
+1 (`.cauce-page h3`) le fijaría el color al foreground de la sección, que sobre la banda oscura
+es blanco, adentro de una pastilla blanca. Por el mismo motivo el `font-size` del media query
+también va con dos clases: la especificidad gana sobre el orden, y con una sola clase el tamaño
+de desktop nunca se aplicaba (encontrado en el QA).
+
+**Los ítems de cada hito se cargan en un `textarea`, uno por línea.** Shopify no da bloques
+anidados en secciones clásicas, y un par de campos fijos (`item_1`, `item_2`) congelaría la
+cantidad. Se parten con `newline_to_br | split: '<br />'` y no con un `split` por `\n` porque el
+editor puede guardar el salto como `\r\n` según el sistema, y ahí quedaría un `\r` colgado al
+final de cada ítem.
+
+**Un ícono nuevo:** `visto`, la tilde suelta. La que había (`chequeo`) tiene círculo y es un
+sello; esta es una viñeta. De paso `chequeo` pasa a llamarse "Tilde en círculo" en el selector
+de `cauce-solucion`, que es lo que siempre fue.
+
+**El copy es el bloqueante más grave de los cuatro bloques nuevos.** No describe una situación:
+es un cronograma de resultados con semanas. "Semana 5–8: El Número se Mueve" le pone fecha a un
+efecto sobre la glucemia, que es exactamente lo que el §3.3 listaba como algo que la página
+deliberadamente no decía, y lo que la Disp. ANMAT 4980/05 prohíbe afirmar de un suplemento
+dietario. Además los tres asteriscos no remiten a ninguna nota: un asterisco sin aclaración al
+pie es una remisión a nada, y eso solo ya es un problema bajo Ley 24.240 art. 4. Anotado en el
+checklist de `CLAIMS-AUDIT.md` §6. Si la sección se queda, el contenido honesto de esta forma es
+la **rutina** —cómo se toma, con qué comida, cuánto dura el frasco, cuándo se repone— que no
+promete nada y ocupa el mismo lugar en la página.

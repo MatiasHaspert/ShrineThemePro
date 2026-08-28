@@ -247,6 +247,18 @@ Plantilla de tema → `cauce-landing`.
       tratamiento. Contradice el §3.3 igual que `dolor`. Aprobar con criterio legal,
       reescribir sin valores ni medicamentos, o quitarla. Se vacía entera desde el
       editor sin tocar código: sin título de sección ni etapas no renderiza nada.
+- [ ] **BLOQUEANTE · La sección `progreso` de `cauce-landing` (D-036).** Es el más
+      grave de los cuatro bloques nuevos, porque no describe una situación: promete un
+      resultado y le pone fecha. "Semana 5–8: El Número se Mueve", "Semana 3–4: energía
+      más estable en la tarde, menos antojos", "Semana 9–12+: protección antioxidante
+      para las células". Un suplemento dietario no puede afirmar un efecto, y menos con
+      cronograma (Disp. ANMAT 4980/05); el §3.3 listaba "cuánto tarda en hacer efecto"
+      como algo que la página deliberadamente no decía. Aparte, los tres asteriscos del
+      texto no remiten a ninguna nota al pie: una remisión a nada es un problema por sí
+      sola (Ley 24.240 art. 4), y se arregla llenando el campo "Texto al pie" o sacando
+      los asteriscos. Aprobar con criterio legal, reescribir la sección como **rutina**
+      (cómo se toma, con qué comida, cuánto dura el frasco) en vez de como resultado, o
+      quitarla. Se vacía entera desde el editor sin tocar código.
 - [ ] **El sello "Cliente verificado"** de `ss_glow_testimonial_3jmxKc` (D-032). Decir
       verificado sin poder probar la compra es Res. SC 270/2020 por sí solo, aparte de lo
       que diga el texto. Destildar `verificado` en cada reseña que no tenga pedido detrás,

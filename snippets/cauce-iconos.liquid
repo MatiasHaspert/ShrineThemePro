@@ -129,4 +129,14 @@
     <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
       <path d="M12 4.2 2.8 20h18.4Z"/><path d="M12 10.2v4M12 17.2h.01"/>
     </svg>
+
+  {%- comment -%}
+    Tilde suelta, sin circulo alrededor: la de 'chequeo' es un sello y esta es una
+    vineta. Se usa a 1.6rem al lado de una linea de texto (ver .cauce-progreso__check),
+    asi que el trazo cruza el viewBox entero para que no se lea flotando.
+  {%- endcomment -%}
+  {%- when 'visto' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="m4.5 12.5 5 5.5L19.5 6"/>
+    </svg>
 {%- endcase -%}

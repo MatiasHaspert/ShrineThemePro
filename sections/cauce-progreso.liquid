@@ -1,0 +1,258 @@
+{% comment %}
+  CAUCE — bloque de progreso (linea de tiempo de uso).
+
+  Titulo de seccion y una lista de hitos colgados de una linea vertical. Cada
+  hito: marcador cuadrado, pastilla con la etiqueta y el nombre, un parrafo y una
+  lista corta de items marcados con tilde.
+
+  Es la contracara de cauce-etapas: aquella cuenta lo que pasa sin hacer nada,
+  esta cuenta que esperar despues de empezar. Van separadas justamente porque una
+  describe al cliente y la otra habla del producto, y el riesgo legal de las dos
+  no es el mismo.
+
+  Cuatro cosas que la seccion resuelve por construccion:
+
+  - Es un <ol>. Los hitos son una secuencia con orden propio, no tarjetas
+    intercambiables, y un lector de pantalla los tiene que poder numerar.
+  - La linea y los marcadores son pseudo-elementos, no un <div> por hito: no hay
+    markup decorativo que un lector de pantalla tenga que saltear. El marcador se
+    pinta con el fondo de la seccion (rgb(var(--color-background))) para tapar la
+    linea que le pasa por atras, asi el hueco del cuadrado sale solo en los tres
+    esquemas de color.
+  - Los items de cada hito se cargan en un textarea, uno por linea, y se parten
+    aca. La alternativa era un par de campos fijos —item_1, item_2— que limitaria
+    la cantidad, o bloques anidados, que Shopify no da en secciones clasicas.
+  - La pastilla es una superficie clara adentro de una banda oscura, asi que
+    redeclara --cauce-acento: el token del bloque 0 se define POR SUPERFICIE, y
+    adentro de la pastilla la superficie ya no es CAUCE (ver D-036).
+
+  ADVERTENCIA DE CLAIMS (Disp. ANMAT 4980/05 · CAA art. 1381). Esta seccion es un
+  cronograma de resultados: dice que esperar y en cuanto tiempo. Un suplemento
+  dietario no puede prometer un resultado, y menos con fecha. El texto vive entero
+  en templates/*.json y no aca. No escribas copy adentro de este archivo.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_hay_hitos = false
+  for block in section.blocks
+    if block.settings.titulo != blank or block.settings.etiqueta != blank or block.settings.texto != blank or block.settings.items != blank
+      assign cauce_hay_hitos = true
+      break
+    endif
+  endfor
+
+  assign cauce_hay = cauce_hay_hitos
+  if section.settings.titulo != blank
+    assign cauce_hay = true
+  endif
+-%}
+
+{%- if cauce_hay -%}
+  <div class="cauce-progreso color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width cauce-progreso__inner cauce-progreso__inner--{{ section.settings.alineacion }}"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-progreso-ancho: {{ section.settings.ancho_maximo }}px;"
+    >
+      {%- if section.settings.volanta != blank or section.settings.titulo != blank or section.settings.bajada != blank -%}
+        <div class="cauce-progreso__encabezado">
+          {%- if section.settings.volanta != blank -%}
+            <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.titulo != blank -%}
+            <h2 class="cauce-progreso__titulo {{ section.settings.heading_size }}">
+              {{- section.settings.titulo -}}
+              {%- if section.settings.titulo_acento != blank -%}
+                <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.bajada != blank -%}
+            <div class="cauce-progreso__bajada rte">{{ section.settings.bajada }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if cauce_hay_hitos -%}
+        <ol class="cauce-progreso__lista" role="list">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              if block.settings.titulo == blank and block.settings.etiqueta == blank and block.settings.texto == blank and block.settings.items == blank
+                continue
+              endif
+
+              comment
+                newline_to_br y no split por '\n': el textarea del editor puede guardar
+                el salto como \r\n segun el sistema, y ahi un split por \n dejaria un \r
+                colgado al final de cada item. El filtro normaliza los dos casos.
+              endcomment
+              assign cauce_items = block.settings.items | strip | newline_to_br | split: '<br />'
+            -%}
+            <li class="cauce-progreso__hito" {{ block.shopify_attributes }}>
+              {%- if block.settings.etiqueta != blank or block.settings.titulo != blank -%}
+                <h3 class="cauce-progreso__pastilla">
+                  {%- if block.settings.etiqueta != blank -%}
+                    <span class="cauce-progreso__etiqueta">{{ block.settings.etiqueta }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.titulo != blank -%}
+                    <span class="cauce-progreso__nombre">{{ block.settings.titulo }}</span>
+                  {%- endif -%}
+                </h3>
+              {%- endif -%}
+
+              {%- if block.settings.texto != blank -%}
+                <div class="cauce-progreso__texto rte">{{ block.settings.texto }}</div>
+              {%- endif -%}
+
+              {%- if cauce_items.size > 0 -%}
+                <ul class="cauce-progreso__checks" role="list">
+                  {%- for item in cauce_items -%}
+                    {%- assign cauce_item = item | strip -%}
+                    {%- if cauce_item == blank -%}
+                      {%- continue -%}
+                    {%- endif -%}
+                    <li class="cauce-progreso__check">
+                      {%- render 'cauce-iconos', icono: section.settings.icono, clase: 'cauce-progreso__visto' -%}
+                      <span>{{ cauce_item }}</span>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ol>
+      {%- endif -%}
+
+      {%- if section.settings.pie != blank -%}
+        <div class="cauce-progreso__pie rte">{{ section.settings.pie }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Progreso",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Cronograma de uso. Es la seccion de mayor riesgo legal del tema: decir que esperar y en cuanto tiempo es prometer un resultado con fecha, y un suplemento dietario no puede (Disp. ANMAT 4980/05). Si va a existir, que hable de la rutina —como se toma, con que comida, cuanto dura el frasco— y no de lo que va a pasar."
+    },
+
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo" },
+    {
+      "type": "inline_richtext",
+      "id": "titulo_acento",
+      "label": "Cierre del titulo en acento",
+      "info": "Se agrega al final del titulo, en el color de acento. Vacio = titulo de un solo color."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    { "type": "richtext", "id": "bajada", "label": "Bajada" },
+    {
+      "type": "select",
+      "id": "alineacion",
+      "label": "Alineacion del encabezado",
+      "options": [
+        { "value": "centrado", "label": "Centrado" },
+        { "value": "izquierda", "label": "A la izquierda" }
+      ],
+      "default": "centrado"
+    },
+    {
+      "type": "richtext",
+      "id": "pie",
+      "label": "Texto al pie",
+      "info": "Si algun item lleva asterisco, la aclaracion va aca. Un asterisco sin nota al pie es una remision a nada."
+    },
+
+    { "type": "header", "content": "Hitos" },
+    {
+      "type": "select",
+      "id": "icono",
+      "label": "Marca de cada item",
+      "options": [
+        { "value": "visto", "label": "Tilde" },
+        { "value": "chequeo", "label": "Tilde en circulo" },
+        { "value": "gota", "label": "Gota" },
+        { "value": "hoja", "label": "Hoja" }
+      ],
+      "default": "visto"
+    },
+
+    { "type": "header", "content": "Presentacion" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "inverse"
+    },
+    {
+      "type": "range",
+      "id": "ancho_maximo",
+      "min": 720,
+      "max": 1400,
+      "step": 40,
+      "unit": "px",
+      "label": "Ancho del bloque",
+      "default": 920
+    },
+
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "hito",
+      "name": "Hito",
+      "settings": [
+        {
+          "type": "text",
+          "id": "etiqueta",
+          "label": "Etiqueta",
+          "info": "Va en color de acento, al principio de la pastilla. Los dos puntos del final se escriben aca."
+        },
+        { "type": "text", "id": "titulo", "label": "Nombre del hito" },
+        { "type": "richtext", "id": "texto", "label": "Texto" },
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "Items",
+          "info": "Uno por linea. Cada linea sale con su marca adelante."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Progreso",
+      "blocks": [
+        { "type": "hito" },
+        { "type": "hito" },
+        { "type": "hito" },
+        { "type": "hito" }
+      ]
+    }
+  ]
+}
+{% endschema %}

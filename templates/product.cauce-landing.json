@@ -801,6 +801,67 @@
         "padding_bottom": 0
       }
     },
+    "progreso": {
+      "type": "cauce-progreso",
+      "blocks": {
+        "p1": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Semana 1–2:",
+            "titulo": "Inicio Fácil",
+            "texto": "<p>Tu rutina se asienta mientras el R-ALA empieza a apoyar la captación de glucosa.</p>",
+            "items": "Una cápsula simple al día\nSin bajones, sin nervios"
+          }
+        },
+        "p2": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Semana 3–4:",
+            "titulo": "Comienza el Apoyo",
+            "texto": "<p>A medida que mejora la absorción, muchos notan que el día se siente más parejo.</p>",
+            "items": "Energía más estable en la tarde\nMenos antojos de azúcar"
+          }
+        },
+        "p3": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Semana 5–8:",
+            "titulo": "El Número se Mueve",
+            "texto": "<p>El apoyo continuo para un azúcar matutino saludable empieza a notarse.*</p>",
+            "items": "Apoyo para tu lectura matutina*\nEmpiezan las mejoras en tu calidad de vida"
+          }
+        },
+        "p4": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Semana 9–12+:",
+            "titulo": "Apoyo a Largo Plazo",
+            "texto": "<p>El uso constante apoya el metabolismo de la glucosa como parte de una rutina a largo plazo.</p>",
+            "items": "Protección antioxidante para las células*\nUna rutina basada en la causa raíz"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "volanta": "",
+        "titulo": "Qué esperar a medida que el apoyo crece con el tiempo",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "",
+        "alineacion": "centrado",
+        "pie": "",
+        "icono": "visto",
+        "color_scheme": "inverse",
+        "ancho_maximo": 920,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
     "pilares": {
       "type": "icon-bar",
       "blocks": {
@@ -2066,6 +2127,7 @@
     "dolor",
     "etapas",
     "solucion",
+    "progreso",
     "pilares",
     "ugc",
     "beneficios",
