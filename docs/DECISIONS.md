@@ -898,3 +898,63 @@ llevarlo a los músculos") y la volanta agrega un claim de origen ("la molécula
 necesita el certificado de materia prima de A4/B3. Todo eso queda anotado en el checklist de
 `CLAIMS-AUDIT.md` §6. Vaciar título, bajada, ítems e imagen apaga la sección entera sin tocar
 código.
+
+---
+
+## D-035 · 2026-08-27 · Bloque de etapas: `<ol>` de filas, no una grilla de tarjetas
+
+**Decisión.** Entra `sections/cauce-etapas.liquid` — título de sección y una fila por etapa,
+foto de un lado y panel de texto del otro, pegados — instanciada en `product.cauce-landing`
+como `etapas`, debajo de `solucion`. Como en D-033 y D-034, el `.liquid` no tiene copy.
+
+**Es un `<ol>`, no un `<ul>` ni tres tarjetas.** Las etapas son una secuencia: el orden *es* el
+contenido. Con `<ul>` un lector de pantalla las lee como opciones intercambiables, y con
+tarjetas en grilla se pierde además la lectura de arriba hacia abajo, que es lo que hace que se
+entienda como una línea de tiempo.
+
+**La numeración es un campo por bloque y no `forloop.index`.** Escribir "Etapa " en el `.liquid`
+para concatenarle el índice sería meter copy en el código, que es justo lo que prohíbe la regla
+1 de `CLAIMS-AUDIT.md`. Cuesta un campo más al cargar y a cambio la palabra queda en el
+template —greppable y traducible— y permite que la etiqueta no sea un número: "Hoy", "A los 45",
+"Dos años después".
+
+**La fila es una pieza sola: columnas pegadas, un solo `border-radius` y `overflow: hidden`.**
+El aire está entre filas (`--cauce-aire-s`), nunca adentro. Es lo que hace que cada etapa se lea
+como un bloque y la lista como una tira; con gap entre la foto y el panel se leerían seis
+elementos sueltos en vez de tres.
+
+**5/12 para la foto y 7/12 para el texto.** Con mitad y mitad el panel queda en 42 caracteres
+por línea a 1120px de bloque y un texto de dos renglones se parte en cinco.
+
+**`height: 100%` y `aspect-ratio` juntos en la foto, a propósito.** En desktop la fila es una
+grilla y la figura se estira: la altura queda definida, gana el `100%` y la foto toma la altura
+del panel — que es lo que hace que las dos columnas terminen parejas sin fijar una altura a
+mano. En mobile la figura mide por su contenido, el `100%` se resuelve en `auto` y ahí sí aplica
+la relación elegida. Una sola declaración cubre los dos casos, y por eso el `info` del setting
+aclara que la relación solo manda en mobile.
+
+**El panel no declara fondo propio: lo pide con `--cauce-fondo-celda`**, el mismo mecanismo de
+`cauce-datos`. SEDIMENTO sobre blanco, SEDIMENTO-2 sobre SEDIMENTO. Sobre la banda oscura vale
+CAUCE, o sea lo mismo que el fondo: ahí la fila se lee por la foto y por el texto, no por un
+recuadro. Es lo único honesto sin inventar un quinto color fuera del brandboard.
+
+**El número de etapa va en `--cauce-secundario` y no en el acento.** La referencia lo pone en
+color de marca, pero acá serían tres óxidos en la misma pantalla y la regla es uno por pieza.
+Y a 1.1rem el acento tampoco daría: sobre CAUCE vale ÓXIDO CLARO, 4.27:1, que no alcanza para
+texto chico. VADO pasa AA como texto en los tres esquemas.
+
+**Las fotos van siempre en `lazy`, sin setting de prioridad.** A diferencia de `dolor` y
+`solucion`, esta sección es la sexta de la landing: nunca está arriba del pliegue, y son tres
+imágenes grandes compitiendo por el mismo ancho de banda que el hero.
+
+**Nota de orden, que es del usuario y no mía.** La landing queda hoy `dolor` → `solucion` →
+`etapas`: problema, solución, problema otra vez. La secuencia natural sería `dolor` → `etapas`
+→ `solucion`, o mover `etapas` arriba de `solucion`. Se cambia arrastrando en el editor, sin
+tocar código.
+
+**El copy es un bloqueante abierto, y es el más expuesto de los tres.** Nombra valores de
+laboratorio ("108. Luego 112"), dibuja una progresión que termina en una consulta médica y
+menciona medicamentos ("la cita que tanto temías — la de los medicamentos"). Puesta en la página
+de un suplemento, la secuencia sugiere que el suplemento la frena, que es exactamente lo que
+mira la Disp. ANMAT 4980/05. Anotado en el checklist de `CLAIMS-AUDIT.md` §6. Vaciar el título de
+sección y las tres etapas apaga la sección entera sin tocar código.

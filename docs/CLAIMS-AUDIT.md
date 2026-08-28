@@ -237,6 +237,16 @@ Plantilla de tema → `cauce-landing`.
       por metro cuadrado de toda la landing. Aprobar con criterio legal, reescribir con
       funciones respaldables, o quitarla. Se vacía entera desde el editor sin tocar
       código: sin título, bajada, ítems ni imagen no renderiza nada.
+- [ ] **BLOQUEANTE · La sección `etapas` de `cauce-landing` (D-035).** Es el caso más
+      directo de los tres bloques nuevos. Dibuja una progresión en el tiempo con
+      valores de laboratorio ("108. Luego 112"), síntomas por etapa y un final que es
+      una consulta médica y una mención a medicamentos ("la cita que tanto temías — la
+      de los medicamentos"). Puesta en la página de un suplemento, la secuencia dice sin
+      decirlo que el suplemento la frena: es el tipo de sugerencia que mira la Disp.
+      ANMAT 4980/05, y la mención a medicamentos suma el problema de comparar con un
+      tratamiento. Contradice el §3.3 igual que `dolor`. Aprobar con criterio legal,
+      reescribir sin valores ni medicamentos, o quitarla. Se vacía entera desde el
+      editor sin tocar código: sin título de sección ni etapas no renderiza nada.
 - [ ] **El sello "Cliente verificado"** de `ss_glow_testimonial_3jmxKc` (D-032). Decir
       verificado sin poder probar la compra es Res. SC 270/2020 por sí solo, aparte de lo
       que diga el texto. Destildar `verificado` en cada reseña que no tenga pedido detrás,

@@ -1,0 +1,284 @@
+{% comment %}
+  CAUCE — bloque de etapas (progresion en el tiempo).
+
+  Titulo de seccion y una lista de etapas. Cada etapa es una fila: foto de un
+  lado, panel de texto del otro, pegados, con la fila entera redondeada.
+
+  Cuatro cosas que la seccion resuelve por construccion:
+
+  - Es un <ol>, no un <ul> ni una grilla de tarjetas. Las etapas son una
+    secuencia: el orden es el contenido. Un lector de pantalla tiene que poder
+    decir "lista de 3 elementos" y numerarlos.
+  - La numeracion ("Etapa 1") es un campo por bloque y no un forloop.index. Sale
+    mas caro de cargar, pero escribir la palabra en el .liquid seria meter copy
+    en el codigo, y la regla 1 de docs/CLAIMS-AUDIT.md pide lo contrario.
+  - El panel usa --cauce-fondo-celda, el mismo mecanismo de superficie que
+    cauce-datos: SEDIMENTO sobre blanco, SEDIMENTO-2 sobre SEDIMENTO, CAUCE sobre
+    la banda oscura. Ninguna seccion declara su propio fondo.
+  - Sin imagen la fila NO se rompe: cae en placeholder_svg_tag y el panel
+    mantiene su ancho.
+
+  ADVERTENCIA DE CLAIMS (Disp. ANMAT 4980/05 · CAA art. 1381). Una progresion
+  temporal puesta en la pagina de un suplemento sugiere que el suplemento la
+  frena, aunque ninguna linea lo diga; si ademas nombra valores de laboratorio o
+  medicamentos, el claim es directo. El texto vive entero en templates/*.json y
+  no aca. No escribas copy adentro de este archivo.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_hay_etapas = false
+  for block in section.blocks
+    if block.settings.titulo != blank or block.settings.texto != blank or block.settings.imagen != blank
+      assign cauce_hay_etapas = true
+      break
+    endif
+  endfor
+
+  assign cauce_hay = cauce_hay_etapas
+  if section.settings.titulo != blank
+    assign cauce_hay = true
+  endif
+
+  comment
+    El `sizes` se arma aca, no con var(), y va todo en px. Mismo motivo que en
+    cauce-dolor (ver D-033): el atributo sizes lo parsea el HTML, donde una custom
+    property no resuelve, y adentro de sizes las unidades relativas se miden contra
+    el font-size INICIAL de 16px y no contra el root de 10px del tema.
+
+    La columna de la foto es 5 de las 12 partes de la fila, sin gap entre columnas
+    (van pegadas). Los numeros son el padding real de .page-width (15px hasta 750px,
+    50px despues) y el max-width del bloque, que es border-box.
+  endcomment
+  assign cauce_tope = section.settings.ancho_maximo
+  assign cauce_util = cauce_tope | minus: 100
+  assign cauce_col = cauce_util | times: 5 | divided_by: 12
+
+  assign cauce_sizes = '(min-width: ' | append: cauce_tope | append: 'px) ' | append: cauce_col | append: 'px, (min-width: 750px) calc((100vw - 100px) * 0.417), calc(100vw - 30px)'
+-%}
+
+{%- if cauce_hay -%}
+  <div class="cauce-etapas color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width cauce-etapas__inner cauce-etapas__inner--{{ section.settings.alineacion }}"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-etapas-ancho: {{ section.settings.ancho_maximo }}px; --cauce-etapas-ratio: {{ section.settings.relacion }};"
+    >
+      {%- if section.settings.volanta != blank or section.settings.titulo != blank or section.settings.bajada != blank -%}
+        <div class="cauce-etapas__encabezado">
+          {%- if section.settings.volanta != blank -%}
+            <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.titulo != blank -%}
+            <h2 class="cauce-etapas__titulo-seccion {{ section.settings.heading_size }}">
+              {{- section.settings.titulo -}}
+              {%- if section.settings.titulo_acento != blank -%}
+                <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.bajada != blank -%}
+            <div class="cauce-etapas__bajada rte">{{ section.settings.bajada }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if cauce_hay_etapas -%}
+        <ol class="cauce-etapas__lista" role="list">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              if block.settings.titulo == blank and block.settings.texto == blank and block.settings.imagen == blank
+                continue
+              endif
+
+              comment
+                El lado se resuelve por etapa y no una vez para toda la seccion: en
+                'alternada' cada fila lee el indice del loop. Se parte siempre del
+                setting, asi que la variable no arrastra el valor de la vuelta anterior.
+              endcomment
+              assign cauce_lado = section.settings.posicion_imagen
+              if cauce_lado == 'alternada'
+                assign cauce_par = forloop.index0 | modulo: 2
+                assign cauce_lado = 'izquierda'
+                if cauce_par == 1
+                  assign cauce_lado = 'derecha'
+                endif
+              endif
+
+              assign cauce_alt = block.settings.alt | default: block.settings.imagen.alt
+            -%}
+            <li class="cauce-etapas__etapa cauce-etapas__etapa--{{ cauce_lado }}" {{ block.shopify_attributes }}>
+              <figure class="cauce-etapas__figura">
+                {%- if block.settings.imagen != blank -%}
+                  {{
+                    block.settings.imagen
+                    | image_url: width: 1200
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '400, 600, 800, 1000, 1200',
+                      sizes: cauce_sizes,
+                      class: 'cauce-etapas__imagen',
+                      alt: cauce_alt
+                  }}
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'cauce-etapas__imagen placeholder-svg placeholder' }}
+                {%- endif -%}
+              </figure>
+
+              <div class="cauce-etapas__panel">
+                {%- if block.settings.volanta != blank -%}
+                  <p class="cauce-etapas__volanta">{{ block.settings.volanta }}</p>
+                {%- endif -%}
+
+                {%- if block.settings.titulo != blank -%}
+                  <h3 class="cauce-etapas__titulo">{{ block.settings.titulo }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.texto != blank -%}
+                  <div class="cauce-etapas__texto rte">{{ block.settings.texto }}</div>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ol>
+      {%- endif -%}
+
+      {%- if section.settings.pie != blank -%}
+        <div class="cauce-etapas__pie rte">{{ section.settings.pie }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Etapas",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Secuencia en el tiempo. Describe la situacion del cliente, NUNCA lo que el producto hace con ella: una progresion puesta arriba de un suplemento sugiere que el suplemento la frena (Disp. ANMAT 4980/05). Sin valores de laboratorio, sin patologias con nombre y sin mencionar medicamentos."
+    },
+
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo" },
+    {
+      "type": "inline_richtext",
+      "id": "titulo_acento",
+      "label": "Cierre del titulo en acento",
+      "info": "Se agrega al final del titulo, en el color de acento. Vacio = titulo de un solo color."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    { "type": "richtext", "id": "bajada", "label": "Bajada" },
+    {
+      "type": "select",
+      "id": "alineacion",
+      "label": "Alineacion del encabezado",
+      "options": [
+        { "value": "centrado", "label": "Centrado" },
+        { "value": "izquierda", "label": "A la izquierda" }
+      ],
+      "default": "centrado"
+    },
+    { "type": "richtext", "id": "pie", "label": "Texto al pie" },
+
+    { "type": "header", "content": "Etapas" },
+    {
+      "type": "select",
+      "id": "posicion_imagen",
+      "label": "Lado de la foto",
+      "options": [
+        { "value": "izquierda", "label": "Siempre a la izquierda" },
+        { "value": "derecha", "label": "Siempre a la derecha" },
+        { "value": "alternada", "label": "Alternada" }
+      ],
+      "default": "izquierda"
+    },
+    {
+      "type": "select",
+      "id": "relacion",
+      "label": "Relacion de aspecto de las fotos",
+      "info": "Solo manda en mobile. En desktop la foto toma la altura de su fila.",
+      "options": [
+        { "value": "1 / 1", "label": "1:1 cuadrada" },
+        { "value": "4 / 3", "label": "4:3" },
+        { "value": "3 / 2", "label": "3:2" },
+        { "value": "16 / 9", "label": "16:9" }
+      ],
+      "default": "4 / 3"
+    },
+
+    { "type": "header", "content": "Presentacion" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "ancho_maximo",
+      "min": 720,
+      "max": 1400,
+      "step": 40,
+      "unit": "px",
+      "label": "Ancho del bloque",
+      "default": 1120
+    },
+
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "etapa",
+      "name": "Etapa",
+      "settings": [
+        { "type": "image_picker", "id": "imagen", "label": "Foto" },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Texto alternativo",
+          "info": "Describi la escena. Si lo dejas vacio se usa el alt cargado en Shopify."
+        },
+        { "type": "text", "id": "volanta", "label": "Numero de etapa", "info": "Por ejemplo: Etapa 1." },
+        { "type": "text", "id": "titulo", "label": "Titulo" },
+        {
+          "type": "richtext",
+          "id": "texto",
+          "label": "Texto",
+          "info": "Dos o tres lineas. Situacion del cliente, no beneficio del producto."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Etapas",
+      "blocks": [
+        { "type": "etapa" },
+        { "type": "etapa" },
+        { "type": "etapa" }
+      ]
+    }
+  ]
+}
+{% endschema %}

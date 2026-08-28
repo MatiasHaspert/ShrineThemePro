@@ -618,6 +618,7 @@ h1, h2, h3, h4,
 .cauce-datos__inner,
 .cauce-detalle__inner,
 .cauce-dolor__inner,
+.cauce-etapas__inner,
 .cauce-solucion__inner,
 .cauce-ugc__inner,
 .cauce-glow__inner,
@@ -630,6 +631,7 @@ h1, h2, h3, h4,
   .cauce-datos__inner,
   .cauce-detalle__inner,
   .cauce-dolor__inner,
+  .cauce-etapas__inner,
   .cauce-solucion__inner,
   .cauce-ugc__inner,
   .cauce-glow__inner,
@@ -1714,4 +1716,162 @@ h1, h2, h3, h4,
   .cauce-solucion__icono { width: 4rem; height: 4rem; }
   .cauce-solucion__bajada { font-size: 1.7rem; }
   .cauce-solucion__etiqueta { font-size: 1.7rem; }
+}
+
+/* ==========================================================================
+   12. PDP — bloque de etapas
+   Ver sections/cauce-etapas.liquid y docs/DECISIONS.md D-035.
+
+   Una fila por etapa: foto y panel pegados, sin gap entre columnas, con la fila
+   entera redondeada y recortada. El aire esta entre filas, no adentro de la fila:
+   es lo que hace que cada etapa se lea como una pieza y la lista como una tira.
+   ========================================================================== */
+
+.cauce-etapas__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-etapas-ancho, 1120px), var(--page-width, 1440px));
+}
+
+/* Encabezado --------------------------------------------------------------- */
+
+.cauce-etapas__encabezado { max-width: 62ch; }
+
+.cauce-etapas__titulo-seccion {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.cauce-etapas__bajada {
+  color: var(--cauce-secundario);
+  max-width: 56ch;
+  margin-top: var(--cauce-aire-s);
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+.cauce-etapas__bajada > :first-child { margin-top: 0; }
+.cauce-etapas__bajada > :last-child { margin-bottom: 0; }
+
+.cauce-etapas__inner--centrado .cauce-etapas__encabezado {
+  text-align: center;
+  margin-inline: auto;
+}
+
+.cauce-etapas__inner--centrado .cauce-etapas__bajada { margin-inline: auto; }
+
+/* Lista -------------------------------------------------------------------- */
+
+.cauce-etapas__lista {
+  list-style: none;
+  display: grid;
+  gap: var(--cauce-aire-s);
+  margin: 0;
+  padding: 0;
+}
+
+/* La superficie sale del mismo mecanismo que cauce-datos: la seccion no declara
+   un fondo propio, lo pide por token y el esquema de color lo resuelve. Sobre la
+   banda oscura el panel vale CAUCE, igual que el fondo — ahi la fila se lee por la
+   foto y por el texto, no por un recuadro, que es lo unico honesto sin inventar un
+   quinto color fuera del brandboard. */
+.cauce-etapas__etapa {
+  display: grid;
+  background-color: var(--cauce-fondo-celda, var(--cauce-sedimento));
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.color-background-2 .cauce-etapas__etapa { --cauce-fondo-celda: var(--cauce-sedimento-2); }
+.color-inverse .cauce-etapas__etapa { --cauce-fondo-celda: var(--cauce-cauce); }
+
+.cauce-etapas__figura {
+  margin: 0;
+  min-width: 0;
+}
+
+/* height: 100% y aspect-ratio juntos, a proposito. En desktop la fila es una
+   grilla y la figura se estira: la altura queda definida y gana el 100%, asi que
+   la foto toma la altura del panel, que es la que manda. En mobile la figura mide
+   por su contenido, el 100% se resuelve en auto y ahi si aplica la relacion
+   elegida. Una sola declaracion cubre los dos casos. */
+.cauce-etapas__imagen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: var(--cauce-etapas-ratio, 4 / 3);
+  object-fit: cover;
+}
+
+.cauce-etapas__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--cauce-aire-s) * 1.5);
+  min-width: 0;
+}
+
+/* El numero de etapa va en el secundario y no en el acento. La referencia lo pone
+   en color de marca, pero aca serian tres oxidos en la misma pantalla y la regla
+   del brandboard es uno por pieza (ver .cauce-acento, bloque 2). VADO ademas pasa
+   AA como texto en los tres esquemas, que a 1.1rem es obligatorio: sobre CAUCE el
+   acento valdria OXIDO CLARO, 4.27:1, que no alcanza para texto chico. */
+.cauce-etapas__volanta {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cauce-secundario);
+  margin: 0 0 var(--cauce-aire-xs);
+}
+
+.cauce-etapas__titulo {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin: 0 0 var(--cauce-aire-xs);
+  text-wrap: balance;
+}
+
+.cauce-etapas__texto {
+  color: var(--cauce-secundario);
+  max-width: 56ch;
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+.cauce-etapas__texto > :first-child { margin-top: 0; }
+.cauce-etapas__texto > :last-child { margin-bottom: 0; }
+
+.cauce-etapas__pie {
+  max-width: 72ch;
+  font-size: 1.3rem;
+  opacity: 0.75;
+}
+
+.cauce-etapas__pie > :first-child { margin-top: 0; }
+.cauce-etapas__pie > :last-child { margin-bottom: 0; }
+
+.cauce-etapas__inner--centrado .cauce-etapas__pie {
+  text-align: center;
+  margin-inline: auto;
+}
+
+/* Fila en dos columnas ----------------------------------------------------- */
+
+/* 5/12 para la foto y 7/12 para el texto. Con 6 y 6 el panel queda en 42
+   caracteres por linea a 1120px de bloque y el texto de la etapa —dos o tres
+   renglones— se parte en cinco. */
+@media screen and (min-width: 750px) {
+  .cauce-etapas__etapa {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: stretch;
+  }
+
+  .cauce-etapas__etapa--derecha .cauce-etapas__figura { order: 2; }
+
+  .cauce-etapas__panel { padding: var(--cauce-aire-m); }
+  .cauce-etapas__titulo { font-size: 2.4rem; }
+  .cauce-etapas__texto { font-size: 1.6rem; }
+  .cauce-etapas__bajada { font-size: 1.7rem; }
 }
