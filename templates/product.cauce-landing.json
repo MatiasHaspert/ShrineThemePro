@@ -909,7 +909,7 @@
         "results_headline_size": "h2",
         "results_text": "",
         "results_headline_alignment": "left",
-        "caption": "<p>Caption about the results and/or link for their proof.</p>",
+        "caption": "",
         "button_label": "",
         "link": "",
         "button_style_secondary": false,
