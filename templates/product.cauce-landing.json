@@ -714,7 +714,7 @@
         "s4": {
           "type": "beneficio",
           "settings": {
-            "icono": "escudo",
+            "icono": "molecula",
             "texto": "Apoyo Antioxidante"
           }
         }
@@ -733,7 +733,6 @@
         "bajada": "<p>El Ácido Alfa Lipoico R de forma pura de <strong>Cauce</strong> ayuda a sacar el azúcar de la sangre y llevarlo a los músculos — el mecanismo que disminuye con la edad y la comida moderna.</p>",
         "alineacion": "centrado",
         "columnas": "2",
-        "imagen": "",
         "alt": "Tres frascos de Ácido R-Alfa Lipoico de CAUCE, de 30 cápsulas de 600 mg cada una.",
         "ancho_imagen": 900,
         "estilo_imagen": "suelta",
