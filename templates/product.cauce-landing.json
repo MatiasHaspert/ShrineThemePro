@@ -862,6 +862,71 @@
         "padding_bottom": 72
       }
     },
+    "results_WhnfCa": {
+      "type": "results",
+      "blocks": {
+        "row_BUUtah": {
+          "type": "row",
+          "settings": {
+            "percentage": 88,
+            "row_text": "<p>Vieron mejores números matutinos. Reportaron apoyo para su lectura de azúcar en ayunas.</p>"
+          }
+        },
+        "row_tLfe6Y": {
+          "type": "row",
+          "settings": {
+            "percentage": 91,
+            "row_text": "<p>Sintieron energía más estable. Energía limpia todo el día que no venía de la cafeína.</p>"
+          }
+        },
+        "row_JgzJ6a": {
+          "type": "row",
+          "settings": {
+            "percentage": 90,
+            "row_text": "<p>Se sintieron más en control. Llegaron a su próxima cita con confianza.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "row_BUUtah",
+        "row_tLfe6Y",
+        "row_JgzJ6a"
+      ],
+      "name": "Results",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Resultados que sintieron quienes probaron Cauce",
+        "title_highlight_color": "#6D388B",
+        "heading_size": "h1",
+        "text": "<p>Encuestamos a usuarios diarios para ver cómo Cauce encajó en sus vidas.</p>",
+        "image": "shopify://shop_images/imagen.png",
+        "video_muted_autoplay": true,
+        "color_scheme": "background-1",
+        "layout": "results_second",
+        "results_headline": "",
+        "results_title_highlight_color": "#6D388B",
+        "results_headline_size": "h2",
+        "results_text": "",
+        "results_headline_alignment": "left",
+        "caption": "<p>Caption about the results and/or link for their proof.</p>",
+        "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#FFFFFF",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2E2A39",
+        "custom_colors_accent": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
     "pilares": {
       "type": "icon-bar",
       "blocks": {
@@ -2128,6 +2193,7 @@
     "etapas",
     "solucion",
     "progreso",
+    "results_WhnfCa",
     "pilares",
     "ugc",
     "beneficios",
