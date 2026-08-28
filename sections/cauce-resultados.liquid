@@ -1,0 +1,318 @@
+{% comment %}
+  CAUCE — bloque de resultados (cifras de una encuesta).
+
+  Reemplaza a la seccion nativa `results` de Shrine, que se habia instanciado en la
+  landing. Tres motivos, en orden de importancia:
+
+  1. La nativa expone title_highlight_color y siete custom_colors_* como color
+     pickers. La instancia que habia cargada traia #6D388B, #dd1d1d y #2E2A39, que
+     no son colores de CAUCE: el bloque 3 de cauce-brand.css existe justamente para
+     neutralizar eso. Aca no hay un solo hex elegible.
+  2. La nativa no tiene donde poner la metodologia de la encuesta, y una cifra de
+     resultado sin fuente no se puede publicar (ver mas abajo).
+  3. La nativa pone el porcentaje y un parrafo. Un dato se lee mejor partido en
+     tres: cifra, que dice la cifra, y el detalle.
+
+  Notas de construccion:
+
+  - La barra es decorativa y va con aria-hidden. El valor ya esta escrito al lado
+    en texto: repetirlo en un role="progressbar" le haria leer el mismo numero dos
+    veces a un lector de pantalla.
+  - La barra no se anima. Animarla al entrar en viewport pide JS y un observer, y
+    el numero ya esta escrito: la animacion no agrega informacion, agrega peso.
+  - La cifra va en la fuente de datos (DM Mono, tabular) y no en la de titulos. Es
+    la misma decision de .cauce-datos__valor: los numeros de esta marca son datos,
+    no titulares.
+
+  ADVERTENCIA DE CLAIMS (Res. SC 270/2020 · Disp. ANMAT 4980/05 · Ley 24.240 art. 8).
+  Un porcentaje de resultado es la afirmacion mas fuerte que puede hacer una pagina
+  de producto, y es publicidad comparativa y verificable: quien la publica tiene que
+  poder mostrar la encuesta, el universo, la fecha y la pregunta textual. Por eso
+  `metodologia` es un campo propio y no un renglon mas del pie. El texto vive entero
+  en templates/*.json. No escribas copy adentro de este archivo.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_hay_datos = false
+  for block in section.blocks
+    if block.settings.valor != blank or block.settings.etiqueta != blank or block.settings.texto != blank
+      assign cauce_hay_datos = true
+      break
+    endif
+  endfor
+
+  assign cauce_hay = cauce_hay_datos
+  if section.settings.titulo != blank or section.settings.bajada != blank
+    assign cauce_hay = true
+  endif
+
+  assign cauce_con_imagen = false
+  if section.settings.imagen != blank and section.settings.posicion_imagen != 'sin'
+    assign cauce_con_imagen = true
+  endif
+
+  assign cauce_alt = section.settings.alt | default: section.settings.imagen.alt
+
+  comment
+    El `sizes` se arma aca, no con var(), y va todo en px. Mismo motivo que en
+    cauce-dolor (ver D-033). La columna de la imagen es 5 de las 12 partes de lo
+    que queda despues del gap de --cauce-aire-l (64px) entre las dos columnas.
+  endcomment
+  assign cauce_tope = section.settings.ancho_maximo
+  assign cauce_util = cauce_tope | minus: 100
+  assign cauce_col = cauce_util | minus: 64 | times: 5 | divided_by: 12
+
+  if cauce_con_imagen
+    assign cauce_sizes = '(min-width: ' | append: cauce_tope | append: 'px) ' | append: cauce_col | append: 'px, (min-width: 990px) calc((100vw - 164px) * 0.417), (min-width: 750px) calc(100vw - 100px), calc(100vw - 30px)'
+  else
+    assign cauce_sizes = '(min-width: ' | append: cauce_tope | append: 'px) ' | append: cauce_util | append: 'px, (min-width: 750px) calc(100vw - 100px), calc(100vw - 30px)'
+  endif
+-%}
+
+{%- if cauce_hay -%}
+  <div class="cauce-resultados color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width cauce-resultados__inner cauce-resultados__inner--{{ section.settings.posicion_imagen }}{% unless cauce_con_imagen %} cauce-resultados__inner--sin{% endunless %}"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-resultados-ancho: {{ section.settings.ancho_maximo }}px; --cauce-resultados-ratio: {{ section.settings.relacion }};"
+    >
+      {%- if cauce_con_imagen -%}
+        <figure class="cauce-resultados__media">
+          {{
+            section.settings.imagen
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1000, 1400',
+              sizes: cauce_sizes,
+              class: 'cauce-resultados__imagen',
+              alt: cauce_alt
+          }}
+        </figure>
+      {%- endif -%}
+
+      <div class="cauce-resultados__cuerpo">
+        {%- if section.settings.volanta != blank or section.settings.titulo != blank or section.settings.bajada != blank -%}
+          <div class="cauce-resultados__encabezado">
+            {%- if section.settings.volanta != blank -%}
+              <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+            {%- endif -%}
+
+            {%- if section.settings.titulo != blank -%}
+              <h2 class="cauce-resultados__titulo {{ section.settings.heading_size }}">
+                {{- section.settings.titulo -}}
+                {%- if section.settings.titulo_acento != blank -%}
+                  <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+                {%- endif -%}
+              </h2>
+            {%- endif -%}
+
+            {%- if section.settings.bajada != blank -%}
+              <div class="cauce-resultados__bajada rte">{{ section.settings.bajada }}</div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if cauce_hay_datos -%}
+          <ul class="cauce-resultados__lista" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.valor == blank and block.settings.etiqueta == blank and block.settings.texto == blank -%}
+                {%- continue -%}
+              {%- endif -%}
+              <li class="cauce-resultados__dato" {{ block.shopify_attributes }}>
+                {%- if block.settings.valor != blank -%}
+                  <p class="cauce-resultados__valor">{{ block.settings.valor }}</p>
+                {%- endif -%}
+
+                <div class="cauce-resultados__detalle">
+                  {%- if block.settings.etiqueta != blank -%}
+                    <p class="cauce-resultados__etiqueta">{{ block.settings.etiqueta }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.texto != blank -%}
+                    <div class="cauce-resultados__texto rte">{{ block.settings.texto }}</div>
+                  {%- endif -%}
+                </div>
+
+                {%- if section.settings.mostrar_barra and block.settings.barra > 0 -%}
+                  <div class="cauce-resultados__barra" aria-hidden="true">
+                    <span style="width: {{ block.settings.barra }}%"></span>
+                  </div>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.metodologia != blank -%}
+          <div class="cauce-resultados__metodologia rte">{{ section.settings.metodologia }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.boton_texto != blank and section.settings.boton_link != blank -%}
+          <a class="cauce-resultados__cta button" href="{{ section.settings.boton_link }}">
+            {{- section.settings.boton_texto -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Resultados",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Cifras de una encuesta propia. Es la afirmacion mas fuerte que puede hacer la pagina: hay que poder mostrar la encuesta, cuanta gente respondio, cuando y con que pregunta textual (Res. SC 270/2020 y Ley 24.240 art. 8). Sin metodologia cargada, este bloque no se publica. Los porcentajes describen lo que respondio la gente, nunca lo que hace el producto."
+    },
+
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo" },
+    {
+      "type": "inline_richtext",
+      "id": "titulo_acento",
+      "label": "Cierre del titulo en acento",
+      "info": "Se agrega al final del titulo, en el color de acento. Vacio = titulo de un solo color."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    { "type": "richtext", "id": "bajada", "label": "Bajada" },
+
+    { "type": "header", "content": "Cifras" },
+    {
+      "type": "checkbox",
+      "id": "mostrar_barra",
+      "label": "Mostrar la barra de cada cifra",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "metodologia",
+      "label": "Metodologia de la encuesta",
+      "info": "Quienes respondieron, cuantos eran, en que fecha y la pregunta textual. Es obligatorio para publicar cifras: sin esto, un porcentaje es publicidad no verificable."
+    },
+
+    { "type": "header", "content": "Imagen" },
+    { "type": "image_picker", "id": "imagen", "label": "Imagen" },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Texto alternativo",
+      "info": "Describi lo que se ve. Si lo dejas vacio se usa el alt cargado en Shopify."
+    },
+    {
+      "type": "select",
+      "id": "posicion_imagen",
+      "label": "Posicion",
+      "options": [
+        { "value": "izquierda", "label": "A la izquierda" },
+        { "value": "derecha", "label": "A la derecha" },
+        { "value": "sin", "label": "Sin imagen" }
+      ],
+      "default": "izquierda"
+    },
+    {
+      "type": "select",
+      "id": "relacion",
+      "label": "Relacion de aspecto",
+      "options": [
+        { "value": "auto", "label": "La de la imagen" },
+        { "value": "1 / 1", "label": "1:1 cuadrada" },
+        { "value": "4 / 5", "label": "4:5 vertical" },
+        { "value": "3 / 4", "label": "3:4 vertical" },
+        { "value": "4 / 3", "label": "4:3" }
+      ],
+      "default": "4 / 5"
+    },
+
+    { "type": "header", "content": "Boton" },
+    {
+      "type": "text",
+      "id": "boton_texto",
+      "label": "Texto",
+      "info": "Vacio = sin boton. Este bloque es el pico de credibilidad de la pagina: conviene que tenga a donde ir."
+    },
+    {
+      "type": "url",
+      "id": "boton_link",
+      "label": "Enlace",
+      "info": "Para volver al bloque de compra sin recargar, usa #shopify-section-main."
+    },
+
+    { "type": "header", "content": "Presentacion" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "ancho_maximo",
+      "min": 720,
+      "max": 1400,
+      "step": 40,
+      "unit": "px",
+      "label": "Ancho del bloque",
+      "default": 1120
+    },
+
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "dato",
+      "name": "Cifra",
+      "settings": [
+        {
+          "type": "text",
+          "id": "valor",
+          "label": "Cifra",
+          "info": "Como se escribe: 88 %, 9 de cada 10, 4,8 sobre 5."
+        },
+        { "type": "text", "id": "etiqueta", "label": "Que dice la cifra", "info": "Cuatro o cinco palabras." },
+        { "type": "richtext", "id": "texto", "label": "Detalle" },
+        {
+          "type": "range",
+          "id": "barra",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Largo de la barra",
+          "info": "0 = sin barra. Va aparte de la cifra para que una cifra que no es un porcentaje igual pueda dibujarse.",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Resultados",
+      "blocks": [
+        { "type": "dato" },
+        { "type": "dato" },
+        { "type": "dato" }
+      ]
+    }
+  ]
+}
+{% endschema %}

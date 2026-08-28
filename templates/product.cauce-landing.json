@@ -862,69 +862,60 @@
         "padding_bottom": 72
       }
     },
-    "results_WhnfCa": {
-      "type": "results",
+    "resultados": {
+      "type": "cauce-resultados",
       "blocks": {
-        "row_BUUtah": {
-          "type": "row",
+        "r1": {
+          "type": "dato",
           "settings": {
-            "percentage": 88,
-            "row_text": "<p>Vieron mejores números matutinos. Reportaron apoyo para su lectura de azúcar en ayunas.</p>"
+            "valor": "88 %",
+            "etiqueta": "Mejores números matutinos",
+            "texto": "<p>Dijeron notar apoyo en su lectura de azúcar en ayunas.</p>",
+            "barra": 88
           }
         },
-        "row_tLfe6Y": {
-          "type": "row",
+        "r2": {
+          "type": "dato",
           "settings": {
-            "percentage": 91,
-            "row_text": "<p>Sintieron energía más estable. Energía limpia todo el día que no venía de la cafeína.</p>"
+            "valor": "91 %",
+            "etiqueta": "Energía más pareja",
+            "texto": "<p>Describieron una energía sostenida durante el día, sin recurrir a más café.</p>",
+            "barra": 91
           }
         },
-        "row_JgzJ6a": {
-          "type": "row",
+        "r3": {
+          "type": "dato",
           "settings": {
-            "percentage": 90,
-            "row_text": "<p>Se sintieron más en control. Llegaron a su próxima cita con confianza.</p>"
+            "valor": "90 %",
+            "etiqueta": "Más en control",
+            "texto": "<p>Dijeron llegar con más confianza a su siguiente control.</p>",
+            "barra": 90
           }
         }
       },
       "block_order": [
-        "row_BUUtah",
-        "row_tLfe6Y",
-        "row_JgzJ6a"
+        "r1",
+        "r2",
+        "r3"
       ],
-      "name": "Results",
       "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "Resultados que sintieron quienes probaron Cauce",
-        "title_highlight_color": "#6D388B",
+        "volanta": "Encuesta a [[PENDIENTE: cuántos clientes]] · [[PENDIENTE: mes y año]]",
+        "titulo": "Resultados que sintieron quienes probaron",
+        "titulo_acento": "Cauce",
         "heading_size": "h1",
-        "text": "<p>Encuestamos a usuarios diarios para ver cómo Cauce encajó en sus vidas.</p>",
-        "image": "shopify://shop_images/imagen.png",
-        "video_muted_autoplay": true,
+        "bajada": "<p>Encuestamos a quienes lo toman todos los días para saber cómo entró Cauce en su rutina. Esto es lo que respondieron.</p>",
+        "mostrar_barra": true,
+        "metodologia": "<p><strong>Cómo lo medimos.</strong> [[PENDIENTE: cuántas personas respondieron, cómo se las contactó, en qué fechas y la pregunta textual de cada ítem.]] Los porcentajes son respuestas de una encuesta, no un resultado clínico: describen lo que dijo quien respondió, no un efecto del producto.</p>",
+        "imagen": "shopify://shop_images/imagen.png",
+        "alt": "",
+        "posicion_imagen": "izquierda",
+        "relacion": "4 / 5",
+        "boton_texto": "Ver la fórmula y el precio",
+        "boton_link": "#shopify-section-main",
         "color_scheme": "background-1",
-        "layout": "results_second",
-        "results_headline": "",
-        "results_title_highlight_color": "#6D388B",
-        "results_headline_size": "h2",
-        "results_text": "",
-        "results_headline_alignment": "left",
-        "caption": "",
-        "button_label": "",
-        "link": "",
-        "button_style_secondary": false,
-        "atc_button_label": "",
-        "atc_product": "",
-        "atc_skip_cart": false,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#FFFFFF",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2E2A39",
-        "custom_colors_accent": "#dd1d1d",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d"
+        "ancho_maximo": 1120,
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "pilares": {
@@ -2193,7 +2184,7 @@
     "etapas",
     "solucion",
     "progreso",
-    "results_WhnfCa",
+    "resultados",
     "pilares",
     "ugc",
     "beneficios",

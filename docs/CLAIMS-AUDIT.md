@@ -106,6 +106,11 @@ Vale registrarlo: la ausencia es una decisión, no un olvido.
 | Lo que pedía el brief o la referencia | Por qué no se puso | Qué ocupa su lugar |
 |---|---|---|
 | Bloque de porcentajes de resultado | Cifra de eficacia | `cauce-datos`, ficha técnica (bloque 7) |
+
+> **La primera fila volvió.** Desde el theme editor se cargó un bloque de porcentajes de
+> encuesta (88 / 91 / 90) que hoy vive en `cauce-landing` como la sección `resultados`. La
+> decisión de descartarlo sigue siendo la correcta mientras no exista la encuesta detrás: el
+> bloqueante está abierto en §6 y la sección se puede vaciar desde el editor. Ver D-037.
 | Card de **biodisponibilidad** | "Se absorbe mejor" es eficacia comparativa, y el COA no lo dice | Card "Origen del ingrediente" (D-021) |
 | Badge "el más elegido" en el escalón de 2 | Dato de comportamiento que no tenemos | Sin badge |
 | `AggregateRating` en el JSON-LD | No hay reseñas reales | No se emite (D-006) |
@@ -259,6 +264,20 @@ Plantilla de tema → `cauce-landing`.
       los asteriscos. Aprobar con criterio legal, reescribir la sección como **rutina**
       (cómo se toma, con qué comida, cuánto dura el frasco) en vez de como resultado, o
       quitarla. Se vacía entera desde el editor sin tocar código.
+- [ ] **BLOQUEANTE · La sección `resultados` de `cauce-landing` (D-037).** Es el
+      bloqueante más grave del tema, por encima de `progreso`. Publica tres cifras de
+      eficacia —88 % mejores números matutinos, 91 % energía más pareja, 90 % más en
+      control— atribuidas a una encuesta propia. Un porcentaje de resultado es
+      publicidad verificable: hay que poder mostrar el cuestionario, el universo, las
+      fechas y la pregunta textual (Res. SC 270/2020 y Ley 24.240 art. 8), y encima
+      recae sobre una función fisiológica, que es Disp. ANMAT 4980/05. Contradice
+      además el §4 de este documento, donde un "bloque de porcentajes de resultado" ya
+      figuraba como descartado por ser cifra de eficacia. **Si la encuesta no existe,
+      no hay redacción que arregle esto: las cifras se sacan.** Los tres
+      `[[PENDIENTE: ...]]` del campo "Metodología de la encuesta" y de la volanta
+      marcan exactamente qué falta. La alternativa que ocupa el mismo lugar sin
+      depender de nadie son las cifras del rótulo y del COA: 600 mg por cápsula, 30
+      días de frasco, días de garantía.
 - [ ] **El sello "Cliente verificado"** de `ss_glow_testimonial_3jmxKc` (D-032). Decir
       verificado sin poder probar la compra es Res. SC 270/2020 por sí solo, aparte de lo
       que diga el texto. Destildar `verificado` en cada reseña que no tenga pedido detrás,

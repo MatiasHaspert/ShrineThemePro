@@ -620,6 +620,7 @@ h1, h2, h3, h4,
 .cauce-dolor__inner,
 .cauce-etapas__inner,
 .cauce-progreso__inner,
+.cauce-resultados__inner,
 .cauce-solucion__inner,
 .cauce-ugc__inner,
 .cauce-glow__inner,
@@ -634,6 +635,7 @@ h1, h2, h3, h4,
   .cauce-dolor__inner,
   .cauce-etapas__inner,
   .cauce-progreso__inner,
+  .cauce-resultados__inner,
   .cauce-solucion__inner,
   .cauce-ugc__inner,
   .cauce-glow__inner,
@@ -2066,4 +2068,202 @@ h1, h2, h3, h4,
   .cauce-progreso__texto { font-size: 1.6rem; }
   .cauce-progreso__check { font-size: 1.6rem; }
   .cauce-progreso__bajada { font-size: 1.7rem; }
+}
+
+/* ==========================================================================
+   14. PDP — bloque de resultados
+   Ver sections/cauce-resultados.liquid y docs/DECISIONS.md D-037.
+
+   Imagen a un costado y, del otro, encabezado + cifras + metodologia + boton.
+   Cada cifra es una fila de tres partes: numero, detalle y barra abajo cruzando
+   las dos columnas.
+   ========================================================================== */
+
+.cauce-resultados__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-resultados-ancho, 1120px), var(--page-width, 1440px));
+}
+
+.cauce-resultados__media { margin: 0; min-width: 0; }
+
+.cauce-resultados__imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--cauce-resultados-ratio, 4 / 5);
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.cauce-resultados__cuerpo { min-width: 0; }
+
+/* Encabezado --------------------------------------------------------------- */
+
+.cauce-resultados__titulo {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.cauce-resultados__bajada {
+  color: var(--cauce-secundario);
+  max-width: 56ch;
+  margin-top: var(--cauce-aire-s);
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+.cauce-resultados__bajada > :first-child { margin-top: 0; }
+.cauce-resultados__bajada > :last-child { margin-bottom: 0; }
+
+/* Cifras ------------------------------------------------------------------- */
+
+.cauce-resultados__lista {
+  list-style: none;
+  display: grid;
+  gap: var(--cauce-aire-m);
+  margin: var(--cauce-aire-m) 0 0;
+  padding: 0;
+}
+
+/* La barra cruza las dos columnas y no solo la del texto: mide la fila entera,
+   que es lo que la hace comparable de un vistazo entre una cifra y la siguiente. */
+.cauce-resultados__dato {
+  display: grid;
+  grid-template-columns: minmax(8rem, auto) minmax(0, 1fr);
+  grid-template-areas:
+    'valor detalle'
+    'barra barra';
+  column-gap: var(--cauce-aire-s);
+  row-gap: 1.2rem;
+  align-items: baseline;
+}
+
+/* DM Mono con cifras tabulares, como .cauce-datos__valor: los numeros de esta
+   marca son datos, no titulares. Tabular ademas alinea el 88 con el 91 y el 90
+   aunque cada glifo tenga distinto ancho optico. */
+.cauce-resultados__valor {
+  grid-area: valor;
+  margin: 0;
+  font-family: var(--cauce-font-dato);
+  font-size: 3.6rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  /* El espacio fino antes del % es lo correcto en castellano y se escribe en el
+     campo, pero el espacio de una monoespaciada mide 0.6em: a 4.4rem son 26px de
+     aire entre el numero y el signo. Se compensa en el CSS y no sacandolo del
+     texto, para que la cifra siga bien escrita en el template. */
+  word-spacing: -0.3em;
+}
+
+.cauce-resultados__detalle { grid-area: detalle; min-width: 0; }
+
+.cauce-resultados__etiqueta {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1.3;
+}
+
+.cauce-resultados__texto {
+  color: var(--cauce-secundario);
+  margin-top: 0.4rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+.cauce-resultados__texto > :first-child { margin-top: 0; }
+.cauce-resultados__texto > :last-child { margin-bottom: 0; }
+
+/* La barra es el UNICO oxido del bloque: son tres barras iguales, o sea un solo
+   elemento grafico repetido, y no tres acentos distintos compitiendo. Como objeto
+   grafico le alcanza 3:1 (1.4.11) y el acento contextual da 4.27:1 en el peor de
+   los tres esquemas. El numero se queda en currentColor. */
+.cauce-resultados__barra {
+  grid-area: barra;
+  position: relative;
+  height: 0.4rem;
+  border-radius: 2px;
+}
+
+/* La pista es un pseudo-elemento y no un background con opacity sobre el propio
+   contenedor: opacity crea un grupo de composicion y se la comeria tambien el
+   relleno, que tiene que quedar opaco. Asi la pista sale del color del texto —sin
+   sumar un color nuevo— y funciona en los tres esquemas. */
+.cauce-resultados__barra::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: currentColor;
+  opacity: 0.18;
+}
+
+.cauce-resultados__barra span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: block;
+  max-width: 100%;
+  border-radius: inherit;
+  background-color: var(--cauce-acento);
+}
+
+/* Metodologia -------------------------------------------------------------- */
+
+/* Va con regla arriba y no como un parrafo mas: es la fuente de las cifras, tiene
+   que leerse como parte del bloque y no como un pie de pagina cualquiera. */
+.cauce-resultados__metodologia {
+  border-top: 1px solid var(--cauce-linea);
+  margin-top: var(--cauce-aire-m);
+  padding-top: var(--cauce-aire-s);
+  color: var(--cauce-secundario);
+  max-width: 72ch;
+  font-size: 1.3rem;
+  line-height: 1.5;
+}
+
+.color-inverse .cauce-resultados__metodologia { border-top-color: rgba(255, 255, 255, 0.18); }
+
+.cauce-resultados__metodologia > :first-child { margin-top: 0; }
+.cauce-resultados__metodologia > :last-child { margin-bottom: 0; }
+
+.cauce-resultados__cta {
+  display: inline-flex;
+  margin-top: var(--cauce-aire-m);
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-resultados__valor { font-size: 4.4rem; }
+  .cauce-resultados__etiqueta { font-size: 1.7rem; }
+  .cauce-resultados__texto { font-size: 1.5rem; }
+  .cauce-resultados__bajada { font-size: 1.7rem; }
+}
+
+/* Imagen al costado -------------------------------------------------------- */
+
+/* 990 y no 750, igual que en cauce-dolor: a 768 la columna de texto queda en 32
+   caracteres por linea y la fila de cada cifra —numero + etiqueta + detalle— no
+   entra. */
+@media screen and (min-width: 990px) {
+  .cauce-resultados__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    column-gap: var(--cauce-aire-l);
+  }
+
+  .cauce-resultados__inner--derecha .cauce-resultados__media { order: 2; }
+
+  /* align-items: stretch explicito. Sin imagen el contenedor vuelve a ser una
+     columna flex, y ahi el center de la regla de arriba —que existe para centrar la
+     foto contra el texto— pasa a ser eje transversal y encoge el cuerpo al ancho de
+     su contenido en vez de dejarlo ocupar el bloque. */
+  .cauce-resultados__inner--sin {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

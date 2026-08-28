@@ -1024,3 +1024,72 @@ pie es una remisión a nada, y eso solo ya es un problema bajo Ley 24.240 art. 4
 checklist de `CLAIMS-AUDIT.md` §6. Si la sección se queda, el contenido honesto de esta forma es
 la **rutina** —cómo se toma, con qué comida, cuánto dura el frasco, cuándo se repone— que no
 promete nada y ocupa el mismo lugar en la página.
+
+---
+
+## D-037 · 2026-08-28 · Resultados: sección propia en lugar de la `results` de Shrine
+
+**Contexto.** Desde el theme editor se instanció la sección nativa `results` con tres
+porcentajes (88 / 91 / 90), un texto por fila y una imagen. Se pidió adaptarla a CAUCE y
+reforzarla.
+
+**Decisión.** Entra `sections/cauce-resultados.liquid` y la instancia nativa `results_WhnfCa`
+se reemplaza por `resultados`, en la misma posición (después de `progreso`). Se conservan la
+imagen cargada, las tres cifras y el sentido de cada fila; se rehacen la estructura y el
+encuadre del copy.
+
+**Por qué no adaptar la nativa con CSS.** Tres motivos, en orden:
+
+1. `results` expone `title_highlight_color` y siete `custom_colors_*` como color pickers. La
+   instancia traía `#6D388B` (violeta), `#dd1d1d` (rojo) y `#2E2A39` — ninguno es de CAUCE. El
+   bloque 3 de `cauce-brand.css` existe justamente para neutralizar esos pickers; pelearle a
+   siete settings de color desde CSS es más frágil que no tenerlos. En la sección nueva no hay
+   un solo hex elegible.
+2. La nativa no tiene dónde poner la metodología de la encuesta, y una cifra de resultado sin
+   fuente no se puede publicar.
+3. La nativa pone el porcentaje y un párrafo. Un dato se lee mejor partido en tres —cifra, qué
+   dice la cifra, y el detalle—: el ojo baja por la columna de números y el que quiere leer
+   lee.
+
+**Lo que se agrega, y por qué es CRO y no adorno.**
+
+- **`metodologia` es un campo propio, con regla arriba, no un renglón del pie.** Una cifra sin
+  fuente el lector la descuenta sola: es la diferencia entre "dicen que 88 %" y "88 % de 214
+  respuestas, marzo 2026". La credibilidad es la palanca de conversión de un bloque de
+  números, y acá coincide con lo que además pide la ley.
+- **La volanta lleva el universo y la fecha.** Va arriba del título porque es lo que se lee
+  primero y es lo que hace creíble todo lo que viene abajo.
+- **Cada fila arranca con un verbo de reporte**: "dijeron", "describieron". El sujeto de la
+  frase pasa a ser quien respondió y no el producto. Es a la vez el encuadre honesto y el que
+  suena a encuesta de verdad en vez de a folleto.
+- **Botón al cierre, apuntando a `#shopify-section-main`.** El bloque de cifras es el pico de
+  credibilidad de la página; sin un paso siguiente ese pico se desperdicia y el lector sigue
+  scrolleando. El ancla vuelve al bloque de compra sin recargar.
+- **`valor` y `barra` son campos separados.** Así una cifra que no es un porcentaje —"9 de
+  cada 10", "600 mg", "30 días"— igual puede dibujar su barra, o no dibujarla con `barra: 0`.
+
+**La barra es decorativa y va con `aria-hidden`.** El valor ya está escrito al lado en texto:
+un `role="progressbar"` le haría leer el mismo número dos veces a un lector de pantalla. No se
+anima: animarla al entrar en viewport pide JS y un observer, y el número ya está escrito.
+
+**Dos detalles de CSS que salieron del QA.** La pista de la barra es un pseudo-elemento y no un
+`background` con `opacity` sobre el contenedor: `opacity` crea un grupo de composición y se
+comería también el relleno, que tiene que quedar opaco. Y el layout sin imagen necesita
+`align-items: stretch` explícito, porque el `center` que centra la foto contra el texto pasa a
+ser eje transversal cuando el contenedor vuelve a ser columna y encoge el cuerpo al ancho de su
+contenido.
+
+**La cifra va en DM Mono con `tabular-nums`**, como `.cauce-datos__valor`: los números de esta
+marca son datos, no titulares. El espacio fino antes del `%` se escribe en el campo —es lo
+correcto en castellano— y se compensa en el CSS con `word-spacing`, porque el espacio de una
+monoespaciada mide 0.6em y a 4.4rem son 26px de aire entre el número y el signo.
+
+**El copy es el bloqueante más grave del tema, por encima de D-036.** Un porcentaje de
+resultado es la afirmación más fuerte que puede hacer una página de producto, y es publicidad
+verificable: hay que poder mostrar la encuesta. Hoy no hay ninguna. Además el §4 de
+`CLAIMS-AUDIT.md` registra que un "bloque de porcentajes de resultado" ya se había descartado
+en su momento por ser cifra de eficacia; volvió por el editor. Los tres `[[PENDIENTE: ...]]`
+cargados siguen la convención de D-014: son datos que no tengo, no datos que invento. Si la
+encuesta no existe, la versión honesta de este bloque son las cifras que sí se pueden probar
+—600 mg por cápsula, 30 días de frasco, los días de garantía— que ocupan el mismo lugar, se
+ven igual de bien y no dependen de nadie.
