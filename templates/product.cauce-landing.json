@@ -752,7 +752,7 @@
         "e1": {
           "type": "etapa",
           "settings": {
-            "imagen": "",
+            "imagen": "shopify://shop_images/dolor2.png",
             "alt": "Mujer sentada en su casa, mirando la pantalla de un medidor de glucosa.",
             "volanta": "Etapa 1",
             "titulo": "Subida Temprana",
@@ -762,7 +762,7 @@
         "e2": {
           "type": "etapa",
           "settings": {
-            "imagen": "",
+            "imagen": "shopify://shop_images/dolor3.png",
             "alt": "Hombre apoyado en la mesa del comedor, con la cabeza en la mano y una taza al lado.",
             "volanta": "Etapa 2",
             "titulo": "Desaceleración",
@@ -772,7 +772,7 @@
         "e3": {
           "type": "etapa",
           "settings": {
-            "imagen": "",
+            "imagen": "shopify://shop_images/dolor4.png",
             "alt": "Dos personas conversando frente a un escritorio en un consultorio.",
             "volanta": "Etapa 3",
             "titulo": "La Conversación",
