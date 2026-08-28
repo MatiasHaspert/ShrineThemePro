@@ -687,6 +687,61 @@
         "padding_bottom": 72
       }
     },
+    "etapas": {
+      "type": "cauce-etapas",
+      "blocks": {
+        "e1": {
+          "type": "etapa",
+          "settings": {
+            "imagen": "shopify://shop_images/dolor2.png",
+            "alt": "Mujer sentada en su casa, mirando la pantalla de un medidor de glucosa.",
+            "volanta": "Etapa 1",
+            "titulo": "Subida Temprana",
+            "texto": "<p>108. Luego 112. Te dicen que «aún estás bien» — pero cada análisis sale un poco más alto que el anterior.</p>"
+          }
+        },
+        "e2": {
+          "type": "etapa",
+          "settings": {
+            "imagen": "shopify://shop_images/dolor3.png",
+            "alt": "Hombre apoyado en la mesa del comedor, con la cabeza en la mano y una taza al lado.",
+            "volanta": "Etapa 2",
+            "titulo": "Desaceleración",
+            "texto": "<p>Bajones de energía en la tarde, antojos tercos y peso que no baja. Las cosas empiezan a tambalearse.</p>"
+          }
+        },
+        "e3": {
+          "type": "etapa",
+          "settings": {
+            "imagen": "shopify://shop_images/dolor4.png",
+            "alt": "Dos personas conversando frente a un escritorio en un consultorio.",
+            "volanta": "Etapa 3",
+            "titulo": "La Conversación",
+            "texto": "<p>El número cruza una línea, y llega la cita que tanto temías — la de los medicamentos.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "settings": {
+        "volanta": "",
+        "titulo": "Cómo aparece un número que sube con el tiempo",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "",
+        "alineacion": "centrado",
+        "pie": "",
+        "posicion_imagen": "izquierda",
+        "relacion": "4 / 3",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1120,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
     "solucion": {
       "type": "cauce-solucion",
       "blocks": {
@@ -744,61 +799,6 @@
         "ancho_maximo": 1120,
         "padding_top": 72,
         "padding_bottom": 0
-      }
-    },
-    "etapas": {
-      "type": "cauce-etapas",
-      "blocks": {
-        "e1": {
-          "type": "etapa",
-          "settings": {
-            "imagen": "shopify://shop_images/dolor2.png",
-            "alt": "Mujer sentada en su casa, mirando la pantalla de un medidor de glucosa.",
-            "volanta": "Etapa 1",
-            "titulo": "Subida Temprana",
-            "texto": "<p>108. Luego 112. Te dicen que «aún estás bien» — pero cada análisis sale un poco más alto que el anterior.</p>"
-          }
-        },
-        "e2": {
-          "type": "etapa",
-          "settings": {
-            "imagen": "shopify://shop_images/dolor3.png",
-            "alt": "Hombre apoyado en la mesa del comedor, con la cabeza en la mano y una taza al lado.",
-            "volanta": "Etapa 2",
-            "titulo": "Desaceleración",
-            "texto": "<p>Bajones de energía en la tarde, antojos tercos y peso que no baja. Las cosas empiezan a tambalearse.</p>"
-          }
-        },
-        "e3": {
-          "type": "etapa",
-          "settings": {
-            "imagen": "shopify://shop_images/dolor4.png",
-            "alt": "Dos personas conversando frente a un escritorio en un consultorio.",
-            "volanta": "Etapa 3",
-            "titulo": "La Conversación",
-            "texto": "<p>El número cruza una línea, y llega la cita que tanto temías — la de los medicamentos.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "e1",
-        "e2",
-        "e3"
-      ],
-      "settings": {
-        "volanta": "",
-        "titulo": "Cómo aparece un número que sube con el tiempo",
-        "titulo_acento": "",
-        "heading_size": "h1",
-        "bajada": "",
-        "alineacion": "centrado",
-        "pie": "",
-        "posicion_imagen": "izquierda",
-        "relacion": "4 / 3",
-        "color_scheme": "background-1",
-        "ancho_maximo": 1120,
-        "padding_top": 72,
-        "padding_bottom": 72
       }
     },
     "pilares": {
@@ -2064,8 +2064,8 @@
     "ss_glow_testimonial_3jmxKc",
     "cauce_faq_nNHY4y",
     "dolor",
-    "solucion",
     "etapas",
+    "solucion",
     "pilares",
     "ugc",
     "beneficios",
