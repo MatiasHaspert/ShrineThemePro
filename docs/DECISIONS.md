@@ -842,3 +842,59 @@ anotado en el checklist de `CLAIMS-AUDIT.md` §6, junto con la nota de §3.3: la
 venía diciendo esas cosas desde el theme editor, esta sección no lo inaugura. Vaciar título,
 bajada e items apaga la sección entera sin tocar código.
 
+---
+
+## D-034 · 2026-08-27 · Bloque de solución: sección propia con grilla de beneficios y packshot
+
+**Decisión.** Entra `sections/cauce-solucion.liquid` — volanta, título, bajada, grilla de
+beneficios con ícono y foto del producto cerrando — instanciada en `product.cauce-landing`
+como `solucion`, inmediatamente debajo de `dolor` y arriba de los pilares. El par queda
+armado: una sección nombra el problema y la que sigue presenta el producto. Como en D-033, el
+`.liquid` no tiene una sola palabra de copy.
+
+**Alternativa descartada.** Armarlo con `multicolumn`, que es como están resueltos `beneficios`
+y `explicacion`. Dos cosas no salen de ahí: los íconos serían imágenes subidas una por una, en
+vez del set SVG que ya resuelve el color por contexto con `--cauce-icono` (VADO sobre CAUCE,
+VADO-TEXTO sobre SEDIMENTO, que es una regla del brandboard aplicada sola); y el packshot
+quedaría como una columna más de la grilla, sin ancho propio ni control de `loading`.
+
+**La imagen tiene tope de ancho propio, separado del ancho del bloque.** `ancho_imagen` (900px
+por defecto) contra los 1020px de contenido que deja `ancho_maximo`. Un packshot estirado al
+ancho del contenedor se lee como un banner: el producto tiene que quedar más chico que el
+bloque que lo contiene. Es el mismo motivo por el que el `sizes` de esta sección tiene un corte
+más que el de `dolor` — el pedido se limita con `min()` en los dos tramos de abajo, porque
+arriba de 900px la imagen ya no crece.
+
+**En mobile la grilla se queda en dos columnas, no en una.** Son etiquetas de dos o tres
+palabras con el ícono arriba: en una sola columna la sección se estira a cuatro pantallas de
+scroll para decir muy poco. Medido a 390px cada celda queda en 172px y la etiqueta más larga
+("Metabolismo de Glucosa") entra en dos renglones centrados. La cantidad de columnas de desktop
+sí es un setting (2, 3 o 4).
+
+**La bajada va en `--cauce-secundario` y no en el color de texto.** Es el gris de apoyo del
+brandboard y el token ya resuelve el par: VADO 4.93:1 sobre CAUCE, VADO-TEXTO 5.63:1 sobre
+blanco y 4.50:1 sobre SEDIMENTO. Los tres pasan AA como texto, que es lo que esto es. Las
+etiquetas de la grilla, en cambio, se quedan en `currentColor`: son el ancla visual de cada
+ítem y no pueden depender de un token de apoyo.
+
+**Dos íconos nuevos en `cauce-iconos`:** `gota` y `rayo`. Los dos se dibujan a 4rem acá —el
+doble que el `.cauce-icono` de base— así que el trazo ocupa casi todo el viewBox: a ese tamaño
+un glifo chico dentro de una caja grande se lee como un error de alineación.
+
+**El packshot ideal es un PNG con fondo transparente.** La referencia es una sola imagen
+generada donde los frascos y el fondo son lo mismo. Acá el fondo lo pinta el esquema de color de
+la sección, así que una foto con su propio fondo deja un rectángulo que no empalma con CAUCE.
+Está dicho en el `info` del setting, y `estilo_imagen` deja redondear las esquinas para cuando
+el rectángulo es inevitable y conviene que se lea como una foto y no como un error.
+
+**El copy es un bloqueante abierto, y es el más directo de todos.** Las cuatro etiquetas de la
+grilla —"Azúcar Saludable", "Energía Estable", "Metabolismo de Glucosa", "Apoyo
+Antioxidante"— son, palabra por palabra, la traducción de los claims que R1 manda sacar de las
+imágenes del producto: *"Apoyo Para un Azúcar Saludable"*, *"Energía Estable Todo el Día"*,
+*"Apoya el Metabolismo de la Glucosa"*, *"ANTIOXIDANT SUPPORT"*. Sacarlos de la foto y
+escribirlos en HTML no los cambia de naturaleza: siguen siendo funciones atribuidas al producto
+bajo Disp. ANMAT 4980/05. La bajada agrega el mecanismo ("sacar el azúcar de la sangre y
+llevarlo a los músculos") y la volanta agrega un claim de origen ("la molécula alemana") que
+necesita el certificado de materia prima de A4/B3. Todo eso queda anotado en el checklist de
+`CLAIMS-AUDIT.md` §6. Vaciar título, bajada, ítems e imagen apaga la sección entera sin tocar
+código.

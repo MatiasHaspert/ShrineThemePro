@@ -618,6 +618,7 @@ h1, h2, h3, h4,
 .cauce-datos__inner,
 .cauce-detalle__inner,
 .cauce-dolor__inner,
+.cauce-solucion__inner,
 .cauce-ugc__inner,
 .cauce-glow__inner,
 .cauce-tabs-wrap > .page-width {
@@ -629,6 +630,7 @@ h1, h2, h3, h4,
   .cauce-datos__inner,
   .cauce-detalle__inner,
   .cauce-dolor__inner,
+  .cauce-solucion__inner,
   .cauce-ugc__inner,
   .cauce-glow__inner,
   .cauce-tabs-wrap > .page-width {
@@ -1559,4 +1561,157 @@ h1, h2, h3, h4,
   }
 
   .cauce-dolor__inner--derecha .cauce-dolor__media { order: 2; }
+}
+
+/* ==========================================================================
+   11. PDP — bloque de solucion
+   Ver sections/cauce-solucion.liquid y docs/DECISIONS.md D-034.
+
+   Mismo esqueleto que el bloque de dolor —columna editorial dentro de
+   .page-width, con ancho propio que nunca pasa el ancho de pagina— pero al reves:
+   dolor es texto al costado de una foto, solucion es una pila centrada que baja
+   del titulo a la grilla y termina en el producto.
+   ========================================================================== */
+
+.cauce-solucion__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-solucion-ancho, 1120px), var(--page-width, 1440px));
+}
+
+/* Encabezado --------------------------------------------------------------- */
+
+.cauce-solucion__encabezado { max-width: 62ch; }
+
+.cauce-solucion__titulo {
+  margin: 0 0 var(--cauce-aire-s);
+  text-wrap: balance;
+}
+
+/* La bajada va en el secundario y no en el color de texto: es el gris de apoyo
+   del brandboard y el token ya resuelve el par (VADO 4.93:1 sobre CAUCE,
+   VADO-TEXTO 5.63:1 sobre blanco y 4.50:1 sobre SEDIMENTO). Los tres pasan AA
+   como texto, que es lo que esto es. */
+.cauce-solucion__bajada {
+  color: var(--cauce-secundario);
+  max-width: 56ch;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+.cauce-solucion__bajada > :first-child { margin-top: 0; }
+.cauce-solucion__bajada > :last-child { margin-bottom: 0; }
+
+/* Grilla de beneficios ----------------------------------------------------- */
+
+/* Dos columnas tambien en mobile, y no una. Son etiquetas de dos o tres palabras
+   con el icono arriba: en una sola columna la seccion se estira a cuatro pantallas
+   de scroll para decir muy poco. A 390px cada celda queda en 165px, donde
+   "Metabolismo de Glucosa" entra en dos renglones centrados. */
+.cauce-solucion__grilla {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--cauce-aire-m) var(--cauce-aire-s);
+  margin: 0;
+  padding: 0;
+}
+
+.cauce-solucion__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--cauce-aire-xs);
+  min-width: 0;
+}
+
+/* Mas grande que el .cauce-icono de base (2.4rem): aca el icono es lo primero que
+   se ve de cada beneficio, no una vineta al costado de una linea de texto. El
+   trazo de 1.4 del set aguanta el tamano sin engordar. */
+.cauce-solucion__icono {
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+.cauce-solucion__etiqueta {
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+/* Producto ----------------------------------------------------------------- */
+
+.cauce-solucion__media {
+  margin: 0;
+  min-width: 0;
+}
+
+/* El tope de ancho es de la imagen y no del bloque: un packshot estirado a los
+   1020px del contenedor se lee como un banner. Arriba de ese tope la imagen se
+   queda quieta y el aire crece a los costados. */
+.cauce-solucion__imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: var(--cauce-solucion-imagen, 900px);
+}
+
+.cauce-solucion__media--recuadro .cauce-solucion__imagen { border-radius: 4px; }
+
+/* Pie y boton -------------------------------------------------------------- */
+
+.cauce-solucion__pie {
+  max-width: 72ch;
+  font-size: 1.3rem;
+  opacity: 0.75;
+}
+
+.cauce-solucion__pie > :first-child { margin-top: 0; }
+.cauce-solucion__pie > :last-child { margin-bottom: 0; }
+
+/* align-self y no display:inline-flex a secas: el CTA es hijo directo de un flex
+   column, donde el default stretch lo estiraria a todo el ancho del bloque. */
+.cauce-solucion__cta {
+  display: inline-flex;
+  align-self: flex-start;
+}
+
+/* Centrado ----------------------------------------------------------------- */
+
+/* Se centra hijo por hijo y no con align-items en el contenedor: ahi el stretch
+   es justo lo que se quiere para la grilla y para la figura, que tienen que seguir
+   ocupando el ancho completo del bloque. */
+.cauce-solucion__inner--centrado .cauce-solucion__encabezado {
+  text-align: center;
+  margin-inline: auto;
+}
+
+.cauce-solucion__inner--centrado .cauce-solucion__bajada { margin-inline: auto; }
+.cauce-solucion__inner--centrado .cauce-solucion__imagen { margin-inline: auto; }
+.cauce-solucion__inner--centrado .cauce-solucion__cta { align-self: center; }
+
+.cauce-solucion__inner--centrado .cauce-solucion__item { align-items: center; }
+.cauce-solucion__inner--centrado .cauce-solucion__etiqueta { text-align: center; }
+
+.cauce-solucion__inner--centrado .cauce-solucion__pie {
+  text-align: center;
+  margin-inline: auto;
+}
+
+@media screen and (min-width: 750px) {
+  /* Mas aire entre pisos que el gap de mobile: el bloque son tres piezas
+     distintas (dicho, grilla, producto) y a partir de tablet se pueden separar
+     de verdad. */
+  .cauce-solucion__inner { gap: var(--cauce-aire-l); }
+
+  .cauce-solucion__grilla {
+    grid-template-columns: repeat(var(--cauce-solucion-cols, 2), minmax(0, 1fr));
+    gap: var(--cauce-aire-l) var(--cauce-aire-m);
+  }
+
+  .cauce-solucion__icono { width: 4rem; height: 4rem; }
+  .cauce-solucion__bajada { font-size: 1.7rem; }
+  .cauce-solucion__etiqueta { font-size: 1.7rem; }
 }

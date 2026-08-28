@@ -226,6 +226,17 @@ Plantilla de tema → `cauce-landing`.
       lista de lo que la página deliberadamente no decía). Aprobar con criterio legal,
       reescribir sin síntoma, o quitar la sección. La sección se puede vaciar entera
       desde el editor sin tocar código: sin título, bajada ni items no renderiza nada.
+- [ ] **BLOQUEANTE · La sección `solucion` de `cauce-landing` (D-034).** Las cuatro
+      etiquetas de la grilla —"Azúcar Saludable", "Energía Estable", "Metabolismo de
+      Glucosa", "Apoyo Antioxidante"— son la traducción literal de los claims impresos
+      en las imágenes de Noverly que R1 manda reemplazar. Pasarlos de la foto al HTML no
+      los cambia: son funciones atribuidas al producto (Disp. ANMAT 4980/05). Se suman la
+      bajada, que describe el mecanismo ("ayuda a sacar el azúcar de la sangre y llevarlo
+      a los músculos"), y la volanta "La molécula alemana", que es un claim de origen y
+      necesita el certificado de materia prima de A4/B3. Es la sección que dice más cosas
+      por metro cuadrado de toda la landing. Aprobar con criterio legal, reescribir con
+      funciones respaldables, o quitarla. Se vacía entera desde el editor sin tocar
+      código: sin título, bajada, ítems ni imagen no renderiza nada.
 - [ ] **El sello "Cliente verificado"** de `ss_glow_testimonial_3jmxKc` (D-032). Decir
       verificado sin poder probar la compra es Res. SC 270/2020 por sí solo, aparte de lo
       que diga el texto. Destildar `verificado` en cada reseña que no tenga pedido detrás,

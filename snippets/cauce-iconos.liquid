@@ -110,6 +110,21 @@
       <path d="M7.5 7.5 16.5 16.5M16.5 7.5 7.5 16.5"/>
     </svg>
 
+  {%- comment -%}
+    Gota y rayo entran para la grilla de beneficios (ver sections/cauce-solucion.liquid).
+    Los dos se dibujan a 4rem ahi, asi que el trazo ocupa casi todo el viewBox: a ese
+    tamano un glifo chico dentro de una caja grande se lee como un error de alineacion.
+  {%- endcomment -%}
+  {%- when 'gota' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M12 2.8c4.1 5.3 6.2 8.6 6.2 11a6.2 6.2 0 0 1-12.4 0c0-2.4 2.1-5.7 6.2-11Z"/>
+    </svg>
+
+  {%- when 'rayo' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M13.6 2.4 5.2 13.2h5.3L10.4 21.6 18.8 10.8h-5.3Z"/>
+    </svg>
+
   {%- when 'alerta' -%}
     <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
       <path d="M12 4.2 2.8 20h18.4Z"/><path d="M12 10.2v4M12 17.2h.01"/>

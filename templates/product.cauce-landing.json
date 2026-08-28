@@ -687,6 +687,66 @@
         "padding_bottom": 72
       }
     },
+    "solucion": {
+      "type": "cauce-solucion",
+      "blocks": {
+        "s1": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "gota",
+            "texto": "Azúcar Saludable"
+          }
+        },
+        "s2": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "rayo",
+            "texto": "Energía Estable"
+          }
+        },
+        "s3": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "molecula",
+            "texto": "Metabolismo de Glucosa"
+          }
+        },
+        "s4": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "escudo",
+            "texto": "Apoyo Antioxidante"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "volanta": "La molécula alemana",
+        "titulo": "Apoya tu azúcar en sangre desde la raíz",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "<p>El Ácido Alfa Lipoico R de forma pura de <strong>Cauce</strong> ayuda a sacar el azúcar de la sangre y llevarlo a los músculos — el mecanismo que disminuye con la edad y la comida moderna.</p>",
+        "alineacion": "centrado",
+        "columnas": "2",
+        "imagen": "",
+        "alt": "Tres frascos de Ácido R-Alfa Lipoico de CAUCE, de 30 cápsulas de 600 mg cada una.",
+        "ancho_imagen": 900,
+        "estilo_imagen": "suelta",
+        "carga_prioritaria": false,
+        "pie": "",
+        "boton_texto": "",
+        "boton_link": "",
+        "color_scheme": "inverse",
+        "ancho_maximo": 1120,
+        "padding_top": 72,
+        "padding_bottom": 0
+      }
+    },
     "pilares": {
       "type": "icon-bar",
       "blocks": {
@@ -1950,6 +2010,7 @@
     "ss_glow_testimonial_3jmxKc",
     "cauce_faq_nNHY4y",
     "dolor",
+    "solucion",
     "pilares",
     "ugc",
     "beneficios",

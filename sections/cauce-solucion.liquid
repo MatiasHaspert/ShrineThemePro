@@ -1,0 +1,325 @@
+{% comment %}
+  CAUCE — bloque de solucion (mecanismo + beneficios + producto).
+
+  Va inmediatamente despues de cauce-dolor: el bloque anterior nombra el problema
+  y este presenta el producto. Estructura de arriba abajo: volanta, titulo,
+  bajada, grilla de beneficios con icono, y la foto del producto cerrando.
+
+  Cuatro cosas que la seccion resuelve por construccion:
+
+  - La grilla es un <ul> real, un <li> por beneficio. Un lector de pantalla tiene
+    que poder decir "lista de 4 elementos" y no leer cuatro parrafos sueltos.
+  - Los iconos salen de snippets/cauce-iconos y heredan --cauce-icono, el token
+    contextual del bloque 0: VADO sobre CAUCE (4.93:1) y VADO-TEXTO sobre
+    SEDIMENTO, donde VADO puro esta prohibido por el brandboard.
+  - La foto del producto tiene ancho propio (`ancho_imagen`), separado del ancho
+    del bloque: un packshot estirado a 1020 px se ve como un banner, no como un
+    producto.
+  - Sin imagen no deja un hueco: cae en placeholder_svg_tag.
+
+  ADVERTENCIA DE CLAIMS (Disp. ANMAT 4980/05 · CAA art. 1381). Cada etiqueta de
+  la grilla es una funcion atribuida al producto, que es exactamente lo que la
+  disposicion mira. Por eso el texto vive entero en templates/*.json y no aca:
+  la regla 1 de docs/CLAIMS-AUDIT.md pide que todo claim se pueda listar con un
+  grep. No escribas copy adentro de este archivo.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_hay_grilla = false
+  for block in section.blocks
+    if block.settings.texto != blank
+      assign cauce_hay_grilla = true
+      break
+    endif
+  endfor
+
+  assign cauce_hay = cauce_hay_grilla
+  if section.settings.titulo != blank or section.settings.bajada != blank or section.settings.imagen != blank
+    assign cauce_hay = true
+  endif
+
+  assign cauce_loading = 'lazy'
+  assign cauce_fetch = 'auto'
+  if section.settings.carga_prioritaria
+    assign cauce_loading = 'eager'
+    assign cauce_fetch = 'high'
+  endif
+
+  comment
+    Si el campo de la seccion esta vacio se cae al alt cargado en Shopify. Pasarle
+    un string vacio a image_tag escribiria alt="" y marcaria la foto como decorativa:
+    el packshot es el producto, no un adorno.
+  endcomment
+  assign cauce_alt = section.settings.alt | default: section.settings.imagen.alt
+
+  comment
+    El `sizes` se arma aca, no con var(), y va todo en px. Mismo motivo que en
+    cauce-dolor (ver D-033): el atributo sizes lo parsea el HTML, donde una custom
+    property no resuelve, y adentro de sizes las unidades relativas se miden contra
+    el font-size INICIAL de 16px y no contra el root de 10px del tema.
+
+    Aca hay un corte mas que en dolor porque la imagen tiene tope propio: nunca pasa
+    de `ancho_imagen`, asi que el pedido se limita con min() en los dos tramos de
+    abajo. Los numeros son el padding real de .page-width (15px hasta 750px, 50px
+    despues) y el max-width del bloque, que es border-box.
+  endcomment
+  assign cauce_tope = section.settings.ancho_maximo
+  assign cauce_util = cauce_tope | minus: 100
+  assign cauce_img = section.settings.ancho_imagen | at_most: cauce_util
+
+  assign cauce_sizes = '(min-width: ' | append: cauce_tope | append: 'px) ' | append: cauce_img | append: 'px, (min-width: 750px) min(calc(100vw - 100px), ' | append: cauce_img | append: 'px), min(calc(100vw - 30px), ' | append: cauce_img | append: 'px)'
+-%}
+
+{%- if cauce_hay -%}
+  <div class="cauce-solucion color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width cauce-solucion__inner cauce-solucion__inner--{{ section.settings.alineacion }}"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-solucion-ancho: {{ section.settings.ancho_maximo }}px; --cauce-solucion-imagen: {{ section.settings.ancho_imagen }}px; --cauce-solucion-cols: {{ section.settings.columnas }};"
+    >
+      {%- if section.settings.volanta != blank or section.settings.titulo != blank or section.settings.bajada != blank -%}
+        <div class="cauce-solucion__encabezado">
+          {%- if section.settings.volanta != blank -%}
+            <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.titulo != blank -%}
+            {%- comment -%}
+              El cierre en acento es un setting aparte y no un color picker dentro de un
+              richtext: el par claro/oscuro lo resuelve --cauce-acento. Ver D-031 y D-033.
+            {%- endcomment -%}
+            <h2 class="cauce-solucion__titulo {{ section.settings.heading_size }}">
+              {{- section.settings.titulo -}}
+              {%- if section.settings.titulo_acento != blank -%}
+                <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.bajada != blank -%}
+            <div class="cauce-solucion__bajada rte">{{ section.settings.bajada }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if cauce_hay_grilla -%}
+        <ul class="cauce-solucion__grilla" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.texto == blank -%}
+              {%- continue -%}
+            {%- endif -%}
+            <li class="cauce-solucion__item" {{ block.shopify_attributes }}>
+              {%- render 'cauce-iconos', icono: block.settings.icono, clase: 'cauce-solucion__icono' -%}
+              <span class="cauce-solucion__etiqueta">{{ block.settings.texto }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <figure class="cauce-solucion__media cauce-solucion__media--{{ section.settings.estilo_imagen }}">
+        {%- if section.settings.imagen != blank -%}
+          {{
+            section.settings.imagen
+            | image_url: width: 1800
+            | image_tag:
+              loading: cauce_loading,
+              fetchpriority: cauce_fetch,
+              widths: '480, 720, 960, 1200, 1600, 1800',
+              sizes: cauce_sizes,
+              class: 'cauce-solucion__imagen',
+              alt: cauce_alt
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'cauce-solucion__imagen placeholder-svg placeholder' }}
+        {%- endif -%}
+      </figure>
+
+      {%- if section.settings.pie != blank -%}
+        <div class="cauce-solucion__pie rte">{{ section.settings.pie }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.boton_texto != blank and section.settings.boton_link != blank -%}
+        <a class="cauce-solucion__cta button" href="{{ section.settings.boton_link }}">
+          {{- section.settings.boton_texto -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Solucion",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Presenta el producto despues del bloque de dolor. Cada etiqueta de la grilla le atribuye una funcion al suplemento: eso es un claim (Disp. ANMAT 4980/05) y necesita respaldo. Sin patologias con nombre, sin plazos de resultado y sin comparaciones con medicamentos."
+    },
+
+    { "type": "header", "content": "Texto" },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo" },
+    {
+      "type": "inline_richtext",
+      "id": "titulo_acento",
+      "label": "Cierre del titulo en acento",
+      "info": "Se agrega al final del titulo, en el color de acento. Vacio = titulo de un solo color."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    { "type": "richtext", "id": "bajada", "label": "Bajada" },
+    {
+      "type": "select",
+      "id": "alineacion",
+      "label": "Alineacion",
+      "options": [
+        { "value": "centrado", "label": "Centrado" },
+        { "value": "izquierda", "label": "A la izquierda" }
+      ],
+      "default": "centrado"
+    },
+
+    { "type": "header", "content": "Beneficios" },
+    {
+      "type": "select",
+      "id": "columnas",
+      "label": "Columnas en desktop",
+      "info": "En mobile siempre son 2. Con 4 beneficios, 2 columnas arma el cuadrado; 4 los pone en una fila.",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "2"
+    },
+
+    { "type": "header", "content": "Imagen del producto" },
+    {
+      "type": "image_picker",
+      "id": "imagen",
+      "label": "Imagen",
+      "info": "Ideal: PNG con fondo transparente. Una foto con su propio fondo deja un rectangulo que no empalma con el color de la seccion."
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Texto alternativo",
+      "info": "Describi lo que se ve. Si lo dejas vacio se usa el alt cargado en Shopify."
+    },
+    {
+      "type": "range",
+      "id": "ancho_imagen",
+      "min": 400,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho de la imagen",
+      "default": 900
+    },
+    {
+      "type": "select",
+      "id": "estilo_imagen",
+      "label": "Borde",
+      "options": [
+        { "value": "suelta", "label": "Sin borde (PNG transparente)" },
+        { "value": "recuadro", "label": "Esquinas redondeadas" }
+      ],
+      "default": "suelta"
+    },
+    {
+      "type": "checkbox",
+      "id": "carga_prioritaria",
+      "label": "Cargar la imagen con prioridad",
+      "info": "Marcalo SOLO si la seccion queda arriba del pliegue. Mas abajo, dejalo apagado: le roba ancho de banda a la imagen del hero.",
+      "default": false
+    },
+
+    { "type": "header", "content": "Pie y boton" },
+    { "type": "richtext", "id": "pie", "label": "Texto al pie" },
+    { "type": "text", "id": "boton_texto", "label": "Texto del boton", "info": "Vacio = sin boton." },
+    { "type": "url", "id": "boton_link", "label": "Enlace" },
+
+    { "type": "header", "content": "Presentacion" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "inverse"
+    },
+    {
+      "type": "range",
+      "id": "ancho_maximo",
+      "min": 720,
+      "max": 1400,
+      "step": 40,
+      "unit": "px",
+      "label": "Ancho del bloque",
+      "default": 1120
+    },
+
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "beneficio",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icono",
+          "label": "Icono",
+          "options": [
+            { "value": "gota", "label": "Gota" },
+            { "value": "rayo", "label": "Rayo" },
+            { "value": "molecula", "label": "Molecula" },
+            { "value": "escudo", "label": "Escudo" },
+            { "value": "hoja", "label": "Hoja" },
+            { "value": "chequeo", "label": "Tilde" },
+            { "value": "capsula", "label": "Capsula" },
+            { "value": "laboratorio", "label": "Laboratorio" },
+            { "value": "balanza", "label": "Balanza" },
+            { "value": "reloj", "label": "Reloj" },
+            { "value": "nacional", "label": "Mundo" },
+            { "value": "trazabilidad", "label": "Documento" }
+          ],
+          "default": "gota"
+        },
+        {
+          "type": "text",
+          "id": "texto",
+          "label": "Etiqueta",
+          "info": "Dos o tres palabras. Es un claim: tiene que poder respaldarse."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Solucion",
+      "blocks": [
+        { "type": "beneficio" },
+        { "type": "beneficio" },
+        { "type": "beneficio" },
+        { "type": "beneficio" }
+      ]
+    }
+  ]
+}
+{% endschema %}
