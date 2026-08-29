@@ -906,7 +906,7 @@
         "heading_size": "h1",
         "bajada": "<p>Encuestamos a quienes lo toman todos los días para saber cómo entró Cauce en su rutina. Esto es lo que respondieron.</p>",
         "mostrar_barra": true,
-        "metodologia": "<p><strong>Cómo lo medimos.</strong> [[PENDIENTE: cuántas personas respondieron, cómo se las contactó, en qué fechas y la pregunta textual de cada ítem.]] Los porcentajes son respuestas de una encuesta, no un resultado clínico: describen lo que dijo quien respondió, no un efecto del producto.</p>",
+        "metodologia": "",
         "imagen": "shopify://shop_images/imagen.png",
         "alt": "",
         "posicion_imagen": "izquierda",
