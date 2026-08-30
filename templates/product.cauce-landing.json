@@ -1267,6 +1267,7 @@
         "e1",
         "e2"
       ],
+      "disabled": true,
       "settings": {
         "display_id": false,
         "visibility": "always-display",
@@ -1938,6 +1939,7 @@
         "c5",
         "c6"
       ],
+      "disabled": true,
       "settings": {
         "display_id": false,
         "visibility": "always-display",
@@ -1960,6 +1962,7 @@
         "number_of_competitors": 1,
         "us_label": "CAUCE",
         "us_label_size": 18,
+        "logo": "shopify://shop_images/producto.jpg",
         "logo_width": 90,
         "mobile_logo_width": 60,
         "others_label": "Suplemento genérico",
