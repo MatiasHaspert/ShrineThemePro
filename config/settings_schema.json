@@ -2901,6 +2901,18 @@
         "label": "t:settings_schema.cauce.settings.img_data_fiscal.label"
       },
       {
+        "type": "textarea",
+        "id": "cauce_disclaimer_texto",
+        "label": "t:settings_schema.cauce.settings.disclaimer_texto.label",
+        "info": "t:settings_schema.cauce.settings.disclaimer_texto.info"
+      },
+      {
+        "type": "textarea",
+        "id": "cauce_disclaimer_consulta",
+        "label": "t:settings_schema.cauce.settings.disclaimer_consulta.label",
+        "info": "t:settings_schema.cauce.settings.disclaimer_consulta.info"
+      },
+      {
         "type": "text",
         "id": "cauce_rnpa",
         "label": "t:settings_schema.cauce.settings.rnpa.label",

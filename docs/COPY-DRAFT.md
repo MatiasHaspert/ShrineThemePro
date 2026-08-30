@@ -141,6 +141,12 @@ porque también hay que leerlos antes de publicar.
 | `marca.descriptor` | Fórmulas de uso diario |
 | `legal.suplemento` | Este producto es un suplemento dietario. No reemplaza una alimentación variada. |
 | `legal.consulta_medico` | Consultá a tu médico. |
+
+> **`legal.suplemento` y `legal.consulta_medico` son ahora el valor por defecto, no el
+> único.** Se editan desde **Configuración del tema → CAUCE → Legales** y el valor cargado
+> queda en `config/settings_data.json` (`cauce_disclaimer_texto` y
+> `cauce_disclaimer_consulta`). Si esos campos quedan vacíos vuelve el texto de acá, para que
+> una leyenda obligatoria no pueda desaparecer por un borrado accidental. Ver D-044.
 | `legal.arrepentimiento_texto` | Podés arrepentirte de tu compra dentro de los 10 días corridos de recibido el producto y pedir la devolución del importe pagado, sin costo. Res. SCI 424/2020. |
 | `legal.precio_iva` | Precios en pesos argentinos con IVA incluido. |
 | `pdp.duracion_dias` | {{ dias }} días de uso |

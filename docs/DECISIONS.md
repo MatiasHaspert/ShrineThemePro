@@ -1395,3 +1395,47 @@ próximo sync genere un diff de una línea contra nosotros.
 **Regla para adelante.** El archivo de textos es `locales/es.json`. Una clave `cauce.*` nueva
 va en `es.json` **y** en `en.default.json`. La regla 1 de `CLAIMS-AUDIT.md` no cambia: ningún
 claim se escribe en un `.liquid`.
+
+---
+
+## D-044 · 2026-08-30 · La leyenda de suplemento se edita desde el admin, en un solo campo
+
+**Pedido.** Poder editar `{% render 'cauce-disclaimer' %}` desde el admin sin tocar código.
+
+**Decisión.** Dos settings nuevos en **Configuración del tema → CAUCE → Legales**:
+`cauce_disclaimer_texto` y `cauce_disclaimer_consulta`, ambos `textarea`, cargados con el
+texto que ya estaba vigente. El snippet los lee con esta prioridad:
+
+1. el parámetro que le pase quien renderiza (`texto:` / `consulta:`)
+2. el setting global
+3. `locales/es.json → cauce.legal.*`
+
+**Alternativa descartada: hacerlo editable bloque por bloque.** Era lo más literal —convertir
+el `custom_liquid` en una sección con settings, o directamente escribir el texto adentro de la
+caja de Liquid personalizado— y es lo peor para este texto en particular. La leyenda se
+renderiza en **tres lugares**: el bloque `disclaimer` de la PDP, el bloque `cierre` de la
+landing y la barra legal del footer. Editable por instancia, nada impide que queden tres
+redacciones distintas de una leyenda que exige la Disp. ANMAT 4980/05, y el día que haya que
+cambiar una palabra hay que acordarse de los tres lugares. Un campo global las alimenta a las
+tres y el cambio es atómico.
+
+**Por qué el locale sigue estando debajo, y no se borró.** Es una red de contención: si alguien
+vacía el campo en el admin, vuelve el texto por defecto en vez de desaparecer la leyenda. Una
+leyenda obligatoria no puede quedar sujeta a un borrado accidental en un panel. El costo es
+tener el texto en dos archivos; la alternativa era que un campo vacío publicara un producto sin
+su advertencia legal, que no es un costo, es un riesgo.
+
+**No cambia la regla 1 de `CLAIMS-AUDIT.md`.** No se escribió ningún claim en el `.liquid`: el
+snippet resuelve variables, el texto sigue viviendo en `config/settings_data.json` o en
+`locales/es.json`, los dos greppables. Lo que sí cambió es que la lista de lugares auditables
+pasa de tres a cuatro, y el §7 quedó actualizado con el grep que faltaba.
+
+**De paso, el §7 tenía un comando roto.** El one-liner que volcaba `cauce.*` hacía
+`json.load` directo sobre `locales/es.json`, y desde D-043 ese archivo empieza con el banner
+`auto-generated` de Shopify. Ahora lo saca con un `re.sub` antes de parsear. Los dos comandos
+de la sección se corrieron después de editarlos: una receta de auditoría que no se ejecuta no
+sirve de nada.
+
+**Qué queda igual.** El número de RNPA sigue saliendo de `settings.cauce_rnpa` y su
+placeholder visible sigue apareciendo mientras esté vacío. Y la versión compacta —la del pie—
+sigue mostrando sólo la primera frase, sin la de consulta médica.

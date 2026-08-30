@@ -474,6 +474,14 @@
         "suscripcion": {
           "label": "Activar la opción de suscripción",
           "info": "Deja el hook listo en la PDP. Requiere una app de suscripciones instalada y un medio de pago que la soporte. Apagado por defecto."
+        },
+        "disclaimer_texto": {
+          "label": "Leyenda de suplemento dietario",
+          "info": "Se muestra en la PDP, en el cierre de la landing y en el pie. Si queda vacío vuelve el texto por defecto del tema: la leyenda es obligatoria y no puede quedar en blanco."
+        },
+        "disclaimer_consulta": {
+          "label": "Frase de consulta médica",
+          "info": "Acompaña a la leyenda en la versión larga. En el pie, que usa la versión compacta, no aparece."
         }
       }
     }

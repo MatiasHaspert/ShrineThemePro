@@ -14,7 +14,7 @@ tiene que revisarlo alguien con criterio legal, con la lista de la sección 6 en
 
 ## 1. Regla operativa
 
-**Ningún claim está escrito en un `.liquid`.** Todos viven en uno de tres lugares
+**Ningún claim está escrito en un `.liquid`.** Todos viven en uno de cuatro lugares
 auditables:
 
 | Lugar | Qué contiene | Cómo se audita |
@@ -22,9 +22,10 @@ auditables:
 | `locales/es.json` → `cauce.*` | textos de sistema y legales | un archivo, un grep |
 | `templates/*.json` y `sections/*-group.json` | copy de campaña por sección | `grep -rn` en `templates/` |
 | Metafields del producto (`cauce.*`) | composición, uso, análisis | admin de Shopify, por SKU |
+| `config/settings_data.json` → `cauce_*` | legales editables desde el admin | un grep por `cauce_` |
 
 Consecuencia práctica: cambiar una redacción en toda la tienda es editar un archivo, y
-listar todo lo que afirma la tienda es leer tres lugares. Si mañana ANMAT observa una
+listar todo lo que afirma la tienda es leer cuatro lugares. Si mañana ANMAT observa una
 palabra, no hay que abrir secciones una por una.
 
 ---
@@ -331,11 +332,14 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
 grep -rn "PENDIENTE" templates/ sections/*-group.json snippets/
 
 # Los textos de sistema y legales
-python -c "import json;print(json.dumps(json.load(open('locales/es.json',encoding='utf-8'))['cauce'],ensure_ascii=False,indent=2))"
+python -c "import json,re,io;s=io.open('locales/es.json',encoding='utf-8-sig').read();print(json.dumps(json.loads(re.sub(r'^\s*/\*.*?\*/','',s,flags=re.S))['cauce'],ensure_ascii=False,indent=2))"
+
+# Los legales que se editan desde Configuración del tema
+grep -n '"cauce_' config/settings_data.json
 
 # Buscar palabras prohibidas en todo el tema
 grep -rniE "cura|trata|previene|alivia|reduce el|mejora la|neuropat|glucem|diabet|gabapentin|pregabalin|dolor|ansiedad" \
-  templates/ sections/cauce-*.liquid sections/*-group.json locales/es.json
+  templates/ sections/cauce-*.liquid sections/*-group.json locales/es.json config/settings_data.json
 ```
 
 Resultado esperado hoy: **tres coincidencias, las tres inocuas**.
@@ -345,5 +349,5 @@ Resultado esperado hoy: **tres coincidencias, las tres inocuas**.
 | `product.cauce-landing.json` → "Una rutina, no un **tratamiento**" | Es una negación. Dice explícitamente que el producto no es un tratamiento, que es justo lo que hay que decir. |
 | `cauce-newsletter.liquid` ×2 → "**trata**r datos personales" | Comentario de código sobre Ley 25.326, no es texto de storefront. |
 
-Cualquier cuarta coincidencia hay que mirarla. Si aparece en `templates/` o en
-`locales/es.json` fuera de esas tres, es un claim que se coló.
+Cualquier cuarta coincidencia hay que mirarla. Si aparece en `templates/`,
+`locales/es.json` o `config/settings_data.json` fuera de esas tres, es un claim que se coló.
