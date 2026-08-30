@@ -45,6 +45,6 @@
   {%- if cauce_rnpa != blank %}
     <span class="cauce-dato">{{ 'cauce.legal.rnpa' | t: numero: cauce_rnpa }}</span>
   {%- else %}
-    <span class="cauce-pendiente">{% raw %}{{ PENDIENTE: RNPA/RNE }}{% endraw %}</span>
+    {% comment %}<span class="cauce-pendiente">{% raw %}{{ PENDIENTE: RNPA/RNE }}{% endraw %}</span>{% endcomment %}
   {%- endif -%}
 </p>
