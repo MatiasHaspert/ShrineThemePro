@@ -619,6 +619,7 @@ h1, h2, h3, h4,
 .cauce-detalle__inner,
 .cauce-dolor__inner,
 .cauce-etapas__inner,
+.cauce-hero__inner,
 .cauce-progreso__inner,
 .cauce-resultados__inner,
 .cauce-solucion__inner,
@@ -634,6 +635,7 @@ h1, h2, h3, h4,
   .cauce-detalle__inner,
   .cauce-dolor__inner,
   .cauce-etapas__inner,
+  .cauce-hero__inner,
   .cauce-progreso__inner,
   .cauce-resultados__inner,
   .cauce-solucion__inner,
@@ -2266,4 +2268,187 @@ h1, h2, h3, h4,
     flex-direction: column;
     align-items: stretch;
   }
+}
+
+/* ==========================================================================
+   15. Hero con media
+   Ver sections/cauce-hero.liquid y docs/DECISIONS.md D-039.
+
+   Es el unico bloque del tema donde conviven una imagen y un video en el mismo
+   marco. El <img> es el que ocupa espacio y define la altura; el <video> va
+   encima en position: absolute y entra por opacidad recien cuando reproduce.
+   Asi el layout no salta y, si el video nunca arranca, no se nota.
+   ========================================================================== */
+
+.cauce-hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-hero-ancho, 1200px), var(--page-width, 1440px));
+}
+
+/* Texto -------------------------------------------------------------------- */
+
+.cauce-hero__cuerpo { min-width: 0; }
+
+.cauce-hero__titulo {
+  margin: 0 0 var(--cauce-aire-s);
+  text-wrap: balance;
+}
+
+/* 60ch y no 72ch como en cauce-dolor: aca la bajada comparte fila con la media,
+   asi que la columna ya viene angosta y el tope solo tiene que cubrir el caso
+   "sin media", donde el texto ocupa el bloque entero. */
+.cauce-hero__bajada {
+  max-width: 60ch;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+.cauce-hero__bajada > :first-child { margin-top: 0; }
+.cauce-hero__bajada > :last-child { margin-bottom: 0; }
+
+.cauce-hero__botones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cauce-aire-s);
+  margin-top: var(--cauce-aire-m);
+}
+
+.cauce-hero__cta { margin: 0; }
+
+.cauce-hero__pie {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.2rem;
+  line-height: 1.5;
+  opacity: 0.75;
+  margin-top: var(--cauce-aire-s);
+}
+
+.cauce-hero__pie > :first-child { margin-top: 0; }
+.cauce-hero__pie > :last-child { margin-bottom: 0; }
+
+/* Media -------------------------------------------------------------------- */
+
+.cauce-hero__media {
+  margin: 0;
+  min-width: 0;
+}
+
+/* <cauce-hero> es un elemento desconocido para el CSS: sin display: block se
+   comporta como inline y el position: absolute del video se cuelga del ancestro
+   equivocado. */
+.cauce-hero__marco {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* La imagen queda en flujo normal —no absoluta— justamente para que la opcion
+   "la de la imagen" funcione: con aspect-ratio: auto un contenedor de hijos
+   absolutos colapsaria a cero de alto. Aca la altura siempre la pone el <img>. */
+.cauce-hero__imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--cauce-hero-ratio, 1 / 1);
+  object-fit: cover;
+}
+
+.cauce-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--duration-default, 200ms) ease;
+}
+
+.cauce-hero__marco--reproduciendo .cauce-hero__video { opacity: 1; }
+
+/* Control de pausa --------------------------------------------------------- */
+
+/* Fondo solido y no translucido: el chip se apoya sobre video, o sea sobre un
+   color que cambia cuadro a cuadro, y es la unica forma de garantizar 1.4.11.
+   Aparece recien cuando el video reproduce — hasta ahi lo esconde el [hidden]
+   que trae el HTML. */
+.cauce-hero__pausa {
+  position: absolute;
+  right: var(--cauce-aire-s);
+  bottom: var(--cauce-aire-s);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  padding: 0;
+  border-radius: 50%;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  box-shadow: 0 1px 6px rgba(16, 38, 42, 0.25);
+}
+
+/* Obligatorio, no defensivo: el display: inline-flex de arriba tiene mas
+   especificidad que la regla [hidden] del user agent y sin esto el boton se
+   veria siempre, incluso sin video cargado. */
+.cauce-hero__pausa[hidden] { display: none; }
+
+.cauce-hero__pausa svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: currentColor;
+}
+
+.cauce-hero__pausa-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cauce-hero__pausa-icono--pausar { display: none; }
+.cauce-hero__marco--reproduciendo .cauce-hero__pausa-icono--pausar { display: inline-flex; }
+.cauce-hero__marco--reproduciendo .cauce-hero__pausa-icono--reproducir { display: none; }
+
+/* Orden y dos columnas ------------------------------------------------------ */
+
+/* El texto va primero en el DOM, asi que "texto arriba" es el flujo natural y no
+   necesita regla. El order va acotado a mobile a proposito: sin el max-width se
+   filtraria a la grilla de desktop y mandaria la media a la columna izquierda
+   aunque el setting de posicion diga derecha. */
+@media screen and (max-width: 989px) {
+  .cauce-hero__inner--mobile-media .cauce-hero__media { order: -1; }
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-hero__bajada { font-size: 1.7rem; }
+}
+
+/* 990 y no 750, igual que en cauce-dolor y cauce-resultados: a 768 la columna de
+   texto queda en 32 caracteres por linea y un titulo h0 no entra. */
+@media screen and (min-width: 990px) {
+  .cauce-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--cauce-aire-l);
+  }
+
+  .cauce-hero__inner--izquierda .cauce-hero__media { order: -1; }
+
+  /* align-items: stretch explicito. Sin media el contenedor vuelve a ser una
+     columna flex, y ahi el center de la regla de arriba —que existe para centrar
+     la foto contra el texto— pasa a ser eje transversal y encoge el cuerpo al
+     ancho de su contenido en vez de dejarlo ocupar el bloque. */
+  .cauce-hero__inner--sin {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cauce-hero__video { transition: none; }
 }

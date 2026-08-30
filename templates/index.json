@@ -1,51 +1,28 @@
 {
   "sections": {
     "hero": {
-      "type": "rich-text",
-      "blocks": {
-        "caption": {
-          "type": "caption",
-          "settings": {
-            "caption": "Fórmulas de uso diario",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
-        },
-        "titulo": {
-          "type": "heading",
-          "settings": {
-            "title": "Lo que tomás todos los días debería explicarse en una sola línea.",
-            "heading_size": "h0"
-          }
-        },
-        "texto": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Cada fórmula lleva la lista completa de lo que contiene y en qué cantidad. Sin mezclas propietarias, sin letra chica y sin promesas que no podamos sostener.</p>"
-          }
-        },
-        "cta": {
-          "type": "button",
-          "settings": {
-            "button_label": "Ver la fórmula",
-            "button_link": "/collections/all",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "caption",
-        "titulo",
-        "texto",
-        "cta"
-      ],
+      "type": "cauce-hero",
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "full_width": false,
+        "alt": "",
+        "posicion_media": "derecha",
+        "orden_mobile": "texto",
+        "relacion": "1 / 1",
+        "carga_prioritaria": true,
+        "volanta": "Fórmulas de uso diario",
+        "titulo": "Lo que tomás todos los días debería explicarse en una sola línea.",
+        "titulo_acento": "",
+        "titulo_principal": false,
+        "heading_size": "h0",
+        "bajada": "<p>Cada fórmula lleva la lista completa de lo que contiene y en qué cantidad. Sin mezclas propietarias, sin letra chica y sin promesas que no podamos sostener.</p>",
+        "pie": "",
+        "boton_texto": "Ver la fórmula",
+        "boton_link": "/products/acido-r-alfa-lipoico-capsulas-de-600-mg-en-forma-r-pura",
+        "boton2_texto": "",
+        "boton2_link": "",
         "color_scheme": "background-1",
-        "padding_top": 96,
-        "padding_bottom": 88
+        "ancho_maximo": 1200,
+        "padding_top": 64,
+        "padding_bottom": 64
       }
     },
     "pilares": {
@@ -111,27 +88,62 @@
       }
     },
     "producto": {
-      "type": "featured-collection",
+      "type": "featured-product",
+      "blocks": {
+        "titulo": {
+          "type": "title",
+          "settings": {
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 9
+          }
+        },
+        "precio": {
+          "type": "price",
+          "settings": {
+            "layout": "price_first",
+            "price_color": "text",
+            "compare_price_color": "text",
+            "displayed_badge": "none",
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "cta": {
+          "type": "button",
+          "settings": {
+            "button_label": "Comprar",
+            "button_link": "/products/acido-r-alfa-lipoico-capsulas-de-600-mg-en-forma-r-pura",
+            "button_style_secondary": false,
+            "full_width": false,
+            "large_font_size": false,
+            "alignment": "flex-start",
+            "mobile_alignment": "center",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "titulo",
+        "precio",
+        "cta"
+      ],
       "settings": {
-        "title": "La fórmula",
-        "heading_size": "h2",
+        "product": "acido-r-alfa-lipoico-capsulas-de-600-mg-en-forma-r-pura",
         "color_scheme": "background-1",
-        "products_to_show": 4,
-        "columns_desktop": 3,
-        "columns_mobile": "1",
-        "show_view_all": false,
-        "cards_color_scheme": "background-2",
-        "image_ratio": "square",
-        "badges": "disabled",
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": false,
-        "slider_desktop": false,
-        "slider_mobile": true,
-        "desktop_arrows_position": "hidden",
-        "desktop_dots_position": "hidden",
-        "mobile_arrows_position": "hidden",
-        "mobile_dots_position": "under",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "none",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "mobile_media_corner_radius": 2,
+        "full_media_width": false,
         "padding_top": 24,
         "padding_bottom": 72
       }
@@ -151,11 +163,20 @@
           "settings": {
             "text": "<p>CAUCE es una marca argentina de fórmulas de uso diario. Elegimos contar la composición completa, publicar los análisis y no prometer resultados. Si algo no lo podemos sostener con un documento, no lo escribimos.</p>"
           }
+        },
+        "cta": {
+          "type": "button",
+          "settings": {
+            "button_label": "Ver la fórmula",
+            "button_link": "/products/acido-r-alfa-lipoico-capsulas-de-600-mg-en-forma-r-pura",
+            "button_style_secondary": false
+          }
         }
       },
       "block_order": [
         "titulo",
-        "texto"
+        "texto",
+        "cta"
       ],
       "settings": {
         "desktop_content_position": "center",
@@ -165,12 +186,139 @@
         "padding_top": 88,
         "padding_bottom": 88
       }
+    },
+    "banda": {
+      "type": "icon-bar",
+      "blocks": {
+        "f1": {
+          "type": "column",
+          "settings": {
+            "icon": "local_shipping",
+            "filled_icon": false,
+            "title": "Envío a todo el país",
+            "text": "<p>[[PENDIENTE: plazo_envio]] días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
+          }
+        },
+        "f2": {
+          "type": "column",
+          "settings": {
+            "icon": "undo",
+            "filled_icon": false,
+            "title": "10 días para arrepentirte",
+            "text": "<p>Sin costo y sin explicar por qué, como marca la Res. SCI 424/2020.</p>"
+          }
+        },
+        "f3": {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "filled_icon": false,
+            "title": "Pago procesado por Mercado Pago",
+            "text": "<p>Nosotros no vemos ni guardamos los datos de tu tarjeta.</p>"
+          }
+        },
+        "f4": {
+          "type": "column",
+          "settings": {
+            "icon": "mail",
+            "filled_icon": false,
+            "title": "Te contestamos",
+            "text": "<p>[[PENDIENTE: email_contacto]]</p>"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Comprar acá",
+        "heading_size": "h2",
+        "text": "",
+        "color_scheme": "background-2",
+        "icon_layout": "horizontal",
+        "icon_size": "small",
+        "icon_color": "accent-2",
+        "cards_color_scheme": "background-2",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "background-2",
+        "transparent_arrows": true,
+        "dots_color_scheme": "background-2",
+        "desktop_full_page": false,
+        "columns_desktop": 2,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 48,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "hidden",
+        "desktop_arrows_position": "hidden",
+        "columns_mobile": "1",
+        "slider_mobile": false,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "hidden",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 56,
+        "padding_bottom": 40
+      }
+    },
+    "faq": {
+      "type": "cauce-faq",
+      "blocks": {
+        "p1": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿En qué se diferencia del ácido alfa lipoico común?",
+            "respuesta": "<p>Sintetizado en laboratorio, el ácido alfa lipoico se obtiene como una mezcla de dos isómeros en partes iguales: R y S. El R es la forma que existe en la naturaleza; el S es su imagen especular y no aparece por fuera de la síntesis química.</p><p>Separar los dos encarece la producción. Por eso la mayoría de los suplementos se venden como mezcla racémica, sin aclararlo. Esta fórmula usa únicamente el isómero R, y el análisis de lote lo verifica.</p>"
+          }
+        },
+        "p2": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cómo verifico que es la forma R?",
+            "respuesta": "<p>Cada envase tiene un número de lote y para ese lote hay un certificado de análisis hecho por un laboratorio externo. El certificado indica identidad del compuesto y contenido por cápsula.</p>"
+          }
+        },
+        "p3": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Puedo devolverlo si me arrepiento?",
+            "respuesta": "<p>Sí. Tenés 10 días corridos desde que recibís el pedido para arrepentirte y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). Se inicia desde el botón de arrepentimiento que está en el pie de página.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "volanta": "Antes de comprar",
+        "titulo": "Preguntas frecuentes",
+        "heading_size": "h2",
+        "pie": "",
+        "producto": "",
+        "emitir_schema": false,
+        "color_scheme": "background-2",
+        "padding_top": 24,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
     "hero",
     "pilares",
     "producto",
+    "banda",
+    "faq",
     "manifiesto"
   ]
 }

@@ -174,11 +174,12 @@ calcula el tema, pero el descuento real lo tiene que aplicar un **descuento auto
 Shopify** con las mismas cantidades. Si no coinciden, la PDP muestra un precio y el carrito
 cobra otro.
 
-### R7 · El producto no tiene asignado el template
+### R7 · El producto no tiene asignado el template — **CERRADO 2026-08-29**
 
-En el admin figura con "Producto predeterminado". Mientras siga así, la landing solo se ve
-agregando `?view=cauce-landing` a la URL. Se cambia en el admin del producto, panel
-Plantilla de tema → `cauce-landing`.
+Figuraba con "Producto predeterminado" y la landing solo se veía agregando
+`?view=cauce-landing` a la URL. La plantilla ya está asignada en el admin del producto
+(panel Plantilla de tema → `cauce-landing`), así que los tres CTA de la home quedaron con el
+link limpio `/products/<handle>` (ver D-038 y D-042).
 
 ---
 
@@ -188,7 +189,7 @@ Plantilla de tema → `cauce-landing`.
 
 - [ ] R1 · Reemplazar las cinco imágenes del producto por fotos propias sin claims ni sellos
 - [ ] R2 · Proveedor del producto = CAUCE
-- [ ] R7 · Plantilla del producto = `cauce-landing`
+- [x] R7 · Plantilla del producto = `cauce-landing` — cerrado 2026-08-29
 - [ ] R4 · Revisar los 12 metacampos de categoría, en especial "Enfoque de salud"
 - [ ] Cargar los metafields `cauce.*` con transcripción textual del rótulo
 
@@ -278,6 +279,39 @@ Plantilla de tema → `cauce-landing`.
       marcan exactamente qué falta. La alternativa que ocupa el mismo lugar sin
       depender de nadie son las cifras del rótulo y del COA: 600 mg por cápsula, 30
       días de frasco, días de garantía.
+- [ ] **BLOQUEANTE · Los cuatro `collapsible_tab` de `main-product` en `cauce-landing`.**
+      No estaban en este checklist y son la fuente más explícita del tema, porque son
+      copy de referencia que nunca se reescribió. `collapsible_tab_VtLRkn` se titula
+      "Beneficios clínicamente comprobados" y lista cinco funciones atribuidas al
+      producto ("Favorece la función nerviosa saludable", "Ayuda a mantener niveles
+      saludables de azúcar en sangre dentro del rango normal", "apoyo antioxidante para
+      la salud celular"). `collapsible_tab_FCtjKz` describe síntomas ("te arden los
+      pies, no puedes dormir"), compara con medicamentos ("cansado de medicamentos que
+      te hacen sentir como un zombi mientras tus nervios se van muriendo") y afirma que
+      el compuesto "se utiliza en Alemania como tratamiento con receta para la
+      neuropatía diabética desde 1966" — patología con nombre y equiparación con un
+      medicamento de venta bajo receta. `collapsible_tab_6yhWGL` pone plazos de
+      resultado ("entre 3 y 5 semanas", "2 o 3 meses"). `collapsible_tab_aqXdqx` mezcla
+      la posología real con tres funciones y una promesa de resultado ("dormir mejor,
+      moverse con confianza y pensar con claridad"). Los seis problemas que este
+      documento persigue —función atribuida, patología, plazo, comparación con
+      medicamento, aval clínico y síntoma— están los seis acá. Reescribir con la
+      transcripción del rótulo o vaciar los cuatro bloques. Los otros dos acordeones del
+      mismo bloque, `acordeon_envios` y `acordeon_garantia`, ya están reescritos y se
+      quedan como están.
+- [ ] **BLOQUEANTE · La FAQ de entrada `cauce_faq_nNHY4y` de `cauce-landing`.** Tampoco
+      estaba listada. Cinco preguntas de copy de referencia sin auditar: "¿Cuándo veré
+      resultados?" responde con un plazo ("un cambio en 3 a 5 semanas, con beneficio
+      completo en 2 a 3 meses"), la comparación con la berberina describe mecanismos de
+      acción ("ayuda a llevar el azúcar al músculo"), y la última repite el bloque
+      entero de claims de la referencia ("apoyando un azúcar saludable dentro del rango
+      normal, energía estable todo el día y protección antioxidante") **junto con el
+      nombre de la marca de referencia, "Noverly", que quedó en el texto publicado**.
+      Agrava el caso que la sección tiene `emitir_schema: true`: las cinco preguntas se
+      publican además como datos estructurados `FAQPage`, o sea que los claims van al
+      índice de Google en formato declarado por la marca. La FAQ de cierre de la misma
+      página (`faq`) ya está reescrita y sirve de modelo. Reescribir con preguntas de
+      compra, o vaciar la sección desde el editor.
 - [ ] **El sello "Cliente verificado"** de `ss_glow_testimonial_3jmxKc` (D-032). Decir
       verificado sin poder probar la compra es Res. SC 270/2020 por sí solo, aparte de lo
       que diga el texto. Destildar `verificado` en cada reseña que no tenga pedido detrás,

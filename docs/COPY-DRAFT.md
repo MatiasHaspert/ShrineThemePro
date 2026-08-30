@@ -299,8 +299,8 @@ rótulo aprobado y del certificado.
 
 | # | Dato | Dónde |
 |---|---|---|
-| 10 | Plazo de envío en días hábiles | banda oscura + acordeón del hero |
-| 11 | Email de contacto | banda oscura + acordeón del hero |
+| 10 | Plazo de envío en días hábiles | banda oscura + acordeón del hero + banda `Comprar acá` de la home (D-040) |
+| 11 | Email de contacto | banda oscura + acordeón del hero + banda `Comprar acá` de la home (D-040) |
 | 12 | Videos UGC reales, o posters provisorios | bloque 5 |
 | 13 | Metaobjetos de `cauce.beneficios` | bloque 10 |
 | 14 | Confirmar que se publica el COA **de cada lote** | pilares + cards |

@@ -1,0 +1,367 @@
+{% comment %}
+  CAUCE — hero con media.
+
+  Volanta, titulo con el cierre en acento, bajada, botones y un pie chico, con
+  una imagen o un loop de video al costado. Reemplaza al `rich-text` centrado de
+  la home, que no tiene bloque de imagen ni de video.
+
+  Lo que la seccion resuelve por construccion:
+
+  - La media va AL LADO del texto, nunca atras. Un video de fondo cambia de
+    luminancia cuadro a cuadro y ahi el contraste del titulo deja de poder
+    garantizarse: la tabla WCAG del bloque 0 de cauce-brand.css mide pares de
+    color fijos, no un frame promedio. Por eso no hay opcion de fondo.
+  - El poster es el LCP y es un <img> real, con eager + fetchpriority alto. El
+    <video> va arriba con preload="none" y SIN autoplay: no baja un byte hasta
+    que el JS decide arrancarlo. Sin JS queda el poster, que es la degradacion
+    correcta — el video es atmosfera, no informacion.
+  - El loop tiene control de pausa (WCAG 2.2.2): cualquier movimiento que
+    arranca solo y dura mas de 5 segundos necesita como frenarlo. El boton
+    aparece recien cuando el video efectivamente reproduce.
+  - assets/cauce.js ademas no arranca nada si el visitante pidio menos
+    movimiento (prefers-reduced-motion) o esta en ahorro de datos.
+
+  ADVERTENCIA DE CLAIMS (Disp. ANMAT 4980/05 · CAA art. 1381). El titular de un
+  hero es la linea mas leida del sitio y la mas facil de convertir en promesa.
+  No puede prometer resultados, plazos ni mejoras de salud, ni sugerirlos con la
+  imagen: una escena no representacional no salva un titulo que promete. El
+  texto vive entero en templates/*.json — la regla 1 de docs/CLAIMS-AUDIT.md
+  pide que todo claim se pueda listar con un grep. No escribas copy aca adentro.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_hay = false
+  if section.settings.titulo != blank or section.settings.bajada != blank
+    assign cauce_hay = true
+  endif
+
+  assign cauce_con_media = true
+  if section.settings.posicion_media == 'sin'
+    assign cauce_con_media = false
+  endif
+
+  comment
+    El poster sale de la imagen cargada a mano y, si no hay, del cuadro de
+    preview del propio video. Asi se puede subir solo el video y que igual haya
+    algo pintado en el primer frame de la pagina.
+  endcomment
+  assign cauce_poster = section.settings.imagen
+  if cauce_poster == blank and section.settings.video != blank
+    assign cauce_poster = section.settings.video.preview_image
+  endif
+
+  assign cauce_loading = 'lazy'
+  assign cauce_fetch = 'auto'
+  if section.settings.carga_prioritaria
+    assign cauce_loading = 'eager'
+    assign cauce_fetch = 'high'
+  endif
+
+  comment
+    Si el campo de la seccion esta vacio se cae al alt cargado en Shopify.
+    Pasarle un string vacio a image_tag escribiria alt="" y marcaria la escena
+    como decorativa, que no es lo que es: es la unica imagen del hero.
+  endcomment
+  assign cauce_alt = section.settings.alt | default: cauce_poster.alt
+
+  comment
+    El `sizes` se arma aca por dos motivos, los mismos de cauce-dolor (D-033).
+
+    1. No puede usar var(): el atributo sizes lo parsea el HTML, no el CSS, y
+       ahi una custom property no resuelve. El browser descarta el media query
+       entero y baja siempre la variante mas grande del srcset.
+    2. Va todo en px y ningun rem. Dentro de sizes las unidades relativas se
+       resuelven contra el font-size INICIAL (16px), no contra el root, que aca
+       es 10px por el 62.5% de theme.liquid.
+
+    Los numeros son el padding real de .page-width (15px en mobile, 50px desde
+    750px) y el gap entre columnas, que es --cauce-aire-l (64px). El corte de
+    dos columnas es 990px, igual que en cauce-dolor: a 768 la columna de texto
+    queda en 32 caracteres por linea y un titulo h0 no entra.
+  endcomment
+  assign cauce_tope = section.settings.ancho_maximo
+  assign cauce_util = cauce_tope | minus: 100
+  assign cauce_col = cauce_util | minus: 64 | divided_by: 2
+  assign cauce_sizes = '(min-width: ' | append: cauce_tope | append: 'px) ' | append: cauce_col | append: 'px, (min-width: 990px) calc((100vw - 164px) / 2), (min-width: 750px) calc(100vw - 100px), calc(100vw - 30px)'
+-%}
+
+{%- if cauce_hay -%}
+  <div class="cauce-hero color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width cauce-hero__inner cauce-hero__inner--{{ section.settings.posicion_media }} cauce-hero__inner--mobile-{{ section.settings.orden_mobile }}"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-hero-ancho: {{ section.settings.ancho_maximo }}px; --cauce-hero-ratio: {{ section.settings.relacion }};"
+    >
+      {%- comment -%}
+        El texto va PRIMERO en el DOM aunque en desktop la media quede a la
+        izquierda. El reordenamiento es solo visual (order en CSS) porque la
+        escena es atmosfera: no se pierde nada leyendola despues. Al reves si se
+        perderia — en mobile el titular tiene que ser lo primero del viewport.
+      {%- endcomment -%}
+      <div class="cauce-hero__cuerpo">
+        {%- if section.settings.volanta != blank -%}
+          <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.titulo != blank -%}
+          {%- comment -%}
+            El cierre en acento es un setting aparte y no un color picker dentro
+            de un richtext: asi el hex no se puede elegir mal y el par
+            claro/oscuro lo resuelve --cauce-acento. Ver D-031 y D-033.
+          {%- endcomment -%}
+          {%- if section.settings.titulo_principal -%}
+            <h1 class="cauce-hero__titulo {{ section.settings.heading_size }}">
+              {{- section.settings.titulo -}}
+              {%- if section.settings.titulo_acento != blank -%}
+                <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+              {%- endif -%}
+            </h1>
+          {%- else -%}
+            <h2 class="cauce-hero__titulo {{ section.settings.heading_size }}">
+              {{- section.settings.titulo -}}
+              {%- if section.settings.titulo_acento != blank -%}
+                <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if section.settings.bajada != blank -%}
+          <div class="cauce-hero__bajada rte">{{ section.settings.bajada }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.boton_texto != blank or section.settings.boton2_texto != blank -%}
+          <div class="cauce-hero__botones">
+            {%- if section.settings.boton_texto != blank and section.settings.boton_link != blank -%}
+              <a class="cauce-hero__cta button" href="{{ section.settings.boton_link }}">
+                {{- section.settings.boton_texto -}}
+              </a>
+            {%- endif -%}
+
+            {%- if section.settings.boton2_texto != blank and section.settings.boton2_link != blank -%}
+              <a class="cauce-hero__cta button button--secondary" href="{{ section.settings.boton2_link }}">
+                {{- section.settings.boton2_texto -}}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.pie != blank -%}
+          <div class="cauce-hero__pie rte">{{ section.settings.pie }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if cauce_con_media -%}
+        <figure class="cauce-hero__media">
+          <cauce-hero class="cauce-hero__marco">
+            {%- if cauce_poster != blank -%}
+              {{
+                cauce_poster
+                | image_url: width: 1600
+                | image_tag:
+                  loading: cauce_loading,
+                  fetchpriority: cauce_fetch,
+                  widths: '480, 720, 960, 1200, 1600',
+                  sizes: cauce_sizes,
+                  class: 'cauce-hero__imagen',
+                  alt: cauce_alt
+              }}
+            {%- else -%}
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'cauce-hero__imagen placeholder-svg placeholder' }}
+            {%- endif -%}
+
+            {%- if section.settings.video != blank -%}
+              {%- comment -%}
+                Sin atributo poster a proposito: el <img> de arriba ya es el
+                poster. Ponerlo tambien aca seria una segunda descarga de la
+                misma foto. El video entra con opacity 0 y recien aparece
+                cuando dispara 'playing', asi no se ve un rectangulo negro.
+
+                aria-hidden porque duplica lo que el <img> ya describe. El boton
+                de pausa NO se esconde: el movimiento es decorativo, pero el
+                control para frenarlo tiene que existir igual (WCAG 2.2.2).
+              {%- endcomment -%}
+              <video
+                class="cauce-hero__video"
+                preload="none"
+                playsinline
+                muted
+                loop
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                {%- for cauce_src in section.settings.video.sources -%}
+                  {%- if cauce_src.format == 'mp4' -%}
+                    <source src="{{ cauce_src.url }}" type="{{ cauce_src.mime_type }}">
+                  {%- endif -%}
+                {%- endfor -%}
+              </video>
+
+              <button
+                type="button"
+                class="cauce-hero__pausa"
+                hidden
+                aria-label="{{ 'cauce.a11y.pausar_video' | t }}"
+                data-play="{{ 'cauce.a11y.reproducir_video' | t | escape }}"
+                data-pause="{{ 'cauce.a11y.pausar_video' | t | escape }}"
+              >
+                <span class="cauce-hero__pausa-icono cauce-hero__pausa-icono--pausar">
+                  {%- render 'icon-pause' -%}
+                </span>
+                <span class="cauce-hero__pausa-icono cauce-hero__pausa-icono--reproducir">
+                  {%- render 'icon-play' -%}
+                </span>
+              </button>
+            {%- endif -%}
+          </cauce-hero>
+        </figure>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Hero",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Hero con imagen o loop de video al costado. El titulo es la linea mas expuesta del sitio: no puede prometer resultados, plazos ni mejoras de salud (Disp. ANMAT 4980/05). La escena tampoco puede sugerirlo — sin laboratorios, sin batas, sin manos, sin medidores, sin antes y despues."
+    },
+
+    { "type": "header", "content": "Media" },
+    {
+      "type": "image_picker",
+      "id": "imagen",
+      "label": "Imagen",
+      "info": "Es el LCP de la pagina. Si tambien cargas un video, esta imagen es su poster."
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Texto alternativo",
+      "info": "Describi la escena. Si lo dejas vacio se usa el alt cargado en Shopify."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Loop de video",
+      "info": "Opcional. Corto, sin audio y liviano (apunta a menos de 1,5 MB): se descarga despues del poster, pero se descarga. No arranca si el visitante pidio menos movimiento o esta en ahorro de datos."
+    },
+    {
+      "type": "select",
+      "id": "posicion_media",
+      "label": "Posicion en desktop",
+      "options": [
+        { "value": "derecha", "label": "A la derecha" },
+        { "value": "izquierda", "label": "A la izquierda" },
+        { "value": "sin", "label": "Sin media" }
+      ],
+      "default": "derecha"
+    },
+    {
+      "type": "select",
+      "id": "orden_mobile",
+      "label": "Orden en mobile",
+      "options": [
+        { "value": "texto", "label": "Texto arriba" },
+        { "value": "media", "label": "Media arriba" }
+      ],
+      "default": "texto",
+      "info": "Con «texto arriba» el titular y el boton entran en la primera pantalla del telefono. Si elegis «media arriba», apaga la carga prioritaria solo si la seccion no es la primera de la pagina."
+    },
+    {
+      "type": "select",
+      "id": "relacion",
+      "label": "Relacion de aspecto",
+      "options": [
+        { "value": "auto", "label": "La de la imagen" },
+        { "value": "1 / 1", "label": "1:1 cuadrada" },
+        { "value": "4 / 5", "label": "4:5 vertical" },
+        { "value": "3 / 2", "label": "3:2" },
+        { "value": "16 / 9", "label": "16:9" }
+      ],
+      "default": "1 / 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "carga_prioritaria",
+      "label": "Cargar la imagen con prioridad",
+      "info": "Encendido en un hero, que es lo normal: la imagen es candidata a LCP. Apagalo si la seccion no es la primera de la pagina.",
+      "default": true
+    },
+
+    { "type": "header", "content": "Texto" },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo" },
+    {
+      "type": "inline_richtext",
+      "id": "titulo_acento",
+      "label": "Cierre del titulo en acento",
+      "info": "Se agrega al final del titulo, en el color de acento. Vacio = titulo de un solo color."
+    },
+    {
+      "type": "checkbox",
+      "id": "titulo_principal",
+      "label": "Es el titulo principal de la pagina (h1)",
+      "info": "En la home dejalo APAGADO: el tema ya usa el logo del encabezado como h1. Encendelo en paginas donde no haya otro h1.",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h0"
+    },
+    { "type": "richtext", "id": "bajada", "label": "Bajada" },
+    {
+      "type": "richtext",
+      "id": "pie",
+      "label": "Texto al pie",
+      "info": "Debajo de los botones. Sirve para las condiciones de compra — envio, arrepentimiento — no para argumentar."
+    },
+
+    { "type": "header", "content": "Botones" },
+    { "type": "text", "id": "boton_texto", "label": "Boton principal", "info": "Vacio = sin boton." },
+    { "type": "url", "id": "boton_link", "label": "Enlace del principal" },
+    { "type": "text", "id": "boton2_texto", "label": "Boton secundario", "info": "Vacio = un solo boton." },
+    { "type": "url", "id": "boton2_link", "label": "Enlace del secundario" },
+
+    { "type": "header", "content": "Presentacion" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Sedimento" },
+        { "value": "background-2", "label": "Sedimento 2" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "ancho_maximo",
+      "min": 720,
+      "max": 1400,
+      "step": 40,
+      "unit": "px",
+      "label": "Ancho del bloque",
+      "default": 1200
+    },
+
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "presets": [
+    { "name": "CAUCE · Hero" }
+  ]
+}
+{% endschema %}

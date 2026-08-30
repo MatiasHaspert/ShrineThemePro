@@ -1093,3 +1093,241 @@ cargados siguen la convención de D-014: son datos que no tengo, no datos que in
 encuesta no existe, la versión honesta de este bloque son las cifras que sí se pueden probar
 —600 mg por cápsula, 30 días de frasco, los días de garantía— que ocupan el mismo lugar, se
 ven igual de bien y no dependen de nadie.
+
+---
+
+## D-038 · 2026-08-28 · La home vende el SKU: `featured-product` y el CTA a la landing
+
+**Decisión.** Dos cambios en `templates/index.json`. La sección `producto` pasa de
+`featured-collection` a `featured-product` apuntada al único SKU
+(`acido-r-alfa-lipoico-capsulas-de-600-mg-en-forma-r-pura`), con bloques título + precio +
+botón. Y el CTA del hero deja de apuntar a `/collections/all` para ir directo a la landing.
+
+**El `featured-collection` no estaba mal configurado: estaba sin configurar.** No tenía la
+clave `collection`, así que Shopify caía al onboarding y la home mostraba "Example product
+title" con imágenes fantasma. Encima estaba en `columns_desktop: 3` con `products_to_show: 4`
+para un catálogo de un producto: una card sola en una grilla de tres. Para un solo SKU la
+grilla es la primitiva equivocada — no hay nada que grillar.
+
+**El precio se muestra en la home, el botón de compra no.** El bloque lleva `title`, `price` y
+`button`, no `buy_buttons`. Esconder el precio genera fricción y pre-califica mal, así que se
+muestra; pero el ATC no va, porque el argumento de la marca —el COA, la composición, los 10
+días— vive entero en la landing. Un ATC en la home deja comprar sin haber visto una sola
+prueba, que es exactamente lo contrario de lo que la marca dice ser. El botón dice "Comprar" y
+lleva a la PDP: es la convención de cualquier card de producto y el destino sí es donde se
+compra.
+
+**El `price` copia los settings de la landing, no los defaults.** `price_color: text` y
+`displayed_badge: none`. El default del bloque es `accent-1`, que bajo los tokens de marca es
+ÓXIDO: un precio en el color del acento compite con el botón, y D-016 ya fijó que el acento en
+un hero es un solo elemento. `mobile_media_corner_radius` baja de 12 a 2, que es el
+`card_corner_radius` global.
+
+**El `?view=cauce-landing` es deuda anotada, no una decisión de arquitectura.** El link es
+`/products/<handle>?view=cauce-landing` porque R7 de `CLAIMS-AUDIT.md` §5 sigue abierto: el
+producto figura con "Producto predeterminado" en el admin, así que un link limpio caería en
+`product.json` y no en la landing. El día que se asigne la plantilla, el parámetro sale y el
+link queda `/products/<handle>`. Con la plantilla asignada el parámetro es redundante pero
+inofensivo, así que el orden entre las dos cosas no importa.
+
+**Riesgo conocido del parámetro:** el picker de URL del editor de temas puede normalizar el
+valor si alguien abre la sección y vuelve a guardar, y ahí el `?view=` se pierde en silencio.
+Es una razón más para cerrar R7 en vez de convivir con el workaround.
+
+---
+
+## D-039 · 2026-08-29 · Hero propio con media al costado; la home deja el `rich-text`
+
+**Decisión.** Entra `sections/cauce-hero.liquid` — volanta, título con cierre en acento,
+bajada, hasta dos botones y un pie chico, con una imagen o un loop de video al costado — y la
+sección `hero` de `templates/index.json` deja de ser `rich-text` para instanciarla. Suma el
+bloque 15 de `assets/cauce-brand.css` y un tercer custom element, `<cauce-hero>`, en
+`assets/cauce.js`. El copy es exactamente el que ya tenía el `rich-text`: no entra ni una
+línea nueva.
+
+**Alternativa descartada: agregarle media al `rich-text` de Shrine.** La sección no tiene
+bloque de imagen ni de video. Los únicos campos de media son `custom_image_background` y
+`custom_mobile_image_background`, y los dos se activan sólo con `color_scheme: custom`, que
+obliga a cargar hexes a mano en el JSON del template. Eso choca de frente con D-002 y D-031.
+
+**La media va al costado, nunca de fondo — y no hay opción de fondo.** Un video cambia de
+luminancia cuadro a cuadro: la tabla de contraste del bloque 0 de `cauce-brand.css` mide pares
+de color fijos, no un frame promedio. Sobre un fondo en movimiento no se puede afirmar que el
+titular cumple 1.4.3; habría que medirlo frame por frame o taparlo con un velo que arruina la
+imagen. Al costado, el texto se apoya siempre sobre un `color_scheme` ya medido.
+
+**El poster es el LCP y el video no compite con él.** El `<img>` va con `eager` +
+`fetchpriority="high"` y es el que define la altura del marco. El `<video>` va encima en
+`position: absolute`, con `preload="none"` y **sin** `autoplay`: no baja un byte hasta que
+`<cauce-hero>` decide arrancarlo, y aparece por opacidad recién en el evento `playing`, así el
+layout no salta ni se ve un rectángulo negro. Sin JS queda el poster, que es la degradación
+correcta porque el video es atmósfera y no información. Tampoco lleva atributo `poster`: el
+`<img>` de abajo ya lo es, y ponerlo dos veces serían dos descargas de la misma foto.
+
+**Y no siempre arranca.** `<cauce-hero>` no reproduce nada si el visitante pidió
+`prefers-reduced-motion`, si `navigator.connection.saveData` está prendido o si la conexión es
+2g. El `matchMedia` queda escuchando: si alguien activa "reducir movimiento" con la página
+abierta, el loop frena.
+
+**El botón de pausa no es opcional (WCAG 2.2.2).** Todo movimiento que arranca solo y dura más
+de cinco segundos necesita un control para frenarlo. Aparece recién cuando el video
+efectivamente reproduce — hasta ahí lo esconde el `hidden` del HTML — y una pausa a mano gana
+siempre: el `IntersectionObserver` no vuelve a arrancar lo que el visitante frenó. El chip va
+con fondo sólido y no translúcido porque se apoya sobre un color que cambia cuadro a cuadro, y
+es la única forma de garantizar 1.4.11.
+
+**El texto va primero en el DOM; el orden en mobile es un setting.** En desktop la media puede
+ir a la izquierda, pero eso se resuelve con `order` en CSS: la escena es atmósfera y no se
+pierde nada leyéndola después. Al revés sí se perdería — en un teléfono una imagen 1:1 arriba
+del titular lo empuja fuera de la primera pantalla, y al botón con él. El default es "texto
+arriba" y `orden_mobile` deja invertirlo. La regla de `order` está acotada a
+`max-width: 989px` a propósito: sin eso se filtraría a la grilla de desktop y mandaría la media
+a la columna izquierda aunque el setting diga derecha.
+
+**El título de la home es `h2`, no `h1`.** El encabezado del tema ya envuelve el logo en `<h1>`
+cuando `request.page_type == 'index'`, así que un `h1` acá sería el segundo de la página. El
+setting `titulo_principal` existe para plantillas donde no haya otro `h1` y en la home queda
+apagado. Al margen: la home nunca tuvo un `h1` de contenido — el `rich-text` de Shrine
+renderiza `h2` —, con lo cual esto no cambia lo que había.
+
+**Sin cierre en acento en la home.** `titulo_acento` existe en el schema, pero en `index.json`
+queda vacío: el único ÓXIDO de la pantalla es el botón. Es D-016 aplicado a la home — si el
+acento se reparte entre el título y el CTA, no señala nada.
+
+**La imagen todavía no existe y eso se ve.** La sección queda instanciada con
+`posicion_media: derecha` y sin imagen, así que renderiza `placeholder_svg_tag` igual que las
+secciones nativas. Es deliberado: el hueco aparece en el editor y en la home y no se puede
+olvidar. Cuando esté el loop, se carga desde el editor sin tocar código. La escena tiene que
+respetar la regla de imagen del proyecto — atmósfera, nunca evidencia: sin laboratorios, sin
+batas, sin manos, sin medidores, sin antes y después, y sin packshots generados del frasco,
+porque la foto del producto es parte de la oferta (Ley 24.240 art. 8).
+
+---
+
+## D-040 · 2026-08-29 · Banda de condiciones de compra en la home, reusando `icon-bar`
+
+**Decisión.** Entra la sección `banda` en `templates/index.json`, entre `producto` y
+`manifiesto`: cuatro ítems de condiciones de compra — envío, arrepentimiento, medio de pago y
+contacto — bajo el título **Comprar acá**. Es un `icon-bar`, no una sección nueva, y el copy
+es palabra por palabra el de la banda homónima de `product.cauce-landing.json`.
+
+**Sin sección propia, a diferencia de D-033 y D-039.** Las secciones `cauce-*` se escribieron
+cuando lo nativo no alcanzaba: `multicolumn` no daba una lista de una línea con marca al
+costado, `rich-text` no tiene bloque de media. Acá `icon-bar` da exactamente lo que hace falta
+—ícono, título, texto, columnas, esquema de color— y sus íconos ya son SVG inline desde D-029,
+así que no hay nada que ganar duplicando código. La regla que queda escrita: sección propia
+sólo cuando lo nativo no llega, nunca por prolijidad.
+
+**El copy se repite a propósito.** La landing ya dice estas cuatro cosas con estas mismas
+palabras. Reescribirlas para la home habría abierto cuatro claims nuevos que auditar, y peor:
+dos páginas prometiendo lo mismo con matices distintos es exactamente lo que un cliente lee
+como letra chica. Repetido y verbatim, además, no cuesta nada de mantenimiento.
+
+**No repite lo que ya dicen los pilares.** `pilares` argumenta el producto — isómero R, 600 mg,
+laboratorio externo, producción nacional. La banda argumenta la compra. Cero solapamiento: son
+las dos preguntas distintas que se hace alguien parado frente al precio.
+
+**SEDIMENTO y no TINTA, que es como está en la landing.** En la landing la banda es la única
+sección oscura de la página. En la home, `manifiesto` ya es TINTA a ancho completo: una banda
+oscura pegada arriba las funde en un solo bloque negro. Con SEDIMENTO la home queda con un
+degradé de peso hacia el cierre —blanco, blanco, blanco, sedimento, tinta— y el manifiesto
+sigue siendo el único remate oscuro.
+
+**Dos columnas horizontales, no cuatro verticales.** Es el mismo `icon-bar` que `pilares`, tres
+secciones más arriba, así que si copiaba también el layout la home mostraba dos grillas
+idénticas de cuatro columnas. Con `columns_desktop: 2` e `icon_layout: horizontal` la banda se
+lee distinto sin una línea de CSS nueva, y de paso el ícono al costado del texto es el formato
+natural de una condición de compra.
+
+**Sin slider en mobile, y eso no es un detalle de estilo.** `pilares` usa `slider_mobile: true`
+con puntos. Acá va apilado: una reversión de riesgo que exige deslizar para descubrirse no
+revierte nada, porque la objeción que frena la compra puede ser justo la que quedó fuera de
+pantalla. Cuatro ítems de una línea apilados son unos pocos centímetros de scroll.
+
+**No se copian los hexes que arrastra el editor.** La banda de la landing lleva
+`title_highlight_color` y seis `custom_*` de color guardados por el theme editor. Ninguno entra
+acá: son `color_scheme: custom`, que no usamos, y D-002 y D-031 prohíben hexes en el JSON de
+los templates. El `title_highlight_color` además es inerte — el bloque 3 de `cauce-brand.css`
+lo pisa con `--hightlight-color: var(--cauce-acento) !important`, y un `!important` de hoja de
+estilos le gana a un inline sin `!important`.
+
+**Dos `[[PENDIENTE]]` heredados, no nuevos.** `plazo_envio` y `email_contacto` ya eran los
+pendientes 10 y 11 de `COPY-DRAFT.md` §7; ahora aparecen también en la home y la tabla lo
+anota. Salen los dos con `grep -rn "PENDIENTE" templates/`, que es justo para lo que existe la
+convención de D-014.
+
+---
+
+## D-041 · 2026-08-29 · Cierre de la home: CTA en el manifiesto y FAQ de tres objeciones
+
+**Decisión.** Se completan los dos últimos puntos del plan de la home. El `manifiesto` suma un
+bloque `button` con el mismo destino que el resto de la página, y entra la sección `faq`
+(`cauce-faq`) entre `banda` y `manifiesto` con tres preguntas. La home queda en seis secciones:
+`hero`, `pilares`, `producto`, `banda`, `faq`, `manifiesto`.
+
+**Ni una línea de copy nueva, salvo una pregunta.** Las tres respuestas son texto literal de
+`product.cauce-landing.json`: la primera es la columna "Por qué la forma R" de `explicacion`, y
+la segunda y la tercera son las preguntas `q3` y `q2` de la FAQ de cierre, que son de las pocas
+partes de la landing ya reescritas y auditadas. Lo único redactado acá es el enunciado de la
+primera pregunta, y es deliberadamente composicional: **en qué se diferencia**, no para qué
+sirve. El encabezado de `cauce-faq` lo dice de frente — una pregunta del tipo "sirve para X"
+convierte la sección entera en claim terapéutico.
+
+**Las tres objeciones son las de alguien parado en la home, no en la landing.** Por qué esta
+molécula y no cualquier ALA; cómo se verifica que la etiqueta dice la verdad; qué pasa si me
+arrepiento. La cuarta candidata natural —cómo se toma— queda afuera a propósito: la posología
+tiene que ser transcripción del rótulo aprobado y vive en los metafields de `cauce-tabs`, no en
+una FAQ escrita por marketing.
+
+**`emitir_schema` en false, al revés que en la landing.** Dos de las tres preguntas son las
+mismas que la landing ya publica como `FAQPage`. Emitirlas en dos URLs duplica la misma entidad
+de datos estructurados sin agregar nada; la landing es la página que tiene que ser dueña de ese
+marcado. El HTML es idéntico igual — lo único que cambia es el JSON-LD.
+
+**`producto` queda vacío y eso es una elección, no un olvido.** Con el campo vacío la sección
+usa `product`, que en la home es nil, así que la fuente son los bloques. Si se le asignara el
+SKU, el día que se cargue el metafield `cauce.faq` la home cambiaría sola a las preguntas del
+metafield. Acá se quieren exactamente estas tres, en este orden.
+
+**SEDIMENTO otra vez, pegada a la banda.** `banda` y `faq` comparten fondo y se leen como una
+sola zona de "resolver dudas": condiciones de compra arriba, objeciones abajo. Para que no
+quede una costura en el medio, el `padding_bottom` de la banda baja de 56 a 40 y la FAQ arranca
+en 24. La home queda con el degradé de peso que fijó D-040 —tres bloques en blanco, dos en
+sedimento, uno en tinta— con el manifiesto como único remate oscuro.
+
+**El CTA de cierre repite etiqueta y destino, no los varía.** "Ver la fórmula", igual que el
+hero. Tres botones en la página: dos de descubrimiento que abren y cierran, y el "Comprar" del
+bloque de producto en el medio. Cambiarle las palabras al de cierre sonaría a una oferta
+distinta cuando es la misma. Sobre TINTA el botón resuelve a ÓXIDO CLARO con etiqueta CAUCE
+(4.27:1, AA para componentes), que es lo que ya hace el token contextual del bloque 0: no hubo
+que tocar nada.
+
+**Dos bloqueantes nuevos en `CLAIMS-AUDIT.md` §6, encontrados de paso.** Buscando copy auditado
+para reusar aparecieron dos lugares de la landing que el checklist no listaba: los cuatro
+`collapsible_tab` de `main-product` y la FAQ de entrada `cauce_faq_nNHY4y`. Los dos son copy de
+referencia sin reescribir, con patología con nombre, plazos de resultado, comparación con
+medicamentos de venta bajo receta y el nombre de la marca de referencia todavía en el texto. La
+FAQ de entrada además tiene `emitir_schema: true`, así que publica esos claims como datos
+estructurados. Quedan anotados con el mismo formato que los otros bloqueantes. Nada de esto
+toca la home ni se modificó en este cambio.
+
+---
+
+## D-042 · 2026-08-29 · R7 cerrado: sale el `?view=cauce-landing` de los tres CTA
+
+**Decisión.** Con la plantilla `cauce-landing` ya asignada al producto en el admin, los tres
+CTA de la home dejan el parámetro y quedan en `/products/<handle>` limpio: el del `hero`, el
+del bloque `producto` y el de cierre del `manifiesto`. R7 queda marcado como cerrado en
+`CLAIMS-AUDIT.md` §5 y en el checklist de §6.
+
+**Es la deuda que D-038 dejó anotada, cobrada.** El parámetro existía sólo porque el producto
+figuraba con "Producto predeterminado" y un link limpio habría caído en `product.json` en vez
+de la landing. Ese motivo ya no existe. Sacarlo importa por lo que D-038 advertía: el picker de
+URL del editor de temas puede normalizar el valor si alguien abre la sección y vuelve a
+guardar, y ahí el `?view=` se pierde en silencio y el link se rompe sin que nadie lo note. Un
+link sin parámetro no tiene esa clase de falla.
+
+**Si alguna vez hace falta volver atrás**, el parámetro sigue funcionando: `?view=` es un
+mecanismo nativo de Shopify y es redundante-pero-inofensivo mientras la plantilla esté
+asignada. Lo que no conviene es dejarlo puesto de forma permanente "por las dudas", porque
+esconde el estado real de la configuración del producto.

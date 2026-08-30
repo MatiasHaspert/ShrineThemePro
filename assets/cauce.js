@@ -1,6 +1,6 @@
 /*
   CAUCE — comportamiento de las secciones cauce-*.
-  Vanilla, sin dependencias, dos custom elements. Se carga con defer.
+  Vanilla, sin dependencias, tres custom elements. Se carga con defer.
 
   Todo lo que se puede resolver en CSS o con HTML nativo esta resuelto ahi:
   los acordeones son <details>, los carruseles son scroll-snap. Este archivo
@@ -158,6 +158,108 @@
     }
   }
 
+  /* ----------------------------------------------------------------------
+     <cauce-hero> — loop de video del hero.
+
+     El <img> ya esta pintado y es el LCP; el video es atmosfera que se suma
+     despues. Por eso nada arranca solo: el video sale con preload="none" y sin
+     autoplay, y es este elemento el que decide si vale la pena bajarlo.
+
+     No lo baja si el visitante pidio menos movimiento, si esta en ahorro de
+     datos o si la conexion es 2g. Sin JS tampoco: queda el poster, que es la
+     degradacion correcta porque el video no aporta informacion.
+
+     El boton de pausa existe por WCAG 2.2.2 y aparece recien cuando el video
+     efectivamente reproduce. Una pausa a mano gana siempre: el observer no
+     vuelve a arrancar lo que el visitante freno.
+     -------------------------------------------------------------------- */
+  class CauceHero extends HTMLElement {
+    connectedCallback() {
+      this.video = this.querySelector('.cauce-hero__video');
+      if (!this.video) return;
+
+      this.pausadoPorUsuario = false;
+      this.boton = this.querySelector('.cauce-hero__pausa');
+      if (this.boton) this.boton.addEventListener('click', this.toggle.bind(this));
+
+      this.video.addEventListener('playing', this.sync.bind(this));
+      this.video.addEventListener('pause', this.sync.bind(this));
+
+      if (this.datosCaros()) return;
+
+      // matchMedia con listener y no un chequeo unico: si alguien activa
+      // "reducir movimiento" con la pagina abierta, el loop tiene que frenar.
+      this.mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      this.onMq = function () {
+        if (this.mq.matches) this.video.pause();
+      }.bind(this);
+      if (this.mq.addEventListener) this.mq.addEventListener('change', this.onMq);
+      if (this.mq.matches) return;
+
+      if (!('IntersectionObserver' in window)) {
+        this.arrancar();
+        return;
+      }
+
+      this.observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(
+            function (entry) {
+              if (entry.isIntersecting) this.arrancar();
+              else if (!this.video.paused) this.video.pause();
+            }.bind(this)
+          );
+        }.bind(this),
+        { threshold: 0.2 }
+      );
+      this.observer.observe(this.video);
+    }
+
+    disconnectedCallback() {
+      if (this.observer) this.observer.disconnect();
+      if (this.mq && this.mq.removeEventListener) this.mq.removeEventListener('change', this.onMq);
+    }
+
+    // navigator.connection no existe en Safari. Sin el dato se asume que se
+    // puede: el loop ya es chico y va detras del poster en la cola de descarga.
+    datosCaros() {
+      const con = navigator.connection;
+      if (!con) return false;
+      return con.saveData === true || /(^|-)2g$/.test(con.effectiveType || '');
+    }
+
+    arrancar() {
+      if (this.pausadoPorUsuario) return;
+      if (this.video.preload === 'none') this.video.preload = 'auto';
+      // play() devuelve una promesa que rechaza si el navegador lo bloquea (por
+      // ejemplo Low Power Mode en iOS). Sin catch queda un unhandled rejection.
+      const p = this.video.play();
+      if (p && typeof p.catch === 'function') p.catch(function () {});
+    }
+
+    toggle() {
+      if (this.video.paused) {
+        this.pausadoPorUsuario = false;
+        this.arrancar();
+      } else {
+        this.pausadoPorUsuario = true;
+        this.video.pause();
+      }
+    }
+
+    sync() {
+      const on = !this.video.paused;
+      this.classList.toggle('cauce-hero__marco--reproduciendo', on);
+      if (!this.boton) return;
+      this.boton.hidden = false;
+      this.boton.setAttribute(
+        'aria-label',
+        on ? this.boton.dataset.pause || '' : this.boton.dataset.play || ''
+      );
+    }
+  }
+
   if (!customElements.get('cauce-tabs')) customElements.define('cauce-tabs', CauceTabs);
   if (!customElements.get('cauce-ugc')) customElements.define('cauce-ugc', CauceUgc);
+  if (!customElements.get('cauce-hero')) customElements.define('cauce-hero', CauceHero);
 })();
