@@ -35,7 +35,7 @@
           "type": "text",
           "settings": {
             "heading": "Contacto",
-            "subtext": "<p>[[PENDIENTE: email_contacto]]<br>[[PENDIENTE: telefono]]<br>[[PENDIENTE: horario_de_atencion]]</p>",
+            "subtext": "<p>cauce@caucearg.com<br/>+543406461636<br/>Horarios de atención: 06:00 a 00:00</p>",
             "width_desktop": 3,
             "width_mobile": "1"
           }
@@ -53,7 +53,7 @@
         "enable_country_selector": false,
         "enable_language_selector": false,
         "payment_enable": true,
-        "enabled_payment_types": "mercadopago",
+        "enabled_payment_types": "",
         "show_policy": true,
         "branding_text": "",
         "margin_top": 0,
