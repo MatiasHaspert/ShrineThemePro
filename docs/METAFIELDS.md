@@ -53,7 +53,7 @@ shampoo de 45 usos con "dosis" 1 da 45.
 **Si falta cualquiera de los dos números, el token `[duracion]` se reemplaza por vacío
 y el renglón no se muestra.** Nunca se muestra un "0 días".
 
-El texto sale de `locales/es.default.json → cauce.pdp.duracion_dias`. La unidad de
+El texto sale de `locales/es.json → cauce.pdp.duracion_dias`. La unidad de
 tiempo no está escrita en ningún `.liquid`.
 
 ---

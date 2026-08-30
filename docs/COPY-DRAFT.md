@@ -131,7 +131,7 @@ Texto actual de **Cambios y devoluciones**:
 
 ---
 
-## 4. Textos de sistema · `locales/es.default.json → cauce.*`
+## 4. Textos de sistema · `locales/es.json → cauce.*`
 
 Estos no son copy de campaña, son textos que se repiten en toda la tienda. Están acá
 porque también hay que leerlos antes de publicar.

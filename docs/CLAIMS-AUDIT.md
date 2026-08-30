@@ -19,7 +19,7 @@ auditables:
 
 | Lugar | Qué contiene | Cómo se audita |
 |---|---|---|
-| `locales/es.default.json` → `cauce.*` | textos de sistema y legales | un archivo, un grep |
+| `locales/es.json` → `cauce.*` | textos de sistema y legales | un archivo, un grep |
 | `templates/*.json` y `sections/*-group.json` | copy de campaña por sección | `grep -rn` en `templates/` |
 | Metafields del producto (`cauce.*`) | composición, uso, análisis | admin de Shopify, por SKU |
 
@@ -331,11 +331,11 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
 grep -rn "PENDIENTE" templates/ sections/*-group.json snippets/
 
 # Los textos de sistema y legales
-python -c "import json;print(json.dumps(json.load(open('locales/es.default.json',encoding='utf-8'))['cauce'],ensure_ascii=False,indent=2))"
+python -c "import json;print(json.dumps(json.load(open('locales/es.json',encoding='utf-8'))['cauce'],ensure_ascii=False,indent=2))"
 
 # Buscar palabras prohibidas en todo el tema
 grep -rniE "cura|trata|previene|alivia|reduce el|mejora la|neuropat|glucem|diabet|gabapentin|pregabalin|dolor|ansiedad" \
-  templates/ sections/cauce-*.liquid sections/*-group.json locales/es.default.json
+  templates/ sections/cauce-*.liquid sections/*-group.json locales/es.json
 ```
 
 Resultado esperado hoy: **tres coincidencias, las tres inocuas**.
@@ -346,4 +346,4 @@ Resultado esperado hoy: **tres coincidencias, las tres inocuas**.
 | `cauce-newsletter.liquid` ×2 → "**trata**r datos personales" | Comentario de código sobre Ley 25.326, no es texto de storefront. |
 
 Cualquier cuarta coincidencia hay que mirarla. Si aparece en `templates/` o en
-`locales/es.default.json` fuera de esas tres, es un claim que se coló.
+`locales/es.json` fuera de esas tres, es un claim que se coló.

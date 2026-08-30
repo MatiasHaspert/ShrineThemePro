@@ -1331,3 +1331,67 @@ link sin parámetro no tiene esa clase de falla.
 mecanismo nativo de Shopify y es redundante-pero-inofensivo mientras la plantilla esté
 asignada. Lo que no conviene es dejarlo puesto de forma permanente "por las dudas", porque
 esconde el estado real de la configuración del producto.
+
+---
+
+## D-043 · 2026-08-30 · Los locales vuelven a `es.json`: el rename de fase-2 nunca llegó al tema
+
+**Contexto.** Apareció un `Translation missing: es.cauce.legal.suplemento` en el disclaimer de
+la PDP, dentro del editor. No era un pendiente de contenido: bajando el tema vivo y
+consultando el storefront salieron **14 claves rotas en la PDP en producción** —la leyenda de
+suplemento (×3), consulta médico (×2), botón de arrepentimiento (×2), defensa del consumidor,
+libro de quejas, precio + IVA, consentimiento del newsletter, ver política y título de medios
+de pago (×2)—. Todo el namespace `cauce.*` estaba caído, y con él la mitad de las leyendas
+obligatorias del marco argentino.
+
+**Causa raíz.** D-007 renombró `es.json` a `es.default.json` y borró los otros 50
+locales de Shrine. **Shopify nunca aplicó ese cambio.** El tema vivo sigue teniendo los 52
+archivos, con `en.default.json` como default y `es.json` para castellano; `es.default.json` no
+existe ahí. Un tema no admite dos `*.default.json`, así que el archivo del repo quedó
+rechazado en silencio: ni error en el editor, ni fallo de sync, ni nada en `theme check` —que
+audita el repo, donde el archivo sí estaba—. La tienda corre en `es`, leía `es.json`, y ese
+archivo nunca tuvo una sola clave `cauce`.
+
+Lo demás sí sincroniza: `snippets/cauce-disclaimer.liquid` del tema vivo es idéntico al del
+repo. El agujero era exclusivamente de `locales/`.
+
+**Decisión.** Se revierte la parte de D-007 que renombraba el default. La alternativa que
+D-007 había descartado —`en.default.json` de default y `es.json` de traducción— resulta ser la
+única que la plataforma acepta, y es la que el tema tuvo puesta todo este tiempo.
+
+- `locales/es.default.json` → `locales/es.json`
+- `locales/es.default.schema.json` → `locales/es.schema.json`
+- entran `locales/en.default.json` y `locales/en.default.schema.json`, los del tema vivo, con
+  el namespace `cauce` y `settings_schema.cauce` fusionados adentro.
+
+**El rename es sin pérdida, y se verificó antes de tocar nada.** Comparación hoja por hoja del
+archivo del repo contra el del tema vivo: 334 claves compartidas, **0 con valor distinto**, 0
+que existieran sólo en el vivo. El del repo era un superconjunto exacto —las 334 más 43 de
+`cauce.*` y 8 de `shopify.checkout.*`—. En los schema, lo mismo: 1069 claves compartidas, 35
+propias de `cauce` y 6 nombres de sección que habíamos acortado a propósito y se conservan.
+
+**Por qué el texto castellano también va en `en.default.json`.** El locale default es el
+fallback de toda clave que falte en el idioma activo. Poniendo `cauce.*` ahí, una leyenda legal
+no puede volver a renderizar "Translation missing" aunque mañana se publique otro idioma o
+Shopify resuelva un locale inesperado. Y no hay nada que traducir: son textos que exige la ley
+argentina —CAA art. 1381, Res. SCI 424/2020, Ley 24.240— y se publican en castellano en
+cualquier idioma que muestre la tienda.
+
+**El motivo por el que D-007 quería el default en castellano no se materializa.** El temor era
+que cualquier string que Shrine no hubiera traducido cayera en inglés. Se midió: `es.json`
+cubre **las 375 claves** de `en.default.json` y tiene 10 propias encima. Claves que hoy caigan
+al fallback inglés: **cero**. Si alguna vez aparece una, se agrega a `es.json` y listo.
+
+**Por qué no se completa el plan original borrando `en.default.json`.** Sería dejar al tema en
+vivo sin locale default para ganar una discusión de prolijidad. Además el repo no versiona los
+otros 48 archivos y los borrados de `locales/` demostraron no sincronizar, así que el resultado
+sería un tema a medio migrar. La prolijidad que sí se puede tener es que el repo llame a los
+archivos como el tema los llama.
+
+**Se conserva el banner `auto-generated` de Shopify** en los cuatro archivos. Es el que escribe
+el editor de idiomas del admin cuando alguien guarda desde ahí; tenerlo puesto evita que el
+próximo sync genere un diff de una línea contra nosotros.
+
+**Regla para adelante.** El archivo de textos es `locales/es.json`. Una clave `cauce.*` nueva
+va en `es.json` **y** en `en.default.json`. La regla 1 de `CLAIMS-AUDIT.md` no cambia: ningún
+claim se escribe en un `.liquid`.
