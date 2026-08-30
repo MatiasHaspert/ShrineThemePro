@@ -176,6 +176,8 @@
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "",
+    "cauce_razon_social": "Cauce",
+    "cauce_cuit": "20445260518",
     "cauce_rnpa": "",
     "checkout_accent_color": "#dd1d1d",
     "checkout_button_color": "#dd1d1d",

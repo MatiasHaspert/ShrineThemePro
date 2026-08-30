@@ -1342,7 +1342,7 @@
             "icon": "local_shipping",
             "filled_icon": false,
             "title": "Envío a todo el país",
-            "text": "<p>[[PENDIENTE: plazo_envio]] días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
+            "text": "<p>De 3 a 10 días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
           }
         },
         "f2": {
@@ -2056,6 +2056,7 @@
         "q5",
         "q6"
       ],
+      "disabled": true,
       "settings": {
         "volanta": "Antes de comprar",
         "titulo": "Preguntas frecuentes",
