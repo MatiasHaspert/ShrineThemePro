@@ -965,6 +965,7 @@
         "p3",
         "p4"
       ],
+      "disabled": true,
       "settings": {
         "display_id": false,
         "visibility": "always-display",
@@ -1112,6 +1113,7 @@
         "b3",
         "b4"
       ],
+      "disabled": true,
       "settings": {
         "display_id": false,
         "visibility": "always-display",
@@ -1224,6 +1226,7 @@
         "d3",
         "d4"
       ],
+      "disabled": true,
       "settings": {
         "volanta": "Ficha técnica",
         "titulo": "Los números que sí podemos publicar",
@@ -1450,6 +1453,7 @@
         "i2",
         "i3"
       ],
+      "disabled": true,
       "settings": {
         "volanta": "Letra chica, en grande",
         "titulo": "En detalle",
@@ -1477,6 +1481,7 @@
         },
         "t3": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "title": "Análisis por lote"
           }
@@ -1569,6 +1574,7 @@
         "t2",
         "t3"
       ],
+      "disabled": true,
       "settings": {
         "display_id": false,
         "visibility": "always-display",
@@ -1718,6 +1724,7 @@
         "ta2",
         "ta3"
       ],
+      "disabled": true,
       "settings": {
         "titulo": "La ficha completa",
         "heading_size": "h1",
