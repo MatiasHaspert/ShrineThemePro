@@ -70,7 +70,7 @@
           }}
         </a>
       {%- else -%}
-        <span class="cauce-pendiente">{% raw %}{{ PENDIENTE: Data Fiscal AFIP }}{% endraw %}</span>
+        {%comment%}<span class="cauce-pendiente">{% raw %}{{ }}{% endraw %}</span>{%endcomment%}
       {%- endif -%}
     </div>
 
@@ -78,7 +78,6 @@
       <p class="cauce-legal__vendedor">
         <strong>{% render 'cauce-dato-legal', valor: settings.cauce_razon_social, clave: 'razon_social' %}</strong>
         · CUIT {% render 'cauce-dato-legal', valor: settings.cauce_cuit, clave: 'cuit' %}
-        · {% render 'cauce-dato-legal', valor: settings.cauce_domicilio, clave: 'domicilio' %}
       </p>
       <p class="cauce-legal__contacto">
         {%- if settings.cauce_email != blank -%}

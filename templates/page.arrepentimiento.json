@@ -21,7 +21,7 @@
         "t": {
           "type": "text",
           "settings": {
-            "text": "<p>Si te arrepentiste de tu compra, tenés 10 días corridos desde que recibiste el pedido para pedir la devolución del importe pagado, sin costo. Es un derecho que te da la Resolución SCI 424/2020 y el artículo 34 de la Ley 24.240.</p><p>No hace falta que expliques el motivo. Completá el formulario y te respondemos con las instrucciones para devolver el producto.</p>"
+            "text": "<p>Si te arrepentiste de tu compra, tenés 10 días corridos desde que recibiste el pedido para pedir la devolución del importe pagado, sin costo. Es un derecho que te da la Resolución SCI 424/2020 y el artículo 34 de la Ley 24.240.</p><p>No hace falta que expliques el motivo. Completá el formulario y te respondemos con las instrucciones para devolver el producto.</p><p>Vas a recibir la constancia de tu solicitud por email dentro de las 24 horas.</p>"
           }
         }
       },
@@ -92,6 +92,15 @@
         "button_full_width": false,
         "color_scheme": "background-1",
         "padding_top": 0,
+        "padding_bottom": 24
+      }
+    },
+    "nota": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"page-width page-width--narrow rte\">\n  <h2>Qué pasa después</h2>\n  <ol>\n    <li>Te llega un email con la constancia de tu solicitud dentro de las 24 horas. Lo pide la Resolución SCI 424/2020.</li>\n    <li>Te escribimos con las instrucciones para devolver el producto. Los gastos de devolución corren por nuestra cuenta, como fija el artículo 34 de la Ley 24.240.</li>\n    <li>Cuando recibimos el producto te devolvemos el importe pagado. [[PENDIENTE: plazo_reembolso]]</li>\n  </ol>\n  <p>Si el formulario no te funciona, escribinos a {% render 'cauce-dato-legal', valor: settings.cauce_email, clave: 'email' %} o llamanos al {% render 'cauce-dato-legal', valor: settings.cauce_telefono, clave: 'telefono' %}. Vale igual: la solicitud queda hecha por cualquiera de los tres medios.</p>\n</div>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
         "padding_bottom": 64
       }
     }
@@ -99,6 +108,7 @@
   "order": [
     "main",
     "intro",
-    "form"
+    "form",
+    "nota"
   ]
 }
