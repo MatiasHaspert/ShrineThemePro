@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "t:sections.footer.name",
@@ -26,7 +35,7 @@
           "type": "text",
           "settings": {
             "heading": "Contacto",
-            "subtext": "<p>[[PENDIENTE: email_contacto]]<br>[[PENDIENTE: telefono]]<br>[[PENDIENTE: horario_de_atencion]]</p>",
+            "subtext": "<p>cauce@caucearg.com<br/>+543406461636<br/>Horarios de atención: 06:00 a 00:00</p>",
             "width_desktop": 3,
             "width_mobile": "1"
           }
@@ -43,17 +52,25 @@
         "show_social": true,
         "enable_country_selector": false,
         "enable_language_selector": false,
-        "payment_enable": false,
+        "payment_enable": true,
+        "enabled_payment_types": "",
         "show_policy": true,
         "branding_text": "",
         "margin_top": 0,
         "padding_top": 48,
-        "padding_bottom": 32
+        "padding_bottom": 32,
+        "custom_colors_background": "#121212",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#ffffff",
+        "custom_colors_solid_button_text": "#121212",
+        "custom_colors_outline_button": "#ffffff"
       }
     },
     "legales": {
       "type": "cauce-legal-bar",
       "settings": {
+        "url_arrepentimiento_fallback": "shopify://pages/arrepentimiento",
         "mostrar_defensa": true
       }
     }
