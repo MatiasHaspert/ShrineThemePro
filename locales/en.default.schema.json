@@ -417,6 +417,10 @@
         "telefono": {
           "label": "Teléfono de contacto"
         },
+        "horario": {
+          "label": "Horario de atención",
+          "info": "Se publica en la columna de contacto del pie. Ejemplo: 06:00 a 00:00."
+        },
         "header__legales": {
           "content": "Obligatorios de Argentina"
         },

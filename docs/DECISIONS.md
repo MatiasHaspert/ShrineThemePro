@@ -549,6 +549,11 @@ incluye el id de la seccion, que no se puede escribir en un JSON de otra seccion
 **Nota.** `branding_text` quedo vacio: el "Powered by Shrine" del pie no aporta y compite
 con la firma de la marca.
 
+**Actualizada por D-045 (2026-08-30).** `payment_enable` vuelve a `true`: el problema no era
+mostrar medios de pago en el pie, era el renderizador. Ahora la tira la dibuja
+`cauce-medios-pago`, el mismo snippet de la PDP. Pais e idioma siguen en `false` y
+`show_policy` en `true`. El esquema de color pasa de `background-2` a `inverse`.
+
 ---
 
 ## D-029 · 2026-08-23 · Todo el tema pasa a SVG inline, se elimina Material Symbols
@@ -1439,3 +1444,97 @@ sirve de nada.
 **Qué queda igual.** El número de RNPA sigue saliendo de `settings.cauce_rnpa` y su
 placeholder visible sigue apareciendo mientras esté vacío. Y la versión compacta —la del pie—
 sigue mostrando sólo la primera frase, sin la de consulta médica.
+
+---
+
+## D-045 · 2026-08-30 · El pie se cierra: una sola banda oscura, y los datos salen de los settings
+
+**Contexto.** La barra legal estaba hecha desde la fase 5 (D-004) pero el pie que va arriba
+seguía siendo el de Shrine tal cual salió de la caja: esquema `background-2`, columna de
+marca vacía, contacto escrito a mano dentro del JSON y la tira de medios de pago nativa.
+Ninguna sección `cauce-*` del cuerpo quedó así; el pie era la última pieza sin pasar por el
+sistema.
+
+**Lo que se veía.** En la home el orden de bandas era manifiesto (`inverse`, CAUCE) → pie
+(`background-2`, SEDIMENTO) → barra legal (CAUCE). Oscuro, claro, oscuro: dos pies distintos
+apilados. En la landing el problema era el opuesto —el newsletter también es `background-2`,
+así que el pie se fundía con la sección de arriba y no existía como pieza.
+
+### Las seis decisiones
+
+**1. El pie pasa a `inverse`.** `inverse` resuelve a `colors_text`, que es CAUCE, o sea
+exactamente el fondo que ya tenía la barra legal. Las dos piezas comparten fondo y se leen
+como un solo bloque de cierre, separadas por un filete claro. Se agrega el token
+`--cauce-linea-clara`, que es la regla fina del bloque 2 vista del otro lado, y se usa en las
+tres juntas del cierre.
+
+Los `custom_colors_*` de `footer-group.json` quedan como estaban: son los defaults del schema
+de Shrine, sólo se aplican con `color_scheme: custom` y hoy son inertes. Borrarlos sería un
+diff que el theme editor vuelve a escribir en el próximo guardado.
+
+**2. La columna de marca dibuja el lockup, no una imagen.** `brand_information` depende de
+`settings.brand_image`, que está vacío, y de `brand_headline` / `brand_description`, también
+vacíos: la columna renderizaba un `<div>` con nada adentro. Ahora, sin imagen cargada, cae en
+`{% render 'cauce-logo' %}` —el mismo lockup del header— en vez de quedar muda. Es coherente
+con la regla de marca: el wordmark es texto en Archivo Expanded, no un archivo que alguien
+tiene que acordarse de subir.
+
+El aire del logo se compensa con un margin negativo. `--cauce-logo-aire` es una zona de
+respeto contra otros elementos, no un margen contra el borde de la columna; sin compensar, la
+C quedaba 32px adentro y desalineada de las cabeceras de las columnas vecinas.
+
+**3. La columna de contacto lee los settings.** El email y el teléfono estaban escritos a mano
+en un `richtext` dentro de `footer-group.json`, mientras `settings.cauce_email` y
+`settings.cauce_telefono` estaban vacíos. O sea que el pie publicaba un email y la barra legal
+—que publica el mismo dato por obligación de la Ley 24.240 art. 4— imprimía
+`{{ PENDIENTE: email }}` **en todas las páginas del sitio**. Dos fuentes para el mismo dato,
+y la que faltaba era la legal.
+
+Entra un block `cauce_contacto` que lee los settings globales, con el mismo pendiente visible
+que usa la barra legal, y los tres valores se cargan en `settings_data.json`. La duplicación
+visual se mantiene a propósito —columna legible arriba, letra chica legal abajo— pero ahora
+las dos salen del mismo campo y no pueden divergir.
+
+**Alternativa descartada: sacar email y teléfono de la barra legal** para no repetirlos. Es
+justo lo que D-004 evita: la barra legal tiene que ser completa y auditable sola, sin depender
+de que arriba haya un block que nadie borró.
+
+**4. Los medios de pago se dibujan con `cauce-medios-pago`.** Esto **actualiza D-028**, que
+ponía `payment_enable: false`. El motivo de aquella decisión no era que los medios de pago no
+van en el pie, era que el block nativo renderiza con `payment_type_svg_tag` y ese filtro no
+conoce Mercado Pago, Cabal ni Naranja X (D-012). Cambiado el renderizador por el snippet que
+ya usan la PDP y el cierre, el motivo desaparece y el checkbox vuelve a `true`. El campo
+nativo `enabled_payment_types` queda sin efecto y el schema lo dice.
+
+Sobre CAUCE los tres logos propios son ilegibles: el azul #0a0080 de Mercado Pago y el violeta
+#50007f de Naranja X sobre un fondo #10262A son casi negro sobre negro. Se les pone placa
+blanca, que además es como esas marcas piden usarse. La placa va en el `<li>` y no en la
+imagen, así los SVG nativos de Shopify —que ya traen su propia tarjeta clara— quedan a la
+misma altura y la tira se lee pareja.
+
+**5. Las redes se dibujan en un solo lugar.** `footer.liquid` tiene **dos** puntos de render de
+`social-icons`: uno en el block de marca (`block.settings.show_social`) y otro en la fila de
+abajo (`section.settings.show_social`). Los dos estaban en `true`. Como no hay ninguna red
+cargada todavía, `has_social_icons` da `false` y no se veía nada; el día que se cargue la
+primera red aparecían **dos filas de íconos**. El de sección pasa a `false`: los íconos van bajo
+el lockup, que es donde los pone el layout de la columna de marca.
+
+**6. El domicilio entra a la barra legal.** El comentario de `cauce-legal-bar.liquid` lo listaba
+desde el principio entre lo que la sección cubre —es parte de la identificación del vendedor
+que exige la Ley 24.240 art. 4, igual que la razón social y el CUIT— pero el markup nunca lo
+imprimió. Ahora sale, con pendiente visible mientras `settings.cauce_domicilio` esté vacío,
+que es el estado de hoy.
+
+**Cabeceras de columna en DM Mono.** “Ayuda” y “Contacto” no son títulos de sección, son
+etiquetas: toman el lenguaje del antetítulo (`.cauce-eyebrow`) en vez del Newsreader que la
+regla global le da a todo `h2`. Blanco al 70% sobre CAUCE da 8.35:1, holgado para 1.1rem.
+
+**Se edita `footer.liquid`, que es una sección de Shrine.** Con el mismo criterio de D-030: un
+`theme pull` puede pisar los tres parches, y por eso los tres llevan comentario adentro que
+dice qué hacen y a qué decisión responden. La alternativa —un `cauce-footer.liquid` propio—
+era reescribir columnas, grilla, selectores y newsletter que ya funcionan, para no tocar tres
+lugares.
+
+**Lo que sigue faltando, y sale como pendiente visible.** El domicilio legal
+(`cauce_domicilio`), la URL y la imagen de Data Fiscal, el RNPA, y las redes sociales, que las
+carga el comercio desde Configuración del tema.

@@ -2869,6 +2869,12 @@
         "label": "t:settings_schema.cauce.settings.telefono.label"
       },
       {
+        "type": "text",
+        "id": "cauce_horario",
+        "label": "t:settings_schema.cauce.settings.horario.label",
+        "info": "t:settings_schema.cauce.settings.horario.info"
+      },
+      {
         "type": "header",
         "content": "t:settings_schema.cauce.settings.header__legales.content"
       },

@@ -59,6 +59,9 @@
   --cauce-sedimento-2: #DFDBCE;
   --cauce-linea:        rgba(16, 38, 42, 0.14);
   --cauce-linea-fuerte: rgba(16, 38, 42, 0.28);
+  /* La misma regla fina, del otro lado: sobre CAUCE. La usan el pie y la barra
+     legal, que son las dos piezas oscuras que hay que separar entre si. */
+  --cauce-linea-clara:  rgba(233, 230, 220, 0.22);
 
   /* --- Tipografia ------------------------------------------------------- */
   --cauce-font-logo:    'Archivo', var(--font-body-family, system-ui), sans-serif;
@@ -420,7 +423,7 @@ h1, h2, h3, h4,
 }
 
 .cauce-legal__disclaimer {
-  border-top: 1px solid rgba(233, 230, 220, 0.2);
+  border-top: 1px solid var(--cauce-linea-clara);
   padding: var(--cauce-aire-s) 0;
   font-size: 1.2rem;
   opacity: 0.85;
@@ -2451,4 +2454,118 @@ h1, h2, h3, h4,
 
 @media (prefers-reduced-motion: reduce) {
   .cauce-hero__video { transition: none; }
+}
+
+/* ==========================================================================
+   16. Pie de pagina
+   El pie es la seccion `footer` de Shrine + `cauce-legal-bar`, apiladas en
+   sections/footer-group.json (D-004). Con la barra legal en CAUCE y el footer
+   en un esquema claro se leian como dos pies distintos: en la home la banda
+   quedaba oscura-clara-oscura. El footer pasa a `inverse`, que resuelve a
+   colors_text = CAUCE, o sea exactamente el fondo de la barra legal, y las dos
+   piezas se leen como un solo bloque de cierre. Ver D-045.
+   ========================================================================== */
+
+/* Shrine apaga el borde superior en todo esquema que no sea background-1
+   (`.footer:not(.color-background-1) { border-top: none }`). Sobre la home eso
+   deja el manifiesto —que tambien es inverse— pegado al pie sin junta. Vuelve
+   como filete claro, que es el mismo recurso que separa las tres capas del
+   cierre. */
+.footer.color-inverse {
+  border-top: 1px solid var(--cauce-linea-clara);
+}
+
+/* Las cabeceras de columna no son titulos de seccion: son etiquetas. Toman el
+   lenguaje del antetitulo (DM Mono en versalitas) en vez del Newsreader que la
+   regla global le da a todo h2. Gana por especificidad, no por !important. */
+.footer .footer-block__heading {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: var(--cauce-aire-s);
+}
+
+/* El lockup de marca ------------------------------------------------------- */
+
+/* El aire del logo (`--cauce-logo-aire`) es una zona de respeto contra otros
+   elementos, no un margen contra el borde de la columna. Se compensa con un
+   margin negativo para que la C alinee con las cabeceras de las columnas de al
+   lado; el padding sigue existiendo, asi que la zona de respeto se mantiene. */
+.cauce-pie__lockup .cauce-logo {
+  margin: calc(var(--cauce-logo-aire) * -1);
+  margin-bottom: 0;
+}
+
+.cauce-pie__lockup {
+  margin-bottom: var(--cauce-aire-s);
+}
+
+/* Redes: el bloque de marca es el unico lugar donde se dibujan (ver D-045), y
+   van bajo el lockup, alineadas a la izquierda como el resto de la columna.
+   Shrine las centra por defecto. El margen negativo compensa el padding de
+   1.3rem que el tema le da al area de toque, que se conserva. */
+.footer .footer-block__brand-info .footer__list-social.list-social {
+  justify-content: flex-start;
+  margin-left: -1.3rem;
+  margin-top: var(--cauce-aire-xs);
+}
+
+/* Columna de contacto ------------------------------------------------------ */
+
+.cauce-pie__contacto p {
+  margin: 0 0 0.6rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+.cauce-pie__contacto a {
+  color: rgba(var(--color-foreground), 0.9);
+}
+
+.cauce-pie__contacto a:hover {
+  color: rgb(var(--color-foreground));
+}
+
+.cauce-pie__horario,
+.cauce-pie__domicilio {
+  opacity: 0.75;
+}
+
+/* Medios de pago sobre fondo oscuro ---------------------------------------- */
+
+/* Los tres logos propios (Mercado Pago, Cabal, Naranja X) son a color y estan
+   dibujados para fondo claro: el azul #0a0080 de Mercado Pago y el violeta
+   #50007f de Naranja X sobre CAUCE quedan casi negros sobre negro. Se les pone
+   una placa blanca, que es como esas marcas piden usarse. La placa va en el
+   item y no en la imagen para que los SVG nativos de Shopify —que ya traen su
+   propia tarjeta clara— queden a la misma altura y la tira se lea pareja. */
+.color-inverse .cauce-pagos__item,
+.cauce-legal .cauce-pagos__item {
+  background: var(--cauce-blanco);
+  border-radius: 4px;
+  padding: 0.5rem 0.7rem;
+}
+
+/* Dentro de la placa el chip ya no necesita su propio marco, y conserva el
+   color oscuro que le da la regla del bloque 2: adentro el fondo es blanco. */
+.color-inverse .cauce-pagos__chip,
+.cauce-legal .cauce-pagos__chip {
+  border: 0;
+  padding: 0.15em 0.2em;
+}
+
+.cauce-pie__pagos .cauce-pagos {
+  margin-top: 0;
+}
+
+/* Junta con la barra legal ------------------------------------------------- */
+
+/* Las dos piezas comparten fondo, asi que la unica separacion posible es el
+   filete. La barra legal cierra el pie: letra mas chica, SEDIMENTO en vez de
+   blanco y este filete arriba. */
+.cauce-legal {
+  border-top: 1px solid var(--cauce-linea-clara);
 }

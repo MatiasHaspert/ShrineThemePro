@@ -85,6 +85,46 @@
                     <div class="footer-block__details-content rte">
                       {{ block.settings.subtext }}
                     </div>
+                  {%- when 'cauce_contacto' -%}
+                    {%- comment -%}
+                      CAUCE: la columna de contacto lee los settings globales, no un
+                      richtext escrito a mano. La barra legal de abajo publica el mismo
+                      email y el mismo telefono por obligacion (Ley 24.240 art. 4); con
+                      dos fuentes distintas era cuestion de tiempo que dijeran cosas
+                      distintas. Un dato vacio sale como pendiente visible, igual que en
+                      la barra legal. Ver D-045.
+                    {%- endcomment -%}
+                    <div class="footer-block__details-content cauce-pie__contacto">
+                      <p>
+                        {%- if settings.cauce_email != blank -%}
+                          <a class="link link--text" href="mailto:{{ settings.cauce_email }}">
+                            {{- settings.cauce_email -}}
+                          </a>
+                        {%- else -%}
+                          {% render 'cauce-dato-legal', valor: '', clave: 'email' %}
+                        {%- endif -%}
+                      </p>
+                      <p>
+                        {%- if settings.cauce_telefono != blank -%}
+                          <a
+                            class="link link--text"
+                            href="tel:{{ settings.cauce_telefono | remove: ' ' | remove: '-' }}"
+                          >
+                            {{- settings.cauce_telefono -}}
+                          </a>
+                        {%- else -%}
+                          {% render 'cauce-dato-legal', valor: '', clave: 'telefono' %}
+                        {%- endif -%}
+                      </p>
+                      {%- if settings.cauce_horario != blank -%}
+                        <p class="cauce-pie__horario">
+                          {{- 'cauce.footer.horario' | t: horario: settings.cauce_horario -}}
+                        </p>
+                      {%- endif -%}
+                      {%- if block.settings.mostrar_domicilio and settings.cauce_domicilio != blank -%}
+                        <p class="cauce-pie__domicilio">{{ settings.cauce_domicilio }}</p>
+                      {%- endif -%}
+                    </div>
                   {%- when 'link_list' -%}
                     {%- if block.settings.menu != blank -%}
                       <ul class="footer-block__details-content list-unstyled">
@@ -119,6 +159,17 @@
                               height: brand_image_height,
                               width: settings.brand_image_width
                           }}
+                        </div>
+                      {%- else -%}
+                        {%- comment -%}
+                          CAUCE: sin imagen de marca cargada, el pie no queda mudo.
+                          El wordmark de CAUCE es texto en Archivo Expanded, no un
+                          archivo: queda nitido en cualquier densidad, hereda el color
+                          del esquema y no depende de que alguien suba un PNG desde el
+                          admin. Es el mismo lockup del header. Ver D-045 y D-031.
+                        {%- endcomment -%}
+                        <div class="cauce-pie__lockup">
+                          {% render 'cauce-logo', tamano: 'lg', descriptor: true, url: routes.root_url %}
                         </div>
                       {%- endif -%}
                       {%- if settings.brand_headline != blank -%}
@@ -424,20 +475,17 @@
       </div>
       <div class="footer__column footer__column--info">
         {%- if section.settings.payment_enable -%}
-          <div class="footer__payment">
+          {%- comment -%}
+            CAUCE: la tira de medios de pago sale de `cauce-medios-pago`, no del
+            `payment_type_svg_tag` nativo. Ese filtro conoce un set fijo de Shopify
+            que no incluye Mercado Pago, Cabal ni Naranja X —los tres que mas se
+            usan en Argentina— y si incluye medios que no operan aca. Es el mismo
+            snippet que ya usan la PDP y el cierre de la landing, asi que la tira
+            del pie no puede contradecirlas. Ver D-045 y D-012.
+          {%- endcomment -%}
+          <div class="footer__payment cauce-pie__pagos">
             <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
-            <ul class="list list-payment" role="list">
-              {% assign enabled_payment_types = shop.enabled_payment_types %}
-              {% if section.settings.enabled_payment_types != blank %}
-                {% assign enabled_payment_types = section.settings.enabled_payment_types | remove: ' ' | split: ',' %}
-              {% endif %}
-
-              {%- for type in enabled_payment_types -%}
-                <li class="list-payment__item">
-                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-                </li>
-              {%- endfor -%}
-            </ul>
+            {% render 'cauce-medios-pago', alineacion: 'center' %}
           </div>
         {%- endif -%}
       </div>
@@ -640,6 +688,58 @@
           "id": "subtext",
           "default": "<p>Share contact information, store details, and brand content with your customers.</p>",
           "label": "t:sections.footer.blocks.text.settings.subtext.label"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "range",
+          "id": "width_desktop",
+          "max": 12,
+          "min": 1,
+          "step": 1,
+          "default": 3,
+          "label": "Column desktop width"
+        },
+        {
+          "type": "select",
+          "id": "width_mobile",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            }
+          ],
+          "default": "2",
+          "label": "Column mobile width"
+        }
+      ]
+    },
+    {
+      "type": "cauce_contacto",
+      "name": "CAUCE · Contacto",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Email, teléfono y horario salen de Configuración del tema > CAUCE. Son los mismos datos que publica la barra legal: se cargan una vez y no pueden quedar distintos."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Contacto",
+          "label": "t:sections.footer.blocks.text.settings.heading.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "mostrar_domicilio",
+          "default": false,
+          "label": "Mostrar el domicilio",
+          "info": "La barra legal ya lo publica. Activalo solo si también querés verlo acá."
         },
         {
           "type": "header",
@@ -1123,10 +1223,14 @@
       "label": "t:sections.footer.settings.payment_enable.label"
     },
     {
+      "type": "paragraph",
+      "content": "CAUCE: la lista de medios se edita en Configuración del tema > CAUCE > Medios de pago, que es la misma que usan la ficha de producto y el cierre de la landing. El campo nativo de abajo quedó sin efecto: su filtro no conoce Mercado Pago, Cabal ni Naranja X."
+    },
+    {
       "type": "text",
       "id": "enabled_payment_types",
-      "label": "Custom payment icons to show",
-      "info": "List of payments you want to show, split with a comma (without spacing). Options are: afterpay, american_express, apple_pay, bitcoin, dankort, diners_club, discover, dogecoin, dwolla, facebook_pay, forbrugsforeningen, google_pay, ideal, jcb, klarna, klarna-pay-later, litecoin, maestro, master, paypal, shopify_pay, sofort, unionpay, visa"
+      "label": "Custom payment icons to show (sin efecto en CAUCE)",
+      "info": "Reemplazado por Configuración del tema > CAUCE > Medios de pago. Ver docs/DECISIONS.md D-045."
     },
     {
       "type": "header",

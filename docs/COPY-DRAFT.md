@@ -429,10 +429,12 @@ que dice explícitamente que no hace falta dar un motivo.
 | # | Dato | Dónde |
 |---|---|---|
 | 16 | Tipo de factura que emiten (A / B / C) | FAQ |
-| 17 | Horario de atención | footer |
+| ~~17~~ | ~~Horario de atención~~ — resuelto en D-045: `cauce_horario` = 06:00 a 00:00 | footer |
 | 18 | Crear la página de arrepentimiento y cargar su URL | Shopify + settings CAUCE |
 | 19 | Escribir las cuatro políticas en Configuración → Políticas | Shopify |
 | 20 | Decidir si el costo de la devolución lo paga la marca | garantía + política |
+| 21 | Domicilio legal del vendedor (Ley 24.240 art. 4) | settings CAUCE → barra legal |
+| 22 | Links de redes sociales | Configuración del tema → Redes sociales |
 
 ---
 

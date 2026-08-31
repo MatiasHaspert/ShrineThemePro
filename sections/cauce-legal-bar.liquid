@@ -79,6 +79,14 @@
         <strong>{% render 'cauce-dato-legal', valor: settings.cauce_razon_social, clave: 'razon_social' %}</strong>
         · CUIT {% render 'cauce-dato-legal', valor: settings.cauce_cuit, clave: 'cuit' %}
       </p>
+      {%- comment -%}
+        El domicilio es parte de la identificacion del vendedor que exige la Ley 24.240
+        art. 4, igual que la razon social y el CUIT. El comentario de arriba lo listaba
+        desde el principio pero el markup no lo imprimia. Ver D-045.
+      {%- endcomment -%}
+      <p class="cauce-legal__domicilio">
+        {% render 'cauce-dato-legal', valor: settings.cauce_domicilio, clave: 'domicilio' %}
+      </p>
       <p class="cauce-legal__contacto">
         {%- if settings.cauce_email != blank -%}
           <a href="mailto:{{ settings.cauce_email }}">{{ settings.cauce_email }}</a>

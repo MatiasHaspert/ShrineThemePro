@@ -493,6 +493,9 @@
       "nombre": "Cauce",
       "descriptor": "Fórmulas de uso diario"
     },
+    "footer": {
+      "horario": "Horario de atención: {{ horario }}"
+    },
     "legal": {
       "suplemento": "Este producto es un suplemento dietario. No reemplaza una alimentación variada.",
       "consulta_medico": "Consultá a tu médico.",
