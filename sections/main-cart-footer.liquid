@@ -1,103 +1,151 @@
-<div class="page-width{% if cart == empty %} is-empty{% endif %}" id="main-cart-footer" data-id="{{ section.id }}">
-  <div>
-    <div class="cart__footer">
-      {%- if settings.show_cart_note -%}
-        <cart-note class="cart__note field">
-          <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
-          <textarea
-            class="text-area field__input"
-            name="note"
-            form="cart"
-            id="Cart-note"
-            placeholder="{{ 'sections.cart.note' | t }}"
-          >{{ cart.note }}</textarea>
-        </cart-note>
-      {%- endif -%}
+{% comment %}
+  CAUCE — pie de /cart. Espejo del pie del drawer, con los mismos snippets.
 
-      <div class="cart__blocks">
-        {% for block in section.blocks %}
-          {%- case block.type -%}
-            {%- when '@app' -%}
-              {% render block %}
-            {%- when 'subtotal' -%}
-              <div class="js-contents" {{ block.shopify_attributes }}>
-                <div class="totals">
-                  <h2 class="totals__subtotal">{{ 'sections.cart.subtotal' | t }}</h2>
-                  <p class="totals__subtotal-value">{{ cart.total_price | money_with_currency }}</p>
-                </div>
+  Los tres bloques de Shrine se conservan (discount_field, subtotal, buttons) para
+  que se sigan pudiendo reordenar y apagar desde el editor. Lo que cambia es que
+  ahora dibujan las piezas CAUCE.
 
-                <div>
-                  {%- if cart.cart_level_discount_applications.size > 0 -%}
-                    <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
-                      {%- for discount in cart.cart_level_discount_applications -%}
-                        <li class="discounts__discount discounts__discount--position">
-                          {%- render 'icon-discount' -%}
-                          {{ discount.title }}
-                          (-{{ discount.total_allocated_amount | money }})
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  {%- endif -%}
-                </div>
-              </div>
-            {% when 'discount_field' %}
-              {% render 'cart-discount-field', block: block %}
-            {%- else -%}
-              <div class="cart__ctas" {{ block.shopify_attributes }}>
-                <noscript>
-                  <button type="submit" class="cart__update-button button button--secondary" form="cart">
-                    {{ 'sections.cart.update' | t }}
-                  </button>
-                </noscript>
+  El beneficio de pago va DENTRO del bloque subtotal, que es el que lleva
+  .js-contents: en /cart el re-render es por region (a diferencia del drawer, que
+  se re-renderiza entero), y CartItems.getSectionsToRender() solo reemplaza
+  '#main-cart-footer .js-contents'. Fuera de ahi el monto quedaria viejo al
+  cambiar una cantidad.
 
-                <button
-                  type="submit"
-                  id="checkout"
-                  class="cart__checkout-button button"
-                  name="checkout"
-                  {% if cart == empty %}
-                    disabled
-                  {% endif %}
-                  form="cart"
+  Los medios de pago, en cambio, no dependen del carrito: van con los botones.
+{% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div
+  class="page-width cauce-carrito cauce-carrito--pagina gradient color-{{ section.settings.color_scheme }}{% if cart == empty %} is-empty{% endif %}"
+  id="main-cart-footer"
+  data-id="{{ section.id }}"
+>
+  <div class="cart__footer cauce-carrito__columna section-{{ section.id }}-padding">
+    {%- if settings.show_cart_note -%}
+      {%- comment -%}
+        La nota "instrucciones especiales" existe SOLO acá y no en el drawer: ahí
+        comia altura y empujaba el primer item abajo del fold. Es la decisión de
+        Numen, replicada. El bloque cart_note del drawer queda disponible pero sin
+        instanciar.
+      {%- endcomment -%}
+      <cart-note class="cart__note field cauce-carrito__nota">
+        <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
+        <textarea
+          class="text-area field__input"
+          name="note"
+          form="cart"
+          id="Cart-note"
+          placeholder="{{ 'sections.cart.note' | t }}"
+        >{{ cart.note }}</textarea>
+      </cart-note>
+    {%- endif -%}
+
+    <div class="cart__blocks">
+      {% for block in section.blocks %}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+
+          {%- when 'discount_field' -%}
+            {% render 'cart-discount-field', block: block %}
+
+          {%- when 'subtotal' -%}
+            <div class="js-contents cauce-carrito__totales" {{ block.shopify_attributes }}>
+              {%- if cart.cart_level_discount_applications.size > 0 -%}
+                <ul
+                  class="cauce-carrito__descuentos"
+                  role="list"
+                  aria-label="{{ 'customer.order.discount' | t }}"
                 >
-                  {{ 'sections.cart.checkout' | t }}
-                </button>
+                  {%- for discount in cart.cart_level_discount_applications -%}
+                    <li>
+                      {{- discount.title | escape }} (−{{ discount.total_allocated_amount | money }})
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+              <div class="cauce-carrito__total" role="status">
+                <span class="cauce-carrito__total-label">{{ 'sections.cart.subtotal' | t }}</span>
+                <span class="cauce-carrito__total-monto">{{ cart.total_price | money }}</span>
               </div>
+
+              {%- assign cauce_ahorro = cart.original_total_price | minus: cart.total_price -%}
+              {%- if cauce_ahorro > 0 -%}
+                {%- assign cauce_ahorro_money = cauce_ahorro | money -%}
+                <p class="cauce-carrito__ahorro">
+                  {{- 'cauce.carrito.ahorro' | t: monto: cauce_ahorro_money -}}
+                </p>
+              {%- endif -%}
+
+              <small class="cauce-carrito__impuestos">
+                {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+                  {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                {%- elsif cart.taxes_included -%}
+                  {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+                {%- elsif shop.shipping_policy.body != blank -%}
+                  {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+                {%- else -%}
+                  {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+                {%- endif -%}
+              </small>
+
+              {% render 'cauce-carrito-pago' %}
+            </div>
+
+          {%- else -%}
+            <div class="cart__ctas cauce-carrito__ctas" {{ block.shopify_attributes }}>
+              <noscript>
+                <button type="submit" class="cauce-carrito__seguir" form="cart">
+                  {{ 'sections.cart.update' | t }}
+                </button>
+              </noscript>
+
+              <button
+                type="submit"
+                id="checkout"
+                class="cauce-carrito__cta"
+                name="checkout"
+                form="cart"
+                {% if cart == empty %}
+                  disabled
+                {% endif %}
+              >
+                <span>{{ 'sections.cart.checkout' | t }}</span>
+                <span class="cauce-carrito__cta-sep" aria-hidden="true"></span>
+                <span class="cauce-carrito__cta-monto">{{ cart.total_price | money }}</span>
+              </button>
 
               {%- if additional_checkout_buttons -%}
                 <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
                   {{ content_for_additional_checkout_buttons }}
                 </div>
               {%- endif -%}
-          {%- endcase -%}
-        {% endfor %}
 
-        <div id="cart-errors"></div>
-      </div>
+              <div class="cauce-carrito__pagos">
+                {% render 'cauce-medios-pago', alineacion: 'center' %}
+              </div>
+            </div>
+        {%- endcase -%}
+      {% endfor %}
+
+      <div id="cart-errors"></div>
     </div>
   </div>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    function isIE() {
-      const ua = window.navigator.userAgent;
-      const msie = ua.indexOf('MSIE ');
-      const trident = ua.indexOf('Trident/');
-
-      return msie > 0 || trident > 0;
-    }
-
-    if (!isIE()) return;
-    const cartSubmitInput = document.createElement('input');
-    cartSubmitInput.setAttribute('name', 'checkout');
-    cartSubmitInput.setAttribute('type', 'hidden');
-    document.querySelector('#cart').appendChild(cartSubmitInput);
-    document.querySelector('#checkout').addEventListener('click', function (event) {
-      document.querySelector('#cart').submit();
-    });
-  });
-</script>
 
 {% schema %}
 {
@@ -106,27 +154,27 @@
   "blocks": [
     {
       "type": "discount_field",
-      "name": "Discount field",
+      "name": "Campo de descuento",
       "limit": 1,
       "settings": [
         {
           "type": "text",
           "id": "placeholder",
-          "label": "Input placeholder",
-          "default": "Enter discount code"
+          "label": "Texto del campo",
+          "default": "Ingresá tu código"
         },
         {
           "type": "text",
           "id": "btn_label",
-          "label": "Button label",
-          "default": "ADD"
+          "label": "Etiqueta del botón",
+          "default": "Aplicar"
         },
         {
           "type": "text",
           "id": "error_msg",
-          "label": "Error message",
-          "default": "Please enter a discount code!",
-          "info": "Displayed if add button is clicked while the input is empty."
+          "label": "Mensaje de error",
+          "default": "Escribí un código de descuento.",
+          "info": "Se muestra si se aprieta el botón con el campo vacío."
         }
       ]
     },
@@ -142,6 +190,38 @@
     },
     {
       "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "default": "background-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
     }
   ]
 }
