@@ -33,17 +33,29 @@
   assign cauce_umbral = settings.cauce_umbral_envio_gratis | times: 100
   assign cauce_actual = cart.items_subtotal_price
   assign cauce_hay = false
+  assign cauce_mejor = 0
 
+  comment
+    La comparacion es contra cauce_mejor, un numero, y no contra
+    cauce_elegido.variant.price: Liquid no corta la evaluacion de un `or` como lo
+    hace un lenguaje de programacion, asi que en la primera vuelta estaria
+    comparando un precio contra el price de un objeto que todavia es nil.
+  endcomment
   if cauce_umbral > 0 and cart != empty and cauce_actual < cauce_umbral
     for cauce_item in cart.items
       unless cauce_item.variant.available
         continue
       endunless
-      assign cauce_proyectado = cauce_actual | plus: cauce_item.variant.price
+      assign cauce_precio = cauce_item.variant.price | plus: 0
+      assign cauce_proyectado = cauce_actual | plus: cauce_precio
       if cauce_proyectado >= cauce_umbral
-        if cauce_hay == false or cauce_item.variant.price < cauce_elegido.variant.price
+        if cauce_hay == false
           assign cauce_elegido = cauce_item
+          assign cauce_mejor = cauce_precio
           assign cauce_hay = true
+        elsif cauce_precio < cauce_mejor
+          assign cauce_elegido = cauce_item
+          assign cauce_mejor = cauce_precio
         endif
       endif
     endfor

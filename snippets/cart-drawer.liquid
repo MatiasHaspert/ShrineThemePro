@@ -82,7 +82,14 @@
         <div class="drawer__inner-empty">
           <div class="cart-drawer__warnings">
             <div class="cauce-carrito__cabecera">
-              <h2 class="cauce-carrito__titulo">{{ 'sections.cart.title' | t }}</h2>
+              {%- comment -%}
+                Mismo titulo que la cabecera de arriba, para que cambiarlo en el
+                editor no deje dos nombres para la misma pieza. El [count] resuelve
+                a 0, que es lo cierto en un carrito vacio.
+              {%- endcomment -%}
+              <h2 class="cauce-carrito__titulo">
+                {{ section.settings.heading_text | replace: '[count]', 0 }}
+              </h2>
               <button
                 class="drawer__close cauce-carrito__cerrar"
                 type="button"
