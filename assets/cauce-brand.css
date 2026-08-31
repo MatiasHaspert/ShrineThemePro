@@ -63,6 +63,24 @@
      legal, que son las dos piezas oscuras que hay que separar entre si. */
   --cauce-linea-clara:  rgba(233, 230, 220, 0.22);
 
+  /* Exito y error. Entran con el carrito (bloque 17), que es la primera pieza
+     del tema que necesita decir "logrado" y "esto fallo". Cada uno tiene su
+     segundo valor para la banda oscura, igual que el acento.
+
+       --cauce-exito  sobre BLANCO 7.47 AAA · SEDIMENTO 5.98 AA · SEDIMENTO-2 5.39 AA
+       --cauce-exito-claro  sobre CAUCE 6.24 AA
+       --cauce-error  sobre BLANCO 8.52 AAA · SEDIMENTO 6.83 AA · SEDIMENTO-2 6.15 AA
+       --cauce-error-claro  sobre CAUCE 6.26 AA
+
+     El error es carmin (matiz 350) y no un rojo anaranjado: OXIDO esta en matiz
+     10 y es el color del boton de compra. Dos rojos casi iguales que significan
+     cosas distintas —comprar y algo salio mal— es peor que no tener un color de
+     error. */
+  --cauce-verde:        #1B6047;
+  --cauce-verde-claro:  #4FB58C;
+  --cauce-carmin:       #96182C;
+  --cauce-carmin-claro: #E4899A;
+
   /* --- Tipografia ------------------------------------------------------- */
   --cauce-font-logo:    'Archivo', var(--font-body-family, system-ui), sans-serif;
   --cauce-font-titulo:  'Newsreader', Georgia, 'Times New Roman', serif;
@@ -103,6 +121,8 @@
   --cauce-acento:       var(--cauce-oxido);
   --cauce-acento-label: var(--cauce-blanco);
   --cauce-secundario:   var(--cauce-vado-texto);
+  --cauce-exito:        var(--cauce-verde);
+  --cauce-error:        var(--cauce-carmin);
 }
 
 /* Sobre BLANCO el VADO puro pasa 3.20:1, que alcanza para iconos y componentes
@@ -130,6 +150,8 @@
   --cauce-acento-label: var(--cauce-cauce);
   --cauce-icono:        var(--cauce-vado);
   --cauce-secundario:   var(--cauce-vado);
+  --cauce-exito:        var(--cauce-verde-claro);
+  --cauce-error:        var(--cauce-carmin-claro);
 }
 
 /* Secciones cuyo FONDO es el acento o el secundario. Encima de OXIDO no hay
@@ -2568,4 +2590,1003 @@ h1, h2, h3, h4,
    blanco y este filete arriba. */
 .cauce-legal {
   border-top: 1px solid var(--cauce-linea-clara);
+}
+
+/* ==========================================================================
+   17. Carrito — drawer y /cart
+   Una sola hoja para las dos superficies. La clase raiz .cauce-carrito va en
+   .drawer__inner del drawer y en el contenedor de /cart, asi que /cart no es un
+   segundo diseno que se desincroniza al primer cambio: es el mismo CSS con un
+   modificador de layout (.cauce-carrito--pagina).
+
+   Por que aca y no en un component-*.css nuevo: el drawer reinyecta su HTML
+   entero en cada update (renderContents reemplaza el innerHTML de .drawer__inner),
+   asi que un <style> adentro de esa region se duplicaria en cada cambio de
+   cantidad. Y ademas es la regla 4 del proyecto.
+
+   NINGUN HEX. Los colores salen de los tokens contextuales del bloque 0 y de
+   rgba(var(--color-foreground), a) para las reglas finas, que se adapta sola al
+   esquema en vez de necesitar una regla por esquema.
+
+   Contraste medido (WCAG 2.1, sRGB):
+     etiqueta del CTA sobre el acento .... 6.04 sobre OXIDO (esquema claro)
+                                           4.27 sobre OXIDO CLARO (esquema oscuro),
+                                           que es AA solo para texto grande: por eso
+                                           el CTA sube a 2.4rem en .color-inverse.
+     texto muteado (opacity .78) ......... 7.70 sobre blanco · 6.77 sobre sedimento
+                                           10.02 sobre CAUCE
+     --cauce-exito como texto ............ 7.47 / 5.98 claro · 6.24 sobre CAUCE
+     --cauce-error como texto ............ 8.52 / 6.83 claro · 6.26 sobre CAUCE
+     relleno de la barra (VADO) .......... grafico, 1.4.11: 3.20 sobre blanco
+   ========================================================================== */
+
+/* --- Panel del drawer ----------------------------------------------------- */
+
+/* base.css deja .drawer__inner en 40rem (50rem en desktop) y le pone
+   overflow: scroll en el tramo ancho. Con el panel scrolleando entero, el pie
+   deja de quedar fijo y el CTA se va abajo del fold. Se fija aca. */
+.cauce-carrito.drawer__inner {
+  width: 100%;
+  max-width: min(42rem, calc(100vw - 3rem));
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* base.css pasa el panel vacio a grid centrado; el empty state de CAUCE ya se
+   centra solo adentro de .drawer__inner-empty. */
+cart-drawer.is-empty .cauce-carrito.drawer__inner {
+  display: flex;
+}
+
+/* --- Cabecera ------------------------------------------------------------- */
+
+.cauce-carrito .cauce-carrito__cabecera {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 1.6rem 1.8rem 1.3rem;
+  /* base.css alinea con var(--alignment), que salia de un setting que ya no
+     existe: sin valor, justify-content quedaba invalido. */
+  justify-content: flex-start;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.14);
+}
+
+.cauce-carrito .cauce-carrito__titulo {
+  margin: 0;
+  font-family: var(--cauce-font-titulo);
+  font-weight: 400;
+  font-size: 2.2rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.cauce-carrito__contador {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--color-foreground), 0.18);
+  color: var(--cauce-secundario);
+}
+
+.cauce-carrito .cauce-carrito__cerrar {
+  position: static;
+  transform: none;
+  margin-left: auto;
+  width: 4.4rem;
+  height: 4.4rem;
+  min-width: 4.4rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(var(--color-foreground), 0.14);
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 140ms ease;
+}
+
+.cauce-carrito .cauce-carrito__cerrar .cauce-icono {
+  width: 1.8rem;
+  height: 1.8rem;
+  color: inherit;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cauce-carrito .cauce-carrito__cerrar:hover {
+    background-color: rgba(var(--color-foreground), 0.06);
+  }
+}
+
+/* --- Cuerpo scrolleable --------------------------------------------------- */
+
+.cauce-carrito .cart-drawer__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* base.css cuelga los margenes de cada bloque de --margin-top / --margin-bottom,
+   que eran settings por bloque. El ritmo lo pone el sistema. */
+.cauce-carrito .cart-drawer__body > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.cauce-carrito__bloque {
+  padding: 1.2rem 1.8rem;
+}
+
+.cauce-carrito .cart-drawer__form,
+.cauce-carrito .drawer__contents {
+  display: block;
+}
+
+/* --- Reaseguro ------------------------------------------------------------ */
+
+/* El separador es un ::before del PROPIO segmento, no un nodo suelto entre
+   spans: asi viaja con su texto y, cuando la linea wrapea en mobile, nunca queda
+   un punto huerfano colgando al final de un renglon. Tecnica de Numen. */
+.cauce-carrito__reaseguro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 0;
+  row-gap: 0.3rem;
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+  opacity: 0.78;
+}
+
+.cauce-carrito__reaseguro-icono {
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-right: 0.6rem;
+}
+
+.cauce-carrito__reaseguro-item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.cauce-carrito__reaseguro-item + .cauce-carrito__reaseguro-item::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.55;
+  margin: 0 0.6rem;
+}
+
+/* --- Barra de envio gratis ------------------------------------------------ */
+
+.cauce-carrito__envio-texto {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 0.8rem;
+  font-size: 1.3rem;
+  line-height: 1.35;
+}
+
+.cauce-carrito__envio-icono {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.cauce-carrito__envio-monto {
+  font-family: var(--cauce-font-dato);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.cauce-carrito__envio-pista {
+  height: 0.6rem;
+  border-radius: 999px;
+  background-color: rgba(var(--color-foreground), 0.1);
+  overflow: hidden;
+}
+
+/* El relleno va en VADO y no en el acento: es un grafico, y el unico oxido de
+   la pieza es el boton de pago (regla del brandboard, misma razon que D-036).
+   Dos clases para ganarle a cualquier regla de una sola clase. */
+.cauce-carrito__envio-pista .cauce-carrito__envio-relleno {
+  display: block;
+  height: 100%;
+  min-width: 0.6rem;
+  border-radius: 999px;
+  background-color: var(--cauce-icono);
+  transition: width 460ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms ease;
+}
+
+.cauce-carrito__envio--logrado .cauce-carrito__envio-texto {
+  color: var(--cauce-exito);
+}
+
+.cauce-carrito__envio--logrado .cauce-carrito__envio-pista .cauce-carrito__envio-relleno {
+  background-color: var(--cauce-exito);
+}
+
+/* --- Linea de producto ---------------------------------------------------- */
+
+.cauce-carrito__items {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.8rem;
+}
+
+.cauce-carrito__linea {
+  position: relative;
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1.3rem;
+  margin: 0;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+.cauce-carrito__linea:last-child {
+  border-bottom: 0;
+}
+
+.cauce-carrito__linea-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7rem;
+  height: 8rem;
+  padding: 0.6rem;
+  overflow: hidden;
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  border-radius: 4px;
+  background-color: rgba(var(--color-foreground), 0.04);
+}
+
+.cauce-carrito__linea-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cauce-carrito__linea-cuerpo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cauce-carrito__linea-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.cauce-carrito .cauce-carrito__linea-nombre {
+  min-width: 0;
+  margin: 0;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: inherit;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cauce-carrito .cauce-carrito__linea-nombre:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+  }
+}
+
+.cauce-carrito__linea-quitar-wrap {
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.cauce-carrito .cauce-carrito__linea-quitar {
+  width: 4.4rem;
+  height: 4.4rem;
+  margin: -1rem -1rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: inherit;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: color 140ms ease, opacity 140ms ease, background-color 140ms ease;
+}
+
+.cauce-carrito .cauce-carrito__linea-quitar .cauce-icono {
+  width: 1.8rem;
+  height: 1.8rem;
+  color: inherit;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cauce-carrito .cauce-carrito__linea-quitar:hover {
+    opacity: 1;
+    color: var(--cauce-error);
+    background-color: rgba(var(--color-foreground), 0.06);
+  }
+}
+
+.cauce-carrito__linea-chip {
+  align-self: flex-start;
+  margin: 0.6rem 0 0;
+  padding: 0.2rem 0.7rem;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  border: 1px solid rgba(var(--color-foreground), 0.14);
+  border-radius: 4px;
+  opacity: 0.85;
+}
+
+.cauce-carrito__linea-variante {
+  margin: 0.5rem 0 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+  opacity: 0.78;
+}
+
+.cauce-carrito__linea-pie {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.1rem;
+}
+
+.cauce-carrito__linea-precios {
+  min-width: 0;
+}
+
+/* Los precios de esta marca son datos: DM Mono con tabular-nums, igual que
+   .cauce-datos__valor y las cifras de cauce-resultados. */
+.cauce-carrito__linea-precio {
+  display: block;
+  font-family: var(--cauce-font-dato);
+  font-size: 1.8rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.cauce-carrito__linea-antes {
+  display: block;
+  font-family: var(--cauce-font-dato);
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  opacity: 0.6;
+}
+
+.cauce-carrito__linea-dia {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 1.1rem;
+  color: var(--cauce-secundario);
+}
+
+/* --- Stepper de cantidad -------------------------------------------------- */
+
+/* Reusa el <quantity-input> del tema, que es quien cablea minus/plus. base.css
+   le da un ancho fijo de 14rem, un min-height de 4.5rem y dibuja el marco con
+   ::before/::after; aca el marco lo pone el propio contenedor. */
+.cauce-carrito .cauce-carrito__stepper {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  min-height: 0;
+  height: 4rem;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(var(--color-foreground), 0.18);
+  border-radius: 4px;
+  color: inherit;
+}
+
+.cauce-carrito .cauce-carrito__stepper::before,
+.cauce-carrito .cauce-carrito__stepper::after {
+  content: none;
+  display: none;
+}
+
+.cauce-carrito .cauce-carrito__stepper .quantity__button {
+  width: 4rem;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 140ms ease;
+}
+
+/* QuantityInput decide entre stepUp y stepDown mirando event.target.name. Si el
+   tap cae en un hijo del boton, name es undefined y siempre baja. base.css ya
+   apaga los eventos del <svg>; esto cubre tambien al <span> de texto oculto. */
+.cauce-carrito .cauce-carrito__stepper .quantity__button > * {
+  pointer-events: none;
+}
+
+.cauce-carrito .cauce-carrito__stepper .quantity__button .cauce-icono {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: inherit;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cauce-carrito .cauce-carrito__stepper .quantity__button:not(:disabled):hover {
+    background-color: rgba(var(--color-foreground), 0.06);
+  }
+}
+
+.cauce-carrito .cauce-carrito__stepper .quantity__button:disabled,
+.cauce-carrito .cauce-carrito__stepper .quantity__button.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.cauce-carrito .cauce-carrito__stepper .quantity__input {
+  flex: 0 0 auto;
+  width: 3.2rem;
+  min-width: 3.2rem;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  opacity: 1;
+  text-align: center;
+  font-family: var(--cauce-font-dato);
+  font-size: 1.3rem;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+
+.cauce-carrito .cauce-carrito__stepper .quantity__input::-webkit-outer-spin-button,
+.cauce-carrito .cauce-carrito__stepper .quantity__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* --- Estado de carga y error de linea ------------------------------------- */
+
+.cauce-carrito .cauce-carrito__linea .loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(var(--color-background), 0.65);
+}
+
+.cauce-carrito .cauce-carrito__linea .loading-overlay.hidden {
+  display: none;
+}
+
+.cauce-carrito .cauce-carrito__linea .loading-overlay__spinner svg {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.cauce-carrito__linea-error {
+  color: var(--cauce-error);
+  font-size: 1.15rem;
+  line-height: 1.4;
+}
+
+.cauce-carrito__linea-error .cart-item__error-text {
+  display: block;
+  margin-top: 0.6rem;
+}
+
+.cauce-carrito__linea-error .cart-item__error-text:empty {
+  display: none;
+}
+
+/* --- Empujon de envio gratis ---------------------------------------------- */
+
+.cauce-carrito__nudge {
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.14);
+}
+
+.cauce-carrito__nudge-titulo {
+  margin: 0 0 0.9rem;
+}
+
+.cauce-carrito__nudge-card {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr auto;
+  gap: 1.1rem;
+  align-items: center;
+  padding: 0.9rem;
+  border: 1px solid rgba(var(--color-foreground), 0.14);
+  border-radius: 4px;
+}
+
+.cauce-carrito__nudge-media {
+  width: 4.6rem;
+  height: 4.6rem;
+  padding: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: rgba(var(--color-foreground), 0.04);
+}
+
+.cauce-carrito__nudge-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cauce-carrito__nudge-info {
+  min-width: 0;
+}
+
+.cauce-carrito__nudge-texto {
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.cauce-carrito__nudge-precio {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1.3rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.78;
+}
+
+.cauce-carrito .cauce-carrito__nudge-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 4rem;
+  padding: 0 1.2rem;
+  white-space: nowrap;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cauce-acento-label);
+  background-color: var(--cauce-acento);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.cauce-carrito .cauce-carrito__nudge-boton .cauce-icono {
+  width: 1.3rem;
+  height: 1.3rem;
+  color: inherit;
+}
+
+.cauce-carrito .cauce-carrito__nudge-boton:active {
+  transform: scale(0.97);
+}
+
+.cauce-carrito .cauce-carrito__nudge-boton[aria-busy="true"],
+.cauce-carrito .cauce-carrito__nudge-boton:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* --- Leyenda legal -------------------------------------------------------- */
+
+.cauce-carrito__legal {
+  padding: 1.2rem 1.8rem 1.6rem;
+}
+
+.cauce-carrito__legal .cauce-disclaimer {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.45;
+  opacity: 0.78;
+}
+
+/* --- Pie del drawer ------------------------------------------------------- */
+
+.cauce-carrito .drawer__footer {
+  flex: 0 0 auto;
+  padding: 1.2rem 1.8rem calc(1.2rem + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(var(--color-foreground), 0.14);
+  background-color: transparent;
+}
+
+.cauce-carrito .drawer__footer .cauce-carrito__bloque {
+  padding: 0;
+}
+
+.cauce-carrito__totales {
+  display: block;
+}
+
+.cauce-carrito__descuentos {
+  list-style: none;
+  margin: 0 0 0.6rem;
+  padding: 0;
+  font-size: 1.2rem;
+  color: var(--cauce-secundario);
+}
+
+.cauce-carrito__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cauce-carrito__total-label {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.cauce-carrito__total-monto {
+  font-family: var(--cauce-font-dato);
+  font-size: 2.2rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.cauce-carrito__ahorro {
+  margin: 0.4rem 0 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cauce-exito);
+}
+
+.cauce-carrito__impuestos {
+  display: block;
+  margin: 0.4rem 0 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  opacity: 0.78;
+}
+
+.cauce-carrito__pago {
+  margin: 1rem 0 0;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid rgba(var(--color-foreground), 0.14);
+  border-radius: 4px;
+}
+
+.cauce-carrito__pago-cuotas {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+/* --- CTA de pago ---------------------------------------------------------- */
+
+.cauce-carrito__ctas {
+  margin-top: 1.1rem;
+}
+
+.cauce-carrito .cauce-carrito__cta {
+  width: 100%;
+  min-height: 5.2rem;
+  margin: 0;
+  padding: 0 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--cauce-acento-label);
+  background-color: var(--cauce-acento);
+  transition: transform 140ms ease, opacity 140ms ease;
+}
+
+/* Sobre banda oscura el acento vale OXIDO CLARO y la etiqueta CAUCE: 4.27:1, que
+   es AA para texto grande y no para texto chico. En vez de prohibir el esquema,
+   el CTA sube a 2.4rem justo ahi, que es el umbral de texto grande. La regla se
+   aplica sola, como la prohibicion de VADO sobre SEDIMENTO del bloque 0. */
+.cauce-carrito.color-inverse .cauce-carrito__cta,
+.cauce-carrito.color-text .cauce-carrito__cta {
+  font-size: 2.4rem;
+  font-weight: 400;
+}
+
+.cauce-carrito .cauce-carrito__cta:active {
+  transform: scale(0.99);
+}
+
+.cauce-carrito .cauce-carrito__cta:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cauce-carrito__cta-sep {
+  width: 1px;
+  height: 2rem;
+  background-color: currentColor;
+  opacity: 0.45;
+}
+
+.cauce-carrito__cta-monto {
+  font-family: var(--cauce-font-dato);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.92em;
+}
+
+.cauce-carrito .cauce-carrito__seguir {
+  width: 100%;
+  margin: 0.8rem 0 0;
+  padding: 0.6rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.78;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cauce-carrito .cauce-carrito__seguir:hover {
+    opacity: 1;
+  }
+}
+
+/* --- Medios de pago ------------------------------------------------------- */
+
+.cauce-carrito__pagos {
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.14);
+}
+
+.cauce-carrito__pagos .cauce-pagos__cuotas {
+  display: none; /* las cuotas ya las dice el bloque de beneficio de pago */
+}
+
+/* --- Carrito vacio -------------------------------------------------------- */
+
+.cauce-carrito .drawer__inner-empty {
+  height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cauce-carrito .cart-drawer__warnings {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.cauce-carrito__vacio {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* el padding de abajo pesa mas que el de arriba: sube el centro optico */
+  padding: 2rem 3rem 9rem;
+}
+
+.cauce-carrito__vacio-glifo {
+  width: 7.2rem;
+  height: 7.2rem;
+  margin-bottom: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--color-foreground), 0.14);
+}
+
+.cauce-carrito__vacio-glifo .cauce-icono {
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+.cauce-carrito__vacio-titulo {
+  margin: 0 0 0.6rem;
+  font-family: var(--cauce-font-titulo);
+  font-size: 2.2rem;
+  line-height: 1.2;
+}
+
+.cauce-carrito__vacio-texto {
+  margin: 0 0 2rem;
+  max-width: 32ch;
+  font-size: 1.35rem;
+  line-height: 1.5;
+  opacity: 0.78;
+}
+
+.cauce-carrito .cauce-carrito__vacio-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 5.2rem;
+  padding: 0 2.8rem;
+  border-radius: 4px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--cauce-acento-label);
+  background-color: var(--cauce-acento);
+}
+
+/* --- /cart ---------------------------------------------------------------- */
+
+/* Misma hoja, otro contenedor. Las reglas del drawer estan colgadas de
+   .drawer__inner / .cart-drawer__body / .drawer__footer, que no existen aca. */
+.cauce-carrito--pagina {
+  display: block;
+}
+
+.cauce-carrito--pagina .cauce-carrito__columna {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.cauce-carrito--pagina .cauce-carrito__cabecera {
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: var(--cauce-aire-s);
+}
+
+.cauce-carrito--pagina .cauce-carrito__titulo {
+  font-size: 3rem;
+}
+
+.cauce-carrito .cauce-carrito__volver {
+  margin-left: auto;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.78;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cauce-carrito .cauce-carrito__volver:hover {
+    opacity: 1;
+  }
+}
+
+/* El pie de /cart es una columna angosta a la derecha en desktop, como el resto
+   del tema; en mobile queda apilado y a ancho completo. */
+.cauce-carrito--pagina .cart__blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-s);
+}
+
+.cauce-carrito--pagina .cauce-carrito__ctas {
+  margin-top: 0;
+}
+
+.cauce-carrito--pagina .cauce-carrito__nota {
+  display: block;
+  margin-bottom: var(--cauce-aire-s);
+}
+
+.cauce-carrito--pagina .cauce-carrito__nota label {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.cauce-carrito--pagina .cauce-carrito__totales {
+  padding-top: var(--cauce-aire-s);
+  border-top: 1px solid rgba(var(--color-foreground), 0.14);
+}
+
+.cauce-carrito--pagina .cauce-carrito__bloque,
+.cauce-carrito--pagina .cauce-carrito__legal {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.cauce-carrito--pagina .cauce-carrito__items {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.cauce-carrito--pagina .cauce-carrito__vacio {
+  padding: 4rem 0 6rem;
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-carrito--pagina .cauce-carrito__linea {
+    grid-template-columns: 9rem 1fr;
+    gap: 1.8rem;
+  }
+
+  .cauce-carrito--pagina .cauce-carrito__linea-media {
+    width: 9rem;
+    height: 10.4rem;
+  }
+}
+
+/* --- Foco visible --------------------------------------------------------- */
+
+/* El tema apaga el foco en varios de estos controles. .cauce-page existe en el
+   bloque 3 pero ningun archivo del tema pone esa clase, asi que esa regla nunca
+   aplico: el carrito declara la suya. */
+.cauce-carrito :focus-visible {
+  outline: 2px solid var(--cauce-icono);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* --- Avisos del editor ---------------------------------------------------- */
+
+/* Solo se renderizan con request.design_mode. Un monto comercial que falta no se
+   publica como pendiente visible —eso es para los datos legales, ver D-004— pero
+   quien puede cargarlo tiene que verlo. */
+.cauce-carrito__aviso {
+  margin: 0;
+  padding: 1.2rem 1.8rem;
+  font-size: 1.2rem;
+  line-height: 1.45;
+  color: var(--cauce-secundario);
+  border: 1px dashed rgba(var(--color-foreground), 0.28);
+  border-radius: 4px;
+}
+
+/* --- Movimiento reducido -------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cauce-carrito__envio-pista .cauce-carrito__envio-relleno,
+  .cauce-carrito .cauce-carrito__cta,
+  .cauce-carrito .cauce-carrito__cerrar,
+  .cauce-carrito .cauce-carrito__linea-quitar,
+  .cauce-carrito .cauce-carrito__stepper .quantity__button,
+  .cauce-carrito .cauce-carrito__nudge-boton {
+    transition: none;
+  }
 }
