@@ -2940,7 +2940,7 @@
         "content": "t:settings_schema.cauce.settings.header__envios.content"
       },
       {
-        "type": "text",
+        "type": "number",
         "id": "cauce_umbral_envio_gratis",
         "label": "t:settings_schema.cauce.settings.umbral_envio.label",
         "info": "t:settings_schema.cauce.settings.umbral_envio.info"
