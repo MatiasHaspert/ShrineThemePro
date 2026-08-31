@@ -1,0 +1,39 @@
+{% comment %}
+  CAUCE — cuerpo del carrito vacio. Compartido por el drawer y /cart.
+
+  IMPORTANTE — el <a> de abajo no es decorativo. Cuando el carrito se vacia, el JS
+  de este tema hace:
+
+      trapFocus(cartDrawer.querySelector('.drawer__inner-empty'),
+                cartDrawer.querySelector('a'))
+
+  y trapFocus llama .focus() sobre ese segundo argumento sin chequear null. Si el
+  drawer vacio no tiene NINGUN <a>, eso tira un TypeError y se corta el resto del
+  update (verificado en assets/main.js: CartItems.updateQuantity y clearCart).
+  Ademas querySelector('a') busca en TODO el <cart-drawer>, no solo dentro del
+  bloque vacio, asi que este link tiene que seguir siendo el primero del DOM.
+
+  El destino sale de settings.cart_drawer_collection si esta cargada; si no, de
+  todos los productos.
+{% endcomment %}
+
+{%- liquid
+  if settings.cart_drawer_collection != blank
+    assign cauce_vacio_url = settings.cart_drawer_collection.url
+  elsif settings.continue_shopping_url != blank
+    assign cauce_vacio_url = settings.continue_shopping_url
+  else
+    assign cauce_vacio_url = routes.all_products_collection_url
+  endif
+-%}
+
+<div class="cauce-carrito__vacio">
+  <span class="cauce-carrito__vacio-glifo" aria-hidden="true">
+    {%- render 'cauce-iconos', icono: 'bolsa' -%}
+  </span>
+  <p class="cauce-carrito__vacio-titulo">{{ 'cauce.carrito.vacio_titulo' | t }}</p>
+  <p class="cauce-carrito__vacio-texto">{{ 'cauce.carrito.vacio_texto' | t }}</p>
+  <a href="{{ cauce_vacio_url }}" class="cauce-carrito__vacio-cta">
+    {{- 'cauce.carrito.vacio_cta' | t -}}
+  </a>
+</div>

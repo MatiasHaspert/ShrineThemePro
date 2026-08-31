@@ -1,0 +1,49 @@
+{% comment %}
+  CAUCE — beneficio de pago del carrito.
+
+  Portado de snippets/cart-transfer-benefit.liquid de Numen. Las razones de ese
+  snippet se respetan todas, aunque una de ellas aca se cumpla sola:
+
+  1. "Vive dentro de la region re-renderizada del footer, para que el monto se
+     recalcule al cambiar cantidades." En Dawn/Numen eso obliga a elegir bien el
+     lugar, porque se re-renderizan dos regiones sueltas. En ESTE tema
+     CartDrawerItems.getSectionsToRender() devuelve
+     {id:'CartDrawer', selector:'.drawer__inner'}: se re-renderiza el drawer
+     ENTERO. La condicion se cumple en cualquier bloque. Queda anotado igual
+     porque en /cart si importa: ahi va adentro de #main-cart-footer .js-contents.
+
+  2. Se muestra el AHORRO, nunca un segundo precio, y NUNCA se tacha un precio.
+
+  3. El beneficio no se autoaplica: se comunica y se aclara que baja en el
+     checkout.
+
+  4. Transferencia y cuotas van en UNA sola card, para no duplicar wrapper ni
+     gating ni dejar una card vacia.
+
+  ESTADO HOY: CAUCE no tiene definido un beneficio por transferencia (confirmado
+  antes de escribir esto), asi que la card queda solo con cuotas y los puntos 2 y 3
+  no tienen todavia nada que gobernar. No se inventaron settings de transferencia
+  "por las dudas": el dia que exista el beneficio se agregan cauce_transferencia_pct
+  y cauce_transferencia_codigo en Configuracion del tema, se calcula el ahorro
+  sobre cart.items_subtotal_price (subtotal de LISTA, la misma base que la barra de
+  envio) y se suma arriba de la linea de cuotas. Ese es el unico lugar donde toca
+  tocar.
+
+  Las cuotas salen de settings.cauce_cuotas y el texto de cauce.pdp.cuotas — el
+  mismo par que ya usa snippets/cauce-medios-pago.liquid, para que la PDP, el pie y
+  el carrito no puedan decir numeros distintos.
+{% endcomment %}
+
+{%- if cart != empty and settings.cauce_cuotas > 0 -%}
+  <div class="cauce-carrito__pago">
+    <p class="cauce-carrito__pago-cuotas">
+      {{- 'cauce.pdp.cuotas' | t: cuotas: settings.cauce_cuotas -}}
+    </p>
+  </div>
+{%- elsif request.design_mode -%}
+  <p class="cauce-carrito__aviso">
+    Beneficio de pago: hoy solo dibuja cuotas, y cuotas está en 0. Cargá el número
+    en Configuración del tema → CAUCE → Pagos, y sólo si el plan está activo de
+    verdad en Mercado Pago.
+  </p>
+{%- endif -%}

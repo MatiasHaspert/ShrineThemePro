@@ -570,6 +570,7 @@
       "nudge_sumar": "Sumar",
       "nudge_sumando": "Sumando…",
       "nudge_sumar_aria": "Sumar una unidad de {{ producto }}",
+      "ahorro": "Ahorrás {{ monto }}",
       "vacio_titulo": "Tu carrito está vacío",
       "vacio_texto": "Todavía no agregaste nada.",
       "vacio_cta": "Ver los productos"

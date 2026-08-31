@@ -1,0 +1,243 @@
+{% comment %}
+  CAUCE — linea de producto del carrito. COMPARTIDA por el drawer y /cart.
+
+  Una sola linea para las dos superficies es lo que evita que /cart y el drawer se
+  desincronicen al primer cambio. Lo unico que cambia entre contextos son los ids
+  que cablea el JS del tema; eso es el parametro `contexto`.
+
+  Parametros:
+    item      {object}  requerido. Line item del carrito.
+    contexto  {string}  requerido: 'drawer' | 'cart'.
+    formato   {bool}    mostrar el chip de cauce.formato. Default true.
+    por_dia   {bool}    mostrar el precio por dia de uso. Default true.
+
+  HOOKS DEL JS — verificados contra assets/main.js de ESTE repo (el bundle
+  ofuscado; no existen cart.js ni cart-drawer.js sueltos), no contra Dawn:
+
+    #{row_id} .................. CartItems.updateQuantity busca 'CartItem-N' o
+                                 'CartDrawer-Item-N' para devolver el foco.
+    .cart-item ................. contador de items y fallback de trapFocus.
+    .cart-item--product-{handle} CartDrawer.oneNonUpellRemaining / checkForClear.
+    .loading-overlay ........... enableLoading/disableLoading le sacan .hidden.
+                                 OJO: en este tema es .loading-overlay +
+                                 .loading-overlay__spinner, NO el .loading__spinner
+                                 de Dawn.
+    .cart-item__name ........... trapFocus cae aca cuando el foco se pierde.
+    cart-remove-button ......... escucha el click en el PROPIO custom element y
+                                 hace preventDefault(); no busca <a> ni <button>
+                                 adentro. Por eso el <a href=url_to_remove> de
+                                 abajo funciona con JS (AJAX) y sin JS (navega).
+                                 No convertirlo en <button>: se perderia esa
+                                 degradacion sin ganar nada.
+    quantity-input ............. QuantityInput exige .quantity__button[name='minus']
+                                 y [name='plus'] cuando el input declara min/max.
+    #{qty_id}[name="updates[]"]  la cantidad; data-index es la linea.
+    #{error_id} ................ ver el comentario del bloque de error, abajo.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_i = item.index | plus: 1
+
+  if contexto == 'drawer'
+    assign cauce_row_id = 'CartDrawer-Item-' | append: cauce_i
+    assign cauce_qty_id = 'Drawer-quantity-' | append: cauce_i
+    assign cauce_rm_id = 'CartDrawer-Remove-' | append: cauce_i
+    assign cauce_err_id = 'CartDrawer-LineItemError-' | append: cauce_i
+    assign cauce_err_id_js = 'CartDrawer-LineItemErrork-' | append: cauce_i
+  else
+    assign cauce_row_id = 'CartItem-' | append: cauce_i
+    assign cauce_qty_id = 'Quantity-' | append: cauce_i
+    assign cauce_rm_id = 'Remove-' | append: cauce_i
+    assign cauce_err_id = 'Line-item-error-' | append: cauce_i
+    assign cauce_err_id_js = ''
+  endif
+
+  assign cauce_ver_formato = formato | default: true, allow_false: true
+  assign cauce_ver_por_dia = por_dia | default: true, allow_false: true
+
+  comment
+    Chip de presentacion. En Numen es custom.tipo_presentacion (Decant / Sellado),
+    que aca no existe: el equivalente es cauce.formato ("30 capsulas"). Sin el
+    metafield no hay chip — nunca un chip vacio (regla de METAFIELDS.md).
+  endcomment
+  assign cauce_formato = item.product.metafields.cauce.formato.value
+
+  comment
+    Precio por dia de uso: el equivalente CAUCE del $/ml de Numen. Los dias salen
+    de los mismos dos metafields que usa snippets/cauce-duracion.liquid
+    (unidades_envase / dosis_diaria, ver METAFIELDS.md seccion 2); no se reusa ese
+    snippet porque devuelve la frase ya armada y aca hace falta el numero.
+
+    Se divide item.final_price (lo que se paga por unidad) y no variant.price, para
+    que el dato no mienta cuando hay un descuento de linea. Si falta cualquiera de
+    los dos metafields, o si la division cae a cero, no se muestra NADA: un
+    "$0 por dia" seria peor que no decir nada.
+  endcomment
+  assign cauce_envase = item.product.metafields.cauce.unidades_envase.value | plus: 0
+  assign cauce_dosis = item.product.metafields.cauce.dosis_diaria.value | plus: 0
+  assign cauce_por_dia = 0
+  if cauce_envase > 0 and cauce_dosis > 0
+    assign cauce_dias = cauce_envase | divided_by: cauce_dosis
+    if cauce_dias > 0
+      assign cauce_por_dia = item.final_price | divided_by: cauce_dias
+    endif
+  endif
+
+  assign cauce_puede_cantidad = item.instructions.can_update_quantity | default: true, allow_false: true
+  assign cauce_puede_quitar = item.instructions.can_remove | default: true, allow_false: true
+-%}
+
+<li
+  id="{{ cauce_row_id }}"
+  class="cart-item cart-item--product-{{ item.product.handle }} cauce-carrito__linea"
+  data-index="{{ cauce_i }}"
+>
+  <div class="loading-overlay hidden">
+    <div class="loading-overlay__spinner">
+      <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+      </svg>
+    </div>
+  </div>
+
+  {%- if item.image -%}
+    <a href="{{ item.url }}" class="cauce-carrito__linea-media" tabindex="-1" aria-hidden="true">
+      <img
+        src="{{ item.image | image_url: width: 300 }}"
+        alt="{{ item.image.alt | escape }}"
+        loading="lazy"
+        width="150"
+        height="{{ 150 | divided_by: item.image.aspect_ratio | ceil }}"
+      >
+    </a>
+  {%- else -%}
+    <span class="cauce-carrito__linea-media" aria-hidden="true"></span>
+  {%- endif -%}
+
+  <div class="cauce-carrito__linea-cuerpo">
+    <div class="cauce-carrito__linea-top">
+      <a href="{{ item.url }}" class="cart-item__name cauce-carrito__linea-nombre">
+        {{- item.product.title | escape -}}
+      </a>
+
+      <cart-remove-button class="cauce-carrito__linea-quitar-wrap" id="{{ cauce_rm_id }}" data-index="{{ cauce_i }}">
+        <a
+          href="{{ item.url_to_remove }}"
+          class="cauce-carrito__linea-quitar{% unless cauce_puede_quitar %} hidden{% endunless %}"
+          aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
+        >
+          {%- render 'cauce-iconos', icono: 'tacho' -%}
+        </a>
+      </cart-remove-button>
+    </div>
+
+    {%- if cauce_ver_formato and cauce_formato != blank -%}
+      <span class="cauce-carrito__linea-chip cauce-dato">{{ cauce_formato }}</span>
+    {%- endif -%}
+
+    {%- if item.product.has_only_default_variant == false or item.selling_plan_allocation != null -%}
+      <p class="cauce-carrito__linea-variante">
+        {%- if item.product.has_only_default_variant == false -%}
+          {{ item.options_with_values | map: 'value' | join: ' / ' }}
+        {%- endif -%}
+        {%- if item.selling_plan_allocation != null %} {{ item.selling_plan_allocation.selling_plan.name }}{% endif -%}
+      </p>
+    {%- endif -%}
+
+    <div class="cauce-carrito__linea-pie">
+      <div class="cauce-carrito__linea-precios">
+        {%- if item.original_line_price != item.final_line_price -%}
+          <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+          <s class="cauce-carrito__linea-antes">{{ item.original_line_price | money }}</s>
+          <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+          <span class="cauce-carrito__linea-precio">{{ item.final_line_price | money }}</span>
+        {%- else -%}
+          <span class="cauce-carrito__linea-precio">{{ item.original_line_price | money }}</span>
+        {%- endif -%}
+
+        {%- if cauce_ver_por_dia and cauce_por_dia > 0 -%}
+          {%- assign cauce_por_dia_money = cauce_por_dia | money -%}
+          <span class="cauce-carrito__linea-dia cauce-dato">
+            {{- 'cauce.carrito.precio_por_dia' | t: monto: cauce_por_dia_money -}}
+          </span>
+        {%- endif -%}
+      </div>
+
+      <quantity-input class="quantity cauce-carrito__stepper">
+        <button
+          class="quantity__button"
+          name="minus"
+          type="button"
+          {% unless cauce_puede_cantidad %}
+            disabled
+          {% endunless %}
+        >
+          <span class="visually-hidden">
+            {{- 'products.product.quantity.decrease' | t: product: item.product.title | escape -}}
+          </span>
+          {%- render 'cauce-iconos', icono: 'menos' -%}
+        </button>
+        <input
+          class="quantity__input"
+          type="number"
+          data-quantity-variant-id="{{ item.variant.id }}"
+          name="updates[]"
+          value="{{ item.quantity }}"
+          {% # theme-check-disable %}
+          data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
+          min="{{ item.variant.quantity_rule.min }}"
+          {% if item.variant.quantity_rule.max != null %}
+            max="{{ item.variant.quantity_rule.max }}"
+          {% endif %}
+          step="{{ item.variant.quantity_rule.increment }}"
+          {% # theme-check-enable %}
+          aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+          id="{{ cauce_qty_id }}"
+          data-index="{{ cauce_i }}"
+          {% unless cauce_puede_cantidad %}
+            disabled
+          {% endunless %}
+        >
+        <button
+          class="quantity__button"
+          name="plus"
+          type="button"
+          {% unless cauce_puede_cantidad %}
+            disabled
+          {% endunless %}
+        >
+          <span class="visually-hidden">
+            {{- 'products.product.quantity.increase' | t: product: item.product.title | escape -}}
+          </span>
+          {%- render 'cauce-iconos', icono: 'mas' -%}
+        </button>
+      </quantity-input>
+    </div>
+
+    {%- comment -%}
+      Los dos ids anidados son a proposito y no son un descuido.
+
+      updateLiveRegions() de este tema busca el error del drawer como
+      getElementById('CartDrawer-LineItemError' + 'k' + '-' + linea) — con una k de
+      mas, que es un typo del bundle de Shrine. Con el id correcto el mensaje de
+      error del drawer nunca aparece: getElementById devuelve null y el guarda lo
+      traga en silencio. En /cart no pasa: ahi el id es 'Line-item-error-N' y
+      matchea.
+
+      El contenedor externo lleva el id que el JS busca hoy y el interno el id
+      correcto. Los dos resuelven al mismo .cart-item__error-text, asi que el
+      mensaje se anuncia hoy y va a seguir anunciandose el dia que Shrine corrija
+      el typo. role="alert" va en el interno, que es el que tiene el texto.
+
+      El wrapper se abre y se cierra SIEMPRE, y lo condicional es solo el atributo:
+      un <div> abierto adentro de un {% if %} rompe el parser de theme-check y
+      corta el archivo en ese punto (misma razon que D-008). En /cart el wrapper
+      queda sin id, que es inofensivo.
+    {%- endcomment -%}
+    <div {% if cauce_err_id_js != blank %}id="{{ cauce_err_id_js }}"{% endif %}>
+      <div id="{{ cauce_err_id }}" class="cart-item__error cauce-carrito__linea-error" role="alert">
+        <small class="cart-item__error-text"></small>
+      </div>
+    </div>
+  </div>
+</li>
