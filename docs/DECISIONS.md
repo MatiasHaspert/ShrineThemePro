@@ -77,6 +77,13 @@ theme editor al rediseñar el footer. Como sección propia con settings requerid
 visibles, el incumplimiento es evidente y auditable. `footer-group` garantiza que aparezca en todas
 las páginas, incluido home y checkout-adyacentes.
 
+**Precisada por D-046 (2026-08-31).** La regla del "pendiente visible" que sale de acá es
+sobre **datos que la ley obliga a publicar**: ahí esconder el hueco es esconder un
+incumplimiento. No aplica a los datos comerciales que faltan —un umbral de envío gratis, un
+número de cuotas—, donde publicar `[[PENDIENTE: …]]` en la cara del cliente sería peor que
+callarse. Para esos, el carrito usa la tercera vía: nada en la tienda y un aviso bajo
+`request.design_mode`, o sea sólo para quien puede cargarlo. Ver D-046 §6.
+
 ---
 
 ## D-005 · 2026-08-21 · Íconos VADO en SVG inline, no Material Symbols
@@ -1445,6 +1452,12 @@ sirve de nada.
 placeholder visible sigue apareciendo mientras esté vacío. Y la versión compacta —la del pie—
 sigue mostrando sólo la primera frase, sin la de consulta médica.
 
+**Actualizada por D-046 (2026-08-31).** Los lugares donde se renderiza la leyenda pasan de
+tres a **cinco**: se suman el bloque `legal_note` del carrito lateral y el mismo bloque en
+`/cart`. El argumento de esta decisión se refuerza —cinco instancias editables por separado
+serían cinco redacciones posibles de una leyenda obligatoria— y no cambia nada más: siguen
+saliendo del mismo campo global. La lista completa está en el §7 de `CLAIMS-AUDIT.md`.
+
 ---
 
 ## D-045 · 2026-08-30 · El pie se cierra: una sola banda oscura, y los datos salen de los settings
@@ -1538,3 +1551,290 @@ lugares.
 **Lo que sigue faltando, y sale como pendiente visible.** El domicilio legal
 (`cauce_domicilio`), la URL y la imagen de Data Fiscal, el RNPA, y las redes sociales, que las
 carga el comercio desde Configuración del tema.
+
+## D-046 · 2026-08-31 · El carrito se rehace con el diseño de Numen sobre la sección de bloques de Shrine
+
+**Decisión.** El carrito de CAUCE —drawer y `/cart`— se reescribe entero. Se conserva de
+Shrine **una sola cosa**: que el carrito sea una sección con bloques reordenables desde el
+theme editor, con su configuración en `settings_data.json → current.sections["cart-drawer"]`.
+Todo lo demás —layout, línea de producto, reaseguro, barra de envío, empujón, beneficio de
+pago, CTA, empty state— sale del carrito de **Numen** (`Haspert-Theme`), portado al sistema
+CAUCE: sin un solo color de Numen, sin su prefijo `.nc-`, y con los textos en los locales.
+
+**Alternativa descartada.** Copiar la arquitectura de Numen, donde el drawer es un snippet con
+un orden fijo de `{% render %}`. Es más simple de leer y es un downgrade: el comercio pierde
+la posibilidad de prender, apagar y reordenar piezas del carrito sin abrir código, que es
+justo lo que Shrine hace mejor y lo único que valía la pena conservar de él.
+
+**Cómo queda el drawer.** Nueve bloques, en dos regiones que se reordenan por separado
+(cuerpo y pie, que es como Shrine recorre `section.blocks` dos veces):
+
+| # | Bloque | Estado | Qué dibuja |
+|---|---|---|---|
+| 1 | `trust_line` | **nuevo** | reaseguro de una línea |
+| 2 | `progress_bar` | reescrito | barra de envío gratis |
+| 3 | `cart_items` | reescrito | la línea compartida con `/cart` |
+| 4 | `product_upsells` | reescrito | empujón de envío gratis |
+| 5 | `legal_note` | **nuevo** | `cauce-disclaimer` compacto |
+| 6 | `subtotals` | reescrito | total, ahorro y nota de impuestos |
+| 7 | `payment_benefit` | **nuevo** | cuotas (ver más abajo) |
+| 8 | `checkout_btn` | reescrito | CTA etiqueta · separador · monto |
+| 9 | `payment_badges` | reescrito | `cauce-medios-pago` (D-045, D-012) |
+
+Los demás tipos de bloque de Shrine (`checkpoints_bar`, `countdown_timer`, `gift`,
+`discount_field`, `cart_note`, `tnc_checkbox`, `image`, `icon_with_text`, `text_with_icon`,
+`custom_liquid`) **quedan disponibles con su render original**, sin instanciar. Se conservaron
+sus ramas del `case` para que agregarlos desde el editor siga funcionando; no toman el sistema
+CAUCE y eso está dicho en el comentario del archivo.
+
+---
+
+### 1. Lo que cambió porque el JS de este tema no es el de Dawn
+
+El brief pedía verificar los hooks contra el `cart.js` / `cart-drawer.js` **de este repo**.
+Esos archivos no existen: la lógica del carrito está adentro de `assets/main.js`, que está
+ofuscado con string-array (mismo problema de D-003). Se desofuscó para poder leerla. Cinco
+cosas salieron de ahí, y dos simplifican el trabajo:
+
+**a. Shrine re-renderiza el drawer entero.** `CartDrawerItems.getSectionsToRender()` devuelve
+`{id:'CartDrawer', section:'cart-drawer', selector:'.drawer__inner'}`. Dawn y Numen
+re-renderizan dos regiones sueltas y por eso el comentario de `cart-transfer-benefit` insiste
+en vivir "dentro de la región re-renderizada del footer". Acá **todo** el drawer se recalcula,
+así que cualquier bloque en cualquier posición se actualiza solo. En `/cart` sí importa: ahí
+el re-render sigue siendo por región y el beneficio de pago tiene que ir adentro de
+`#main-cart-footer .js-contents`.
+
+**b. El `<a>` de remove funciona y degrada.** `CartRemoveButton` escucha `click` en el propio
+custom element y hace `preventDefault()`; no busca `<a>` ni `<button>` adentro. O sea que el
+`<a href="{{ item.url_to_remove }}">` de Numen es compatible: con JS elimina por AJAX, sin JS
+elimina por navegación. Shrine usaba un `<button>`, que sin JS no hace nada.
+
+**c. El spinner es otro.** Acá es `.loading-overlay.hidden` + `.loading-overlay__spinner`, que
+es lo que togglean `enableLoading` y `disableLoading`. El `.loading__spinner` de Numen no
+existe en este tema.
+
+**d. El error de línea del drawer estaba muerto, y es un bug de Shrine.** `updateLiveRegions`
+busca `getElementById('CartDrawer-LineItemError` **`k`** `-' + linea)`, con una `k` de más,
+mientras el markup escribía `CartDrawer-LineItemError-N`. `getElementById` devolvía `null`, el
+guarda lo tragaba en silencio y el mensaje nunca aparecía. En `/cart` no pasa: ahí el id es
+`Line-item-error-N` y matchea.
+
+Se arregla anidando los dos ids: el contenedor externo lleva el que el JS busca hoy y el
+interno el correcto, y los dos resuelven al mismo `.cart-item__error-text`. Funciona ahora y
+va a seguir funcionando el día que Shrine corrija el typo. El wrapper se abre y se cierra
+siempre y lo condicional es sólo el atributo, porque un `<div>` abierto adentro de un
+`{% if %}` corta el parser de theme-check en ese punto (D-008).
+
+**e. El empty state necesita un `<a>` sí o sí.** Cuando el carrito se vacía, el JS hace
+`trapFocus(cartDrawer.querySelector('.drawer__inner-empty'), cartDrawer.querySelector('a'))`
+y `trapFocus` llama `.focus()` sin chequear `null`. Sin un `<a>` en el drawer eso tira
+`TypeError` y corta el resto del update. Además `querySelector('a')` busca en todo el
+`<cart-drawer>`, así que el bloque vacío tiene que ir **primero en el DOM** y su CTA tiene que
+ser el primer link. Está anotado en `cauce-carrito-vacio.liquid` y en el markup.
+
+**Consecuencia de (a):** no se portó `assets/numen-cart-add.js` (128 líneas de `DOMParser` y
+`replaceWith`). Este tema ya expone el re-render correcto en sus propios custom elements
+(`cart-drawer-items.updateCart()` en el drawer, `cart-items.updateCart()` en `/cart`), así que
+el AJAX del empujón son ~60 líneas dentro de `assets/cauce.js` en vez de un asset nuevo. Y si
+Shrine cambia sus regiones, el empujón se entera solo.
+
+---
+
+### 2. El `countdown_timer` se apaga, y se apaga borrando la instancia
+
+Estaba **prendido**, diciendo *"Cart reserved for [timer]"*. El carrito no reserva stock: es
+urgencia falsa. En Argentina es exponible ante Defensa del Consumidor (Ley 24.240 art. 8 y
+Res. SC 270/2020) y además contradice el criterio de todo este tema, que publica leyendas
+legales por obligación y muestra pendientes en vez de esconderlos. No hay argumento para
+conservarlo.
+
+**Se borra la instancia en vez de dejarla `disabled`.** Un bloque apagado con copy en inglés
+sin auditar es exactamente lo que alguien vuelve a prender un martes. El tipo de bloque sigue
+en el schema, así que re-agregarlo son dos clics; lo que no queda es el texto.
+
+Por el mismo criterio salen las otras dos instancias de la demo: `checkpoints_bar` (metas
+*Free Shipping / 20% OFF / Free Gift* con montos en dólares — son tres promesas escalonadas y
+CAUCE tiene un solo umbral, ningún descuento y ningún regalo configurado) y `discount_field`
+(apagado, con copy en inglés).
+
+---
+
+### 3. Con un solo SKU no hay cross-sell: hay escalón de envío
+
+**Consultado y resuelto.** Un cross-sell con un solo producto en catálogo sólo puede ofrecer
+el producto que la persona ya tiene en el carrito, a dos centímetros del botón "+" del
+stepper. Las otras dos opciones tampoco existen hoy: el segundo frasco al precio del escalón
+choca con R6 de `CLAIMS-AUDIT.md` mientras no haya un descuento automático que lo respalde, y
+la suscripción necesita un `selling_plan_group` que el producto no tiene
+(`cauce_suscripcion_activa` está apagado).
+
+Lo que sí existe y es verdad es el **escalón de envío**. El bloque `product_upsells` pasa a ser
+un empujón que aparece **sólo cuando sumar una unidad más alcanza para cruzar el umbral de
+envío gratis**, y desaparece solo cuando no aplica. Tres reglas lo mantienen honesto:
+
+- Si falta más que una unidad no se muestra: la barra de progreso ya dice cuánto falta, y
+  repetirlo en una card sería presión sin información nueva.
+- El monto es el **precio de lista** de esa unidad, porque es exactamente lo que se le va a
+  sumar a `cart.items_subtotal_price`, que es la base de la barra. Con el precio con descuento
+  de línea, el número de la card y el de la barra no cerrarían.
+- Entre varias líneas candidatas gana la más barata: la que menos le cuesta al cliente, no la
+  que más factura.
+
+**Lo que se toma de Numen es el comportamiento** (agregar por AJAX sin salir del carrito) y
+**no** el criterio de match (familia olfativa) ni el gancho (la variante decant más barata).
+El handle de la demo de Shrine (`thedogface-designer-dog-jacket`) se borra junto con los otros
+16 settings de carrito huérfanos.
+
+---
+
+### 4. No hay beneficio por transferencia, y no se inventan settings
+
+**Consultado y resuelto:** CAUCE no tiene definido un beneficio por pago con transferencia. El
+bloque `payment_benefit` se implementa igual y queda **sólo con cuotas**, que salen de
+`settings.cauce_cuotas` y de `cauce.pdp.cuotas` — el mismo par que ya usa `cauce-medios-pago`,
+para que la PDP, el pie y el carrito no puedan decir números distintos.
+
+**No se crearon settings de transferencia "por las dudas".** Un campo vacío en el admin es una
+invitación a llenarlo con un número que nadie acordó. El comentario de cabecera de
+`cauce-carrito-pago.liquid` dice exactamente dónde y cómo se enchufa el día que exista: dos
+settings, el ahorro calculado sobre `cart.items_subtotal_price`, y las cuatro reglas de Numen
+que se respetan (mostrar el ahorro y no un segundo precio, nunca tachar un precio, no
+autoaplicar y comunicar que baja en el checkout, y una sola card para las dos cosas).
+
+**Hoy el bloque no dibuja nada**, porque `cauce_cuotas` vale 0. Ver el punto 6.
+
+---
+
+### 5. `cauce_umbral_envio_gratis` pasa de `text` a `number`
+
+El brief pedía elegir entre resolverlo con `| plus: 0` o migrar el setting, y decir cuál.
+**Se migra el setting.**
+
+Primero, porque salió gratis: se verificó que el campo **no tiene valor guardado** en
+`settings_data.json` y que **no lo consume ningún archivo** del tema — estaba definido desde la
+fase 5 y nunca se usó. No hay nada que migrar hoy y hay más que migrar cada día que pase.
+
+Segundo, y es el motivo de fondo: con `text` alguien escribe `45.000` o `$45000`, `| plus: 0`
+lo convierte en `45` en silencio y la barra le dice al cliente **"te faltan $44.955"**. Un
+número equivocado en pantalla es la clase de falla que este repo evita mostrando pendientes en
+vez de escondiéndolos; `| plus: 0` no la previene, la disimula. Con `number` el editor no deja
+escribirlo.
+
+---
+
+### 6. Un dato comercial que falta no se publica como pendiente visible
+
+Acá hay un choque de reglas que había que resolver. La regla 3 del proyecto dice que todo dato
+faltante se muestra como **pendiente visible** (D-004). `METAFIELDS.md` dice lo contrario para
+los metafields: si falta uno, la pieza **no renderiza**.
+
+Las dos son correctas y no hablan de lo mismo. **D-004 es sobre datos que la ley obliga a
+publicar** —CUIT, domicilio, email, RNPA—: ahí esconder el hueco es esconder un
+incumplimiento, y por eso grita. Un umbral de envío gratis o un número de cuotas no son eso:
+son datos comerciales, y publicar `[[PENDIENTE: umbral]]` en el carrito de un cliente sería
+peor que no decir nada.
+
+**Se resuelve con la tercera vía que el repo ya usa:** nada para el cliente, y un aviso que se
+renderiza sólo con `request.design_mode`, o sea sólo para quien puede cargarlo. Es el mismo
+patrón del aviso de `ss-glow-testimonial` (D-030). Hoy lo usan tres bloques:
+
+| Bloque | Espera | Mientras tanto |
+|---|---|---|
+| `progress_bar` | `cauce_umbral_envio_gratis` | nada en la tienda, aviso en el editor |
+| `product_upsells` | el mismo umbral | ídem |
+| `payment_benefit` | `cauce_cuotas > 0` | ídem |
+
+Los tres están implementados y prendidos. El día que se carguen los dos campos aparecen solos,
+sin tocar código.
+
+---
+
+### 7. `/cart` es el mismo archivo, no un segundo diseño
+
+`main-cart-items` y `main-cart-footer` renderizan **los mismos snippets** que el drawer, con
+`.cauce-carrito` de contenedor y un modificador `--pagina` para el layout. Sale la tabla de
+Shrine: el `<tr role="row">` no aportaba nada —el carrito no es una tabla de datos, es una
+lista de items editables, y `role="row"` fuera de una tabla ni siquiera es ARIA válida— y era
+lo único que impedía compartir la línea.
+
+La nota "instrucciones especiales" queda **sólo en `/cart`**. En el drawer comía altura y
+empujaba el primer ítem abajo del fold; es la decisión de Numen y se replica. El bloque
+`cart_note` del drawer queda disponible, sin instanciar.
+
+**Las dos secciones de la demo salen de `templates/cart.json`:**
+
+- `featured-collection` *"You may also like"* sobre la colección `all`. Con un solo SKU
+  recomienda el producto que la persona ya tiene en el carrito. No es un problema de copy: es
+  una grilla sin nada que grillar, que es el mismo razonamiento de D-038 para la home.
+- `newsletter` nativo. No pide consentimiento y viola la Ley 25.326 (D-024). **No se reemplaza
+  por `cauce-newsletter`**: el trabajo de `/cart` es cerrar la compra, y un alta de correo
+  entre el total y el botón compite con el checkout. El newsletter ya vive en la landing y en
+  el pie, que es donde tiene sentido.
+
+---
+
+### 8. El CSS, los tokens y el contraste
+
+Todo el CSS del carrito es el **bloque 17 de `assets/cauce-brand.css`** (regla 4: nada de un
+`component-*.css` nuevo). Una sola hoja para las dos superficies. Ningún hex: los colores salen
+de los tokens contextuales del bloque 0 y de `rgba(var(--color-foreground), a)` para las reglas
+finas, que se adapta sola al esquema en vez de pedir una regla por esquema.
+
+**Entran cuatro colores a la paleta y dos tokens contextuales al bloque 0**, cada uno con su
+segundo valor para banda oscura, igual que el acento:
+
+| Token | Sobre BLANCO | Sobre SEDIMENTO | Sobre SEDIMENTO-2 | Sobre CAUCE |
+|---|---|---|---|---|
+| `--cauce-verde` (éxito) | 7.47 AAA | 5.98 AA | 5.39 AA | — |
+| `--cauce-verde-claro` | — | — | — | 6.24 AA |
+| `--cauce-carmin` (error) | 8.52 AAA | 6.83 AA | 6.15 AA | — |
+| `--cauce-carmin-claro` | — | — | — | 6.26 AA |
+
+**El error es carmín (matiz 350) y no un rojo anaranjado.** ÓXIDO está en matiz 10 y es el
+color del botón de compra: dos rojos casi iguales que significan cosas distintas —comprá y
+algo salió mal— es peor que no tener un color de error.
+
+**El CTA sube a 2.4rem cuando el esquema es `inverse`.** Ahí el acento vale ÓXIDO CLARO con
+etiqueta CAUCE, que da 4.27:1 — AA para texto grande y no para texto chico (el límite que
+D-031 dejó anotado). En vez de prohibir el esquema, la regla sube el cuerpo justo en ese
+esquema hasta el umbral de texto grande. Se aplica sola, como la prohibición de VADO sobre
+SEDIMENTO del bloque 0. En el esquema por defecto (`background-1`) el CTA da 6.04:1 a
+cualquier tamaño.
+
+**El relleno de la barra de envío va en VADO, no en el acento**, y las tildes tampoco son
+óxido: el único óxido de la pieza es el botón de pago. Es la misma resolución de D-036.
+
+**El texto muteado va en `opacity: 0.78`** y no en un color propio: 7.70 sobre blanco, 6.77
+sobre sedimento y 10.02 sobre CAUCE. Es el recurso del bloque 8, con un punto más de opacidad.
+
+---
+
+### 9. Un hallazgo colateral: `.cauce-page` no existe en el markup
+
+El brief daba por hecho que el foco visible ya estaba resuelto porque
+`.cauce-page :focus-visible` existe en el bloque 3. La regla existe; **la clase no la pone
+ningún archivo del tema.** `grep -rn "cauce-page"` sólo la encuentra en la documentación. O sea
+que esa regla —y la del bloque 1 que impide que un `h1/h2/h3` quede en óxido— nunca aplicaron.
+
+El carrito declara su propio `.cauce-carrito :focus-visible` y queda cubierto. **El arreglo
+general queda pendiente** y es de una línea (agregar `cauce-page` al `<body>` en
+`theme.liquid`), pero toca todas las páginas del sitio y hay que mirar qué títulos cambian de
+color cuando la regla del bloque 1 empiece a aplicarse de verdad. No se hizo acá porque no es
+del carrito.
+
+---
+
+**Verificación.** `theme check`: 59 warnings antes y 59 después, ninguno nuevo en los archivos
+tocados. Dos snippets quedaron huérfanos por el cambio y se borraron
+(`cart-progress-bar.liquid`, que reemplaza `cauce-carrito-envio`, e `icon-remove.liquid`, que
+reemplaza el ícono `tacho` del set CAUCE); dejarlos habría subido el número a 61. Contraste
+medido con la misma calculadora que reprodujo exactamente los valores documentados en D-031 y
+D-045 antes de usarla para los colores nuevos.
+
+**Pendiente de vos.**
+1. Cargar `cauce_umbral_envio_gratis` y `cauce_cuotas` en Configuración del tema → CAUCE.
+   Hasta que estén, tres bloques del carrito no dibujan nada en la tienda (punto 6).
+2. Decidir si existe un beneficio por transferencia (punto 4).
+3. El arreglo de `.cauce-page` (punto 9).
+
+---

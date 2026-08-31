@@ -337,17 +337,48 @@ python -c "import json,re,io;s=io.open('locales/es.json',encoding='utf-8-sig').r
 # Los legales que se editan desde Configuración del tema
 grep -n '"cauce_' config/settings_data.json
 
+# Dónde se publica la leyenda de suplemento
+grep -rn "render 'cauce-disclaimer'" --include=*.liquid --include=*.json .
+
 # Buscar palabras prohibidas en todo el tema
-grep -rniE "cura|trata|previene|alivia|reduce el|mejora la|neuropat|glucem|diabet|gabapentin|pregabalin|dolor|ansiedad" \
-  templates/ sections/cauce-*.liquid sections/*-group.json locales/es.json config/settings_data.json
+grep -rniE "cura|trata|previene|alivia|reduce el|mejora la|neuropat|glucem|diabet|gabapentin|pregabalin|dolor|ansiedad"   templates/ sections/cauce-*.liquid sections/*-group.json snippets/cauce-*.liquid   locales/es.json config/settings_data.json   | grep -viE "cauce-dolor|/dolor[0-9]|oscura|\"dolor\""
 ```
 
-Resultado esperado hoy: **tres coincidencias, las tres inocuas**.
+### Dónde se renderiza `cauce-disclaimer`
 
-| Coincidencia | Por qué está bien |
+Son **cinco** lugares. El texto sale de un solo campo (`settings.cauce_disclaimer_texto`,
+con fallback al locale — ver D-044), así que cambiarlo es atómico; esta lista existe para
+saber dónde se ve.
+
+| Archivo | Qué instancia | Versión |
+|---|---|---|
+| `sections/cauce-legal-bar.liquid` | la barra legal del pie, en todas las páginas | compacta |
+| `templates/product.cauce-landing.json` | bloque `disclaimer` de la PDP | completa |
+| `templates/product.cauce-landing.json` | bloque `cierre` de la landing | compacta |
+| `snippets/cart-drawer.liquid` | bloque `legal_note` del carrito lateral | compacta |
+| `sections/main-cart-items.liquid` | el mismo bloque en `/cart` | compacta |
+
+Los dos últimos entran con el carrito CAUCE (D-046). Son la misma pieza en las dos
+superficies del carrito, no dos redacciones.
+
+### El resultado esperado del último grep
+
+Hoy son **ocho coincidencias: cinco inocuas y tres que ya están abiertas en el §6.**
+
+| Coincidencia | Estado |
 |---|---|
-| `product.cauce-landing.json` → "Una rutina, no un **tratamiento**" | Es una negación. Dice explícitamente que el producto no es un tratamiento, que es justo lo que hay que decir. |
-| `cauce-newsletter.liquid` ×2 → "**trata**r datos personales" | Comentario de código sobre Ley 25.326, no es texto de storefront. |
+| `product.cauce-landing.json` → "Una rutina, no un **tratamiento**" | Inocua. Es una negación: dice explícitamente que el producto no es un tratamiento. |
+| `cauce-newsletter.liquid` ×2 → "**trata**r datos personales" | Inocua. Comentario de código sobre Ley 25.326, no es texto de storefront. |
+| `cauce-solucion.liquid` ×2 → "el bloque de **dolor**" | Inocua. Comentario y `info` del editor que nombran a la sección vecina. |
+| `product.cauce-landing.json:296` → "te arden los pies… **neuropat**ía" | **Abierta.** Es `collapsible_tab_FCtjKz`, ya listado como bloqueante en el §6. |
+| `product.cauce-landing.json:537` → "La **diabet**es de mi papá" | **Abierta.** Es un testimonio de `ss_glow_testimonial_3jmxKc`, §6. |
+| `product.cauce-landing.json:822` → "a medida que **mejora la** absorción" | **Abierta.** Es la sección `progreso`, §6. |
 
-Cualquier cuarta coincidencia hay que mirarla. Si aparece en `templates/`,
-`locales/es.json` o `config/settings_data.json` fuera de esas tres, es un claim que se coló.
+El filtro `grep -v` del final saca dos familias de falsos positivos que aparecieron
+después de escribir esta receta: `cura` matchea dentro de "os**cura**" y la sección
+`cauce-dolor` (D-033) matchea por su propio nombre en cada una de sus clases. Sin ese
+filtro el comando devuelve cuarenta líneas de ruido y deja de servir para lo único que
+sirve, que es notar la coincidencia número nueve.
+
+Cualquier coincidencia que no esté en esa tabla hay que mirarla. Si aparece en
+`templates/`, `locales/es.json` o `config/settings_data.json`, es un claim que se coló.
