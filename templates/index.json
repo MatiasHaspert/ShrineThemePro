@@ -202,7 +202,7 @@
             "icon": "local_shipping",
             "filled_icon": false,
             "title": "Envío a todo el país",
-            "text": "<p>[[PENDIENTE: plazo_envio]] días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
+            "text": "<p>De 3 a 10 días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
           }
         },
         "f2": {
@@ -229,7 +229,7 @@
             "icon": "mail",
             "filled_icon": false,
             "title": "Te contestamos",
-            "text": "<p>[[PENDIENTE: email_contacto]]</p>"
+            "text": "<p>cauce@caucearg.com</p>"
           }
         }
       },
