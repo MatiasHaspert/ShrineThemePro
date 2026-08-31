@@ -259,6 +259,96 @@
     }
   }
 
+  /* ----------------------------------------------------------------------
+     Empujon de envio gratis del carrito: agrega una unidad por AJAX sin salir
+     del drawer (snippets/cauce-carrito-nudge.liquid).
+
+     No se porto el numen-cart-add.js de Numen (128 lineas de DOMParser y
+     replaceWith): este tema ya expone el re-render correcto en sus propios
+     custom elements, y usarlo es mas corto y no se desincroniza si Shrine
+     cambia sus regiones.
+
+       drawer -> <cart-drawer-items>.updateCart() pide las secciones cart-drawer
+                 y cart-icon-bubble y llama a renderContents(data, true), que es
+                 el mismo camino del update de cantidad. El "true" es "no
+                 abras el drawer": ya esta abierto.
+       /cart  -> <cart-items>.updateCart() re-renderiza
+                 #main-cart-items .js-contents y #main-cart-footer .js-contents.
+
+     El boton vive dentro de la region re-renderizada, asi que despues del add
+     la card desaparece sola (el umbral ya esta cruzado) y no hay que resetear
+     nada. Si el add falla, el mensaje va al contenedor de errores que el tema
+     ya usa.
+     -------------------------------------------------------------------- */
+  function cauceCarritoRefrescar() {
+    const objetivo =
+      document.querySelector('cart-drawer-items') || document.querySelector('cart-items');
+    if (objetivo && typeof objetivo.updateCart === 'function') {
+      objetivo.updateCart();
+      return true;
+    }
+    return false;
+  }
+
+  function cauceCarritoError(mensaje) {
+    const caja =
+      document.getElementById('CartDrawer-CartErrors') || document.getElementById('cart-errors');
+    if (caja) caja.textContent = mensaje || '';
+  }
+
+  function cauceCarritoSumar(boton) {
+    const id = boton.dataset.cauceSumar;
+    const rutas = window.routes || {};
+    if (!id || !rutas.cart_add_url) return;
+
+    const etiqueta = boton.querySelector('.cauce-carrito__nudge-label');
+    const original = etiqueta ? etiqueta.textContent : '';
+    if (etiqueta && boton.dataset.cauceSumando) etiqueta.textContent = boton.dataset.cauceSumando;
+    boton.setAttribute('aria-busy', 'true');
+    boton.disabled = true;
+    cauceCarritoError('');
+
+    const cuerpo = new FormData();
+    cuerpo.append('id', id);
+    cuerpo.append('quantity', 1);
+
+    function fallar(mensaje) {
+      if (etiqueta) etiqueta.textContent = original;
+      boton.removeAttribute('aria-busy');
+      boton.disabled = false;
+      cauceCarritoError(mensaje);
+    }
+
+    fetch(rutas.cart_add_url, {
+      method: 'POST',
+      headers: { 'X-Requested-With': 'XMLHttpRequest', Accept: 'application/javascript' },
+      body: cuerpo,
+    })
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (data) {
+        // El endpoint de Shopify devuelve `status` solo cuando el add fallo
+        // (sin stock, limite por pedido).
+        if (data && data.status) {
+          fallar(data.description || data.message || '');
+          return;
+        }
+        if (!cauceCarritoRefrescar()) window.location.reload();
+      })
+      .catch(function () {
+        fallar((window.cartStrings && window.cartStrings.error) || '');
+      });
+  }
+
+  document.addEventListener('click', function (e) {
+    const boton = e.target.closest('[data-cauce-sumar]');
+    if (!boton) return;
+    e.preventDefault();
+    if (boton.disabled) return;
+    cauceCarritoSumar(boton);
+  });
+
   if (!customElements.get('cauce-tabs')) customElements.define('cauce-tabs', CauceTabs);
   if (!customElements.get('cauce-ugc')) customElements.define('cauce-ugc', CauceUgc);
   if (!customElements.get('cauce-hero')) customElements.define('cauce-hero', CauceHero);
