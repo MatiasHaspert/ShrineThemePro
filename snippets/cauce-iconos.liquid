@@ -139,4 +139,44 @@
     <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
       <path d="m4.5 12.5 5 5.5L19.5 6"/>
     </svg>
+  {%- comment -%}
+    Los cuatro que siguen son del carrito (drawer y /cart, ver bloque 17 de
+    cauce-brand.css). Van aca y no como <svg> suelto en el markup por D-029.
+
+    Para el boton de cerrar del drawer NO se agrego un glifo nuevo: se reusa
+    'cruz', que ya es una equis a trazo. Un segundo glifo identico byte a byte es
+    justo lo que D-029 descarto cuando reescribio material-icon.
+  {%- endcomment -%}
+  {%- when 'tacho' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M4 6.5h16M9.5 6.5V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v1.5"/>
+      <path d="m6.5 6.5.8 12a1.5 1.5 0 0 0 1.5 1.4h6.4a1.5 1.5 0 0 0 1.5-1.4l.8-12"/>
+    </svg>
+
+  {%- comment -%}
+    Menos y mas son los botones del stepper de cantidad. El trazo cruza casi todo el
+    viewBox porque se dibujan a 1.4rem dentro de un area de toque de 4.4rem: un glifo
+    chico en una caja grande se lee como un error de alineacion (mismo criterio que
+    'gota' y 'rayo' en D-034).
+  {%- endcomment -%}
+  {%- when 'menos' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M4.5 12h15"/>
+    </svg>
+
+  {%- when 'mas' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M12 4.5v15M4.5 12h15"/>
+    </svg>
+
+  {%- comment -%}
+    Bolsa del empty state. Es una bolsa y no un changuito porque settings.cart_icon
+    del tema ya esta en 'bag_2': el glifo del header y el del carrito vacio tienen que
+    ser el mismo objeto.
+  {%- endcomment -%}
+  {%- when 'bolsa' -%}
+    <svg class="cauce-icono {{ cauce_clase }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M5.2 7.5h13.6l1 13a1.5 1.5 0 0 1-1.5 1.6H5.7a1.5 1.5 0 0 1-1.5-1.6Z"/>
+      <path d="M8.7 10.5V6.2a3.3 3.3 0 0 1 6.6 0v4.3"/>
+    </svg>
 {%- endcase -%}

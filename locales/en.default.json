@@ -546,6 +546,23 @@
       "rapipago": "Rapipago",
       "transferencia": "Transferencia bancaria",
       "efectivo": "Efectivo"
+    },
+    "carrito": {
+      "reaseguro_arrepentimiento": "{{ dias }} días de arrepentimiento",
+      "reaseguro_iva": "Precio final con IVA",
+      "reaseguro_envio": "Envío a todo el país",
+      "envio_falta": "Te faltan [monto] para el envío gratis",
+      "envio_logrado": "Tenés el envío gratis",
+      "envio_progreso": "Progreso hacia el envío gratis",
+      "precio_por_dia": "{{ monto }} por día de uso",
+      "nudge_titulo": "Estás cerca del envío gratis",
+      "nudge_texto": "Con una unidad más de {{ producto }} el envío te sale gratis.",
+      "nudge_sumar": "Sumar",
+      "nudge_sumando": "Sumando…",
+      "nudge_sumar_aria": "Sumar una unidad de {{ producto }}",
+      "vacio_titulo": "Tu carrito está vacío",
+      "vacio_texto": "Todavía no agregaste nada.",
+      "vacio_cta": "Ver los productos"
     }
   }
 }
