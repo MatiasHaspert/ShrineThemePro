@@ -13,6 +13,7 @@
       "type": "cauce-hero",
       "settings": {
         "alt": "",
+        "video": "shopify://files/videos/descarga (14).mp4",
         "posicion_media": "derecha",
         "orden_mobile": "texto",
         "relacion": "1 / 1",
