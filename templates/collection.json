@@ -130,10 +130,10 @@
       "type": "cauce-newsletter",
       "name": "CAUCE · Suscripcion",
       "settings": {
-        "volanta": "",
+        "volanta": "Novedades",
         "titulo": "Poco y cuando valga la pena",
         "heading_size": "h2",
-        "bajada": "",
+        "bajada": "<p>Avisamos cuando sale una fórmula nueva y cuando se publica el análisis de un lote. Nada más que eso.</p>",
         "boton": "Suscribirme",
         "pagina_privacidad": "",
         "color_scheme": "background-2",
