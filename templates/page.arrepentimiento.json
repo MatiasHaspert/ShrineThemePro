@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -15,6 +24,7 @@
           "type": "heading",
           "settings": {
             "title": "Botón de arrepentimiento",
+            "title_highlight_color": "#6d388b",
             "heading_size": "h0"
           }
         },
@@ -30,12 +40,20 @@
         "t"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "desktop_content_position": "left",
         "content_alignment": "left",
         "full_width": false,
         "color_scheme": "background-1",
         "padding_top": 64,
-        "padding_bottom": 24
+        "padding_bottom": 24,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
       }
     },
     "form": {
@@ -87,18 +105,42 @@
         "f3"
       ],
       "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "title": "Solicitud de arrepentimiento",
+        "title_highlight_color": "#6d388b",
         "heading_size": "h2",
         "button_full_width": false,
         "color_scheme": "background-1",
+        "success_icon": "check_circle",
+        "success_icon_filled": false,
+        "success_text_color": "#28c100",
+        "success_bg_color": "#f2ffed",
+        "success_border_radius": 8,
+        "success_border_width": 1,
+        "success_border_color": "#28c100",
+        "errors_icon": "error",
+        "errors_icon_filled": false,
+        "errors_text_color": "#ff0000",
+        "errors_bg_color": "#fff5f5",
+        "errors_border_radius": 8,
+        "errors_border_width": 1,
+        "errors_border_color": "#ff0000",
         "padding_top": 0,
-        "padding_bottom": 24
+        "padding_bottom": 24,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff"
       }
     },
     "nota": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<div class=\"page-width page-width--narrow rte\">\n  <h2>Qué pasa después</h2>\n  <ol>\n    <li>Te llega un email con la constancia de tu solicitud dentro de las 24 horas. Lo pide la Resolución SCI 424/2020.</li>\n    <li>Te escribimos con las instrucciones para devolver el producto. Los gastos de devolución corren por nuestra cuenta, como fija el artículo 34 de la Ley 24.240.</li>\n    <li>Cuando recibimos el producto te devolvemos el importe pagado. [[PENDIENTE: plazo_reembolso]]</li>\n  </ol>\n  <p>Si el formulario no te funciona, escribinos a {% render 'cauce-dato-legal', valor: settings.cauce_email, clave: 'email' %} o llamanos al {% render 'cauce-dato-legal', valor: settings.cauce_telefono, clave: 'telefono' %}. Vale igual: la solicitud queda hecha por cualquiera de los tres medios.</p>\n</div>",
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<div class=\"page-width page-width--narrow rte\">\n  <h2>Qué pasa después</h2>\n  <ol>\n    <li>Te llega un email con la constancia de tu solicitud dentro de las 24 horas. Lo pide la Resolución SCI 424/2020.</li>\n    <li>Te escribimos con las instrucciones para devolver el producto. Los gastos de devolución corren por nuestra cuenta, como fija el artículo 34 de la Ley 24.240.</li>\n    <li>Cuando recibimos el producto te devolvemos el importe pagado. El plazo de reembolso es de hasta 3 días.</li>\n  </ol>\n  <p>Si el formulario no te funciona, escribinos a {% render 'cauce-dato-legal', valor: settings.cauce_email, clave: 'email' %} o llamanos al {% render 'cauce-dato-legal', valor: settings.cauce_telefono, clave: 'telefono' %}. Vale igual: la solicitud queda hecha por cualquiera de los tres medios.</p>\n</div>",
         "color_scheme": "background-1",
         "padding_top": 0,
         "padding_bottom": 64
