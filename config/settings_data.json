@@ -188,6 +188,7 @@
     "cauce_disclaimer_texto": "Este producto es un suplemento dietario. No reemplaza una alimentación variada.",
     "cauce_disclaimer_consulta": "Consultá a tu médico.",
     "cauce_rnpa": "",
+    "cauce_umbral_envio_gratis": 50000,
     "cauce_cuotas": 3,
     "checkout_accent_color": "#dd1d1d",
     "checkout_button_color": "#dd1d1d",
