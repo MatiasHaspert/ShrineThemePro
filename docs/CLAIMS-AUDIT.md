@@ -225,27 +225,26 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
 - [x] ~~R6b · La cinta "ENVÍO GRATIS" del escalón 3~~ — **cerrado 2026-09-09 (D-047c), y hoy
       todavía más cerrado.** Se sacó porque con el umbral en $50.000 el escalón 2 también lo
       cruzaba y anunciarlo sólo en el 3 era exclusividad falsa. Desde el 2026-09-10 el umbral es
-      $80.000 y el escalón 3 vale $77.900: la cinta ya no sería exclusividad falsa sino promesa
-      falsa a secas. No vuelve mientras el 3 no cruce el umbral.
-- [ ] **La tarifa de envío gratis tiene que existir en Shopify.** `cauce_umbral_envio_gratis`
-      está cargado en $80.000 y ya lo publica la barra de anuncio, el acordeón de envíos, la
-      barra de progreso del carrito (D-046) y la nota del bloque de oferta. El setting del tema
-      **sólo dibuja**: si no hay una tarifa real de envío sin cargo desde $80.000 en
-      Configuración → Envíos, esas cuatro superficies prometen algo que el checkout no cumple
-      (Ley 24.240 art. 7 y 8).
-- [ ] **BLOQUEANTE · Ningún escalón llega al envío gratis (D-049).** Con el umbral en $80.000 y
-      el escalón 3 en $77.900, la oferta más grande de la grilla queda **$2.100 por debajo** del
-      mínimo, y el catálogo tiene un solo producto con el cual completarlo. La nota al pie sigue
-      siendo cierta como regla, así que no es publicidad engañosa, pero cierra el bloque de
-      oferta con un beneficio que ninguna de las tres opciones alcanza. Peor: hoy el carrito de
-      3 frascos suma $149.700 reales y sí cruza el umbral, así que **cargar los descuentos
-      automáticos de R6 va a apagar el envío gratis** que hoy se ve. Hay que resolver las dos
-      juntas: o el umbral baja por debajo de $77.900 —con la tarifa real y los tres textos que
-      hoy dicen $80.000—, o la nota sale del bloque de oferta.
+      $75.000 y el escalón 3 vale $77.900: el 3 es otra vez el único que cruza, así que la
+      cinta sería **verdadera** si volviera (D-049b). No se repuso por criterio comercial —el
+      envío gratis exclusivo del 3 empuja en contra del 2, que es la estrella—, no por riesgo
+      legal. Si se decide reponerla, es un campo: `option_3_badge`.
+- [ ] **BLOQUEANTE · La tarifa de envío gratis tiene que existir en Shopify.**
+      `cauce_umbral_envio_gratis` está cargado en **$75.000** y ese número ya lo publican cuatro
+      superficies: la barra de anuncio, el acordeón de envíos, la nota del bloque de oferta y la
+      barra de progreso del carrito (D-046). El setting del tema **sólo dibuja**: si no hay una
+      tarifa real de envío sin cargo desde $75.000 en Configuración → Envíos, las cuatro
+      prometen algo que el checkout no cumple (Ley 24.240 art. 7 y 8).
+- [x] ~~Ningún escalón llega al envío gratis~~ — **cerrado 2026-09-10 (D-049b).** Con el umbral
+      en $80.000 y el escalón 3 bajado a $77.900 no llegaba ninguno. El umbral bajó a $75.000 y
+      el pack de 3 lo cruza por $2.900, en los dos estados: con los descuentos automáticos
+      cargados ($77.900) y sin ellos ($149.700). Cargar R6 ya no apaga el envío gratis.
 - [ ] Reescribir a mano los dos precios que el tema no calcula en el bloque de oferta: el
-      `$10.000` del pill del escalón 2 (si cambia el precio de 1 o de 2 frascos) y el `$80.000`
-      de la nota (si cambia `cauce_umbral_envio_gratis`). D-047, D-047c y D-049. El precio del
-      escalón 3 **no** está en esta lista: lo calcula el tema desde `option_3_fixed_amount_off`.
+      `$10.000` del pill del escalón 2 (si cambia el precio de 1 o de 2 frascos) y el `$75.000`
+      de la nota (si cambia `cauce_umbral_envio_gratis`; el mismo número está escrito a mano
+      también en la barra de anuncio y en el acordeón de envíos, o sea tres lugares). D-047,
+      D-047c, D-049 y D-049b. El precio del escalón 3 **no** está en esta lista: lo calcula el
+      tema desde `option_3_fixed_amount_off`.
 - [ ] **BLOQUEANTE · La cinta "EL MÁS ELEGIDO" del escalón 2 (D-047b).** Se puso el 2026-09-09
       para ver cómo quedaba. Es una afirmación sobre la conducta de otros compradores y hoy no
       hay ventas que la respalden: Res. SC 270/2020 y art. 8 de la Ley 24.240, el mismo motivo

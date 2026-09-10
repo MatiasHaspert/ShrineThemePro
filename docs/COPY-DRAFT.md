@@ -95,7 +95,7 @@ precios comerciales reales, y el escalón 3 bajó a $77.900 el 2026-09-10.
 | Escalón 2 | cinta **EL MÁS ELEGIDO** · **2 frascos** · pill **El 2º sale $10.000** · $29.950 por frasco · **$59.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$59.900 **y ventas reales que respalden "el más elegido"** |
 | Escalón 3 | **3 frascos** · pill *(duración)* · $25.966,67 por frasco · **$77.900** ~~$149.700~~ | `dato` — exige el descuento automático. El precio por frasco lo calcula el tema y no da redondo: $77.900 no es divisible por 3 |
 | Nota al pie 1 | El precio tachado es lo que te costaría llevar esa misma cantidad de a un frasco. | `forma` |
-| Nota al pie 2 | Envío gratis en pedidos desde $80.000. | `dato` — exige la tarifa real de envío sin cargo, **y hoy ningún escalón llega**: el más caro son $77.900 (D-049) |
+| Nota al pie 2 | Envío gratis en pedidos desde $75.000. | `dato` — exige la tarifa real de envío sin cargo. Sólo lo alcanza el escalón 3, por $2.900 (D-049b) |
 
 "frasco" es un valor de setting del template, no está en el Liquid: para un SKU en polvo
 se cambia a "envase" desde el editor sin tocar código.

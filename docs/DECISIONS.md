@@ -2082,12 +2082,59 @@ carrito (D-046) dice "tenés el envío gratis". El día que se carguen los descu
 O sea que arreglar la discrepancia de precios, que es lo urgente, va a romper el envío gratis de
 paso. Las dos cosas hay que resolverlas juntas.
 
-**Queda abierto, y es decisión del comercio.** O el umbral baja por debajo de $77.900 —con la
-tarifa real en Configuración → Envíos y los tres textos que hoy dicen $80.000—, o la nota sale
-del bloque de oferta. Está en el §6 de CLAIMS-AUDIT.
+**Resuelto el mismo día en D-049b:** el umbral baja a $75.000.
 
 **Lo que no se tocó.** La cinta `EL MÁS ELEGIDO` y el pill `El 2º sale $10.000` del escalón 2
 siguen igual: ninguno de los dos depende del precio del escalón 3. El `$10.000` sigue siendo el
 único precio hardcodeado del bloque.
+
+---
+
+## D-049b · 2026-09-10 · El umbral de envío gratis baja a $75.000 y el pack de 3 vuelve a cruzarlo
+
+**Decisión.** `cauce_umbral_envio_gratis` pasa de `80000` a **`75000`**, y con él los tres textos
+que lo escriben a mano:
+
+| Superficie | Archivo | Antes | Ahora |
+|---|---|---|---|
+| Barra de anuncio | `sections/header-group.json` | `Envío gratis en compras desde $80000` | `…desde $75.000` |
+| Nota del bloque de oferta | `templates/product.cauce-landing.json` | `Envío gratis en pedidos desde $80.000.` | `…desde $75.000.` |
+| Acordeón de envíos | `templates/product.cauce-landing.json` | `Envío sin cargo en compras desde $80000.` | `…desde $75.000.` |
+| Barra de progreso y empujón del carrito | `config/settings_data.json` | `80000` | `75000` |
+
+De paso se corrige la tipografía: dos de esos textos decían **$80000** sin separador de miles,
+contra el `$80.000` de la nota. Los cuatro dicen ahora el mismo número con el mismo formato.
+
+**Por qué $75.000 y no $77.900 exacto.** $77.900 dejaba el pack de 3 justo en el borde, sin un
+peso de margen: cualquier baja futura de precio, o un cupón que reduzca el subtotal, lo tiraba
+abajo del umbral sin que nadie se enterara. $75.000 es redondo, deja **$2.900 de aire** y se lee
+mejor en la barra de anuncio.
+
+**Quién cruza ahora:**
+
+| Escalón | Total | ¿Cruza los $75.000? |
+|---|---|---|
+| 1 frasco | $49.900 | No, por $25.100 |
+| 2 frascos | $59.900 | No, por $15.100 |
+| 3 frascos | $77.900 | **Sí, por $2.900** |
+
+**Esto cancela el efecto cruzado que preocupaba en D-049.** Con el umbral en $80.000 el carrito
+de 3 frascos cruzaba hoy —$149.700 sin descuentos— y dejaba de cruzar el día que se cargaran los
+descuentos automáticos, con lo cual arreglar R6 apagaba el envío gratis de rebote. Con el umbral
+en $75.000 el pack de 3 cruza en los dos estados, $149.700 y $77.900. El beneficio ya no depende
+de cuándo se carguen los descuentos.
+
+**El escalón 3 vuelve a ser el único con envío gratis, y la cinta no se puso.** D-047c sacó la
+cinta `ENVÍO GRATIS` del escalón 3 porque con el umbral en $50.000 el escalón 2 también cruzaba y
+anunciarlo sólo en el 3 era exclusividad falsa. Ese motivo ya no existe: a $75.000 el 3 es el
+único que llega. La cinta sería verdadera si volviera. **No la puse igual**, porque el slot está
+libre pero el argumento de D-047 no cambió: el envío gratis exclusivo del 3 es la palanca más
+fuerte de la grilla y empuja en contra del 2, que es el escalón que se quiso destacar y el único
+que hoy tiene cinta. Reponerla es una decisión comercial, no técnica; si se pide, es un campo
+(`option_3_badge`).
+
+**Sigue abierto.** El setting del tema **sólo dibuja**. La tarifa real de envío sin cargo desde
+$75.000 tiene que existir en Configuración → Envíos, o las cuatro superficies prometen algo que
+el checkout no cumple (Ley 24.240 art. 7 y 8). Está en el §6 de CLAIMS-AUDIT.
 
 ---
