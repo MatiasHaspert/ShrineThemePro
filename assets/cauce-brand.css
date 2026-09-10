@@ -3337,6 +3337,24 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   cursor: not-allowed;
 }
 
+/* Candado y flecha del CTA. Dos cosas se salen del set a proposito:
+
+   - El tamano va en em y no en rem. El CTA salta de 1.8 a 2.4rem cuando el esquema
+     es oscuro (la regla de arriba, por contraste); en em los dos glifos siguen ese
+     salto solos y no hay que repetir el breakpoint de esquema para los iconos.
+   - El color pisa var(--cauce-icono) del set, que esta calibrado contra SEDIMENTO.
+     Aca el fondo es OXIDO y la etiqueta ya resolvio su contraste: los iconos toman
+     currentColor para no poder discrepar del texto que acompanan.
+
+   El trazo sube de 1.4 a 2 porque a 20px sobre un fondo lleno el trazo fino del set
+   se lava. */
+.cauce-carrito .cauce-carrito__cta .cauce-icono--cta {
+  width: 1.15em;
+  height: 1.15em;
+  color: currentColor;
+  stroke-width: 2;
+}
+
 .cauce-carrito__cta-sep {
   width: 1px;
   height: 2rem;

@@ -345,11 +345,13 @@
                     disabled
                   {% endif %}
                 >
+                  {% render 'cauce-iconos', icono: 'candado', clase: 'cauce-icono--cta' %}
                   <span>{{ 'sections.cart.checkout' | t }}</span>
                   {%- if block.settings.mostrar_monto -%}
                     <span class="cauce-carrito__cta-sep" aria-hidden="true"></span>
                     <span class="cauce-carrito__cta-monto">{{ cart.total_price | money }}</span>
                   {%- endif -%}
+                  {% render 'cauce-iconos', icono: 'flecha', clase: 'cauce-icono--cta' %}
                 </button>
                 <div class="tnc-checkbox-warning tnc-checkbox-warning--under-button hidden"></div>
                 {%- if block.settings.mostrar_pagos_rapidos and additional_checkout_buttons -%}

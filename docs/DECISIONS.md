@@ -1973,3 +1973,41 @@ $50.000 tiene que existir en Configuración → Envíos, o cuatro superficies pr
 el checkout no cumple. Está en el §6 de CLAIMS-AUDIT.
 
 ---
+
+## D-048 · 2026-09-10 · El CTA de pago dice "Pago seguro", y el botón del checkout no se toca desde acá
+
+**Decisión.** `sections.cart.checkout` pasa de "Pagar pedido" a **"Pago seguro"**, y los dos
+botones que la usan con diseño CAUCE —`snippets/cart-drawer.liquid` y
+`sections/main-cart-footer.liquid`— la envuelven entre dos iconos del set: `candado` antes y
+`flecha` después. La flecha es nueva en `snippets/cauce-iconos.liquid`.
+
+**Dónde queda la flecha.** Al final del botón, **después** del monto, no pegada al texto. El
+pedido literal era "candado · Pago seguro · flecha", y así se ve exacto en el drawer cuando
+`mostrar_monto` está apagado. Con el monto prendido la flecha igual cierra el botón, porque la
+flecha significa *avanzar con esto*, y lo que avanza es el botón entero, no la palabra. Pegada
+al texto queda `Pago seguro → | $59.900`, con la punta entrando en el separador.
+
+**Los iconos se salen del set en dos cosas, a propósito** (regla en `cauce-brand.css`, bloque
+"CTA de pago"): el tamaño va en `em` y no en `rem`, para que los glifos sigan solos el salto de
+1.8 a 2.4rem que el CTA hace sobre esquema oscuro; y el color se fuerza a `currentColor` en vez
+de `var(--cauce-icono)`, que está calibrado contra SEDIMENTO y acá el fondo es OXIDO. El trazo
+sube de 1.4 a 2: a 20px sobre fondo lleno el trazo del set se lava.
+
+**Lo que NO se pudo hacer desde el repo.** El botón de pagar del checkout. Se cambió
+`shopify.checkout.general.pay_now_button_label` a "🔒 Pago seguro" para que el archivo no
+contradiga la intención, **pero esa clave es inerte**: Shopify guarda las traducciones de
+checkout y de los mails fuera de los locale files del tema, en el editor de idiomas. El lugar
+real es **Configuración → Idiomas → Pago y sistema** (o Translate & Adapt). Y ahí el candado
+sólo puede ser el emoji 🔒, porque es un string plano: no entra SVG, y el glifo lo dibuja cada
+sistema operativo distinto.
+
+**Esto corrige D-007.** Ese D dice que a `es` "le faltaban 8 claves, todas bajo
+`shopify.checkout.*`" y que "se completaron a mano", dando a entender que gobiernan el
+checkout. No lo hacen. Las 8 claves pueden quedarse —no molestan— pero no son el lugar donde
+se edita el checkout.
+
+**Sigue abierto.** Confirmar en el admin que el botón del checkout diga lo mismo que el
+carrito. Mientras no se toque, el carrito promete "Pago seguro" y el checkout sigue diciendo
+"Pagar ahora": no es una promesa falsa, pero es un corte de tono en el paso más delicado.
+
+---
