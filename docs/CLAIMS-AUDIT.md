@@ -113,7 +113,7 @@ Vale registrarlo: la ausencia es una decisión, no un olvido.
 > decisión de descartarlo sigue siendo la correcta mientras no exista la encuesta detrás: el
 > bloqueante está abierto en §6 y la sección se puede vaciar desde el editor. Ver D-037.
 | Card de **biodisponibilidad** | "Se absorbe mejor" es eficacia comparativa, y el COA no lo dice | Card "Origen del ingrediente" (D-021) |
-| Badge "el más elegido" en el escalón de 2 | Dato de comportamiento que no tenemos | Sin badge |
+| Badge "el más elegido" en el escalón de 2 | Dato de comportamiento que no tenemos | ~~Descartado~~ · **VOLVIÓ el 2026-09-09** a pedido, como previsualización. Es un claim de popularidad sin dato detrás: bloqueante abierto en §6 (D-047b) |
 | `AggregateRating` en el JSON-LD | No hay reseñas reales | No se emite (D-006) |
 | Reseñas de clientes | Ídem | Sección desactivada (D-019) |
 | Sellos *gluten free* / *lab tested* | Regla 5 del brandboard y sellos sin certificación | Nada |
@@ -175,6 +175,13 @@ calcula el tema, pero el descuento real lo tiene que aplicar un **descuento auto
 Shopify** con las mismas cantidades. Si no coinciden, la PDP muestra un precio y el carrito
 cobra otro.
 
+> **Dejó de ser teórico el 2026-09-09.** Hasta D-047 los tres escalones estaban en descuento 0:
+> mostraban el precio multiplicado, que es exactamente lo que cobra el carrito, y la
+> discrepancia era de $0. Ahora la PDP promete **$59.900** por dos y **$81.900** por tres, y sin
+> los descuentos automáticos cargados el carrito cobra **$99.800** y **$149.700**. La diferencia
+> es de $39.900 y $67.800 por pedido, en contra del cliente. Es lo primero que hay que cargar o
+> lo primero que hay que revertir; no hay estado intermedio publicable.
+
 ### R7 · El producto no tiene asignado el template — **CERRADO 2026-08-29**
 
 Figuraba con "Producto predeterminado" y la landing solo se veía agregando
@@ -208,7 +215,24 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
 - [ ] URL del formulario de arrepentimiento (la página `page.arrepentimiento` ya existe)
 - [ ] Imagen y URL de Data Fiscal AFIP
 - [ ] Redactar las cuatro políticas en Configuración → Políticas (el footer las muestra solo si existen)
-- [ ] R6 · Descuentos automáticos que coincidan con los escalones, o poner los escalones en 0
+- [ ] **BLOQUEANTE · R6 · Los descuentos automáticos de los escalones (D-047).** Dos descuentos
+      automáticos de Shopify: cantidad 2 → precio final $59.900 (−$39.900) y cantidad 3 → precio
+      final $81.900 (−$67.800). Tienen que coincidir al peso con `option_2_fixed_amount_off` y
+      `option_3_fixed_amount_off` del bloque `ofertas`. Si no se cargan, los escalones vuelven a
+      `0` y las dos cintas salen.
+- [ ] **BLOQUEANTE · La cinta "ENVÍO GRATIS" del escalón 3 (D-047).** Hoy no existe ninguna
+      tarifa de envío gratis y `cauce_umbral_envio_gratis` está vacío. Crear la tarifa real por
+      encima de $81.900 y cargar el umbral en Configuración → CAUCE (el mismo campo enciende la
+      barra de progreso del carrito, D-046), o sacar la cinta.
+- [ ] Reescribir el `$10.000` del pill del escalón 2 si cambia el precio de 1 o de 2 frascos.
+      Es el único precio del bloque que no calcula el tema (D-047).
+- [ ] **BLOQUEANTE · La cinta "EL MÁS ELEGIDO" del escalón 2 (D-047b).** Se puso el 2026-09-09
+      para ver cómo quedaba. Es una afirmación sobre la conducta de otros compradores y hoy no
+      hay ventas que la respalden: Res. SC 270/2020 y art. 8 de la Ley 24.240, el mismo motivo
+      por el que el §4 la había descartado y por el que las reseñas están apagadas (D-019) y no
+      se emite `AggregateRating` (D-006). Es coherente sostenerla **sólo** si sale de los pedidos
+      reales de Shopify. Confirmar con los datos, o volver la cinta a la aritmética marginal
+      (`EL 2º FRASCO POR $10.000`), que dice lo mismo en fuerza persuasiva y es verificable.
 
 **Revisión**
 

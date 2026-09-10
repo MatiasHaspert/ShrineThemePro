@@ -1838,3 +1838,102 @@ D-045 antes de usarla para los colores nuevos.
 3. El arreglo de `.cauce-page` (punto 9).
 
 ---
+
+## D-047 · 2026-09-09 · Los escalones dejan de ser display neutro: precios reales y el 2 como estrella
+
+**Decisión.** El bloque `ofertas` de `product.cauce-landing.json` pasa de descuento 0 (D-017) a
+los tres precios comerciales, cargados como `fixed_amount_off` sobre el precio de la variante:
+
+| Escalón | Cant. | `fixed_amount_off` | Total | Por frasco | Tachado |
+|---|---|---|---|---|---|
+| 1 | 1 | `0` | $49.900 | $49.900 | — (queda oculto: compare = price) |
+| 2 | 2 | `39900` | **$59.900** | **$29.950** | $99.800 |
+| 3 | 3 | `67800` | $81.900 | $27.300 | $149.700 |
+
+Se usa **monto fijo y no porcentaje** porque los porcentajes reales son 39,98 % y 45,29 %:
+redondear a 40 % y 45 % sobredeclara el descuento, y eso es art. 8 de la Ley 24.240. El monto
+en pesos es exacto y además es el número grande en ARS.
+
+**Cómo se señala el escalón 2 sin inventar datos.** El §4 de CLAIMS-AUDIT descartó el badge
+*"el más elegido"* por ser un dato de comportamiento que no tenemos. Sigue descartado. El 2
+gana por tres vías que son todas verificables contra la tabla de precios:
+
+1. **`preselected: option_2`** más el indicador de seleccionado (ya venía así).
+2. **El badge dice la aritmética marginal:** `EL 2º FRASCO POR $10.000`. Es literal —
+   $59.900 − $49.900 = $10.000— y es la frase más fuerte que permite esta grilla.
+3. **La caption es la misma columna en las tres filas:** `[price_each] por frasco`. El salto
+   real vive ahí: −$19.950 del 1 al 2, y sólo −$2.650 del 2 al 3. La asimetría *es* el
+   argumento, y no hay que afirmarla porque se lee.
+
+**El `[duracion]` se muda de la caption al pill de beneficio.** `snippets/text-with-price.liquid`
+es una cadena `if/elsif`: **resuelve un solo token por campo**. La caption no podía tener a la
+vez la duración y el precio por unidad, y el precio por unidad es lo que hace comparable la
+grilla. El pill mantiene el guarda de D-003 (si faltan los metafields de dosis, `[duracion]`
+queda en blanco y el pill no renderiza) porque el token sigue solo en su campo.
+
+**Los pills bajan de `accent-2` a `text`.** Con los badges nuevos en VADO, dejar también los
+pills en VADO ponía dos acentos por fila. Jerarquía: cinta VADO > pill TINTA contorneado >
+ÓXIDO sólo en el botón (regla de D-016/D-031, intacta).
+
+**Bloque nuevo `nota_precios`.** `.quantity-break__compare-price` lleva `text-decoration:
+line-through` sobre todo el elemento, así que aclarar dentro del campo tacharía también la
+aclaración. La nota va abajo, una sola vez para los tres escalones: *"El precio tachado es lo
+que te costaría llevar esa misma cantidad de a un frasco."* Sin eso, $99.800 tachado se lee
+como precio anterior, y nunca lo fue — es el mismo problema que R1 le marca al badge de
+*"COMPRA 1 LLEVA 1 GRATIS"* de las imágenes de Noverly.
+
+**Lo que queda hardcodeado, a propósito.** El `$10.000` del badge del escalón 2 es el único
+precio escrito a mano del bloque; todo lo demás lo calcula el tema. No hay token para el costo
+marginal de la unidad siguiente. **Si cambia cualquiera de los dos primeros precios, ese badge
+miente hasta que alguien lo edite.** Vive en `templates/`, así que lo levanta el grep del §7 de
+CLAIMS-AUDIT.
+
+**Advertencia de D-017 y R6, sin cambios y ahora urgente.** Los escalones siguen siendo
+**display**. Con esto cargado, la PDP promete $59.900 y $81.900 y el carrito cobra $99.800 y
+$149.700 hasta que existan los **descuentos automáticos de Shopify** por cantidad con los
+mismos montos. Antes de este cambio la discrepancia era de $0 y no había nada que romper; ahora
+es de $39.900 y $67.800. Es art. 7 y 8 de la Ley 24.240, no UX.
+
+**El envío gratis del escalón 3 tiene el mismo problema.** El badge lo promete y hoy
+`cauce_umbral_envio_gratis` está vacío y no hay tarifa de envío gratis configurada. O existe la
+tarifa real por encima de $81.900 — con el umbral cargado, que además enciende la barra de
+progreso del carrito (D-046) —, o el badge sale.
+
+**Tensión comercial que dejo anotada.** El envío gratis exclusivo del escalón 3 empuja en
+contra del escalón 2, que es el que se quiso destacar, y es la palanca más fuerte de la grilla.
+Es una decisión del negocio, no del tema: se pidió así y así quedó. Si el 3 termina
+canibalizando al 2 no es un bug del bloque.
+
+---
+
+## D-047b · 2026-09-09 · La cinta del escalón 2 pasa a "El más elegido", y eso reabre lo que el §4 había cerrado
+
+**Qué cambió.** A pedido, para previsualizar:
+
+| Slot | Antes (D-047) | Ahora |
+|---|---|---|
+| `option_2_badge` | `EL 2º FRASCO POR $10.000` | `EL MÁS ELEGIDO` |
+| `option_2_benefit` | `[duracion]` | `El 2º sale $10.000` |
+
+**Por qué el costo marginal baja al pill y no se borra.** El slot de cinta es uno solo, y la
+aritmética del segundo frasco es el argumento más fuerte y verificable de la grilla. El pill se
+apila debajo del label (`.quantity-break__label` es `flex-direction: column`) y lleva
+`white-space: nowrap`, así que tiene renglón propio y entra completo en mobile. El escalón 2
+queda como el único con dos slots ocupados, lo que lo destaca más que antes.
+
+**Lo que se pierde.** El `[duracion]` del escalón 2. Los escalones 1 y 3 lo conservan, así que la
+columna de pills queda dispareja; el 2 se lee como la fila distinta, que es el efecto buscado. Si
+los metafields de dosis siguen vacíos, los pills de 1 y 3 no renderizan y el del 2 sí, y el
+contraste es todavía mayor.
+
+**Lo que hay que mirar.** El §4 de CLAIMS-AUDIT había descartado este badge por ser un dato de
+comportamiento que no tenemos, y es la misma razón por la que las reseñas están apagadas (D-019) y
+por la que no se emite `AggregateRating` (D-006). Con la cinta puesta, la página afirma algo sobre
+la conducta de otros compradores por primera vez. Si hay pedidos que lo respalden, se sostiene y
+esta decisión pasa a firme; si no, es Res. SC 270/2020. **Queda como bloqueante en el §6**, no
+como decisión cerrada, porque se pidió para ver cómo quedaba y no como resolución del punto.
+
+**Cómo se revierte.** Dos campos del bloque `ofertas` en `templates/product.cauce-landing.json`:
+`option_2_badge` vuelve a `EL 2º FRASCO POR $10.000` y `option_2_benefit` a `[duracion]`.
+
+---

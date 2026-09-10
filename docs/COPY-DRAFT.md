@@ -85,18 +85,35 @@ marca y conviene que se repita.
 
 ### Selector de oferta
 
+Actualizado en D-047: los `[[PENDIENTE: descuento_xN]]` se resolvieron con los precios
+comerciales reales.
+
 | Campo | Texto | Riesgo |
 |---|---|---|
-| Encabezado | Elegí tu cantidad | `forma` |
-| Escalón 1 | 1 frasco · *(duración calculada)* | `forma` |
-| Escalón 2 | 2 frascos · *(duración)* · pill `[[PENDIENTE: descuento_x2]]` | `pendiente` |
-| Escalón 3 | 3 frascos · *(duración)* · pill `[[PENDIENTE: descuento_x3]]` | `pendiente` |
+| Encabezado | Cuantos más frascos, más barato cada uno | `forma` |
+| Escalón 1 | **1 frasco** · pill *(duración)* · $49.900 por frasco · **$49.900** | `forma` |
+| Escalón 2 | cinta **EL MÁS ELEGIDO** · **2 frascos** · pill **El 2º sale $10.000** · $29.950 por frasco · **$59.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$59.900 **y ventas reales que respalden "el más elegido"** |
+| Escalón 3 | cinta **ENVÍO GRATIS** · **3 frascos** · pill *(duración)* · $27.300 por frasco · **$81.900** ~~$149.700~~ | `dato` — exige el descuento automático **y** la tarifa de envío gratis |
+| Nota al pie | El precio tachado es lo que te costaría llevar esa misma cantidad de a un frasco. | `forma` |
 
 "frasco" es un valor de setting del template, no está en el Liquid: para un SKU en polvo
 se cambia a "envase" desde el editor sin tocar código.
 
-**Sin badge de "el más elegido".** Es lo que haría un tema de dropshipping y es
-exactamente el tipo de dato que todavía no tenemos. Cuando haya ventas reales, se pone.
+La duración sale del token `[duracion]` y depende de los metafields de dosis: mientras estén
+vacíos, los tres pills no renderizan. No es un `[[PENDIENTE]]`, es el guarda de D-003.
+
+**El badge "el más elegido" volvió el 2026-09-09**, a pedido y para previsualizar. Queda
+anotado que es el único texto del bloque que no se puede verificar contra la tabla de precios
+ni contra el rótulo: afirma la conducta de otros compradores. Bloqueante abierto en el §6 de
+CLAIMS-AUDIT.
+
+La alternativa que ocupaba ese lugar y no depende de nadie es la aritmética marginal: el
+segundo frasco cuesta $10.000, y el precio por frasco cae $19.950 del 1 al 2 contra $2.650 del
+2 al 3. Hoy esa frase sigue en la página, corrida al pill.
+
+**Los dos números escritos a mano.** `$10.000` en la cinta del escalón 2 y la palabra "gratis"
+en la del 3. Todo lo demás lo calcula el tema desde el precio de la variante. Si cambian los
+precios, esas dos cintas hay que reescribirlas a mano.
 
 ### Acordeones
 
