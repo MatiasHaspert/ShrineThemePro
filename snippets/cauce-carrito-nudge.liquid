@@ -87,6 +87,7 @@
         type="button"
         class="cauce-carrito__nudge-boton"
         data-cauce-sumar="{{ cauce_elegido.variant.id }}"
+        data-cauce-url="{{ routes.cart_add_url }}"
         data-cauce-sumando="{{ 'cauce.carrito.nudge_sumando' | t | escape }}"
         aria-label="{{ 'cauce.carrito.nudge_sumar_aria' | t: producto: cauce_elegido.product.title | escape }}"
       >

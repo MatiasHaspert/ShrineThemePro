@@ -298,8 +298,14 @@
 
   function cauceCarritoSumar(boton) {
     const id = boton.dataset.cauceSumar;
-    const rutas = window.routes || {};
-    if (!id || !rutas.cart_add_url) return;
+    // La URL sale del Liquid del boton y NO de window.routes.cart_add_url. El
+    // constructor de CartItems en main.js pisa esa global con "cart" cuando
+    // pasaron 27 dias desde una fecha fija (2024-11-09): una ruta relativa que
+    // desde una PDP resuelve a /products/cart, devuelve un 404 en HTML y el
+    // r.json() cae en el catch. El add de Shrine no se entera porque usa
+    // "/cart/add" fijo; cualquier JS propio que lea esa global se rompe.
+    const url = boton.dataset.cauceUrl;
+    if (!id || !url) return;
 
     const etiqueta = boton.querySelector('.cauce-carrito__nudge-label');
     const original = etiqueta ? etiqueta.textContent : '';
@@ -319,7 +325,7 @@
       cauceCarritoError(mensaje);
     }
 
-    fetch(rutas.cart_add_url, {
+    fetch(url, {
       method: 'POST',
       headers: { 'X-Requested-With': 'XMLHttpRequest', Accept: 'application/javascript' },
       body: cuerpo,
