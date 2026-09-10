@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "t:sections.header.name",
@@ -8,15 +17,19 @@
         "envio": {
           "type": "announcement",
           "settings": {
-            "text": "Envío gratis en compras desde $ [[PENDIENTE: umbral_envio_gratis]]",
+            "text": "Envío gratis en compras desde $50000",
             "text_alignment": "center",
             "mobile_text_size": 12,
             "desktop_text_size": 13,
             "icon": "local_shipping",
+            "filled_icon": false,
             "mobile_icon_size": 16,
             "desktop_icon_size": 18,
             "desktop_layout": "horizontal",
-            "mobile_layout": "horizontal"
+            "mobile_layout": "horizontal",
+            "hidden_products": "",
+            "enable_specific_display": false,
+            "displayed_products": ""
           }
         },
         "produccion": {
@@ -27,10 +40,14 @@
             "mobile_text_size": 12,
             "desktop_text_size": 13,
             "icon": "verified",
+            "filled_icon": false,
             "mobile_icon_size": 16,
             "desktop_icon_size": 18,
             "desktop_layout": "horizontal",
-            "mobile_layout": "horizontal"
+            "mobile_layout": "horizontal",
+            "hidden_products": "",
+            "enable_specific_display": false,
+            "displayed_products": ""
           }
         }
       },
@@ -50,8 +67,14 @@
         "type": "loop",
         "autoplay": true,
         "autoplay_speed": 5,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
         "padding_top": 10,
-        "padding_bottom": 10
+        "padding_bottom": 10,
+        "custom_colors_background": "#dd1d1d",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff"
       }
     },
     "header": {
@@ -65,7 +88,13 @@
         "menu": "main-menu",
         "menu_type_desktop": "dropdown",
         "highlight_active_link": false,
+        "highlighted_link_color_scheme": "accent-1",
+        "products_mega_menu_links": "",
+        "products_mega_menu_display_collection_products": false,
+        "products_mega_menu_display_collection_images": true,
+        "products_mega_menu_display_collection_images_on_mobile": false,
         "mobile_menu_title": "Menu",
+        "secondary_menu": "",
         "menu_color_scheme": "background-1",
         "mobile_logo_position": "center",
         "display_search": false,
