@@ -1848,7 +1848,10 @@ los tres precios comerciales, cargados como `fixed_amount_off` sobre el precio d
 |---|---|---|---|---|---|
 | 1 | 1 | `0` | $49.900 | $49.900 | — (queda oculto: compare = price) |
 | 2 | 2 | `39900` | **$59.900** | **$29.950** | $99.800 |
-| 3 | 3 | `67800` | $81.900 | $27.300 | $149.700 |
+| 3 | 3 | ~~`67800`~~ | ~~$81.900~~ | ~~$27.300~~ | $149.700 |
+
+> El escalón 3 cambió el 2026-09-10: `71800` / **$77.900** / $25.966,67 por frasco. La fila de
+> arriba queda como registro de lo que se decidió acá. Los valores vivos están en **D-049**.
 
 Se usa **monto fijo y no porcentaje** porque los porcentajes reales son 39,98 % y 45,29 %:
 redondear a 40 % y 45 % sobredeclara el descuento, y eso es art. 8 de la Ley 24.240. El monto
@@ -1972,6 +1975,10 @@ va en el bloque de oferta y no sólo en el carrito.
 $50.000 tiene que existir en Configuración → Envíos, o cuatro superficies prometen algo que
 el checkout no cumple. Está en el §6 de CLAIMS-AUDIT.
 
+> **Superado el 2026-09-10.** El comercio subió el umbral a **$80.000** y bajó el escalón 3 a
+> $77.900. Con esos dos números ya no hay ningún escalón que cruce, así que la tabla de acá
+> arriba no describe la tienda de hoy. Ver **D-049**.
+
 ---
 
 ## D-048 · 2026-09-10 · El CTA de pago dice "Pago seguro", y el botón del checkout no se toca desde acá
@@ -2009,5 +2016,78 @@ se edita el checkout.
 **Sigue abierto.** Confirmar en el admin que el botón del checkout diga lo mismo que el
 carrito. Mientras no se toque, el carrito promete "Pago seguro" y el checkout sigue diciendo
 "Pagar ahora": no es una promesa falsa, pero es un corte de tono en el paso más delicado.
+
+---
+
+## D-049 · 2026-09-10 · El escalón 3 baja a $77.900, y con eso ningún escalón llega al envío gratis
+
+**Decisión.** `option_3_fixed_amount_off` pasa de `67800` a `71800`. Es un solo campo del bloque
+`ofertas` de `templates/product.cauce-landing.json`; el resto de la grilla lo recalcula el tema.
+
+| Escalón | Cant. | `fixed_amount_off` | Total | Por frasco | Tachado | Ahorro | % real |
+|---|---|---|---|---|---|---|---|
+| 1 | 1 | `0` | $49.900 | $49.900 | — | — | — |
+| 2 | 2 | `39900` | **$59.900** | **$29.950** | $99.800 | $39.900 | 39,98 % |
+| 3 | 3 | `71800` | $77.900 | $25.966,67 | $149.700 | $71.800 | 47,96 % |
+
+Se mantiene el monto fijo y no el porcentaje por lo mismo que en D-047: 47,96 % redondeado a
+"48 % OFF" sobredeclara, y eso es art. 8 de la Ley 24.240.
+
+**El precio por frasco del escalón 3 deja de ser redondo.** $77.900 no es divisible por 3.
+`quantity-breaks.liquid` hace `option_3_price_each = option_3_price | divided_by: 3`, y como
+`option_3_price` es float —sale de `times: percentage_left`, que vale `1.00`— la división no
+trunca: da 2.596.666,67 centavos, y `money_without_trailing_zeros` no tiene ceros que sacar. La
+caption queda **"$25.966,67 por frasco"** al lado de los `$49.900` y `$29.950` limpios de las
+otras dos filas. Es exacto y no miente, sólo rompe la prolijidad de la columna. Si molesta, el
+precio más cercano que divide justo es **$77.700**, que da $25.900 por frasco.
+
+**El escalón 2 sigue siendo la estrella, pero por menos margen.** El argumento de D-047 era el
+acantilado del precio unitario, y se achicó:
+
+| | 3 a $81.900 | 3 a $77.900 |
+|---|---|---|
+| Salto por frasco del 1 al 2 | −$19.950 | −$19.950 |
+| Salto por frasco del 2 al 3 | −$2.650 | −$3.983 |
+| Porción del acantilado que captura el 2 | 88,3 % | 83,4 % |
+| Costo del 2º frasco | $10.000 | $10.000 |
+| Costo del 3º frasco | $22.000 | **$18.000** |
+
+El 2 conserva lo único que el 3 no puede replicar —el segundo frasco a la quinta parte del
+precio de lista, que es lo que dice el pill— y sigue preseleccionado. Pero el tercero se abarató
+$4.000 y el 3 quedó más competitivo. Es la misma tensión comercial anotada al final de D-047, un
+escalón más apretada. Decisión del negocio, no del tema.
+
+**Lo que este cambio rompe: el envío gratis.** `cauce_umbral_envio_gratis` está en **$80.000**
+desde el 2026-09-10 (lo subió el comercio desde el editor, de $50.000 a $80.000, y de paso
+completó los `[[PENDIENTE:]]` de la barra de anuncio y del acordeón de envíos con ese número).
+Contra ese umbral:
+
+| Escalón | Total | ¿Cruza los $80.000? |
+|---|---|---|
+| 1 frasco | $49.900 | No, por $30.100 |
+| 2 frascos | $59.900 | No, por $20.100 |
+| 3 frascos | $77.900 | **No, por $2.100** |
+
+Con el 3 a $81.900 el escalón grande cruzaba por $1.900 y la nota al pie del bloque cerraba la
+grilla con un beneficio alcanzable. A $77.900 **ninguna de las tres ofertas llega**, y el
+catálogo tiene un solo producto, así que el cliente no tiene con qué completar los $2.100 que le
+faltan salvo comprando un cuarto frasco. La nota sigue siendo cierta como regla —no es publicidad
+engañosa— pero pasó de ser un cierre a ser una puerta cerrada, y la barra de anuncio la repite
+arriba de todas las páginas.
+
+**Y hay un efecto cruzado con los descuentos automáticos.** Hoy, sin los descuentos cargados, el
+carrito de 3 frascos suma $149.700 reales y **sí** cruza los $80.000: la barra de progreso del
+carrito (D-046) dice "tenés el envío gratis". El día que se carguen los descuentos automáticos
+—que es obligatorio, R6 del §6— el subtotal real baja a $77.900 y el envío gratis se apaga solo.
+O sea que arreglar la discrepancia de precios, que es lo urgente, va a romper el envío gratis de
+paso. Las dos cosas hay que resolverlas juntas.
+
+**Queda abierto, y es decisión del comercio.** O el umbral baja por debajo de $77.900 —con la
+tarifa real en Configuración → Envíos y los tres textos que hoy dicen $80.000—, o la nota sale
+del bloque de oferta. Está en el §6 de CLAIMS-AUDIT.
+
+**Lo que no se tocó.** La cinta `EL MÁS ELEGIDO` y el pill `El 2º sale $10.000` del escalón 2
+siguen igual: ninguno de los dos depende del precio del escalón 3. El `$10.000` sigue siendo el
+único precio hardcodeado del bloque.
 
 ---

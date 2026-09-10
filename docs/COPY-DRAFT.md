@@ -85,17 +85,17 @@ marca y conviene que se repita.
 
 ### Selector de oferta
 
-Actualizado en D-047: los `[[PENDIENTE: descuento_xN]]` se resolvieron con los precios
-comerciales reales.
+Actualizado en D-047 y en D-049: los `[[PENDIENTE: descuento_xN]]` se resolvieron con los
+precios comerciales reales, y el escalón 3 bajó a $77.900 el 2026-09-10.
 
 | Campo | Texto | Riesgo |
 |---|---|---|
 | Encabezado | Cuantos más frascos, más barato cada uno | `forma` |
 | Escalón 1 | **1 frasco** · pill *(duración)* · $49.900 por frasco · **$49.900** | `forma` |
 | Escalón 2 | cinta **EL MÁS ELEGIDO** · **2 frascos** · pill **El 2º sale $10.000** · $29.950 por frasco · **$59.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$59.900 **y ventas reales que respalden "el más elegido"** |
-| Escalón 3 | **3 frascos** · pill *(duración)* · $27.300 por frasco · **$81.900** ~~$149.700~~ | `dato` — exige el descuento automático |
+| Escalón 3 | **3 frascos** · pill *(duración)* · $25.966,67 por frasco · **$77.900** ~~$149.700~~ | `dato` — exige el descuento automático. El precio por frasco lo calcula el tema y no da redondo: $77.900 no es divisible por 3 |
 | Nota al pie 1 | El precio tachado es lo que te costaría llevar esa misma cantidad de a un frasco. | `forma` |
-| Nota al pie 2 | Envío gratis en pedidos desde $50.000. | `dato` — exige la tarifa real de envío sin cargo |
+| Nota al pie 2 | Envío gratis en pedidos desde $80.000. | `dato` — exige la tarifa real de envío sin cargo, **y hoy ningún escalón llega**: el más caro son $77.900 (D-049) |
 
 "frasco" es un valor de setting del template, no está en el Liquid: para un SKU en polvo
 se cambia a "envase" desde el editor sin tocar código.
