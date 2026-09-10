@@ -388,7 +388,7 @@
             "collapse_icon": "carret",
             "display_top_border": true,
             "open": false,
-            "content": "<p>Tenés 10 días corridos desde que recibís el pedido para arrepentirte de la compra y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). El producto tiene que estar sin abrir.</p><p>Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a cauce@caucearg.com.</p>",
+            "content": "<p>Tenés 10 días corridos desde que recibís el pedido para arrepentirte de la compra y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). El producto tiene que estar sin abrir.</p><p>Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a caucearg.argentina@gmail.com.</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0
@@ -1402,7 +1402,7 @@
             "icon": "mail",
             "filled_icon": false,
             "title": "Te contestamos",
-            "text": "<p>cauce@caucearg.com</p>"
+            "text": "<p>caucearg.argentina@gmail.com</p>"
           }
         }
       },
