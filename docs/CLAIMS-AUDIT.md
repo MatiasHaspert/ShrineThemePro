@@ -220,12 +220,18 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       final $81.900 (−$67.800). Tienen que coincidir al peso con `option_2_fixed_amount_off` y
       `option_3_fixed_amount_off` del bloque `ofertas`. Si no se cargan, los escalones vuelven a
       `0` y las dos cintas salen.
-- [ ] **BLOQUEANTE · La cinta "ENVÍO GRATIS" del escalón 3 (D-047).** Hoy no existe ninguna
-      tarifa de envío gratis y `cauce_umbral_envio_gratis` está vacío. Crear la tarifa real por
-      encima de $81.900 y cargar el umbral en Configuración → CAUCE (el mismo campo enciende la
-      barra de progreso del carrito, D-046), o sacar la cinta.
-- [ ] Reescribir el `$10.000` del pill del escalón 2 si cambia el precio de 1 o de 2 frascos.
-      Es el único precio del bloque que no calcula el tema (D-047).
+- [x] ~~R6b · La cinta "ENVÍO GRATIS" del escalón 3~~ — **cerrado 2026-09-09 (D-047c).** La
+      cinta se sacó: con `cauce_umbral_envio_gratis` en $50.000, el escalón 2 también cruza el
+      umbral, así que anunciarlo sólo en el 3 era exclusividad falsa. La regla va una vez, en la
+      nota al pie del bloque.
+- [ ] **La tarifa de envío gratis tiene que existir en Shopify.** `cauce_umbral_envio_gratis`
+      está cargado en $50.000 y ya lo publica la barra de anuncio, la barra de progreso del
+      carrito (D-046) y ahora la nota del bloque de oferta. El setting del tema **sólo dibuja**:
+      si no hay una tarifa real de envío sin cargo desde $50.000 en Configuración → Envíos, las
+      cuatro superficies prometen algo que el checkout no cumple (Ley 24.240 art. 7 y 8).
+- [ ] Reescribir a mano los dos precios que el tema no calcula en el bloque de oferta: el
+      `$10.000` del pill del escalón 2 (si cambia el precio de 1 o de 2 frascos) y el `$50.000`
+      de la nota (si cambia `cauce_umbral_envio_gratis`). D-047 y D-047c.
 - [ ] **BLOQUEANTE · La cinta "EL MÁS ELEGIDO" del escalón 2 (D-047b).** Se puso el 2026-09-09
       para ver cómo quedaba. Es una afirmación sobre la conducta de otros compradores y hoy no
       hay ventas que la respalden: Res. SC 270/2020 y art. 8 de la Ley 24.240, el mismo motivo

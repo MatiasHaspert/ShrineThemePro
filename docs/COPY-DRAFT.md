@@ -93,8 +93,9 @@ comerciales reales.
 | Encabezado | Cuantos más frascos, más barato cada uno | `forma` |
 | Escalón 1 | **1 frasco** · pill *(duración)* · $49.900 por frasco · **$49.900** | `forma` |
 | Escalón 2 | cinta **EL MÁS ELEGIDO** · **2 frascos** · pill **El 2º sale $10.000** · $29.950 por frasco · **$59.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$59.900 **y ventas reales que respalden "el más elegido"** |
-| Escalón 3 | cinta **ENVÍO GRATIS** · **3 frascos** · pill *(duración)* · $27.300 por frasco · **$81.900** ~~$149.700~~ | `dato` — exige el descuento automático **y** la tarifa de envío gratis |
-| Nota al pie | El precio tachado es lo que te costaría llevar esa misma cantidad de a un frasco. | `forma` |
+| Escalón 3 | **3 frascos** · pill *(duración)* · $27.300 por frasco · **$81.900** ~~$149.700~~ | `dato` — exige el descuento automático |
+| Nota al pie 1 | El precio tachado es lo que te costaría llevar esa misma cantidad de a un frasco. | `forma` |
+| Nota al pie 2 | Envío gratis en pedidos desde $50.000. | `dato` — exige la tarifa real de envío sin cargo |
 
 "frasco" es un valor de setting del template, no está en el Liquid: para un SKU en polvo
 se cambia a "envase" desde el editor sin tocar código.

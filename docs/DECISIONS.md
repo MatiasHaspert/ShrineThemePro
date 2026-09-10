@@ -1937,3 +1937,39 @@ como decisión cerrada, porque se pidió para ver cómo quedaba y no como resolu
 `option_2_badge` vuelve a `EL 2º FRASCO POR $10.000` y `option_2_benefit` a `[duracion]`.
 
 ---
+
+## D-047c · 2026-09-09 · La cinta "Envío gratis" del escalón 3 era exclusividad falsa
+
+**Qué pasó.** Al traer `origin/main` antes de pushear aparecieron siete commits del theme
+editor. Dos settings nuevos: `cauce_umbral_envio_gratis: 50000` y `cauce_cuotas: 3`. El
+umbral no existía cuando se escribió D-047, y lo invalida.
+
+**La cuenta.** `snippets/cauce-carrito-nudge.liquid` y `cauce-carrito-envio.liquid` leen el
+umbral como `settings.cauce_umbral_envio_gratis | times: 100`, o sea **$50.000** contra
+`cart.items_subtotal_price`:
+
+| Escalón | Total | ¿Cruza los $50.000? |
+|---|---|---|
+| 1 frasco | $49.900 | **No**, por $100 |
+| 2 frascos | $59.900 | Sí |
+| 3 frascos | $81.900 | Sí |
+
+El escalón 2 también tiene envío gratis. Anunciarlo como cinta sólo en el 3 le atribuía al
+escalón 3 un beneficio exclusivo que no lo es — publicidad engañosa por omisión, y encima en
+contra del escalón que se quiso destacar.
+
+**Decisión.** La cinta sale del escalón 3 y la regla se dice una sola vez, completa, en la
+nota al pie del bloque: *"Envío gratis en pedidos desde $50.000."* Con eso el escalón 2 queda
+como **la única fila con cinta**, que es exactamente lo que se pidió, y el lector ve solo que
+$49.900 no llega al umbral por $100.
+
+**Efecto lateral que conviene mirar.** El escalón 1 se queda a $100 del envío gratis. Es la
+distancia más corta posible y empuja fuerte del 1 al 2 sin que la página tenga que afirmar
+nada. No lo diseñé así —el umbral lo cargó el comercio— pero es la razón por la que la nota
+va en el bloque de oferta y no sólo en el carrito.
+
+**Sigue abierto.** El setting del tema sólo dibuja. La tarifa real de envío sin cargo desde
+$50.000 tiene que existir en Configuración → Envíos, o cuatro superficies prometen algo que
+el checkout no cumple. Está en el §6 de CLAIMS-AUDIT.
+
+---
