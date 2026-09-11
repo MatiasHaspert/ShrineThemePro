@@ -140,7 +140,7 @@ Texto actual de **Cambios y devoluciones**:
 > que estar sin abrir.
 >
 > Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a
-> `[[PENDIENTE: email_contacto]]`.
+> cauce@caucearg.com.
 
 > **Revisar con criterio legal.** "El producto tiene que estar sin abrir" es una condición
 > que la marca elige, y el derecho de arrepentimiento de la Res. SCI 424/2020 no la exige
@@ -266,7 +266,7 @@ La única sección con fondo oscuro de la página. Título: **Comprar acá**.
 | envío | Envío a todo el país | `[[PENDIENTE: plazo_envio]]` días hábiles. El costo se calcula en el checkout según tu código postal. | `pendiente` |
 | devolución | 10 días para arrepentirte | Sin costo y sin explicar por qué, como marca la Res. SCI 424/2020. | `dato` |
 | candado | Pago procesado por Mercado Pago | Nosotros no vemos ni guardamos los datos de tu tarjeta. | `dato` — cierto con MP, confirmá si se suma otro medio |
-| mail | Te contestamos | `[[PENDIENTE: email_contacto]]` | `pendiente` |
+| mail | Te contestamos | cauce@caucearg.com | `dato` |
 
 ### 6.7 Detalle (bloque 10) · `cauce-acordeon-detalle`
 
@@ -324,7 +324,7 @@ rótulo aprobado y del certificado.
 | # | Dato | Dónde |
 |---|---|---|
 | 10 | Plazo de envío en días hábiles | banda oscura + acordeón del hero + banda `Comprar acá` de la home (D-040) |
-| 11 | Email de contacto | banda oscura + acordeón del hero + banda `Comprar acá` de la home (D-040) |
+| 11 | Email de contacto — resuelto el 2026-09-10: cauce@caucearg.com | banda oscura + acordeón del hero + banda `Comprar acá` de la home (D-040) |
 | 12 | Videos UGC reales, o posters provisorios | bloque 5 |
 | 13 | Metaobjetos de `cauce.beneficios` | bloque 10 |
 | 14 | Confirmar que se publica el COA **de cada lote** | pilares + cards |
