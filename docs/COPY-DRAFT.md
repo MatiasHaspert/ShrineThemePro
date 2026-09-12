@@ -405,10 +405,10 @@ pago y la leyenda de suplemento en versión compacta.
 
 ### 8.5 Suscripción (bloque 19) · `cauce-newsletter`
 
-Título **Poco y cuando valga la pena**.
+Título **10 % en tu primer pedido**.
 
-> Avisamos cuando sale una fórmula nueva y cuando se publica el análisis de un lote. Nada
-> más que eso.
+> Suscribite y te mandamos el código. Después, pocos mails: fórmulas nuevas y un aviso
+> cuando se te esté por terminar el frasco.
 
 Consentimiento (locale `cauce.newsletter.consentimiento`):
 
