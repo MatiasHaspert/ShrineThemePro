@@ -94,6 +94,7 @@ precios comerciales reales, y el 2026-09-12 los escalones 2 y 3 subieron a $61.9
 | Escalón 1 | **1 frasco** · pill *(duración)* · $49.900 por frasco · **$49.900** | `forma` |
 | Escalón 2 | cinta **EL MÁS ELEGIDO** · **2 frascos** · pill **El 2º sale $12.000** · $30.950 por frasco · **$61.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$61.900 **y ventas reales que respalden "el más elegido"** |
 | Escalón 3 | **3 frascos** · pill *(duración)* · $24.300 por frasco · **$72.900** ~~$149.700~~ | `dato` — exige el descuento automático. El precio por frasco vuelve a dar redondo: $72.900 ÷ 3 = $24.300 |
+| Chip de envío (escalones 2 y 3) | Envío gratis | `dato` — exige la tarifa real de envío sin cargo. No se carga en el editor: lo dibuja el tema en cada escalón cuyo total cruza `cauce_umbral_envio_gratis` (D-050c). Texto en `cauce.pdp.envio_gratis_escalon` |
 | Nota al pie 1 | El precio tachado es lo que te costaría llevar esa misma cantidad de a un frasco. | `forma` |
 | Nota al pie 2 | Envío gratis en pedidos desde $60.000. | `dato` — exige la tarifa real de envío sin cargo. Lo alcanzan los escalones 2 y 3, por $1.900 y $12.900 (D-050) |
 

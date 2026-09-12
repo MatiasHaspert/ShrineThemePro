@@ -15,6 +15,13 @@
   caption vacio ocupando renglon.
 
   Ver snippets/cauce-duracion.liquid y docs/DECISIONS.md D-003.
+
+  Segundo agregado CAUCE: la marca de envio gratis dentro de cada tarjeta. Va
+  despues del caption, en el quantity-break__left, y la decide
+  snippets/cauce-envio-escalon.liquid comparando el option_N_price ya
+  descontado contra settings.cauce_umbral_envio_gratis. No es un token de
+  block.settings: no hay nada que cargar en el editor y no puede quedar
+  desfasada del precio. Ver D-050c.
 {%- endcomment -%}
 {%- capture cauce_duracion_1 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_1_quantity %}{% endcapture -%}
 {%- capture cauce_duracion_2 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_2_quantity %}{% endcapture -%}
@@ -215,6 +222,10 @@
                     compare_price_each: option_1_compare_price_each
                   %}
                 </span>
+              {% endif %}
+              {%- capture cauce_envio_1 %}{% render 'cauce-envio-escalon', total: option_1_price %}{% endcapture -%}
+              {% if cauce_envio_1 != blank %}
+                <span class="quantity-break__envio">{{ cauce_envio_1 }}</span>
               {% endif %}
             </div>
             <div class="quantity-break__right dynamic-price">
@@ -445,6 +456,10 @@
                   %}
                 </span>
               {% endif %}
+              {%- capture cauce_envio_2 %}{% render 'cauce-envio-escalon', total: option_2_price %}{% endcapture -%}
+              {% if cauce_envio_2 != blank %}
+                <span class="quantity-break__envio">{{ cauce_envio_2 }}</span>
+              {% endif %}
             </div>
             <div class="quantity-break__right dynamic-price">
               {% if cauce_o2_price_text != blank %}
@@ -674,6 +689,10 @@
                   %}
                 </span>
               {% endif %}
+              {%- capture cauce_envio_3 %}{% render 'cauce-envio-escalon', total: option_3_price %}{% endcapture -%}
+              {% if cauce_envio_3 != blank %}
+                <span class="quantity-break__envio">{{ cauce_envio_3 }}</span>
+              {% endif %}
             </div>
             <div class="quantity-break__right dynamic-price">
               {% if cauce_o3_price_text != blank %}
@@ -902,6 +921,10 @@
                     compare_price_each: option_4_compare_price_each
                   %}
                 </span>
+              {% endif %}
+              {%- capture cauce_envio_4 %}{% render 'cauce-envio-escalon', total: option_4_price %}{% endcapture -%}
+              {% if cauce_envio_4 != blank %}
+                <span class="quantity-break__envio">{{ cauce_envio_4 }}</span>
               {% endif %}
             </div>
             <div class="quantity-break__right dynamic-price">

@@ -2280,3 +2280,80 @@ el campo `option_2_benefit` — y es el único de los tres que hoy no usa `[dura
 
 ---
 
+## D-050c · 2026-09-12 · El precio por frasco sube a contraste pleno, y el envío gratis se dibuja solo en la tarjeta que lo cumple
+
+**Dos cambios en el mismo bloque, por el mismo motivo: lo que decide la compra tiene que verse.**
+
+### 1. El precio por frasco deja de estar en gris
+
+`.quantity-break__caption` tenía `opacity: 0.72` sobre el color de texto de la tarjeta. La regla
+venía de tratar la caption como una nota al pie —era el slot de `[duracion]`— pero desde D-047 ahí
+vive **`[price_each] por frasco`**, que es el único número de la grilla que baja mientras el total
+sube: $49.900 → $30.950 → $24.300. Es el argumento de volumen entero, y estaba dibujado como letra
+chica.
+
+| | Compone a | Contraste |
+|---|---|---|
+| `opacity: .72` sobre blanco | `#536366` | 6,28:1 |
+| `opacity: .72` sobre SEDIMENTO | `#4D5C5C` | 5,60:1 |
+| **CAUCE pleno sobre blanco** | `#10262A` | **15,76:1** |
+| **CAUCE pleno sobre SEDIMENTO** | `#10262A` | **12,62:1** |
+
+Pasa a `color: var(--cauce-cauce)` —que es `#10262A`— y se saca la opacidad. Se toca el color y
+nada más: **DM Mono se queda**, porque el precio por frasco es un dato duro y el brandboard manda
+mono para datos. Se usa el token y no el hex suelto por la regla del propio archivo: ningún color
+de marca se decide con un hex en una regla.
+
+### 2. El envío gratis aparece dentro de cada escalón que lo cumple
+
+Hasta acá el envío gratis se prometía en cuatro superficies que hablan del pedido en general
+—barra de anuncio, nota al pie del bloque, acordeón de envíos, barra de progreso del carrito— pero
+en ninguna tarjeta. El cliente tenía que hacer la cuenta contra el umbral él mismo, con el número
+escrito tres renglones más abajo.
+
+Ahora cada tarjeta cuyo total cruza `cauce_umbral_envio_gratis` muestra un chip **"Envío gratis"**
+abajo del precio por frasco. Con los precios de D-050:
+
+| Escalón | Total | Chip |
+|---|---|---|
+| 1 frasco | $49.900 | no |
+| 2 frascos | $61.900 | **sí** |
+| 3 frascos | $72.900 | **sí** |
+
+**Se calcula, no se carga.** `snippets/cauce-envio-escalon.liquid` recibe el `option_N_price` ya
+descontado que calcula `quantity-breaks.liquid` y lo compara contra el umbral. No es un token de
+`block.settings` ni un `option_N_badge`: no hay nada que escribir en el editor y **no puede quedar
+desfasado del precio**. Esto importa porque es exactamente lo que pasó tres veces en cuatro días:
+D-047c sacó la cinta porque dejó de ser exclusiva, D-049 la habilitó de nuevo sin reponerla, y
+D-050 la volvió a invalidar. Un texto a mano habría estado mintiendo en dos de esas tres vueltas.
+
+**Y cierra la discusión de la cinta.** D-047c la sacó porque anunciarla sólo en el 3 cuando el 2
+también cruzaba era exclusividad falsa. La respuesta correcta no era elegir una tarjeta: era
+mostrarla en todas las que corresponde. `option_3_badge` sigue libre para lo que haga falta.
+
+**Archivos.**
+
+| Qué | Archivo |
+|---|---|
+| Cálculo y guarda del umbral | `snippets/cauce-envio-escalon.liquid` *(nuevo)* |
+| Render en las cuatro tarjetas | `snippets/quantity-breaks.liquid` |
+| Texto | `locales/es.json` y `locales/en.default.json` → `cauce.pdp.envio_gratis_escalon` |
+| Estilo del chip y color del caption | `assets/cauce-brand.css` |
+
+El chip va en el `quantity-break__left`, después del caption, en el mismo DM Mono a cuerpo chico
+para no abrir una tercera tipografía adentro de la tarjeta. El borde es SEDIMENTO-2 y no CAUCE a
+propósito: no tiene que competir con el precio por frasco, que es lo que se acaba de subir.
+
+**Límite conocido.** El chip se resuelve en el servidor. El JS del tema recalcula los precios de
+las tarjetas al cambiar de variante leyendo `data-percentage-left` y `data-fixed-discount`, pero no
+toca este span. Hoy da igual —`update_prices` está en `false` y el producto tiene una sola
+variante—, pero si alguna vez se activan variantes de distinto precio, el chip hay que moverlo al
+mismo mecanismo de `variant-price-update` o queda pegado al precio de la primera variante. Está
+anotado en el encabezado del snippet.
+
+**Lo que sigue igual.** Sigue siendo `settings.cauce_umbral_envio_gratis` **sólo dibujando**: la
+tarifa real de envío sin cargo desde $60.000 tiene que existir en Configuración → Envíos. Con este
+cambio la promesa pasó de cuatro superficies a cinco, y la quinta es la que está pegada al botón de
+compra. El bloqueante del §6 pesa más, no menos.
+
+---

@@ -227,19 +227,23 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       final $72.900 (−$76.800). Tienen que coincidir al peso con `option_2_fixed_amount_off` y
       `option_3_fixed_amount_off` del bloque `ofertas`. Si no se cargan, los escalones vuelven a
       `0` y las dos cintas salen.
-- [x] ~~R6b · La cinta "ENVÍO GRATIS" del escalón 3~~ — **cerrado 2026-09-09 (D-047c), y desde
-      el 2026-09-12 cerrado otra vez por el motivo original.** Se sacó porque con el umbral en
-      $50.000 el escalón 2 también lo cruzaba y anunciarlo sólo en el 3 era exclusividad falsa.
-      Entre el 2026-09-10 y el 2026-09-12 el 3 fue el único que cruzaba y la cinta habría sido
-      verdadera (D-049b), pero no se repuso. Con el umbral en $60.000 y el escalón 2 en $61.900
-      **vuelven a cruzar los dos**, así que anunciarla sólo en el 3 sería de nuevo exclusividad
-      falsa: art. 8 de la Ley 24.240. La cinta no va (D-050).
+- [x] ~~R6b · La cinta "ENVÍO GRATIS" del escalón 3~~ — **cerrado 2026-09-09 (D-047c) y resuelto
+      de raíz el 2026-09-12 (D-050c).** Se sacó porque con el umbral en $50.000 el escalón 2
+      también lo cruzaba y anunciarlo sólo en el 3 era exclusividad falsa; entre el 2026-09-10 y
+      el 2026-09-12 el 3 volvió a ser el único que cruzaba y la cinta habría sido verdadera
+      (D-049b), y con los precios de D-050 cruzan los dos otra vez. La respuesta dejó de ser
+      elegir una tarjeta: **cada escalón que cruza el umbral muestra su propio chip "Envío
+      gratis", calculado contra su total ya descontado.** No hay exclusividad que declarar ni
+      texto que mantenga nadie, y el riesgo del art. 8 por esta vía queda cerrado.
 - [ ] **BLOQUEANTE · La tarifa de envío gratis tiene que existir en Shopify.**
-      `cauce_umbral_envio_gratis` está cargado en **$60.000** y ese número ya lo publican cuatro
-      superficies: la barra de anuncio, el acordeón de envíos, la nota del bloque de oferta y la
-      barra de progreso del carrito (D-046). El setting del tema **sólo dibuja**: si no hay una
-      tarifa real de envío sin cargo desde $60.000 en Configuración → Envíos, las cuatro
-      prometen algo que el checkout no cumple (Ley 24.240 art. 7 y 8).
+      `cauce_umbral_envio_gratis` está cargado en **$60.000** y la promesa la publican **cinco**
+      superficies: la barra de anuncio, el acordeón de envíos, la nota del bloque de oferta, la
+      barra de progreso del carrito (D-046) y, desde el 2026-09-12, el chip "Envío gratis" dentro
+      de los escalones 2 y 3 (D-050c) — que es la que está pegada al botón de compra. El setting
+      del tema **sólo dibuja**: si no hay una tarifa real de envío sin cargo desde $60.000 en
+      Configuración → Envíos, las cinco prometen algo que el checkout no cumple (Ley 24.240 art. 7
+      y 8). Las cuatro primeras escriben el número a mano; el chip lo calcula el tema contra el
+      total ya descontado del escalón, así que no puede quedar desfasado del precio.
 - [x] ~~Ningún escalón llega al envío gratis~~ — **cerrado 2026-09-10 (D-049b), y sigue cerrado
       con los precios del 2026-09-12 (D-050).** Con el umbral en $60.000 lo cruzan el pack de 2
       ($61.900, por $1.900) y el de 3 ($72.900, por $12.900), en los dos estados: con los
@@ -258,7 +262,8 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       de la nota (si cambia `cauce_umbral_envio_gratis`; el mismo número está escrito a mano
       también en la barra de anuncio y en el acordeón de envíos, o sea tres lugares). D-047,
       D-047c, D-049, D-049b y D-050. Los precios de los escalones 2 y 3 **no** están en esta
-      lista: los calcula el tema desde `option_N_fixed_amount_off`.
+      lista: los calcula el tema desde `option_N_fixed_amount_off`. El chip "Envío gratis" de las
+      tarjetas tampoco: lo decide `snippets/cauce-envio-escalon.liquid` contra el umbral (D-050c).
 - [ ] **BLOQUEANTE · La cinta "EL MÁS ELEGIDO" del escalón 2 (D-047b).** Se puso el 2026-09-09
       para ver cómo quedaba. Es una afirmación sobre la conducta de otros compradores y hoy no
       hay ventas que la respalden: Res. SC 270/2020 y art. 8 de la Ley 24.240, el mismo motivo

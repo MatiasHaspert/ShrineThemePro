@@ -513,6 +513,7 @@
     },
     "pdp": {
       "duracion_dias": "{{ dias }} días de uso",
+      "envio_gratis_escalon": "Envío gratis",
       "medios_pago_titulo": "Medios de pago",
       "cuotas": "Hasta {{ cuotas }} cuotas con tarjeta",
       "suscripcion_titulo": "Frecuencia de entrega",

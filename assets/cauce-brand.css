@@ -487,15 +487,42 @@ h1, h2, h3, h4,
    Ver snippets/cauce-duracion.liquid. */
 .quantity-break__caption:empty,
 .quantity-break__benefit:empty,
-.quantity-break__badge:empty {
+.quantity-break__badge:empty,
+.quantity-break__envio:empty {
   display: none;
 }
 
-/* La duracion es un dato, no copy. Va en mono como el resto de los datos duros. */
+/* El precio por frasco es un dato, no copy: va en mono como el resto de los datos
+   duros. Pero es tambien EL argumento de volumen de la grilla —es el unico numero
+   que baja de $49.900 a $24.300 mientras el total sube— asi que no puede leerse
+   como letra chica. Tenia opacity 0.72, que compone a #536366 sobre blanco
+   (6,28:1) y a #4D5C5C sobre SEDIMENTO (5,60:1): pasa AA, pero gris. A CAUCE
+   pleno son 15,76:1 y 12,62:1. Ver seccion 8 y D-050c. */
 .quantity-break__caption {
   font-family: var(--cauce-font-dato);
   letter-spacing: 0.01em;
-  opacity: 0.72;
+  color: var(--cauce-cauce);
+}
+
+/* Envio gratis por escalon. Aparece solo en las tarjetas cuyo total cruza
+   settings.cauce_umbral_envio_gratis; quien decide es
+   snippets/cauce-envio-escalon.liquid, no un texto cargado a mano.
+   Es un beneficio y no un dato duro, pero comparte celda con el caption en mono:
+   va en el mismo mono a cuerpo chico para no abrir una tercera tipografia adentro
+   de la tarjeta. El borde es SEDIMENTO-2 y no CAUCE para que el chip no compita
+   con el precio por frasco, que es lo que se acaba de subir de contraste.
+   El display lo fija `.quantity-break__left > span`; aca no se toca. */
+.quantity-break__envio {
+  padding: 0 0.6em;
+  font-family: var(--cauce-font-dato);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cauce-cauce);
+  border: 1px solid var(--cauce-sedimento-2);
+  border-radius: 0.3rem;
+  white-space: nowrap;
 }
 
 .quantity-breaks__title {
