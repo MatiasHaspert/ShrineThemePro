@@ -1,0 +1,66 @@
+{% comment %}
+  CAUCE: las tres lineas que van abajo del precio por frasco en cada escalon
+  de cantidad. Ahorro en pesos, envio gratis y cuotas, en ese orden.
+
+  Parametros:
+    indice     {number}  requerido. 1..4. Cual de los cuatro escalones es.
+    total      {number}  requerido. Total del escalon EN CENTAVOS, ya descontado.
+    ahorro     {number}  requerido. option_N_price_difference, en centavos.
+    cuotas_en  {string}  opcional. 'option_1'..'option_4' o vacio: en que escalon
+                         se dibujan las cuotas. Sale del setting
+                         cauce_cuotas_escalon del bloque.
+
+  Las tres se calculan, ninguna se escribe a mano:
+
+    ahorro  = compare_price - price, que es lo que el tema ya usa para el token
+              [amount_saved]. Si da 0 no se dibuja, asi el escalon de 1 frasco
+              -donde tachado y precio son el mismo numero- no muestra "Ahorras $0".
+    envio   = snippets/cauce-envio-escalon.liquid contra cauce_umbral_envio_gratis.
+    cuotas  = settings.cauce_cuotas, el mismo numero que usa el carrito
+              (snippets/cauce-carrito-pago.liquid), dividiendo el total del
+              escalon. Solo en el escalon que indique cuotas_en, porque cuantas
+              cuotas conviene anunciar y en donde es decision comercial, no del
+              tema.
+
+  Los tres textos salen de locales/es.json > cauce.pdp.*. Ninguno se escribe aca.
+
+  Los importes usan money_without_trailing_zeros, el mismo filtro que
+  snippets/text-with-price.liquid, para que el formato no se parta entre la
+  linea de ahorro y el precio de al lado.
+
+  Limite conocido, igual que el chip de envio: esto se resuelve en el servidor.
+  Con update_prices activado y variantes de distinto precio el JS del tema
+  recalcula los precios de las tarjetas pero no estas lineas. Hoy update_prices
+  esta en false.
+
+  Ver docs/DECISIONS.md D-051.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_ahorro = ahorro | plus: 0
+  assign cauce_total = total | plus: 0
+  assign cauce_cuotas_n = settings.cauce_cuotas | plus: 0
+  assign cauce_indice_actual = 'option_' | append: indice
+  assign cauce_ahorro_money = cauce_ahorro | money_without_trailing_zeros
+-%}
+
+{%- if cauce_ahorro > 0 -%}
+  <span class="quantity-break__ahorro">
+    {{- 'cauce.pdp.ahorro_escalon' | t: monto: cauce_ahorro_money -}}
+  </span>
+{%- endif -%}
+
+{%- capture cauce_envio %}{% render 'cauce-envio-escalon', total: cauce_total %}{% endcapture -%}
+{%- if cauce_envio != blank -%}
+  <span class="quantity-break__envio">{{ cauce_envio }}</span>
+{%- endif -%}
+
+{%- if cauce_cuotas_n > 0 and cuotas_en == cauce_indice_actual -%}
+  {%- liquid
+    assign cauce_cuota_monto = cauce_total | divided_by: cauce_cuotas_n
+    assign cauce_cuota_money = cauce_cuota_monto | money_without_trailing_zeros
+  -%}
+  <span class="quantity-break__cuotas">
+    {{- 'cauce.pdp.cuotas_escalon' | t: cuotas: cauce_cuotas_n, monto: cauce_cuota_money -}}
+  </span>
+{%- endif -%}

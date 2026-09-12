@@ -202,11 +202,14 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
 - [ ] R2 · Proveedor del producto = CAUCE
 - [x] R7 · Plantilla del producto = `cauce-landing` — cerrado 2026-08-29
 - [ ] R4 · Revisar los 12 metacampos de categoría, en especial "Enfoque de salud"
-- [ ] Cargar los metafields `cauce.*` con transcripción textual del rótulo. **Desde el
-      2026-09-12 `cauce.unidades_envase` y `cauce.dosis_diaria` son prioritarios (D-050b):**
-      el titular del bloque de oferta pregunta cuántos meses querés cubrir y los tres pills
-      de duración salen de esos dos campos. Vacíos, el token `[duracion]` no renderiza y el
-      titular queda arriba de una grilla que sólo muestra frascos y precios.
+- [ ] Cargar los metafields `cauce.*` con transcripción textual del rótulo. **`cauce.unidades_envase`
+      y `cauce.dosis_diaria` siguen vacíos, y desde D-051 eso tiene otra consecuencia:** los
+      "30 / 60 / 90 días" de los títulos de fila y el "una cápsula por día · cada frasco, un mes"
+      del encabezado están **escritos a mano** en el editor, no calculados. Son verdaderos si el
+      envase trae 30 cápsulas y la toma es una por día — que es justamente lo que esos dos campos
+      deberían decir. Cargarlos deja el dato auditable en un solo lugar y permite volver los
+      títulos al token `[duracion]` (D-003). Mientras tanto, cualquier cambio de conteo del envase
+      obliga a reescribir cuatro textos del bloque.
 
 **Evidencia documental**
 
@@ -264,13 +267,35 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       D-047c, D-049, D-049b y D-050. Los precios de los escalones 2 y 3 **no** están en esta
       lista: los calcula el tema desde `option_N_fixed_amount_off`. El chip "Envío gratis" de las
       tarjetas tampoco: lo decide `snippets/cauce-envio-escalon.liquid` contra el umbral (D-050c).
-- [ ] **BLOQUEANTE · La cinta "EL MÁS ELEGIDO" del escalón 2 (D-047b).** Se puso el 2026-09-09
-      para ver cómo quedaba. Es una afirmación sobre la conducta de otros compradores y hoy no
-      hay ventas que la respalden: Res. SC 270/2020 y art. 8 de la Ley 24.240, el mismo motivo
-      por el que el §4 la había descartado y por el que las reseñas están apagadas (D-019) y no
-      se emite `AggregateRating` (D-006). Es coherente sostenerla **sólo** si sale de los pedidos
-      reales de Shopify. Confirmar con los datos, o volver la cinta a la aritmética marginal
-      (`EL 2º FRASCO POR $10.000`), que dice lo mismo en fuerza persuasiva y es verificable.
+- [x] ~~**BLOQUEANTE · La cinta "EL MÁS ELEGIDO" del escalón 2 (D-047b).**~~ — **cerrado
+      2026-09-12 (D-051).** Era una afirmación sobre la conducta de otros compradores sin ventas
+      que la respaldaran: Res. SC 270/2020 y art. 8 de la Ley 24.240, el mismo motivo por el que
+      el §4 la había descartado, por el que las reseñas están apagadas (D-019) y por el que no se
+      emite `AggregateRating` (D-006). **La cinta ya no existe:** el escalón 2 quedó sin badge y
+      el destaque se mudó al 3 con un texto que no habla de nadie más que del producto
+      (`LA TOMA COMPLETA · 90 DÍAS`). No quedó nada que confirmar contra los pedidos reales.
+- [ ] **BLOQUEANTE · La bajada del bloque de oferta cita ensayos clínicos (D-051).** El texto es
+      *"Los ensayos clínicos con R-ALA evalúan tomas diarias sostenidas de 8 a 12 semanas."* No
+      afirma un resultado ni un plazo de efecto —dice qué duración usan los estudios, no qué pasa
+      a las 12 semanas—, pero **es una afirmación sobre literatura científica y el que la publica
+      tiene que poder mostrarla**: art. 4 y 8 de la Ley 24.240, y Res. Conj. 148/2019 sobre
+      publicidad de suplementos. Hace falta la cita de al menos dos ensayos con R-ALA (no
+      racémico) cuyo protocolo esté en esa ventana, guardada con el resto de la evidencia
+      documental. Si no se consigue, el renglón sale: es un campo del editor
+      (`cauce_subtitulo`), no toca código.
+- [ ] **BLOQUEANTE · "3 cuotas de $24.300" en el escalón 3 (D-051).** Sale de
+      `settings.cauce_cuotas`, que está en 3, dividiendo el total del escalón. La aritmética es
+      exacta ($72.900 ÷ 3), pero el número **promete financiación sin interés**: si el medio de
+      pago real cobra CFT, el precio por cuota que ve el cliente no es el que va a pagar. Tiene
+      que coincidir con lo que efectivamente ofrece la pasarela, o `cauce_cuotas` vuelve a 0 y la
+      línea desaparece sola. Es el mismo pendiente que ya tenía la línea de cuotas del carrito
+      (`snippets/cauce-carrito-pago.liquid`), ahora también en la PDP.
+- [ ] **"Menos de la mitad" en la letra chica (D-051).** *"Cada frasco te sale $24.300 en vez de
+      $49.900. Menos de la mitad."* Es verdadera y verificable: $24.300 es $650 menos que la
+      mitad de $49.900. **Pero depende de R6:** sin los descuentos automáticos cargados el
+      carrito cobra $149.700 por tres frascos, o sea $49.900 por frasco, y la frase pasa a ser
+      falsa. No es un pendiente propio, es una consecuencia más de R6 — y la más explícita de
+      todas, porque acá el número está escrito a mano en el editor y no lo calcula el tema.
 
 **Revisión**
 

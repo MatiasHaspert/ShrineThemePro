@@ -502,6 +502,10 @@ h1, h2, h3, h4,
   font-family: var(--cauce-font-dato);
   letter-spacing: 0.01em;
   color: var(--cauce-cauce);
+  /* Mismo cuerpo que el total de la derecha (--price-font-size, 1.6rem) y no el
+     --caption-font-size de 1.4rem que trae Shrine: el precio por frasco es el
+     argumento de volumen y deja de ser un pie de foto del total. D-051. */
+  font-size: var(--price-font-size);
 }
 
 /* Envio gratis por escalon. Aparece solo en las tarjetas cuyo total cruza
@@ -533,6 +537,109 @@ h1, h2, h3, h4,
   text-transform: uppercase;
   /* 0.65 daba 3.77:1 sobre SEDIMENTO. Ver seccion 8. */
   opacity: 0.85;
+}
+
+/* Bajada del encabezado. Es copy, no dato: Archivo, caja baja y sin tracking,
+   justo lo contrario del filete de arriba, para que se lean como dos cosas
+   distintas y no como un titulo de dos renglones. */
+.quantity-breaks__subtitulo {
+  max-width: 46ch;
+  margin: 0.6rem auto 0;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.3rem;
+  line-height: 1.45;
+  color: var(--cauce-cauce);
+  opacity: 0.75;
+}
+
+/* El destaque del escalon es FIJO, no sigue a la seleccion ------------------
+
+   Shrine mueve el fondo con el radio: .quantity-break arranca en 2 % del color
+   de acento y el :checked salta a 10 %. Con eso el peso visual viajaba de
+   tarjeta en tarjeta y el escalon que el negocio quiere empujar solo se veia
+   destacado mientras estaba elegido.
+
+   Aca el fondo deja de depender del estado: las tres tarjetas van en BLANCO y
+   el escalon 3 va siempre en SEDIMENTO. La seleccion sigue leyendose por el
+   borde -que pasa de 30 % a pleno- y por el punto indicador, que es lo que un
+   grupo de radios necesita. El selector es [for="quantity3"] y no un
+   data-quantity: engancha el TERCER escalon, no "el que lleva 3 frascos".
+   Ver D-051. */
+.quantity-breaks-container .quantity-break,
+.quantity-breaks-container input:checked + .quantity-break {
+  background: var(--cauce-blanco);
+}
+
+@media (hover: hover) {
+  .quantity-breaks-container .quantity-break:hover {
+    background: var(--cauce-blanco);
+  }
+}
+
+.quantity-breaks-container label[for='quantity3'].quantity-break,
+.quantity-breaks-container input:checked + label[for='quantity3'].quantity-break {
+  background: var(--cauce-sedimento);
+}
+
+@media (hover: hover) {
+  .quantity-breaks-container label[for='quantity3'].quantity-break:hover {
+    background: var(--cauce-sedimento);
+  }
+}
+
+/* El chip de envio se dibuja con un borde SEDIMENTO-2 calibrado contra el fondo
+   blanco de la tarjeta. En la tarjeta destacada ese borde queda contra SEDIMENTO
+   y desaparece, asi que ahi el chip se invierte: pastilla blanca, texto CAUCE,
+   15,76:1. Es el mismo chip, resuelto para los dos fondos. */
+.quantity-breaks-container label[for='quantity3'] .quantity-break__envio {
+  background: var(--cauce-blanco);
+  border-color: var(--cauce-blanco);
+}
+
+/* Ahorro en pesos y cuotas. Son datos duros: mono, como los precios. Ninguno
+   estrena color -CAUCE pleno-, porque OXIDO ya esta tomado por el boton de
+   agregar al carrito y VADO por la cinta, y la regla de marca es un solo
+   elemento por pieza en cada uno. La jerarquia la hace el cuerpo. */
+.quantity-break__ahorro {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.4rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--cauce-cauce);
+}
+
+.quantity-break__cuotas {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.3rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--cauce-cauce);
+}
+
+/* 375 px: la columna izquierda creció de dos renglones a cinco y el precio por
+   frasco subio al cuerpo del total. Sin esto el titulo con los dias empuja la
+   columna de precios afuera de la tarjeta: min-width 0 deja que el texto largo
+   corte en vez de estirar el flex, y flex-shrink 0 clava el ancho del precio.
+   El titulo pasa a line-height 1.2 porque con line-height 1 -el de Shrine, que
+   asume una sola linea- los renglones se tocan al cortar. */
+.quantity-break__content {
+  gap: 1rem;
+}
+
+.quantity-break__left {
+  min-width: 0;
+}
+
+.quantity-break__right {
+  flex-shrink: 0;
+}
+
+.quantity-break__left .quantity-break__label {
+  line-height: 1.2;
+}
+
+.quantity-break__label-text {
+  line-height: 1.2;
 }
 
 /* Medios de pago ---------------------------------------------------------- */

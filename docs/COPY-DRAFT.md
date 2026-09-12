@@ -85,29 +85,40 @@ marca y conviene que se repita.
 
 ### Selector de oferta
 
-Actualizado en D-047, D-049 y D-050: los `[[PENDIENTE: descuento_xN]]` se resolvieron con los
-precios comerciales reales, y el 2026-09-12 los escalones 2 y 3 subieron a $61.900 y $72.900.
+Actualizado en D-051: el destaque pasó del escalón 2 al 3 y la grilla sumó tres renglones por
+tarjeta (ahorro, envío, cuotas). Los precios son los de D-050.
 
 | Campo | Texto | Riesgo |
 |---|---|---|
-| Encabezado | Elegí cuántos meses querés cubrir | `forma` — es una promesa de duración, y la duración de cada escalón sale del token `[duracion]`, que hoy no renderiza (D-050b) |
-| Escalón 1 | **1 frasco** · pill *(duración)* · $49.900 por frasco · **$49.900** | `forma` |
-| Escalón 2 | cinta **EL MÁS ELEGIDO** · **2 frascos** · pill **El 2º sale $12.000** · $30.950 por frasco · **$61.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$61.900 **y ventas reales que respalden "el más elegido"** |
-| Escalón 3 | **3 frascos** · pill *(duración)* · $24.300 por frasco · **$72.900** ~~$149.700~~ | `dato` — exige el descuento automático. El precio por frasco vuelve a dar redondo: $72.900 ÷ 3 = $24.300 |
-| Chip de envío (escalones 2 y 3) | Envío gratis | `dato` — exige la tarifa real de envío sin cargo. No se carga en el editor: lo dibuja el tema en cada escalón cuyo total cruza `cauce_umbral_envio_gratis` (D-050c). Texto en `cauce.pdp.envio_gratis_escalon` |
-| Nota al pie 1 | El precio tachado es lo que te costaría llevar esa misma cantidad de a un frasco. | `forma` |
-| Nota al pie 2 | Envío gratis en pedidos desde $60.000. | `dato` — exige la tarifa real de envío sin cargo. Lo alcanzan los escalones 2 y 3, por $1.900 y $12.900 (D-050) |
+| Encabezado | UNA CÁPSULA POR DÍA · CADA FRASCO, UN MES | `dato` — exige que el envase rinda un mes a una cápsula por día. Es lo mismo que tendrían que decir los metafields de dosis |
+| Bajada | Los ensayos clínicos con R-ALA evalúan tomas diarias sostenidas de 8 a 12 semanas. | `dato` — **BLOQUEANTE**. Afirmación sobre literatura científica: exige la cita de los ensayos. §6 |
+| Escalón 1 | **1 frasco · 30 días** · *+ envío* · **$49.900** | `forma` |
+| Escalón 2 | **2 frascos · 60 días** · $30.950 por frasco · *Ahorrás $37.900* · *Envío gratis* · **$61.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$61.900 |
+| Escalón 3 | cinta **LA TOMA COMPLETA · 90 DÍAS** · **3 frascos · 90 días** · $24.300 por frasco · *Ahorrás $76.800* · *Envío gratis* · *3 cuotas de $24.300* · **$72.900** ~~$149.700~~ | `dato` — exige el descuento automático de 3×$72.900 y la financiación real de las 3 cuotas (§6). Es el escalón preseleccionado y el único con fondo SEDIMENTO |
+| CTA | Agregar 3 frascos · $72.900 | `forma` — se arma solo desde el escalón elegido. Cambia con el radio, sin recargar |
+| Letra chica 1 | Cada frasco te sale $24.300 en vez de $49.900. Menos de la mitad. | `dato` — verdadera por $650, pero **depende de R6**: sin los descuentos automáticos el frasco sigue saliendo $49.900. §6 |
+| Letra chica 2 | El precio tachado es lo que costarían esos frascos comprados de a uno. | `forma` |
+| Letra chica 3 | Los packs de 2 y 3 frascos van con envío sin cargo. | `dato` — exige la tarifa real de envío sin cargo desde $60.000. Ya no nombra el umbral: lo dice por escalón |
 
-"frasco" es un valor de setting del template, no está en el Liquid: para un SKU en polvo
-se cambia a "envase" desde el editor sin tocar código.
+Lo que salió en D-051 y no vuelve sin datos: la cinta **EL MÁS ELEGIDO** del escalón 2 (era una
+afirmación sobre otros compradores, §6) y el pill **El 2º sale $12.000** (con el pack de 3 a
+$72.900 el tercer frasco salía más barato que el segundo, así que el pill era el peor argumento
+de la grilla — ver D-050).
 
-La duración sale del token `[duracion]` y depende de los metafields de dosis: mientras estén
-vacíos, los tres pills no renderizan. No es un `[[PENDIENTE]]`, es el guarda de D-003.
+El único texto del bloque que sigue escrito a mano es la **letra chica 1**, porque nombra dos
+precios. Los tres renglones nuevos de cada tarjeta —ahorro, envío y cuotas— los calcula el tema
+y no hay nada que mantener cuando cambie un precio.
 
-**El badge "el más elegido" volvió el 2026-09-09**, a pedido y para previsualizar. Queda
-anotado que es el único texto del bloque que no se puede verificar contra la tabla de precios
-ni contra el rótulo: afirma la conducta de otros compradores. Bloqueante abierto en el §6 de
-CLAIMS-AUDIT.
+"frasco" es un valor de setting del template en los títulos de fila, así que para un SKU en
+polvo se cambia a "envase" desde el editor. **Desde D-051 la palabra también vive en el locale**,
+en `cauce.pdp.cta_agregar`, porque el CTA la pluraliza ("1 frasco" / "3 frascos"). Son dos
+lugares, no uno.
+
+**La duración dejó de salir del token `[duracion]` y ahora está escrita en el título de cada
+fila** (D-051). El token sigue existiendo y sigue guardado por D-003 —sin los metafields de
+dosis no dibuja nada— pero ya no se usa acá: el bloque pedía "30 / 60 / 90 días" y los
+metafields están vacíos. La consecuencia es que si el envase cambia de conteo, los tres títulos
+hay que reescribirlos a mano. Anotado en el §6, junto al pendiente de los metafields.
 
 La alternativa que ocupaba ese lugar y no depende de nadie es la aritmética marginal: el
 segundo frasco cuesta $10.000, y el precio por frasco cae $19.950 del 1 al 2 contra $2.650 del

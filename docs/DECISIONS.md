@@ -2357,3 +2357,101 @@ cambio la promesa pasó de cuatro superficies a cinco, y la quinta es la que est
 compra. El bloqueante del §6 pesa más, no menos.
 
 ---
+
+## D-051 · 2026-09-12 · El bloque de packs se reordena alrededor del escalón de 3, y el destaque deja de seguir a la selección
+
+**Decisión.** Pedido comercial completo sobre el bloque `ofertas` de la PDP: el default, el
+badge y el fondo destacado se mudan del escalón 2 al 3, cada tarjeta suma ahorro y envío, el
+escalón 3 suma cuotas, el encabezado pasa a dos renglones y el CTA dice lo que se está por
+agregar. Los precios no se tocaron: son los de D-050.
+
+| | Antes | Ahora |
+|---|---|---|
+| Preseleccionado | escalón 2 | **escalón 3** |
+| Cinta | `EL MÁS ELEGIDO` en el 2 | **`LA TOMA COMPLETA · 90 DÍAS` en el 3** |
+| Fondo destacado | el que estuviera elegido | **fijo en el 3, SEDIMENTO** |
+| Pill del 2 | `El 2º sale $12.000` | — |
+| Títulos | `1 frasco` / `2 frascos` / `3 frascos` | `… · 30 días` / `· 60 días` / `· 90 días` |
+| Caption del 1 | `$49.900 por frasco` | `+ envío` |
+| Líneas nuevas | — | ahorro en los tres; cuotas en el 3 |
+| CTA | `Agregar al carrito` | **`Agregar 3 frascos · $72.900`**, vivo |
+
+### El destaque deja de ser el estado de selección
+
+Es el cambio con más consecuencias y el menos visible en un diff. Shrine dibuja la tarjeta
+elegida con fondo: `.quantity-break` arranca en 2 % del color de acento y `:checked` salta a
+10 %. O sea que "destacado" y "elegido" eran la misma cosa, y el peso visual viajaba de tarjeta
+en tarjeta con cada click.
+
+Ahora son dos cosas distintas: las tres tarjetas van en **BLANCO**, el escalón 3 va **siempre**
+en SEDIMENTO, y la selección se lee por el borde —que pasa de 30 % de alpha a pleno— más el
+punto indicador. Click en el escalón 1 y el fondo SEDIMENTO sigue donde estaba.
+
+El selector es `[for="quantity3"]` y no `[data-quantity="3"]` a propósito: engancha el **tercer
+escalón**, no "el escalón que lleva 3 frascos". Si mañana el pack grande pasa a 4 frascos, el
+destaque se queda donde tiene que estar. Lo que sí queda atado a CSS es *cuál* escalón se
+destaca: moverlo es editar esa regla, no un setting.
+
+### Lo que se calcula y lo que se escribe a mano
+
+Los tres renglones nuevos de cada tarjeta salen de `snippets/cauce-escalon-extras.liquid`, que
+recibe el total ya descontado y el `option_N_price_difference` que el tema ya calculaba para el
+token `[amount_saved]`:
+
+| Renglón | De dónde sale | Dónde aparece hoy |
+|---|---|---|
+| `Ahorrás $X` | `compare_price − price`. Si da 0 no se dibuja | escalones 2 y 3 |
+| `Envío gratis` | `cauce-envio-escalon.liquid` contra el umbral (D-050c) | escalones 2 y 3 |
+| `3 cuotas de $X` | `settings.cauce_cuotas` dividiendo el total | sólo donde lo mande `cauce_cuotas_escalon` |
+
+El escalón 1 no muestra ahorro porque tachado y precio son el mismo número: la línea se calla
+sola en vez de decir "Ahorrás $0". Y las cuotas necesitaron un campo nuevo
+(`cauce_cuotas_escalon`, un select en el schema del bloque) porque **en qué escalón conviene
+anunciar financiación es decisión comercial, no del tema** — el tema no tiene cómo deducirlo.
+
+Contra eso, lo que quedó escrito a mano y hay que mantener: los **días** de los tres títulos, el
+**"cada frasco, un mes"** del encabezado y los **dos precios de la letra chica 1**. Los días
+podrían salir del token `[duracion]`, pero los metafields de dosis siguen vacíos (D-003, D-050b)
+y el bloque los pedía ahora. Está anotado en el §6.
+
+### El CTA
+
+Cada tarjeta trae el texto ya armado en `data-cauce-cta`, con el money y la pluralización
+resueltos **en el servidor**; `assets/cauce.js` sólo lo copia al botón cuando cambia el radio.
+Duplicar el formateo de plata en JS es exactamente como se desincronizan los precios, y este
+bloque ya tuvo tres cambios de precio en cuatro días.
+
+El botón agotado no se toca: ahí el texto es "Sin stock", que no es una promesa de compra. El
+sticky ATC tampoco: es otro elemento, con su propio label, y está fuera del bloque.
+
+**Límite conocido, el mismo del chip de envío:** todo esto se resuelve en el servidor. Con
+`update_prices` activado y variantes de distinto precio, el JS del tema recalcula los precios de
+las tarjetas pero no el ahorro, ni las cuotas, ni el `data-cauce-cta`. Hoy `update_prices` está
+en `false` y el producto tiene una sola variante.
+
+### Tres cosas que este cambio deja abiertas
+
+1. **La bajada cita ensayos clínicos.** *"Los ensayos clínicos con R-ALA evalúan tomas diarias
+   sostenidas de 8 a 12 semanas."* No promete un resultado, pero afirma algo sobre literatura
+   científica y hay que poder mostrarla. Bloqueante nuevo en el §6. Es un campo del editor
+   (`cauce_subtitulo`): sacarlo no toca código.
+2. **"3 cuotas de $24.300" promete financiación sin interés.** La división es exacta, pero si la
+   pasarela cobra CFT el número miente. Bloqueante nuevo en el §6.
+3. **La cinta en VADO con texto blanco da 3,20:1.** Es lo que había y lo que se pidió mantener,
+   pero a 15 px en negrita no llega ni al 4,5:1 de AA ni al 3:1 de texto grande. CAUCE sobre
+   VADO da **4,93:1** y pasa. Es cambiar `--color-foreground` de la cinta; no se hizo porque el
+   pedido decía "texto blanco, como está hoy".
+
+### Lo que se cerró
+
+La cinta `EL MÁS ELEGIDO` era el bloqueante más viejo del §6: afirmaba la conducta de otros
+compradores sin ventas que la respaldaran (D-047b, Res. SC 270/2020). Ya no existe, y el texto
+que la reemplaza habla del producto y no de terceros. El pill `El 2º sale $12.000` también salió,
+y no se hizo el equivalente para el 3: con los precios de D-050 el tercer frasco sale $11.000 y
+el segundo $12.000, así que el pill era el peor argumento de la grilla, no el mejor.
+
+**Lo que no se tocó.** Ninguna otra sección de la PDP, ningún precio, ninguna variante. La barra
+de anuncio y el acordeón de envíos siguen diciendo "desde $60.000": es verdad, el umbral no
+cambió, y son superficies de otra sección.
+
+---

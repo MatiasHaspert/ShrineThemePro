@@ -112,6 +112,15 @@
       <span></span>
     </p>
   {% endif %}
+  {%- comment -%}
+    CAUCE: bajada del encabezado. Va afuera del <p> del titulo porque ese <p> es un
+    flex de tres columnas -texto entre dos filetes- y meterle un segundo renglon
+    adentro le rompe el centrado. Es copy y no dato: va en Archivo, no en mono.
+    El campo es cauce_subtitulo, en el schema del bloque. Ver D-051.
+  {%- endcomment -%}
+  {% if block.settings.cauce_subtitulo != blank %}
+    <p class="quantity-breaks__subtitulo center">{{ block.settings.cauce_subtitulo }}</p>
+  {% endif %}
   <div class="quantity-breaks-container">
     {% if block.settings.option_1_quantity != 0 %}
       {% liquid
@@ -131,6 +140,17 @@
         assign option_1_price_each = option_1_price | divided_by: block.settings.option_1_quantity
         assign option_1_compare_price_each = option_1_compare_price | divided_by: block.settings.option_1_quantity
       %}
+      {%- comment -%}
+        CAUCE: texto que el boton de agregar al carrito toma cuando este escalon queda
+        elegido. Se arma aca, en el servidor, con el mismo money del resto del bloque;
+        assets/cauce.js solo lo copia al boton. Ver D-051.
+      {%- endcomment -%}
+      {%- liquid
+        assign cauce_total_1_money = option_1_price | money_without_trailing_zeros
+        capture cauce_cta_1
+          echo 'cauce.pdp.cta_agregar' | t: count: block.settings.option_1_quantity, total: cauce_total_1_money
+        endcapture
+      -%}
       <input
         id="quantity1"
         aria-label="Quantity"
@@ -150,6 +170,7 @@
         data-input="input_1"
         data-percentage-left="{{ percentage_left }}"
         data-fixed-discount="{{ fixed_amount_off }}"
+        data-cauce-cta="{{ cauce_cta_1 | strip | escape }}"
       >
         {% if cauce_o1_badge != blank %}
           <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_1_badge_color }}" data-text="{{ cauce_o1_badge }}">
@@ -223,10 +244,12 @@
                   %}
                 </span>
               {% endif %}
-              {%- capture cauce_envio_1 %}{% render 'cauce-envio-escalon', total: option_1_price %}{% endcapture -%}
-              {% if cauce_envio_1 != blank %}
-                <span class="quantity-break__envio">{{ cauce_envio_1 }}</span>
-              {% endif %}
+              {% render 'cauce-escalon-extras',
+                indice: 1,
+                total: option_1_price,
+                ahorro: option_1_price_difference,
+                cuotas_en: block.settings.cauce_cuotas_escalon
+              %}
             </div>
             <div class="quantity-break__right dynamic-price">
               {% if cauce_o1_price_text != blank %}
@@ -364,6 +387,17 @@
         assign option_2_price_each = option_2_price | divided_by: block.settings.option_2_quantity
         assign option_2_compare_price_each = option_2_compare_price | divided_by: block.settings.option_2_quantity
       %}
+      {%- comment -%}
+        CAUCE: texto que el boton de agregar al carrito toma cuando este escalon queda
+        elegido. Se arma aca, en el servidor, con el mismo money del resto del bloque;
+        assets/cauce.js solo lo copia al boton. Ver D-051.
+      {%- endcomment -%}
+      {%- liquid
+        assign cauce_total_2_money = option_2_price | money_without_trailing_zeros
+        capture cauce_cta_2
+          echo 'cauce.pdp.cta_agregar' | t: count: block.settings.option_2_quantity, total: cauce_total_2_money
+        endcapture
+      -%}
       <input
         id="quantity2"
         aria-label="Quantity"
@@ -383,6 +417,7 @@
         data-input="input_2"
         data-percentage-left="{{ percentage_left }}"
         data-fixed-discount="{{ fixed_amount_off }}"
+        data-cauce-cta="{{ cauce_cta_2 | strip | escape }}"
       >
         {% if cauce_o2_badge != blank %}
           <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_2_badge_color }}" data-text="{{ cauce_o2_badge }}">
@@ -456,10 +491,12 @@
                   %}
                 </span>
               {% endif %}
-              {%- capture cauce_envio_2 %}{% render 'cauce-envio-escalon', total: option_2_price %}{% endcapture -%}
-              {% if cauce_envio_2 != blank %}
-                <span class="quantity-break__envio">{{ cauce_envio_2 }}</span>
-              {% endif %}
+              {% render 'cauce-escalon-extras',
+                indice: 2,
+                total: option_2_price,
+                ahorro: option_2_price_difference,
+                cuotas_en: block.settings.cauce_cuotas_escalon
+              %}
             </div>
             <div class="quantity-break__right dynamic-price">
               {% if cauce_o2_price_text != blank %}
@@ -597,6 +634,17 @@
         assign option_3_price_each = option_3_price | divided_by: block.settings.option_3_quantity
         assign option_3_compare_price_each = option_3_compare_price | divided_by: block.settings.option_3_quantity
       %}
+      {%- comment -%}
+        CAUCE: texto que el boton de agregar al carrito toma cuando este escalon queda
+        elegido. Se arma aca, en el servidor, con el mismo money del resto del bloque;
+        assets/cauce.js solo lo copia al boton. Ver D-051.
+      {%- endcomment -%}
+      {%- liquid
+        assign cauce_total_3_money = option_3_price | money_without_trailing_zeros
+        capture cauce_cta_3
+          echo 'cauce.pdp.cta_agregar' | t: count: block.settings.option_3_quantity, total: cauce_total_3_money
+        endcapture
+      -%}
       <input
         id="quantity3"
         aria-label="Quantity"
@@ -616,6 +664,7 @@
         data-input="input_3"
         data-percentage-left="{{ percentage_left }}"
         data-fixed-discount="{{ fixed_amount_off }}"
+        data-cauce-cta="{{ cauce_cta_3 | strip | escape }}"
       >
         {% if cauce_o3_badge != blank %}
           <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_3_badge_color }}" data-text="{{ cauce_o3_badge }}">
@@ -689,10 +738,12 @@
                   %}
                 </span>
               {% endif %}
-              {%- capture cauce_envio_3 %}{% render 'cauce-envio-escalon', total: option_3_price %}{% endcapture -%}
-              {% if cauce_envio_3 != blank %}
-                <span class="quantity-break__envio">{{ cauce_envio_3 }}</span>
-              {% endif %}
+              {% render 'cauce-escalon-extras',
+                indice: 3,
+                total: option_3_price,
+                ahorro: option_3_price_difference,
+                cuotas_en: block.settings.cauce_cuotas_escalon
+              %}
             </div>
             <div class="quantity-break__right dynamic-price">
               {% if cauce_o3_price_text != blank %}
@@ -830,6 +881,17 @@
         assign option_4_price_each = option_4_price | divided_by: block.settings.option_4_quantity
         assign option_4_compare_price_each = option_4_compare_price | divided_by: block.settings.option_4_quantity
       %}
+      {%- comment -%}
+        CAUCE: texto que el boton de agregar al carrito toma cuando este escalon queda
+        elegido. Se arma aca, en el servidor, con el mismo money del resto del bloque;
+        assets/cauce.js solo lo copia al boton. Ver D-051.
+      {%- endcomment -%}
+      {%- liquid
+        assign cauce_total_4_money = option_4_price | money_without_trailing_zeros
+        capture cauce_cta_4
+          echo 'cauce.pdp.cta_agregar' | t: count: block.settings.option_4_quantity, total: cauce_total_4_money
+        endcapture
+      -%}
       <input
         id="quantity4"
         aria-label="Quantity"
@@ -849,6 +911,7 @@
         data-input="input_4"
         data-percentage-left="{{ percentage_left }}"
         data-fixed-discount="{{ fixed_amount_off }}"
+        data-cauce-cta="{{ cauce_cta_4 | strip | escape }}"
       >
         {% if cauce_o4_badge != blank %}
           <p class="quantity-break__badge dynamic-price variant-price-update color-{{ block.settings.option_4_badge_color }}" data-text="{{ cauce_o4_badge }}">
@@ -922,10 +985,12 @@
                   %}
                 </span>
               {% endif %}
-              {%- capture cauce_envio_4 %}{% render 'cauce-envio-escalon', total: option_4_price %}{% endcapture -%}
-              {% if cauce_envio_4 != blank %}
-                <span class="quantity-break__envio">{{ cauce_envio_4 }}</span>
-              {% endif %}
+              {% render 'cauce-escalon-extras',
+                indice: 4,
+                total: option_4_price,
+                ahorro: option_4_price_difference,
+                cuotas_en: block.settings.cauce_cuotas_escalon
+              %}
             </div>
             <div class="quantity-break__right dynamic-price">
               {% if cauce_o4_price_text != blank %}

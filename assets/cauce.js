@@ -355,6 +355,48 @@
     cauceCarritoSumar(boton);
   });
 
+  /* ----------------------------------------------------------------------
+     El CTA dice lo que se esta por agregar (snippets/quantity-breaks.liquid).
+
+     Cada tarjeta de escalon trae el texto ya armado en data-cauce-cta, con el
+     money y la pluralizacion resueltos en el servidor. Aca no se arma texto ni
+     se formatea plata: se copia el del escalon elegido al boton. Duplicar el
+     formateo en JS es como se desincronizan los precios.
+
+     No se toca el boton si esta agotado: ahi el texto es "Sin stock" y no una
+     promesa de compra.
+
+     El change va delegado en document y no un listener por radio: el tema
+     re-renderiza el bloque al cambiar de variante y los listeners directos se
+     perderian.
+     -------------------------------------------------------------------- */
+  function cauceCtaSync() {
+    const elegido = document.querySelector(
+      '.quantity-breaks-container input[name="quantity"]:checked'
+    );
+    if (!elegido) return;
+
+    const tarjeta = document.querySelector('[data-cauce-cta][for="' + elegido.id + '"]');
+    const texto = tarjeta && tarjeta.dataset.cauceCta;
+    if (!texto) return;
+
+    const boton =
+      document.querySelector('.main-product-atc') ||
+      document.querySelector('.product-form__submit');
+    if (!boton || boton.dataset.unavailable === 'true') return;
+
+    const etiqueta = boton.querySelector('.main-atc__label__text');
+    if (etiqueta) etiqueta.textContent = texto;
+  }
+
+  document.addEventListener('change', function (e) {
+    if (e.target && e.target.matches && e.target.matches('.quantity-breaks-container input[name="quantity"]')) {
+      cauceCtaSync();
+    }
+  });
+
+  cauceCtaSync();
+
   if (!customElements.get('cauce-tabs')) customElements.define('cauce-tabs', CauceTabs);
   if (!customElements.get('cauce-ugc')) customElements.define('cauce-ugc', CauceUgc);
   if (!customElements.get('cauce-hero')) customElements.define('cauce-hero', CauceHero);
