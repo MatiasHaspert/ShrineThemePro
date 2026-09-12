@@ -90,7 +90,7 @@ precios comerciales reales, y el 2026-09-12 los escalones 2 y 3 subieron a $61.9
 
 | Campo | Texto | Riesgo |
 |---|---|---|
-| Encabezado | Cuantos más frascos, más barato cada uno | `forma` |
+| Encabezado | Elegí cuántos meses querés cubrir | `forma` — es una promesa de duración, y la duración de cada escalón sale del token `[duracion]`, que hoy no renderiza (D-050b) |
 | Escalón 1 | **1 frasco** · pill *(duración)* · $49.900 por frasco · **$49.900** | `forma` |
 | Escalón 2 | cinta **EL MÁS ELEGIDO** · **2 frascos** · pill **El 2º sale $12.000** · $30.950 por frasco · **$61.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$61.900 **y ventas reales que respalden "el más elegido"** |
 | Escalón 3 | **3 frascos** · pill *(duración)* · $24.300 por frasco · **$72.900** ~~$149.700~~ | `dato` — exige el descuento automático. El precio por frasco vuelve a dar redondo: $72.900 ÷ 3 = $24.300 |

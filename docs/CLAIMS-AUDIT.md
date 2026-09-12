@@ -202,7 +202,11 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
 - [ ] R2 · Proveedor del producto = CAUCE
 - [x] R7 · Plantilla del producto = `cauce-landing` — cerrado 2026-08-29
 - [ ] R4 · Revisar los 12 metacampos de categoría, en especial "Enfoque de salud"
-- [ ] Cargar los metafields `cauce.*` con transcripción textual del rótulo
+- [ ] Cargar los metafields `cauce.*` con transcripción textual del rótulo. **Desde el
+      2026-09-12 `cauce.unidades_envase` y `cauce.dosis_diaria` son prioritarios (D-050b):**
+      el titular del bloque de oferta pregunta cuántos meses querés cubrir y los tres pills
+      de duración salen de esos dos campos. Vacíos, el token `[duracion]` no renderiza y el
+      titular queda arriba de una grilla que sólo muestra frascos y precios.
 
 **Evidencia documental**
 

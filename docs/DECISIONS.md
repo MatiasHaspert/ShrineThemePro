@@ -2240,3 +2240,43 @@ pasar a **−$37.900** y **−$76.800**, y la tarifa real de envío sin cargo ti
 
 ---
 
+## D-050b · 2026-09-12 · El titular del bloque de oferta deja de hablar de precio y pasa a hablar de duración
+
+**Decisión.** El `headline` del bloque `ofertas` pasa de `Cuantos más frascos, más barato cada
+uno` a **`Elegí cuántos meses querés cubrir`**. Es un solo campo de
+`templates/product.cauce-landing.json`.
+
+**Por qué.** El titular anterior anunciaba lo que la grilla ya demuestra sola tres veces: el
+total, el tachado y el `[price_each] por frasco` de cada fila. Era redundante, y encima ponía el
+precio como eje de la decisión justo arriba de un selector cuya variable real es cuánto tiempo
+querés estar cubierto. El titular nuevo nombra esa variable y deja el precio donde ya estaba
+dicho.
+
+**Lo que esto engancha: el titular ahora depende del token `[duracion]`.** Los tres pills salen
+de `[duracion]`, que `snippets/cauce-duracion.liquid` resuelve desde dos metafields —
+`cauce.unidades_envase` y `cauce.dosis_diaria`— y que **si falta cualquiera de los dos no
+renderiza nada** (el guarda de D-003: antes que inventar un número, no muestra ninguno). Hoy los
+dos están vacíos, así que los pills no se dibujan.
+
+Con el titular viejo eso era una carencia. Con el nuevo es una contradicción: el encabezado
+pregunta cuántos **meses** querés cubrir y la grilla de abajo sólo muestra frascos y precios, sin
+un solo dato de duración con el cual contestar la pregunta. **Cargar los dos metafields deja de
+ser cosmético y pasa a sostener el titular.** Está en el §6 de CLAIMS-AUDIT, bajo el pendiente de
+los metafields `cauce.*`.
+
+**Y hay un desfasaje de unidad.** El texto de los pills sale de `locales/es.json` >
+`cauce.pdp.duracion_dias`, que dice **`{{ dias }} días de uso`**. Con un envase de 60 cápsulas y
+2 por día, los tres pills van a decir *30 / 60 / 90 días de uso* mientras el titular habla de
+meses. No es falso —30 días es un mes— pero obliga al cliente a hacer la conversión que el
+titular le prometió resuelta. Dos salidas, las dos de una línea y ninguna aplicada acá:
+
+1. Agregar una clave `cauce.pdp.duracion_meses` y usarla cuando los días sean múltiplo de 30.
+2. Dejar el titular en meses y los pills en días, y aceptar el salto.
+
+**Lo que no se tocó.** El pill del escalón 2 sigue siendo de precio (`El 2º sale $12.000`,
+D-050), así que el titular tira para duración y el pill más visible de la grilla tira para
+precio. No se contradicen, pero tampoco empujan juntos. Si se quiere alinear, el pill del 2 es
+el campo `option_2_benefit` — y es el único de los tres que hoy no usa `[duracion]`.
+
+---
+

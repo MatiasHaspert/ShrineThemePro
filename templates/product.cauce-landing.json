@@ -155,7 +155,7 @@
             "atc_append_heights": "stretch-quantity",
             "enable_quantity_discounts": true,
             "style": "normal",
-            "headline": "Cuantos más frascos, más barato cada uno",
+            "headline": "Elegí cuántos meses querés cubrir",
             "preselected": "option_2",
             "display_selected_indicator": true,
             "border_radius": 6,
