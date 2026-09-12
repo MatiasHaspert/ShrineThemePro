@@ -177,12 +177,13 @@ cobra otro.
 
 > **Dejó de ser teórico el 2026-09-09.** Hasta D-047 los tres escalones estaban en descuento 0:
 > mostraban el precio multiplicado, que es exactamente lo que cobra el carrito, y la
-> discrepancia era de $0. Ahora la PDP promete **$59.900** por dos y **$77.900** por tres, y sin
+> discrepancia era de $0. Ahora la PDP promete **$61.900** por dos y **$72.900** por tres, y sin
 > los descuentos automáticos cargados el carrito cobra **$99.800** y **$149.700**. La diferencia
-> es de $39.900 y $71.800 por pedido, en contra del cliente. Es lo primero que hay que cargar o
+> es de $37.900 y $76.800 por pedido, en contra del cliente. Es lo primero que hay que cargar o
 > lo primero que hay que revertir; no hay estado intermedio publicable.
 >
-> Montos actualizados el 2026-09-10 (D-049), cuando el escalón 3 bajó de $81.900 a $77.900.
+> Montos actualizados el 2026-09-12 (D-050), cuando el escalón 2 subió de $59.900 a $61.900 y el
+> 3 de $77.900 a $72.900.
 
 ### R7 · El producto no tiene asignado el template — **CERRADO 2026-08-29**
 
@@ -218,33 +219,42 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
 - [ ] Imagen y URL de Data Fiscal AFIP
 - [ ] Redactar las cuatro políticas en Configuración → Políticas (el footer las muestra solo si existen)
 - [ ] **BLOQUEANTE · R6 · Los descuentos automáticos de los escalones (D-047).** Dos descuentos
-      automáticos de Shopify: cantidad 2 → precio final $59.900 (−$39.900) y cantidad 3 → precio
-      final $77.900 (−$71.800). Tienen que coincidir al peso con `option_2_fixed_amount_off` y
+      automáticos de Shopify: cantidad 2 → precio final $61.900 (−$37.900) y cantidad 3 → precio
+      final $72.900 (−$76.800). Tienen que coincidir al peso con `option_2_fixed_amount_off` y
       `option_3_fixed_amount_off` del bloque `ofertas`. Si no se cargan, los escalones vuelven a
       `0` y las dos cintas salen.
-- [x] ~~R6b · La cinta "ENVÍO GRATIS" del escalón 3~~ — **cerrado 2026-09-09 (D-047c), y hoy
-      todavía más cerrado.** Se sacó porque con el umbral en $50.000 el escalón 2 también lo
-      cruzaba y anunciarlo sólo en el 3 era exclusividad falsa. Desde el 2026-09-10 el umbral es
-      $75.000 y el escalón 3 vale $77.900: el 3 es otra vez el único que cruza, así que la
-      cinta sería **verdadera** si volviera (D-049b). No se repuso por criterio comercial —el
-      envío gratis exclusivo del 3 empuja en contra del 2, que es la estrella—, no por riesgo
-      legal. Si se decide reponerla, es un campo: `option_3_badge`.
+- [x] ~~R6b · La cinta "ENVÍO GRATIS" del escalón 3~~ — **cerrado 2026-09-09 (D-047c), y desde
+      el 2026-09-12 cerrado otra vez por el motivo original.** Se sacó porque con el umbral en
+      $50.000 el escalón 2 también lo cruzaba y anunciarlo sólo en el 3 era exclusividad falsa.
+      Entre el 2026-09-10 y el 2026-09-12 el 3 fue el único que cruzaba y la cinta habría sido
+      verdadera (D-049b), pero no se repuso. Con el umbral en $60.000 y el escalón 2 en $61.900
+      **vuelven a cruzar los dos**, así que anunciarla sólo en el 3 sería de nuevo exclusividad
+      falsa: art. 8 de la Ley 24.240. La cinta no va (D-050).
 - [ ] **BLOQUEANTE · La tarifa de envío gratis tiene que existir en Shopify.**
-      `cauce_umbral_envio_gratis` está cargado en **$75.000** y ese número ya lo publican cuatro
+      `cauce_umbral_envio_gratis` está cargado en **$60.000** y ese número ya lo publican cuatro
       superficies: la barra de anuncio, el acordeón de envíos, la nota del bloque de oferta y la
       barra de progreso del carrito (D-046). El setting del tema **sólo dibuja**: si no hay una
-      tarifa real de envío sin cargo desde $75.000 en Configuración → Envíos, las cuatro
+      tarifa real de envío sin cargo desde $60.000 en Configuración → Envíos, las cuatro
       prometen algo que el checkout no cumple (Ley 24.240 art. 7 y 8).
-- [x] ~~Ningún escalón llega al envío gratis~~ — **cerrado 2026-09-10 (D-049b).** Con el umbral
-      en $80.000 y el escalón 3 bajado a $77.900 no llegaba ninguno. El umbral bajó a $75.000 y
-      el pack de 3 lo cruza por $2.900, en los dos estados: con los descuentos automáticos
-      cargados ($77.900) y sin ellos ($149.700). Cargar R6 ya no apaga el envío gratis.
+- [x] ~~Ningún escalón llega al envío gratis~~ — **cerrado 2026-09-10 (D-049b), y sigue cerrado
+      con los precios del 2026-09-12 (D-050).** Con el umbral en $60.000 lo cruzan el pack de 2
+      ($61.900, por $1.900) y el de 3 ($72.900, por $12.900), en los dos estados: con los
+      descuentos automáticos cargados y sin ellos ($99.800 y $149.700). Cargar R6 no apaga el
+      envío gratis. **El aire del pack de 2 es de $1.900:** un cupón que reste más que eso sobre
+      un pedido de dos frascos lo deja abajo del umbral y apaga el beneficio en silencio.
+- [ ] **El 10 % de bienvenida le saca el envío gratis al pack de 2 (D-050).** Con el umbral en
+      $60.000, un 10 % sobre $61.900 deja el pedido en **$55.710** y el envío pasa a cobrarse; el
+      pack de 3 queda en $65.610 y no se ve afectado. Y la barra de progreso del carrito lee
+      `cart.items_subtotal_price`, que **no** descuenta los códigos a nivel carrito: sigue
+      diciendo "tenés el envío gratis" mientras el checkout lo cobra. Es promesa incumplida en el
+      escalón preseleccionado (Ley 24.240 art. 7 y 8). Tres salidas, todas comerciales: bajar el
+      umbral a $55.000, excluir el envío gratis del cupón de bienvenida, o subir el pack de 2.
 - [ ] Reescribir a mano los dos precios que el tema no calcula en el bloque de oferta: el
-      `$10.000` del pill del escalón 2 (si cambia el precio de 1 o de 2 frascos) y el `$75.000`
+      `$12.000` del pill del escalón 2 (si cambia el precio de 1 o de 2 frascos) y el `$60.000`
       de la nota (si cambia `cauce_umbral_envio_gratis`; el mismo número está escrito a mano
       también en la barra de anuncio y en el acordeón de envíos, o sea tres lugares). D-047,
-      D-047c, D-049 y D-049b. El precio del escalón 3 **no** está en esta lista: lo calcula el
-      tema desde `option_3_fixed_amount_off`.
+      D-047c, D-049, D-049b y D-050. Los precios de los escalones 2 y 3 **no** están en esta
+      lista: los calcula el tema desde `option_N_fixed_amount_off`.
 - [ ] **BLOQUEANTE · La cinta "EL MÁS ELEGIDO" del escalón 2 (D-047b).** Se puso el 2026-09-09
       para ver cómo quedaba. Es una afirmación sobre la conducta de otros compradores y hoy no
       hay ventas que la respalden: Res. SC 270/2020 y art. 8 de la Ley 24.240, el mismo motivo

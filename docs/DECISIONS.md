@@ -1850,8 +1850,10 @@ los tres precios comerciales, cargados como `fixed_amount_off` sobre el precio d
 | 2 | 2 | `39900` | **$59.900** | **$29.950** | $99.800 |
 | 3 | 3 | ~~`67800`~~ | ~~$81.900~~ | ~~$27.300~~ | $149.700 |
 
-> El escalón 3 cambió el 2026-09-10: `71800` / **$77.900** / $25.966,67 por frasco. La fila de
-> arriba queda como registro de lo que se decidió acá. Los valores vivos están en **D-049**.
+> El escalón 3 cambió el 2026-09-10: `71800` / **$77.900** / $25.966,67 por frasco, y los
+> escalones 2 y 3 volvieron a cambiar el 2026-09-12: `37900` / **$61.900** / $30.950 y `76800` /
+> **$72.900** / $24.300. La fila de arriba queda como registro de lo que se decidió acá. Los
+> valores vivos están en **D-050**.
 
 Se usa **monto fijo y no porcentaje** porque los porcentajes reales son 39,98 % y 45,29 %:
 redondear a 40 % y 45 % sobredeclara el descuento, y eso es art. 8 de la Ley 24.240. El monto
@@ -2082,7 +2084,8 @@ carrito (D-046) dice "tenés el envío gratis". El día que se carguen los descu
 O sea que arreglar la discrepancia de precios, que es lo urgente, va a romper el envío gratis de
 paso. Las dos cosas hay que resolverlas juntas.
 
-**Resuelto el mismo día en D-049b:** el umbral baja a $75.000.
+**Resuelto el mismo día en D-049b:** el umbral baja a $75.000. **Superado el 2026-09-12 por
+D-050:** los escalones 2 y 3 pasan a $61.900 y $72.900, y el umbral a $60.000.
 
 **Lo que no se tocó.** La cinta `EL MÁS ELEGIDO` y el pill `El 2º sale $10.000` del escalón 2
 siguen igual: ninguno de los dos depende del precio del escalón 3. El `$10.000` sigue siendo el
@@ -2137,4 +2140,103 @@ que hoy tiene cinta. Reponerla es una decisión comercial, no técnica; si se pi
 $75.000 tiene que existir en Configuración → Envíos, o las cuatro superficies prometen algo que
 el checkout no cumple (Ley 24.240 art. 7 y 8). Está en el §6 de CLAIMS-AUDIT.
 
+> **Superado el 2026-09-12 por D-050:** el umbral baja a $60.000. Las cuatro superficies y el
+> pendiente de la tarifa real siguen siendo los mismos, con ese número.
+
 ---
+
+## D-050 · 2026-09-12 · Precios nuevos en los escalones 2 y 3, y el umbral de envío gratis baja a $60.000
+
+**Decisión.** Los precios comerciales de la grilla los fija el comercio; acá se registran los que
+entraron el 2026-09-12 y todo lo que arrastran. El escalón 1 no se toca.
+
+| Escalón | Cant. | `fixed_amount_off` | Total | Por frasco | Tachado | Ahorro | % real |
+|---|---|---|---|---|---|---|---|
+| 1 | 1 | `0` | $49.900 | $49.900 | — | — | — |
+| 2 | 2 | `37900` | **$61.900** | **$30.950** | $99.800 | $37.900 | 37,98 % |
+| 3 | 3 | `76800` | **$72.900** | **$24.300** | $149.700 | $76.800 | 51,30 % |
+
+Sigue siendo monto fijo y no porcentaje, por lo mismo de D-047 y D-049: 37,98 % redondeado a
+"38 % OFF" sobredeclara, y eso es art. 8 de la Ley 24.240.
+
+**Los campos que cambiaron.** Siete, en tres archivos:
+
+| Qué | Archivo | Antes | Ahora |
+|---|---|---|---|
+| `option_2_fixed_amount_off` | `templates/product.cauce-landing.json` | `39900` | `37900` |
+| `option_3_fixed_amount_off` | idem | `71800` | `76800` |
+| `option_2_benefit` (pill) | idem | `El 2º sale $10.000` | `El 2º sale $12.000` |
+| Nota del bloque de oferta | idem | `…desde $75.000.` | `…desde $60.000.` |
+| Acordeón de envíos | idem | `…desde $75.000.` | `…desde $60.000.` |
+| Barra de anuncio | `sections/header-group.json` | `…desde $75.000` | `…desde $60.000` |
+| `cauce_umbral_envio_gratis` | `config/settings_data.json` | `75000` | `60000` |
+
+Los totales y los precios por frasco de la grilla no están escritos en ningún lado: los calcula
+`quantity-breaks.liquid` desde los dos `fixed_amount_off`. El pill del escalón 2 **sí** está
+hardcodeado y por eso se reescribió a mano: $61.900 − $49.900 = $12.000.
+
+**El precio por frasco del 3 vuelve a ser redondo.** $72.900 ÷ 3 = $24.300 exacto, así que se
+termina el `$25.966,67` que D-049 había dejado en la caption del escalón 3. Las tres filas vuelven
+a mostrar montos limpios: $49.900, $30.950, $24.300.
+
+**El tercer frasco pasó a costar menos que el segundo, y eso da vuelta el argumento de D-047.**
+
+| | 2 a $59.900 / 3 a $77.900 | 2 a $61.900 / 3 a $72.900 |
+|---|---|---|
+| Por frasco 1 / 2 / 3 | $49.900 / $29.950 / $25.966,67 | $49.900 / $30.950 / $24.300 |
+| Salto por frasco del 1 al 2 | −$19.950 | −$18.950 |
+| Salto por frasco del 2 al 3 | −$3.983 | −$6.650 |
+| Porción del acantilado que captura el 2 | 83,4 % | **74,0 %** |
+| Costo del 2º frasco | $10.000 | $12.000 |
+| Costo del 3º frasco | $18.000 | **$11.000** |
+
+El argumento de D-047 era que el 2 se lleva casi todo el acantilado del precio unitario y que el
+pill dice la aritmética marginal más barata de la página. Las dos cosas se debilitaron: el 2
+captura 74 % en vez de 83 %, y **el tercer frasco ($11.000) ahora sale más barato que el segundo
+($12.000)**. Es la primera vez que la grilla se invierte. Ninguno de los dos números es falso
+—son restas exactas— pero el pill `El 2º sale $12.000` deja de ser el mejor argumento de la
+página: el mismo pill en el escalón de al lado diría `El 3º sale $11.000`.
+
+No se cambió nada por esto. La cinta `EL MÁS ELEGIDO` y `preselected: option_2` siguen en el 2, y
+cuál escalón se empuja es decisión comercial, no del tema. **Si se quiere que el 2 vuelva a ganar
+por aritmética y no sólo por cinta, el pack de 3 tiene que valer $73.900 o más** —$61.900 +
+$12.000—, que son $1.000 arriba del precio de hoy.
+
+**Envío gratis: ahora cruzan dos escalones.**
+
+| Escalón | Total | ¿Cruza los $60.000? |
+|---|---|---|
+| 1 frasco | $49.900 | No, por $10.100 |
+| 2 frascos | $61.900 | **Sí, por $1.900** |
+| 3 frascos | $72.900 | **Sí, por $12.900** |
+
+Sigue valiendo lo que cerró D-049b: los dos cruzan en los dos estados —con los descuentos
+automáticos cargados ($61.900 y $72.900) y sin ellos ($99.800 y $149.700)—, así que cargar R6 no
+apaga el envío gratis de rebote.
+
+**Y vuelve a caerse la cinta `ENVÍO GRATIS` del escalón 3.** D-049b la había dejado disponible
+porque con el umbral en $75.000 el 3 era el único que cruzaba. Con dos escalones cruzando,
+ponerla sólo en el 3 es otra vez la exclusividad falsa que D-047c descartó. Queda cerrada por el
+motivo original.
+
+**El riesgo nuevo: el pack de 2 cruza por $1.900 de aire.** D-049b había elegido $75.000 en vez
+de $77.900 justamente para no dejar un escalón al borde del umbral; el precio de hoy vuelve a
+dejarlo ahí, un escalón más abajo. Cualquier descuento de más de $1.900 sobre un pedido de dos
+frascos lo tira abajo de los $60.000 y apaga el envío gratis sin que nadie lo note. **El caso
+concreto ya existe:** el 10 % de bienvenida del newsletter deja el pack de 2 en **$55.710**, que
+no llega —el de 3 queda en $65.610 y sí llega—. O sea que el cupón de bienvenida le saca el envío
+gratis justo al escalón preseleccionado y con cinta.
+
+Peor: la **barra de progreso del carrito** (D-046) lee `cart.items_subtotal_price`, que no
+incluye los descuentos de código a nivel carrito. Con el 10 % aplicado, la barra sigue diciendo
+"tenés el envío gratis" mientras el checkout cobra el envío. Las salidas son tres, y las tres son
+decisión comercial: bajar el umbral a $55.000, excluir el envío gratis del cupón de bienvenida, o
+subir el pack de 2. Queda anotado en el §6 de CLAIMS-AUDIT.
+
+**Lo que no se tocó.** El escalón 1 ($49.900, `fixed_amount_off: 0`), la cinta del 2, la
+preselección, y los pendientes de siempre: los descuentos automáticos de Shopify (R6) tienen que
+pasar a **−$37.900** y **−$76.800**, y la tarifa real de envío sin cargo tiene que existir desde
+**$60.000**. Los dos son bloqueantes del §6 y los dos cambiaron de número con esta decisión.
+
+---
+
