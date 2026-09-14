@@ -516,6 +516,7 @@
       "envio_gratis_escalon": "Envío gratis",
       "ahorro_escalon": "Ahorrás {{ monto }}",
       "cuotas_escalon": "{{ cuotas }} cuotas de {{ monto }}",
+      "transferencia_escalon": "{{ monto }} con transferencia",
       "cta_agregar": {
         "one": "Agregar {{ count }} frasco · {{ total }}",
         "other": "Agregar {{ count }} frascos · {{ total }}"
@@ -568,6 +569,9 @@
       "nudge_sumando": "Sumando…",
       "nudge_sumar_aria": "Sumar una unidad de {{ producto }}",
       "ahorro": "Ahorrás {{ monto }}",
+      "transferencia_ahorro": "Con transferencia ahorrás {{ monto }}",
+      "transferencia_off": "{{ pct }} % OFF",
+      "transferencia_codigo_html": "Cargá el código <code>{{ codigo }}</code> al finalizar la compra y elegí Transferencia bancaria.",
       "vacio_titulo": "Tu carrito está vacío",
       "vacio_texto": "Todavía no agregaste nada.",
       "vacio_cta": "Ver los productos"

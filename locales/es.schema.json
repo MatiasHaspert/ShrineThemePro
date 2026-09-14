@@ -472,6 +472,14 @@
           "label": "Cuotas sin interés",
           "info": "0 desactiva la leyenda de cuotas. Solo poner un número si el plan está realmente activo en Mercado Pago."
         },
+        "transferencia_pct": {
+          "label": "Descuento por transferencia",
+          "info": "0 lo apaga en el carrito y en los escalones. Tiene que ser el mismo porcentaje del código creado en Shopify → Descuentos."
+        },
+        "transferencia_codigo": {
+          "label": "Código de descuento por transferencia",
+          "info": "El código que el cliente carga en el checkout, ej. TRANSFERENCIA10. Vacío no se muestra nada: sin código no hay cómo aplicar el descuento."
+        },
         "header__suscripcion": {
           "content": "Suscripción"
         },

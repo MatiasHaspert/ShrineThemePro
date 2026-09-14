@@ -1,6 +1,7 @@
 {% comment %}
-  CAUCE: las tres lineas que van abajo del precio por frasco en cada escalon
-  de cantidad. Ahorro en pesos, envio gratis y cuotas, en ese orden.
+  CAUCE: las cuatro lineas que van abajo del precio por frasco en cada escalon
+  de cantidad. Ahorro en pesos, envio gratis, precio con transferencia y
+  cuotas, en ese orden.
 
   Parametros:
     indice     {number}  requerido. 1..4. Cual de los cuatro escalones es.
@@ -10,19 +11,26 @@
                          se dibujan las cuotas. Sale del setting
                          cauce_cuotas_escalon del bloque.
 
-  Las tres se calculan, ninguna se escribe a mano:
+  Las cuatro se calculan, ninguna se escribe a mano:
 
     ahorro  = compare_price - price, que es lo que el tema ya usa para el token
               [amount_saved]. Si da 0 no se dibuja, asi el escalon de 1 frasco
               -donde tachado y precio son el mismo numero- no muestra "Ahorras $0".
     envio   = snippets/cauce-envio-escalon.liquid contra cauce_umbral_envio_gratis.
+    transf  = el total del escalon menos settings.cauce_transferencia_pct, con la
+              misma condicion que la card del carrito
+              (snippets/cauce-carrito-pago.liquid): porcentaje Y codigo cargados.
+              Va en todos los escalones. Aca se muestra el precio y no el
+              ahorro, al reves que en el carrito: la linea de ahorro ya esta
+              arriba, y dos "Ahorras" en la misma tarjeta se leen como uno.
+              Ver D-052.
     cuotas  = settings.cauce_cuotas, el mismo numero que usa el carrito
               (snippets/cauce-carrito-pago.liquid), dividiendo el total del
               escalon. Solo en el escalon que indique cuotas_en, porque cuantas
               cuotas conviene anunciar y en donde es decision comercial, no del
               tema.
 
-  Los tres textos salen de locales/es.json > cauce.pdp.*. Ninguno se escribe aca.
+  Los cuatro textos salen de locales/es.json > cauce.pdp.*. Ninguno se escribe aca.
 
   Los importes usan money_without_trailing_zeros, el mismo filtro que
   snippets/text-with-price.liquid, para que el formato no se parta entre la
@@ -53,6 +61,21 @@
 {%- capture cauce_envio %}{% render 'cauce-envio-escalon', total: cauce_total %}{% endcapture -%}
 {%- if cauce_envio != blank -%}
   <span class="quantity-break__envio">{{ cauce_envio }}</span>
+{%- endif -%}
+
+{%- liquid
+  assign cauce_transf_pct = settings.cauce_transferencia_pct | plus: 0
+  assign cauce_transf_codigo = settings.cauce_transferencia_codigo | strip
+-%}
+{%- if cauce_transf_pct > 0 and cauce_transf_codigo != blank and cauce_total > 0 -%}
+  {%- liquid
+    assign cauce_transf_ahorro = cauce_total | times: cauce_transf_pct | divided_by: 100
+    assign cauce_transf_total = cauce_total | minus: cauce_transf_ahorro
+    assign cauce_transf_money = cauce_transf_total | money_without_trailing_zeros
+  -%}
+  <span class="quantity-break__transferencia">
+    {{- 'cauce.pdp.transferencia_escalon' | t: monto: cauce_transf_money -}}
+  </span>
 {%- endif -%}
 
 {%- if cauce_cuotas_n > 0 and cuotas_en == cauce_indice_actual -%}

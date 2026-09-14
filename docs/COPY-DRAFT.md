@@ -22,7 +22,8 @@ Convenciones:
 | # | Texto | Riesgo |
 |---|---|---|
 | 1 | Envío gratis en compras desde $ `[[PENDIENTE: umbral_envio_gratis]]` | `pendiente` — el umbral tiene que existir como envío gratis real configurado |
-| 2 | Producción nacional. Análisis por laboratorio externo. | `dato` — exige que la producción sea nacional y que exista COA de un tercero |
+| 2 | 10 % OFF pagando con transferencia | `dato` — exige el método manual Transferencia bancaria y el código `TRANSFERENCIA10` cargados en Shopify (D-052, §6). Escrito a mano: si cambia `cauce_transferencia_pct` hay que reescribirlo |
+| 3 | Producción nacional. Análisis por laboratorio externo. | `dato` — exige que la producción sea nacional y que exista COA de un tercero |
 
 ---
 
@@ -88,17 +89,21 @@ marca y conviene que se repita.
 Actualizado en D-051: el destaque pasó del escalón 2 al 3 y la grilla sumó tres renglones por
 tarjeta (ahorro, envío, cuotas). Los precios son los de D-050.
 
+**D-052 suma un renglón más en las cuatro tarjetas:** el precio con transferencia, calculado desde
+el total del escalón y `cauce_transferencia_pct`. Sin porcentaje o sin código cargados en
+Configuración del tema → CAUCE → Pagos, la línea no se dibuja.
+
 | Campo | Texto | Riesgo |
 |---|---|---|
 | Encabezado | UNA CÁPSULA POR DÍA · CADA FRASCO, UN MES | `dato` — exige que el envase rinda un mes a una cápsula por día. Es lo mismo que tendrían que decir los metafields de dosis |
 | Bajada | Los ensayos clínicos con R-ALA evalúan tomas diarias sostenidas de 8 a 12 semanas. | `dato` — **BLOQUEANTE**. Afirmación sobre literatura científica: exige la cita de los ensayos. §6 |
-| Escalón 1 | **1 frasco · 30 días** · *+ envío* · **$49.900** | `forma` |
-| Escalón 2 | **2 frascos · 60 días** · $30.950 por frasco · *Ahorrás $37.900* · *Envío gratis* · **$61.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$61.900 |
-| Escalón 3 | cinta **LA TOMA COMPLETA · 90 DÍAS** · **3 frascos · 90 días** · $24.300 por frasco · *Ahorrás $76.800* · *Envío gratis* · *3 cuotas de $24.300* · **$72.900** ~~$149.700~~ | `dato` — exige el descuento automático de 3×$72.900 y la financiación real de las 3 cuotas (§6). Es el escalón preseleccionado y el único con fondo SEDIMENTO |
+| Escalón 1 | **1 frasco · 30 días** · *+ envío* · *$44.910 con transferencia* · **$49.900** | `forma`, salvo la línea de transferencia: `dato` — exige el código `TRANSFERENCIA10` en Shopify (§6) |
+| Escalón 2 | **2 frascos · 60 días** · $30.950 por frasco · *Ahorrás $37.900* · *Envío gratis* · *$55.710 con transferencia* · **$61.900** ~~$99.800~~ | `dato` — exige el descuento automático de 2×$61.900 y el código `TRANSFERENCIA10` combinable con él |
+| Escalón 3 | cinta **LA TOMA COMPLETA · 90 DÍAS** · **3 frascos · 90 días** · $24.300 por frasco · *Ahorrás $76.800* · *Envío gratis* · *$65.610 con transferencia* · *3 cuotas de $24.300* · **$72.900** ~~$149.700~~ | `dato` — exige el descuento automático de 3×$72.900, el código `TRANSFERENCIA10` combinable con él y la financiación real de las 3 cuotas (§6). Es el escalón preseleccionado y el único con fondo SEDIMENTO |
 | CTA | Agregar 3 frascos · $72.900 | `forma` — se arma solo desde el escalón elegido. Cambia con el radio, sin recargar |
 | Letra chica 1 | Cada frasco te sale $24.300 en vez de $49.900. Menos de la mitad. | `dato` — verdadera por $650, pero **depende de R6**: sin los descuentos automáticos el frasco sigue saliendo $49.900. §6 |
 | Letra chica 2 | El precio tachado es lo que costarían esos frascos comprados de a uno. | `forma` |
-| Letra chica 3 | Los packs de 2 y 3 frascos van con envío sin cargo. | `dato` — exige la tarifa real de envío sin cargo desde $60.000. Ya no nombra el umbral: lo dice por escalón |
+| Letra chica 3 | Los packs de 2 y 3 frascos van con envío sin cargo. | `dato` — exige la tarifa real de envío sin cargo desde $55.000 (D-052). Ya no nombra el umbral: lo dice por escalón |
 
 Lo que salió en D-051 y no vuelve sin datos: la cinta **EL MÁS ELEGIDO** del escalón 2 (era una
 afirmación sobre otros compradores, §6) y el pill **El 2º sale $12.000** (con el pack de 3 a
@@ -106,7 +111,7 @@ $72.900 el tercer frasco salía más barato que el segundo, así que el pill era
 de la grilla — ver D-050).
 
 El único texto del bloque que sigue escrito a mano es la **letra chica 1**, porque nombra dos
-precios. Los tres renglones nuevos de cada tarjeta —ahorro, envío y cuotas— los calcula el tema
+precios. Los renglones nuevos de cada tarjeta —ahorro, envío, transferencia y cuotas— los calcula el tema
 y no hay nada que mantener cuando cambie un precio.
 
 "frasco" es un valor de setting del template en los títulos de fila, así que para un SKU en
@@ -181,6 +186,10 @@ porque también hay que leerlos antes de publicar.
 | `legal.precio_iva` | Precios en pesos argentinos con IVA incluido. |
 | `pdp.duracion_dias` | {{ dias }} días de uso |
 | `pdp.cuotas` | Hasta {{ cuotas }} cuotas con tarjeta |
+| `pdp.transferencia_escalon` | {{ monto }} con transferencia |
+| `carrito.transferencia_ahorro` | Con transferencia ahorrás {{ monto }} |
+| `carrito.transferencia_off` | {{ pct }} % OFF |
+| `carrito.transferencia_codigo_html` | Cargá el código {{ codigo }} al finalizar la compra y elegí Transferencia bancaria. |
 | `newsletter.consentimiento` | Acepto recibir emails de CAUCE y que mis datos se traten según la Política de Privacidad (Ley 25.326). Puedo darme de baja cuando quiera. |
 | `newsletter.exito` | Listo. Te vamos a escribir poco y sólo cuando valga la pena. |
 

@@ -17,11 +17,29 @@
         "envio": {
           "type": "announcement",
           "settings": {
-            "text": "Envío gratis en compras desde $60.000",
+            "text": "Envío gratis en compras desde $55.000",
             "text_alignment": "center",
             "mobile_text_size": 12,
             "desktop_text_size": 13,
             "icon": "local_shipping",
+            "filled_icon": false,
+            "mobile_icon_size": 16,
+            "desktop_icon_size": 18,
+            "desktop_layout": "horizontal",
+            "mobile_layout": "horizontal",
+            "hidden_products": "",
+            "enable_specific_display": false,
+            "displayed_products": ""
+          }
+        },
+        "transferencia": {
+          "type": "announcement",
+          "settings": {
+            "text": "10 % OFF pagando con transferencia",
+            "text_alignment": "center",
+            "mobile_text_size": 12,
+            "desktop_text_size": 13,
+            "icon": "payments",
             "filled_icon": false,
             "mobile_icon_size": 16,
             "desktop_icon_size": 18,
@@ -53,6 +71,7 @@
       },
       "block_order": [
         "envio",
+        "transferencia",
         "produccion"
       ],
       "settings": {

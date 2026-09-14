@@ -1703,6 +1703,9 @@ autoaplicar y comunicar que baja en el checkout, y una sola card para las dos co
 
 **Hoy el bloque no dibuja nada**, porque `cauce_cuotas` vale 0. Ver el punto 6.
 
+> **Superado el 2026-09-13 por D-052:** el beneficio existe (10 %, código `TRANSFERENCIA10`) y se
+> enchufó en el lugar que este punto había dejado previsto.
+
 ---
 
 ### 5. `cauce_umbral_envio_gratis` pasa de `text` a `number`
@@ -2238,6 +2241,9 @@ preselección, y los pendientes de siempre: los descuentos automáticos de Shopi
 pasar a **−$37.900** y **−$76.800**, y la tarifa real de envío sin cargo tiene que existir desde
 **$60.000**. Los dos son bloqueantes del §6 y los dos cambiaron de número con esta decisión.
 
+> **Superado el 2026-09-13 por D-052:** el umbral baja a $55.000, para que un 10 % —el de
+> bienvenida o el de transferencia— no le saque el envío gratis al pack de 2.
+
 ---
 
 ## D-050b · 2026-09-12 · El titular del bloque de oferta deja de hablar de precio y pasa a hablar de duración
@@ -2453,5 +2459,109 @@ el segundo $12.000, así que el pill era el peor argumento de la grilla, no el m
 **Lo que no se tocó.** Ninguna otra sección de la PDP, ningún precio, ninguna variante. La barra
 de anuncio y el acordeón de envíos siguen diciendo "desde $60.000": es verdad, el umbral no
 cambió, y son superficies de otra sección.
+
+---
+
+## D-052 · 2026-09-13 · 10 % OFF pagando con transferencia, con código y control a mano, y el umbral de envío gratis baja a $55.000
+
+**Decisión.** CAUCE suma un beneficio por pago con transferencia bancaria: **10 %** sobre el
+pedido, con el código **`TRANSFERENCIA10`**. Esto supera el punto 4 de D-046 ("No hay beneficio
+por transferencia"): el dato comercial ahora existe, y el tema lo enchufa donde ese punto lo había
+dejado previsto. En la misma decisión el umbral de envío gratis baja de $60.000 a **$55.000**.
+
+### 1. Cómo se aplica el descuento, y por qué con control a mano
+
+Shopify no tiene descuento por medio de pago: un código de descuento no sabe con qué se paga el
+pedido. Había tres caminos:
+
+| Camino | Qué hace | Por qué sí o por qué no |
+|---|---|---|
+| **Código + control a mano** | Método de pago manual "Transferencia bancaria" + código que el cliente carga en el checkout | **Elegido.** El cliente ve el descuento antes de confirmar. Es el "Camino A" de Numen, y el carrito de D-046 ya estaba armado para él. El riesgo —usar el código y pagar con Mercado Pago— se controla pedido por pedido, que con el volumen de hoy se puede |
+| Código + app que oculta medios | Lo mismo, y una app de reglas de pago esconde Mercado Pago cuando el código está aplicado | Descartado por ahora: costo mensual para un abuso que todavía no pasó. Es la salida si el control a mano deja de alcanzar |
+| Sin código, ajuste manual | Se paga a precio lleno en el checkout y después se manda el total con 10 % menos | Descartado: el descuento no se ve en el momento de decidir, y el mail de confirmación dice un total que no es el que se cobra |
+
+### 2. Qué dibuja el tema
+
+Dos settings nuevos en **Configuración del tema → CAUCE → Pagos**: `cauce_transferencia_pct`
+(range 0–30, cargado en 10) y `cauce_transferencia_codigo` (texto, cargado en `TRANSFERENCIA10`).
+**Las piezas calculadas se dibujan sólo con los dos cargados**: un porcentaje sin código es una
+promesa sin mecanismo para cumplirla.
+
+| Superficie | Archivo | Qué dice | De dónde sale |
+|---|---|---|---|
+| Card de pago del carrito (drawer y `/cart`) | `snippets/cauce-carrito-pago.liquid` | "Con transferencia ahorrás $X · 10 % OFF" y el código | `cart.items_subtotal_price` × pct |
+| Cada escalón de la PDP | `snippets/cauce-escalon-extras.liquid` | "$X con transferencia" | total del escalón − pct |
+| Barra de anuncio | `sections/header-group.json` | "10 % OFF pagando con transferencia", ícono `payments` | **escrito a mano** |
+| Tira de medios de pago | `cauce_medios_pago` en `config/settings_data.json` | chip "Transferencia bancaria" | la lista, que ya soportaba `transferencia` |
+
+Con los precios de D-050:
+
+| Escalón | Total | Con transferencia |
+|---|---|---|
+| 1 frasco | $49.900 | $44.910 |
+| 2 frascos | $61.900 | $55.710 |
+| 3 frascos | $72.900 | $65.610 |
+
+**En el carrito se muestra el ahorro y en los escalones el precio.** Parece chocar con la regla 2
+de Numen ("el ahorro, nunca un segundo precio") y no choca: esa regla existe porque en el carrito
+el total está dos renglones más arriba. En la tarjeta del escalón el renglón de arriba ya es
+"Ahorrás $X" por el pack, y un segundo "Ahorrás" en la misma tarjeta se lee como el mismo número.
+Ninguno de los dos tacha nada.
+
+**La base del carrito está verificada.** `cart.items_subtotal_price` es, según la documentación de
+Shopify, el subtotal "después de los descuentos de línea": trae aplicados los descuentos
+automáticos de los packs y no los códigos. Es la misma base sobre la que Shopify aplica un
+descuento de pedido, así que el ahorro del carrito coincide con el del checkout. El comentario
+anterior del snippet la llamaba "subtotal de LISTA", y no lo es.
+
+**El ícono no es `account_balance`.** `snippets/material-icon.liquid` dibuja un set cerrado de
+paths (`docs/ICONOS.md`) y un nombre que no está en el set no renderiza nada. `payments` ya
+estaba.
+
+**Límite conocido, el mismo de las cuotas:** la línea del escalón se resuelve en el servidor; con
+`update_prices` activado y variantes de distinto precio no se recalcula. Hoy `update_prices` está
+en `false`.
+
+### 3. El umbral baja a $55.000
+
+Es la salida que D-050 había dejado anotada para el cupón de bienvenida, y con la transferencia
+deja de ser opcional: el 10 % deja el pack de 2 en $55.710, que con el umbral en $60.000 perdía el
+envío gratis en el checkout mientras la barra del carrito —que lee `items_subtotal_price`, sin
+códigos— seguía diciendo "Tenés el envío gratis".
+
+| Escalón | Sin código | Con un 10 % | ¿Cruza los $55.000? |
+|---|---|---|---|
+| 1 frasco | $49.900 | $44.910 | No, en ningún caso |
+| 2 frascos | $61.900 | $55.710 | Sí: por $6.900 sin código y por **$710** con código |
+| 3 frascos | $72.900 | $65.610 | Sí, por $10.610 con código |
+
+**Vale sólo porque los dos 10 % no se combinan entre sí.** Juntos dejan el pack de 2 abajo de
+$55.000 y el problema de D-050 vuelve entero. Y $710 es poco aire: cualquier baja de precio del
+pack de 2 hay que revisarla contra el umbral.
+
+Cambian de número `cauce_umbral_envio_gratis` (60000 → 55000), la barra de anuncio y el acordeón
+de envíos de la landing. Los chips "Envío gratis" de los escalones y la barra del carrito se
+recalculan solos.
+
+### 4. Lo que hay que hacer en Shopify antes del merge
+
+El merge a `main` publica todo esto. Si va antes, la tienda promete un precio que el checkout no
+cobra:
+
+1. Configuración → Pagos → métodos manuales → **Transferencia bancaria**, con los datos de la
+   cuenta y, en las instrucciones, el código y qué pasa si se usa con otro medio de pago.
+2. Descuentos → código `TRANSFERENCIA10`: 10 % sobre el pedido, **combinable con descuentos de
+   producto** y no con otros descuentos de pedido.
+3. Los descuentos automáticos de los packs (R6), con la combinación con descuentos de pedido
+   activada. Sin eso, al cargar el código el cliente pierde el precio del pack.
+4. La tarifa de envío sin cargo pasa a $55.000.
+
+Queda como bloqueante en el §6 de `CLAIMS-AUDIT.md`.
+
+**Alternativa descartada.** Dejar `cauce_transferencia_pct` en 0 en el repo y prenderlo desde el
+editor después de configurar Shopify. Parece más seguro, pero la barra de anuncio y el umbral no
+tienen interruptor y se publican con el merge igual, así que el merge queda condicionado de todos
+modos. Con dos momentos de publicación en vez de uno hay dos oportunidades de dejar la tienda a
+medias.
 
 ---

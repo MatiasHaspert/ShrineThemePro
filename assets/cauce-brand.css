@@ -596,10 +596,11 @@ h1, h2, h3, h4,
   border-color: var(--cauce-blanco);
 }
 
-/* Ahorro en pesos y cuotas. Son datos duros: mono, como los precios. Ninguno
-   estrena color -CAUCE pleno-, porque OXIDO ya esta tomado por el boton de
-   agregar al carrito y VADO por la cinta, y la regla de marca es un solo
-   elemento por pieza en cada uno. La jerarquia la hace el cuerpo. */
+/* Ahorro en pesos, precio con transferencia y cuotas. Son datos duros: mono,
+   como los precios. Ninguno estrena color -CAUCE pleno-, porque OXIDO ya esta
+   tomado por el boton de agregar al carrito y VADO por la cinta, y la regla de
+   marca es un solo elemento por pieza en cada uno. La jerarquia la hace el
+   cuerpo. */
 .quantity-break__ahorro {
   font-family: var(--cauce-font-dato);
   font-size: 1.4rem;
@@ -608,7 +609,8 @@ h1, h2, h3, h4,
   color: var(--cauce-cauce);
 }
 
-.quantity-break__cuotas {
+.quantity-break__cuotas,
+.quantity-break__transferencia {
   font-family: var(--cauce-font-dato);
   font-size: 1.3rem;
   line-height: 1.2;
@@ -3423,6 +3425,45 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   margin: 0;
   font-size: 1.2rem;
   line-height: 1.35;
+}
+
+/* Transferencia (D-052): el ahorro en pesos a la izquierda y el porcentaje en
+   mono a la derecha. Sin color propio: el total de arriba manda, y un verde o
+   un OXIDO aca competiria con el boton de pago que esta justo debajo. */
+.cauce-carrito__pago-transferencia {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.2rem 0.8rem;
+  font-size: 1.3rem;
+  line-height: 1.35;
+}
+
+.cauce-carrito__pago-off {
+  font-family: var(--cauce-font-dato);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.cauce-carrito__pago-codigo {
+  margin: 0.2rem 0 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  opacity: 0.78;
+}
+
+.cauce-carrito__pago-codigo code {
+  font-family: var(--cauce-font-dato);
+  letter-spacing: 0.04em;
+}
+
+.cauce-carrito__pago-codigo + .cauce-carrito__pago-cuotas {
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.14);
 }
 
 /* --- CTA de pago ---------------------------------------------------------- */
