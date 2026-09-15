@@ -2564,4 +2564,44 @@ tienen interruptor y se publican con el merge igual, así que el merge queda con
 modos. Con dos momentos de publicación en vez de uno hay dos oportunidades de dejar la tienda a
 medias.
 
+> **Umbral superado el 2026-09-14 por D-053:** baja a $50.000. Lo demás de esta decisión sigue
+> vigente.
+
+---
+
+## D-053 · 2026-09-14 · El umbral de envío gratis baja a $50.000
+
+**Decisión.** `cauce_umbral_envio_gratis` pasa de 55000 a **50000**, por pedido del comercio.
+Lo que sigue es qué cambia con ese número y qué no.
+
+| Escalón | Sin código | Con un 10 % | ¿Cruza los $50.000? |
+|---|---|---|---|
+| 1 frasco | $49.900 | $44.910 | No: le faltan **$100** sin código |
+| 2 frascos | $61.900 | $55.710 | Sí: por $11.900 sin código y por $5.710 con código |
+| 3 frascos | $72.900 | $65.610 | Sí: por $22.900 sin código y por $15.610 con código |
+
+**Lo que mejora.** El aire del pack de 2 con un cupón pasa de $710 (D-052) a $5.710. Una baja de
+precio chica del pack ya no le saca el envío gratis a quien paga por transferencia o usa el 10 %
+de bienvenida.
+
+**Lo que no cambia.** Cruzan los mismos dos escalones que con $55.000, así que los chips "Envío
+gratis" de las tarjetas, la letra chica 3 ("Los packs de 2 y 3 frascos van con envío sin cargo")
+y la falta de cinta de envío en el 3 (D-047c) quedan como están. Y sigue valiendo que los dos
+10 % no se combinan: juntos dejan el pack de 2 en $49.520, abajo del umbral.
+
+**Lo que hay que mirar: el frasco suelto queda a $100.** A quien compra uno, la barra de progreso
+del carrito le va a decir "Te faltan $100 para el envío gratis" y el empujón le va a ofrecer sumar
+otra unidad. Es verdad y no promete nada que no se cumpla, pero una distancia de $100 puede
+leerse como un redondeo más que como un incentivo. Si se quiere que el frasco suelto también
+tenga envío gratis, el umbral tiene que ser $49.900 o menos, y ahí aparece el chip en el
+escalón 1. No se hizo: el pedido fue $50.000.
+
+Cambian de número `cauce_umbral_envio_gratis` (55000 → 50000), la barra de anuncio y el acordeón
+de envíos de la landing. Los chips de los escalones, la barra del carrito y el empujón se
+recalculan solos.
+
+**Fuera del repo, el mismo día del merge:** la tarifa de envío sin cargo de Configuración →
+Envíos y entregas pasa a $50.000. Si la política de envíos cargada en el admin nombra el umbral,
+también.
+
 ---

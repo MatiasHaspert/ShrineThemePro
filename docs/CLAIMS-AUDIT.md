@@ -239,16 +239,17 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       gratis", calculado contra su total ya descontado.** No hay exclusividad que declarar ni
       texto que mantenga nadie, y el riesgo del art. 8 por esta vía queda cerrado.
 - [ ] **BLOQUEANTE · La tarifa de envío gratis tiene que existir en Shopify.**
-      `cauce_umbral_envio_gratis` está cargado en **$55.000** y la promesa la publican **cinco**
+      `cauce_umbral_envio_gratis` está cargado en **$50.000** y la promesa la publican **cinco**
       superficies: la barra de anuncio, el acordeón de envíos, la nota del bloque de oferta, la
       barra de progreso del carrito (D-046) y, desde el 2026-09-12, el chip "Envío gratis" dentro
       de los escalones 2 y 3 (D-050c) — que es la que está pegada al botón de compra. El setting
-      del tema **sólo dibuja**: si no hay una tarifa real de envío sin cargo desde $55.000 en
+      del tema **sólo dibuja**: si no hay una tarifa real de envío sin cargo desde $50.000 en
       Configuración → Envíos, las cinco prometen algo que el checkout no cumple (Ley 24.240 art. 7
       y 8). Las cuatro primeras escriben el número a mano; el chip lo calcula el tema contra el
       total ya descontado del escalón, así que no puede quedar desfasado del precio.
       **Umbral bajado de $60.000 a $55.000 el 2026-09-13 (D-052):** la tarifa de Configuración →
-      Envíos tiene que cambiar el mismo día que se mergea.
+      Envíos tiene que cambiar el mismo día que se mergea. **Y de $55.000 a $50.000 el 2026-09-14
+      (D-053)**, con la misma condición.
 - [x] ~~Ningún escalón llega al envío gratis~~ — **cerrado 2026-09-10 (D-049b), y sigue cerrado
       con los precios del 2026-09-12 (D-050).** Con el umbral en $60.000 lo cruzan el pack de 2
       ($61.900, por $1.900) y el de 3 ($72.900, por $12.900), en los dos estados: con los
@@ -257,6 +258,8 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       un pedido de dos frascos lo deja abajo del umbral y apaga el beneficio en silencio.
       **Desde D-052 el umbral es $55.000** y el aire del pack de 2 sube a $6.900: un 10 % ($6.190)
       ya no lo tira abajo, queda en $55.710. Dos cupones de 10 % juntos sí.
+      **Desde D-053 el umbral es $50.000:** el aire del pack de 2 es $11.900 sin código y $5.710
+      con un 10 %. Dos cupones juntos lo siguen dejando abajo ($49.520).
 - [x] ~~**El 10 % de bienvenida le saca el envío gratis al pack de 2 (D-050).**~~ — **cerrado
       2026-09-13 (D-052)** bajando el umbral a $55.000: con un 10 % el pack de 2 queda en $55.710
       y sigue cruzando. Vale porque el de bienvenida y el de transferencia **no se combinan**;
@@ -300,7 +303,7 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
          los datos. El bloque se prende por el nombre de la pasarela de la transacción, y eso
          sólo se ve con un pedido de verdad: los mails de prueba del admin usan uno de ejemplo.
 - [ ] Reescribir a mano los dos precios que el tema no calcula en el bloque de oferta: el
-      `$12.000` del pill del escalón 2 (si cambia el precio de 1 o de 2 frascos) y el `$55.000`
+      `$12.000` del pill del escalón 2 (si cambia el precio de 1 o de 2 frascos) y el `$50.000`
       de la nota (si cambia `cauce_umbral_envio_gratis`; el mismo número está escrito a mano
       también en la barra de anuncio y en el acordeón de envíos, o sea tres lugares). D-047,
       D-047c, D-049, D-049b y D-050. Los precios de los escalones 2 y 3 **no** están en esta

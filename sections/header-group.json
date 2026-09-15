@@ -17,7 +17,7 @@
         "envio": {
           "type": "announcement",
           "settings": {
-            "text": "Envío gratis en compras desde $55.000",
+            "text": "Envío gratis en compras desde $50.000",
             "text_alignment": "center",
             "mobile_text_size": 12,
             "desktop_text_size": 13,
