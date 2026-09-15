@@ -267,8 +267,11 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       diciendo "tenés el envío gratis" mientras el checkout lo cobra. Es promesa incumplida en el
       escalón preseleccionado (Ley 24.240 art. 7 y 8). Tres salidas, todas comerciales: bajar el
       umbral a $55.000, excluir el envío gratis del cupón de bienvenida, o subir el pack de 2.
-- [ ] **BLOQUEANTE · El 10 % por transferencia tiene que existir en Shopify antes del merge
-      (D-052).** Lo publican cuatro superficies: la barra de anuncio (escrita a mano), la línea
+- [x] ~~**BLOQUEANTE · El 10 % por transferencia tiene que existir en Shopify antes del merge
+      (D-052).**~~ — **cerrado 2026-09-14:** el comercio confirmó el método manual
+      "Transferencia bancaria", el código `TRANSFERENCIA10` con sus combinaciones y la tarifa de
+      envío sin cargo desde $55.000. Lo que sigue abierto está en el ítem de abajo. El texto
+      original: lo publican cuatro superficies: la barra de anuncio (escrita a mano), la línea
       "$X con transferencia" de cada escalón, la card de pago del carrito y el chip
       "Transferencia bancaria" de los medios de pago. Las tres primeras prometen un precio que
       el checkout tiene que cobrar (Ley 24.240 art. 7 y 8). Antes de mergear a `main`:
@@ -284,6 +287,18 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       tiene que estar escrita en las instrucciones del método y en la política **antes** de
       aplicarla la primera vez. Si algo de la lista no está, `cauce_transferencia_pct` vuelve a 0
       —el carrito y los escalones se apagan solos— y el anuncio de la barra se borra a mano.
+- [ ] **Transferencia: tres cosas que no se ven desde el repo (D-052).**
+      1. **Los datos bancarios están escritos en dos lugares:** las instrucciones del método
+         manual (Configuración → Pagos) y la plantilla de Confirmación de pedido
+         (`carpetalocal/order-confirmation.liquid`, fuera de git). Shopify no expone esas
+         instrucciones como variable de notificación. Si cambia la cuenta, cambian los dos.
+      2. **La regla del código en Términos del servicio:** exclusivo para pagos por
+         transferencia; usado con otro medio de pago, se cancela el pedido y se devuelve el
+         total. Las instrucciones del método sólo las ve quien eligió transferencia, así que no
+         alcanzan: sin la regla publicada, cancelar un pedido por esto no tiene respaldo.
+      3. **Un pedido real pagado con Transferencia bancaria**, para confirmar que el mail muestra
+         los datos. El bloque se prende por el nombre de la pasarela de la transacción, y eso
+         sólo se ve con un pedido de verdad: los mails de prueba del admin usan uno de ejemplo.
 - [ ] Reescribir a mano los dos precios que el tema no calcula en el bloque de oferta: el
       `$12.000` del pill del escalón 2 (si cambia el precio de 1 o de 2 frascos) y el `$55.000`
       de la nota (si cambia `cauce_umbral_envio_gratis`; el mismo número está escrito a mano
