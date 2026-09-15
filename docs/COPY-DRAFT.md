@@ -103,7 +103,7 @@ Configuración del tema → CAUCE → Pagos, la línea no se dibuja.
 | CTA | Agregar 3 frascos · $72.900 | `forma` — se arma solo desde el escalón elegido. Cambia con el radio, sin recargar |
 | Letra chica 1 | Cada frasco te sale $24.300 en vez de $49.900. Menos de la mitad. | `dato` — verdadera por $650, pero **depende de R6**: sin los descuentos automáticos el frasco sigue saliendo $49.900. §6 |
 | Letra chica 2 | El precio tachado es lo que costarían esos frascos comprados de a uno. | `forma` |
-| Letra chica 3 | Los packs de 2 y 3 frascos van con envío sin cargo. | `dato` — exige la tarifa real de envío sin cargo desde $50.000 (D-053). Ya no nombra el umbral: lo dice por escalón |
+| Letra chica 3 | Los packs de 2 y 3 frascos van con envío sin cargo. | `dato` — exige la tarifa real de envío sin cargo desde $55.000 (D-052). Ya no nombra el umbral: lo dice por escalón |
 
 Lo que salió en D-051 y no vuelve sin datos: la cinta **EL MÁS ELEGIDO** del escalón 2 (era una
 afirmación sobre otros compradores, §6) y el pill **El 2º sale $12.000** (con el pack de 3 a
