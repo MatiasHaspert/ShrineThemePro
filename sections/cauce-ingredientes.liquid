@@ -1,0 +1,320 @@
+{% comment %}
+  CAUCE — grilla de ingredientes.
+
+  Una tarjeta por activo: imagen o icono, nombre, dosis y para que esta en la
+  formula. Debajo, una fila de sellos. Entra con Hormify (D-054), que es un
+  producto de ocho activos: la ficha tecnica de cauce-datos esta pensada para un
+  activo solo y no tiene donde decir que hace cada uno.
+
+  Cuatro cosas que la seccion resuelve por construccion:
+
+  - Dos tipos de bloque, `ingrediente` y `sello`, en el mismo orden del editor pero
+    dibujados en dos listas separadas. Asi los sellos se pueden arrastrar entre los
+    ingredientes sin que se mezclen en la grilla.
+  - La dosis va aparte y en DM Mono, como todo dato duro del tema. Si esta vacia la
+    tarjeta no deja el renglon: una dosis que no coincide con el rotulo es peor que
+    no poner ninguna.
+  - La imagen del ingrediente es opcional. Sin imagen se dibuja el icono elegido;
+    sin ninguno de los dos, la tarjeta queda de texto y no deja un hueco.
+  - Las dos listas son <ul> reales. La grilla cambia de columnas por CSS, no por
+    markup, asi que el orden de lectura es siempre el del editor.
+
+  ADVERTENCIA DE CLAIMS (Disp. ANMAT 4980/05 · CAA art. 1381). El texto de cada
+  tarjeta atribuye una funcion a un ingrediente, y la dosis tiene que ser la del
+  rotulo aprobado. Todo el texto vive en templates/*.json (regla 1 de
+  docs/CLAIMS-AUDIT.md). No escribas copy adentro de este archivo.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_hay_ingredientes = false
+  assign cauce_hay_sellos = false
+  for block in section.blocks
+    if block.type == 'ingrediente' and block.settings.nombre != blank
+      assign cauce_hay_ingredientes = true
+    endif
+    if block.type == 'sello' and block.settings.texto != blank
+      assign cauce_hay_sellos = true
+    endif
+  endfor
+
+  assign cauce_hay = false
+  if cauce_hay_ingredientes or cauce_hay_sellos or section.settings.titulo != blank
+    assign cauce_hay = true
+  endif
+-%}
+
+{%- if cauce_hay -%}
+  <div class="cauce-ingredientes color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width cauce-ingredientes__inner"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-ingredientes-ancho: {{ section.settings.ancho_maximo }}px; --cauce-ingredientes-cols: {{ section.settings.columnas }};"
+    >
+      {%- if section.settings.volanta != blank or section.settings.titulo != blank or section.settings.bajada != blank -%}
+        <div class="cauce-ingredientes__encabezado cauce-ingredientes__encabezado--{{ section.settings.alineacion }}">
+          {%- if section.settings.volanta != blank -%}
+            <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.titulo != blank -%}
+            <h2 class="cauce-ingredientes__titulo {{ section.settings.heading_size }}">
+              {{- section.settings.titulo -}}
+              {%- if section.settings.titulo_acento != blank -%}
+                <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.bajada != blank -%}
+            <div class="cauce-ingredientes__bajada rte">{{ section.settings.bajada }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if cauce_hay_ingredientes -%}
+        <ul class="cauce-ingredientes__grilla" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type != 'ingrediente' or block.settings.nombre == blank -%}
+              {%- continue -%}
+            {%- endif -%}
+            <li class="cauce-ingredientes__tarjeta" {{ block.shopify_attributes }}>
+              {%- if block.settings.imagen != blank -%}
+                {{
+                  block.settings.imagen
+                  | image_url: width: 240
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '120, 180, 240',
+                    sizes: '120px',
+                    class: 'cauce-ingredientes__imagen',
+                    alt: ''
+                }}
+              {%- elsif block.settings.icono != blank and block.settings.icono != 'ninguno' -%}
+                <span class="cauce-ingredientes__icono">
+                  {%- render 'cauce-iconos', icono: block.settings.icono -%}
+                </span>
+              {%- endif -%}
+
+              <div class="cauce-ingredientes__texto">
+                <h3 class="cauce-ingredientes__nombre">{{ block.settings.nombre }}</h3>
+                {%- if block.settings.dosis != blank -%}
+                  <p class="cauce-ingredientes__dosis">{{ block.settings.dosis }}</p>
+                {%- endif -%}
+                {%- if block.settings.texto != blank -%}
+                  <div class="cauce-ingredientes__descripcion rte">{{ block.settings.texto }}</div>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if cauce_hay_sellos -%}
+        <ul class="cauce-ingredientes__sellos" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type != 'sello' or block.settings.texto == blank -%}
+              {%- continue -%}
+            {%- endif -%}
+            <li class="cauce-ingredientes__sello" {{ block.shopify_attributes }}>
+              {%- render 'cauce-iconos', icono: block.settings.icono -%}
+              <span>{{ block.settings.texto }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.pie != blank or section.settings.boton_texto != blank -%}
+        <div class="cauce-ingredientes__cierre cauce-ingredientes__cierre--{{ section.settings.alineacion }}">
+          {%- if section.settings.boton_texto != blank and section.settings.boton_link != blank -%}
+            <a class="cauce-ingredientes__cta button" href="{{ section.settings.boton_link }}">
+              {{- section.settings.boton_texto -}}
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.pie != blank -%}
+            <div class="cauce-ingredientes__pie rte">{{ section.settings.pie }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Ingredientes",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Una tarjeta por activo. La dosis tiene que ser la del rotulo aprobado, y la composicion completa sigue viviendo en el metafield cauce.composicion. Ver docs/METAFIELDS.md."
+    },
+
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo" },
+    {
+      "type": "inline_richtext",
+      "id": "titulo_acento",
+      "label": "Cierre del titulo en acento",
+      "info": "Se agrega al final del titulo, en el color de acento. Vacio = titulo de un solo color."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    { "type": "richtext", "id": "bajada", "label": "Bajada" },
+    {
+      "type": "select",
+      "id": "alineacion",
+      "label": "Alineacion",
+      "options": [
+        { "value": "centrado", "label": "Centrado" },
+        { "value": "izquierda", "label": "A la izquierda" }
+      ],
+      "default": "centrado"
+    },
+
+    { "type": "header", "content": "Grilla" },
+    {
+      "type": "select",
+      "id": "columnas",
+      "label": "Columnas en desktop",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+
+    { "type": "header", "content": "Cierre" },
+    { "type": "text", "id": "boton_texto", "label": "Texto del boton", "info": "Vacio = sin boton." },
+    { "type": "url", "id": "boton_link", "label": "Enlace del boton" },
+    { "type": "richtext", "id": "pie", "label": "Texto al pie" },
+
+    { "type": "header", "content": "Presentacion" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Blanco" },
+        { "value": "background-2", "label": "Superficie" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "ancho_maximo",
+      "min": 720,
+      "max": 1400,
+      "step": 40,
+      "unit": "px",
+      "label": "Ancho del bloque",
+      "default": 1200
+    },
+
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "ingrediente",
+      "name": "Ingrediente",
+      "settings": [
+        { "type": "text", "id": "nombre", "label": "Nombre" },
+        {
+          "type": "text",
+          "id": "dosis",
+          "label": "Dosis por porcion",
+          "info": "Copiada del rotulo. Ej: 300 mg. Vacio = no se muestra."
+        },
+        {
+          "type": "richtext",
+          "id": "texto",
+          "label": "Para que esta en la formula",
+          "info": "Es un claim: tiene que poder respaldarse."
+        },
+        {
+          "type": "image_picker",
+          "id": "imagen",
+          "label": "Imagen",
+          "info": "Cuadrada, fondo liso o transparente. Si hay imagen, el icono no se dibuja."
+        },
+        {
+          "type": "select",
+          "id": "icono",
+          "label": "Icono (si no hay imagen)",
+          "options": [
+            { "value": "ninguno", "label": "Ninguno" },
+            { "value": "hoja", "label": "Hoja" },
+            { "value": "flor", "label": "Flor" },
+            { "value": "molecula", "label": "Molecula" },
+            { "value": "gota", "label": "Gota" },
+            { "value": "rayo", "label": "Rayo" },
+            { "value": "luna", "label": "Luna" },
+            { "value": "corazon", "label": "Corazon" },
+            { "value": "llama", "label": "Llama" },
+            { "value": "ola", "label": "Ola" },
+            { "value": "escudo", "label": "Escudo" },
+            { "value": "balanza", "label": "Balanza" },
+            { "value": "capsula", "label": "Capsula" }
+          ],
+          "default": "hoja"
+        }
+      ]
+    },
+    {
+      "type": "sello",
+      "name": "Sello",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icono",
+          "label": "Icono",
+          "options": [
+            { "value": "chequeo", "label": "Tilde en circulo" },
+            { "value": "hoja", "label": "Hoja" },
+            { "value": "laboratorio", "label": "Laboratorio" },
+            { "value": "nacional", "label": "Mundo" },
+            { "value": "escudo", "label": "Escudo" },
+            { "value": "capsula", "label": "Capsula" },
+            { "value": "trazabilidad", "label": "Documento" }
+          ],
+          "default": "chequeo"
+        },
+        {
+          "type": "text",
+          "id": "texto",
+          "label": "Texto",
+          "info": "Dos o tres palabras. Cada sello es un dato: tiene que poder mostrarse el documento."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Ingredientes",
+      "blocks": [
+        { "type": "ingrediente" },
+        { "type": "ingrediente" },
+        { "type": "ingrediente" },
+        { "type": "ingrediente" },
+        { "type": "sello" },
+        { "type": "sello" },
+        { "type": "sello" }
+      ]
+    }
+  ]
+}
+{% endschema %}

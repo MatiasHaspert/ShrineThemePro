@@ -1,0 +1,303 @@
+{% comment %}
+  CAUCE — bloque de contraste (sin equilibrio / con equilibrio).
+
+  Dos columnas enfrentadas: a la izquierda como se vive el problema, a la derecha
+  como se vive resuelto. Entra con Hormify (D-054), copiando la seccion que mas
+  trabaja en la referencia ("Life with hormonal imbalance / with healthy hormonal
+  balance"). cauce-dolor no alcanzaba: tiene una sola lista y el contraste es
+  justamente poner las dos al lado.
+
+  Cuatro cosas que la seccion resuelve por construccion:
+
+  - Cada bloque es un PAR (sin + con). Asi el item 3 de la izquierda y el item 3 de
+    la derecha hablan de lo mismo y salen en el mismo orden, sin que nadie tenga
+    que mantener dos listas sincronizadas en el editor. Si un lado del par esta
+    vacio, ese lado se saltea y el otro se dibuja igual. La altura de cada renglon
+    no se alinea entre columnas: con frases de una linea no hace falta, y un
+    subgrid para eso es mas fragil que lo que resuelve.
+  - Se renderizan DOS <ul>, no una tabla. Un lector de pantalla lee primero la
+    columna entera del problema y despues la entera de la solucion, que es el orden
+    en que el argumento tiene sentido. Una tabla lo leeria renglon por renglon.
+  - La columna positiva lleva `color-background-1` propio: es una tarjeta blanca
+    sobre cualquier esquema. Eso reinicia los tokens contextuales del bloque 0 de
+    cauce-brand.css, asi que adentro el acento vale su version sobre claro aunque
+    la seccion sea TINTA (el acento claro sobre blanco no llega a 3:1).
+  - Las fotos son opcionales y NO caen en placeholder: la referencia no las usa y
+    una tarjeta sin foto se ve terminada. Con foto, va arriba de la lista.
+
+  ADVERTENCIA DE CLAIMS (Disp. ANMAT 4980/05 · CAA art. 1381). La columna de la
+  derecha, puesta al lado del producto, se lee como resultado prometido. El texto
+  vive entero en templates/*.json y no aca (regla 1 de docs/CLAIMS-AUDIT.md). No
+  escribas copy adentro de este archivo.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_hay_sin = false
+  assign cauce_hay_con = false
+  for block in section.blocks
+    if block.settings.sin != blank
+      assign cauce_hay_sin = true
+    endif
+    if block.settings.con != blank
+      assign cauce_hay_con = true
+    endif
+  endfor
+
+  assign cauce_hay = false
+  if cauce_hay_sin or cauce_hay_con or section.settings.titulo != blank
+    assign cauce_hay = true
+  endif
+
+  comment
+    Mismo calculo de `sizes` que cauce-dolor (D-033): todo en px, sin var() y sin
+    rem. En desktop cada tarjeta mide la mitad del ancho util menos el gap (32px) y
+    menos su propio padding (2 x 32px).
+  endcomment
+  assign cauce_tope = section.settings.ancho_maximo
+  assign cauce_util = cauce_tope | minus: 100
+  assign cauce_col = cauce_util | minus: 32 | divided_by: 2 | minus: 64
+  assign cauce_sizes = '(min-width: ' | append: cauce_tope | append: 'px) ' | append: cauce_col | append: 'px, (min-width: 990px) calc((100vw - 260px) / 2), (min-width: 750px) calc(100vw - 164px), calc(100vw - 78px)'
+-%}
+
+{%- if cauce_hay -%}
+  <div class="cauce-contraste color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width cauce-contraste__inner"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-contraste-ancho: {{ section.settings.ancho_maximo }}px;"
+    >
+      {%- if section.settings.volanta != blank or section.settings.titulo != blank or section.settings.bajada != blank -%}
+        <div class="cauce-contraste__encabezado cauce-contraste__encabezado--{{ section.settings.alineacion }}">
+          {%- if section.settings.volanta != blank -%}
+            <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.titulo != blank -%}
+            <h2 class="cauce-contraste__titulo {{ section.settings.heading_size }}">
+              {{- section.settings.titulo -}}
+              {%- if section.settings.titulo_acento != blank -%}
+                <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.bajada != blank -%}
+            <div class="cauce-contraste__bajada rte">{{ section.settings.bajada }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="cauce-contraste__grilla">
+        {%- if cauce_hay_sin -%}
+          <div class="cauce-contraste__columna cauce-contraste__columna--sin">
+            {%- if section.settings.imagen_sin != blank -%}
+              <figure class="cauce-contraste__media">
+                {{
+                  section.settings.imagen_sin
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '360, 540, 720, 960, 1200',
+                    sizes: cauce_sizes,
+                    class: 'cauce-contraste__imagen',
+                    alt: section.settings.imagen_sin.alt
+                }}
+              </figure>
+            {%- endif -%}
+
+            {%- if section.settings.titulo_sin != blank -%}
+              <h3 class="cauce-contraste__subtitulo h4">{{ section.settings.titulo_sin }}</h3>
+            {%- endif -%}
+
+            <ul class="cauce-contraste__lista" role="list">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.sin == blank -%}
+                  {%- continue -%}
+                {%- endif -%}
+                <li class="cauce-contraste__item" {{ block.shopify_attributes }}>
+                  <span class="cauce-contraste__marca cauce-contraste__marca--sin">
+                    {%- render 'cauce-iconos', icono: 'cruz' -%}
+                  </span>
+                  <span class="cauce-contraste__texto">{{ block.settings.sin }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        {%- if cauce_hay_con -%}
+          <div class="cauce-contraste__columna cauce-contraste__columna--con color-background-1">
+            {%- if section.settings.etiqueta_con != blank -%}
+              <p class="cauce-contraste__etiqueta">{{ section.settings.etiqueta_con }}</p>
+            {%- endif -%}
+
+            {%- if section.settings.imagen_con != blank -%}
+              <figure class="cauce-contraste__media">
+                {{
+                  section.settings.imagen_con
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '360, 540, 720, 960, 1200',
+                    sizes: cauce_sizes,
+                    class: 'cauce-contraste__imagen',
+                    alt: section.settings.imagen_con.alt
+                }}
+              </figure>
+            {%- endif -%}
+
+            {%- if section.settings.titulo_con != blank -%}
+              <h3 class="cauce-contraste__subtitulo h4">{{ section.settings.titulo_con }}</h3>
+            {%- endif -%}
+
+            <ul class="cauce-contraste__lista" role="list">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.con == blank -%}
+                  {%- continue -%}
+                {%- endif -%}
+                <li class="cauce-contraste__item" {{ block.shopify_attributes }}>
+                  <span class="cauce-contraste__marca cauce-contraste__marca--con">
+                    {%- render 'cauce-iconos', icono: 'visto' -%}
+                  </span>
+                  <span class="cauce-contraste__texto">{{ block.settings.con }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.pie != blank or section.settings.boton_texto != blank -%}
+        <div class="cauce-contraste__cierre cauce-contraste__cierre--{{ section.settings.alineacion }}">
+          {%- if section.settings.boton_texto != blank and section.settings.boton_link != blank -%}
+            <a class="cauce-contraste__cta button" href="{{ section.settings.boton_link }}">
+              {{- section.settings.boton_texto -}}
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.pie != blank -%}
+            <div class="cauce-contraste__pie rte">{{ section.settings.pie }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Contraste",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Dos columnas: como se vive el problema y como se vive resuelto. Cada bloque es un par; el item de la izquierda y el de la derecha quedan a la misma altura. La columna derecha, al lado del producto, se lee como resultado prometido: ver docs/CLAIMS-AUDIT.md."
+    },
+
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo" },
+    {
+      "type": "inline_richtext",
+      "id": "titulo_acento",
+      "label": "Cierre del titulo en acento",
+      "info": "Se agrega al final del titulo, en el color de acento. Vacio = titulo de un solo color."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    { "type": "richtext", "id": "bajada", "label": "Bajada" },
+    {
+      "type": "select",
+      "id": "alineacion",
+      "label": "Alineacion del encabezado",
+      "options": [
+        { "value": "centrado", "label": "Centrado" },
+        { "value": "izquierda", "label": "A la izquierda" }
+      ],
+      "default": "centrado"
+    },
+
+    { "type": "header", "content": "Columna del problema" },
+    { "type": "text", "id": "titulo_sin", "label": "Titulo", "default": "Con las hormonas en desequilibrio" },
+    { "type": "image_picker", "id": "imagen_sin", "label": "Imagen", "info": "Opcional. El texto alternativo se toma del cargado en Shopify." },
+
+    { "type": "header", "content": "Columna de la solucion" },
+    { "type": "text", "id": "etiqueta_con", "label": "Etiqueta", "info": "Pastilla arriba de la tarjeta, por ejemplo el nombre del producto. Vacio = sin etiqueta." },
+    { "type": "text", "id": "titulo_con", "label": "Titulo", "default": "Con tus hormonas en equilibrio" },
+    { "type": "image_picker", "id": "imagen_con", "label": "Imagen", "info": "Opcional. El texto alternativo se toma del cargado en Shopify." },
+
+    { "type": "header", "content": "Cierre" },
+    { "type": "text", "id": "boton_texto", "label": "Texto del boton", "info": "Vacio = sin boton." },
+    { "type": "url", "id": "boton_link", "label": "Enlace del boton" },
+    { "type": "richtext", "id": "pie", "label": "Texto al pie" },
+
+    { "type": "header", "content": "Presentacion" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Blanco" },
+        { "value": "background-2", "label": "Superficie" },
+        { "value": "inverse", "label": "Tinta" }
+      ],
+      "default": "background-2"
+    },
+    {
+      "type": "range",
+      "id": "ancho_maximo",
+      "min": 720,
+      "max": 1400,
+      "step": 40,
+      "unit": "px",
+      "label": "Ancho del bloque",
+      "default": 1040
+    },
+
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "par",
+      "name": "Par",
+      "settings": [
+        {
+          "type": "text",
+          "id": "sin",
+          "label": "Sin equilibrio",
+          "info": "Una linea. Como se vive el problema."
+        },
+        {
+          "type": "text",
+          "id": "con",
+          "label": "Con equilibrio",
+          "info": "Una linea. Lo mismo, resuelto. Es un claim."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Contraste",
+      "blocks": [
+        { "type": "par" },
+        { "type": "par" },
+        { "type": "par" },
+        { "type": "par" },
+        { "type": "par" }
+      ]
+    }
+  ]
+}
+{% endschema %}

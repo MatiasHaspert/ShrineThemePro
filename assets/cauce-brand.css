@@ -776,11 +776,13 @@ h1, h2, h3, h4,
 /* Las secciones nativas de Shrine emiten su propio <style> con el padding.
    Las cauce-* lo bajan como custom property y lo resuelven aca, con la misma
    reduccion de 0.75 en mobile que usa el tema. */
+.cauce-contraste__inner,
 .cauce-datos__inner,
 .cauce-detalle__inner,
 .cauce-dolor__inner,
 .cauce-etapas__inner,
 .cauce-hero__inner,
+.cauce-ingredientes__inner,
 .cauce-progreso__inner,
 .cauce-resultados__inner,
 .cauce-solucion__inner,
@@ -792,11 +794,13 @@ h1, h2, h3, h4,
 }
 
 @media screen and (max-width: 749px) {
+  .cauce-contraste__inner,
   .cauce-datos__inner,
   .cauce-detalle__inner,
   .cauce-dolor__inner,
   .cauce-etapas__inner,
   .cauce-hero__inner,
+  .cauce-ingredientes__inner,
   .cauce-progreso__inner,
   .cauce-resultados__inner,
   .cauce-solucion__inner,
@@ -3782,4 +3786,444 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   .cauce-carrito .cauce-carrito__nudge-boton {
     transition: none;
   }
+}
+
+/* ==========================================================================
+   18. PDP — bloque de contraste (sin equilibrio / con equilibrio)
+   Ver sections/cauce-contraste.liquid y docs/DECISIONS.md D-054.
+
+   Dos tarjetas enfrentadas. La del problema es un marco fino sobre el fondo
+   de la seccion; la de la solucion es una tarjeta BLANCA con borde de acento,
+   y lleva su propia clase color-background-1: adentro los tokens del bloque 0
+   valen su version sobre claro aunque la seccion sea TINTA.
+   ========================================================================== */
+
+.cauce-contraste__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-contraste-ancho, 1040px), var(--page-width, 1440px));
+}
+
+/* Encabezado (compartido con el bloque 19) --------------------------------- */
+
+.cauce-contraste__encabezado,
+.cauce-ingredientes__encabezado { max-width: 62ch; }
+
+.cauce-contraste__titulo,
+.cauce-ingredientes__titulo {
+  margin: 0 0 var(--cauce-aire-s);
+  text-wrap: balance;
+}
+
+/* Secundario y no color de texto, igual que la bajada de cauce-solucion: el
+   token resuelve el par por fondo. Sobre RUBOR (bloque 20) VADO-TEXTO da 4.64:1. */
+.cauce-contraste__bajada,
+.cauce-ingredientes__bajada {
+  color: var(--cauce-secundario);
+  max-width: 56ch;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+.cauce-contraste__bajada > :first-child,
+.cauce-ingredientes__bajada > :first-child { margin-top: 0; }
+.cauce-contraste__bajada > :last-child,
+.cauce-ingredientes__bajada > :last-child { margin-bottom: 0; }
+
+.cauce-contraste__encabezado--centrado,
+.cauce-ingredientes__encabezado--centrado {
+  text-align: center;
+  margin-inline: auto;
+}
+
+.cauce-contraste__encabezado--centrado .cauce-contraste__bajada,
+.cauce-ingredientes__encabezado--centrado .cauce-ingredientes__bajada { margin-inline: auto; }
+
+/* Tarjetas ----------------------------------------------------------------- */
+
+/* El gap de mobile es m y no s: la etiqueta de la tarjeta positiva se monta
+   sobre su borde superior y con 1.6rem tocaria la tarjeta de arriba. */
+.cauce-contraste__grilla {
+  display: grid;
+  gap: var(--cauce-aire-m);
+}
+
+.cauce-contraste__columna {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-s);
+  min-width: 0;
+  padding: 2.4rem;
+  border: 1px solid var(--cauce-linea-fuerte);
+  border-radius: 8px;
+}
+
+.color-inverse .cauce-contraste__columna--sin { border-color: var(--cauce-linea-clara); }
+
+.cauce-contraste__columna--con {
+  border: 2px solid var(--cauce-acento);
+  box-shadow: 0 1.2rem 3.2rem rgba(16, 38, 42, 0.08);
+}
+
+/* Pastilla sobre el borde. Blanco sobre OXIDO 6.04:1, sobre MALVA 6.37:1: los
+   dos pasan AA a 11px en negrita. */
+.cauce-contraste__etiqueta {
+  position: absolute;
+  top: 0;
+  left: 2.4rem;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 0.5rem 1.2rem;
+  border-radius: 99rem;
+  background: var(--cauce-acento);
+  color: var(--cauce-acento-label);
+  font-family: var(--cauce-font-dato);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cauce-contraste__media { margin: 0; }
+
+.cauce-contraste__imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* La clase h4 del tema da 1.5rem: a ese tamano el titulo de la tarjeta pesa
+   menos que sus propios items en negrita. */
+.cauce-contraste__subtitulo {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+/* Listas ------------------------------------------------------------------- */
+
+.cauce-contraste__lista {
+  list-style: none;
+  display: grid;
+  gap: 1.4rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cauce-contraste__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.cauce-contraste__marca {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+}
+
+.cauce-contraste__marca .cauce-icono {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: currentColor;
+  stroke-width: 2.4;
+}
+
+/* La cruz no lleva acento: el acento es de la columna que resuelve. Un marco al
+   35 % y el glifo al 75 % del primer plano se leen como apagados sin bajar del
+   3:1 que pide un componente. */
+.cauce-contraste__marca--sin {
+  border: 1px solid rgba(var(--color-foreground), 0.35);
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.cauce-contraste__marca--con {
+  background: var(--cauce-acento);
+  color: var(--cauce-acento-label);
+}
+
+.cauce-contraste__texto {
+  font-size: 1.6rem;
+  line-height: 1.45;
+}
+
+.cauce-contraste__columna--sin .cauce-contraste__texto { color: rgba(var(--color-foreground), 0.8); }
+.cauce-contraste__columna--con .cauce-contraste__texto { font-weight: 600; }
+
+/* Cierre (compartido con el bloque 19) ------------------------------------- */
+
+.cauce-contraste__cierre,
+.cauce-ingredientes__cierre {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--cauce-aire-s);
+}
+
+.cauce-contraste__cierre--centrado,
+.cauce-ingredientes__cierre--centrado {
+  align-items: center;
+  text-align: center;
+}
+
+.cauce-contraste__cta,
+.cauce-ingredientes__cta { display: inline-flex; }
+
+.cauce-contraste__pie,
+.cauce-ingredientes__pie {
+  max-width: 72ch;
+  font-size: 1.3rem;
+  opacity: 0.75;
+}
+
+.cauce-contraste__pie > :first-child,
+.cauce-ingredientes__pie > :first-child { margin-top: 0; }
+.cauce-contraste__pie > :last-child,
+.cauce-ingredientes__pie > :last-child { margin-bottom: 0; }
+
+/* Dos columnas desde tablet y no desde 990 como cauce-dolor: aca el argumento
+   ES ver las dos listas juntas. A 768 cada tarjeta deja 270px de texto, y los
+   items son frases de cuatro o cinco palabras. */
+@media screen and (min-width: 750px) {
+  .cauce-contraste__inner { gap: var(--cauce-aire-l); }
+
+  .cauce-contraste__grilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--cauce-aire-m);
+  }
+
+  .cauce-contraste__columna { padding: 3.2rem; }
+  .cauce-contraste__etiqueta { left: 3.2rem; }
+  .cauce-contraste__subtitulo { font-size: 2.4rem; }
+  .cauce-contraste__bajada { font-size: 1.7rem; }
+  .cauce-contraste__texto { font-size: 1.7rem; }
+}
+
+/* ==========================================================================
+   19. PDP — grilla de ingredientes
+   Ver sections/cauce-ingredientes.liquid y docs/DECISIONS.md D-054.
+
+   Mobile: una fila por activo, icono a la izquierda (ocho tarjetas paradas en
+   un telefono son cuatro pantallas de scroll). Tablet: dos columnas.
+   Desktop: las columnas del setting, con la tarjeta parada.
+   ========================================================================== */
+
+.cauce-ingredientes {
+  --cauce-ingredientes-fondo: var(--cauce-sedimento);
+}
+
+.cauce-ingredientes.color-background-2 { --cauce-ingredientes-fondo: var(--cauce-blanco); }
+.cauce-ingredientes.color-inverse { --cauce-ingredientes-fondo: rgba(255, 255, 255, 0.06); }
+
+.cauce-ingredientes__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-ingredientes-ancho, 1200px), var(--page-width, 1440px));
+}
+
+.cauce-ingredientes__grilla {
+  list-style: none;
+  display: grid;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cauce-ingredientes__tarjeta {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.6rem;
+  min-width: 0;
+  padding: 2rem;
+  border-radius: 8px;
+  background: var(--cauce-ingredientes-fondo);
+}
+
+/* El circulo va en el color de fondo de la SECCION, no de la tarjeta: sobre la
+   tarjeta RUBOR (o SEDIMENTO) queda una pastilla blanca, y el icono va en el
+   secundario contextual (VADO-TEXTO sobre claro, VADO sobre TINTA). */
+.cauce-ingredientes__icono {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+  background: rgb(var(--color-background));
+}
+
+.cauce-ingredientes__icono .cauce-icono {
+  width: 2.8rem;
+  height: 2.8rem;
+  color: var(--cauce-secundario);
+}
+
+.cauce-ingredientes__imagen {
+  flex: 0 0 auto;
+  display: block;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cauce-ingredientes__texto { min-width: 0; }
+
+/* Archivo y no Newsreader: es el rotulo de un dato, del mismo orden que la
+   pastilla de cauce-progreso, no un titulo de seccion. */
+.cauce-ingredientes__nombre {
+  margin: 0;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.cauce-ingredientes__dosis {
+  margin: 0.4rem 0 0;
+  font-family: var(--cauce-font-dato);
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  color: var(--cauce-secundario);
+}
+
+.cauce-ingredientes__descripcion {
+  margin-top: 0.8rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+.cauce-ingredientes__descripcion > :first-child { margin-top: 0; }
+.cauce-ingredientes__descripcion > :last-child { margin-bottom: 0; }
+
+/* Sellos ------------------------------------------------------------------- */
+
+.cauce-ingredientes__sellos {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--cauce-aire-s) var(--cauce-aire-m);
+  margin: 0;
+  padding: var(--cauce-aire-m) 0 0;
+  border-top: 1px solid var(--cauce-linea);
+}
+
+.color-inverse .cauce-ingredientes__sellos { border-top-color: var(--cauce-linea-clara); }
+
+.cauce-ingredientes__sello {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--cauce-font-dato);
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-ingredientes__inner { gap: var(--cauce-aire-l); }
+  .cauce-ingredientes__bajada { font-size: 1.7rem; }
+
+  .cauce-ingredientes__grilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--cauce-aire-s);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .cauce-ingredientes__grilla {
+    grid-template-columns: repeat(var(--cauce-ingredientes-cols, 4), minmax(0, 1fr));
+  }
+
+  .cauce-ingredientes__tarjeta {
+    flex-direction: column;
+    padding: 2.4rem;
+  }
+
+  .cauce-ingredientes__icono,
+  .cauce-ingredientes__imagen {
+    width: 7.2rem;
+    height: 7.2rem;
+  }
+
+  .cauce-ingredientes__icono .cauce-icono { width: 3.6rem; height: 3.6rem; }
+}
+
+/* ==========================================================================
+   20. Linea Hormify — paleta propia del template product.hormify
+   Ver docs/DECISIONS.md D-054 y layout/theme.liquid (clase plantilla--*).
+
+   La estructura, la tipografia, TINTA y VADO son los de CAUCE. Cambian dos
+   pares: el acento (OXIDO -> MALVA) y la superficie (SEDIMENTO -> RUBOR). Se
+   pisan los tokens de marca y las variables de Shrine que salen de los mismos
+   settings, asi las secciones nativas y las cauce-* cambian juntas y ninguna
+   seccion declara un hex.
+
+   Especificidad (0,2,0): le gana al :root de theme.liquid sin importar el
+   orden de carga, y como es el mismo elemento, todo lo que base.css deriva
+   sobre :root (--color-button, --accent-color) se recalcula con estos valores.
+
+   Contraste medido (WCAG 2.1, sRGB):
+                          sobre BLANCO   sobre RUBOR   sobre RUBOR 2   sobre CAUCE
+     MALVA ...............   6.37 AA       5.25 AA       4.68 AA          —
+     MALVA CLARO .........     —             —             —            6.44 AA
+     CAUCE ...............  15.76 AAA     12.99 AAA     11.59 AAA          —
+     VADO-TEXTO ..........   5.63 AA       4.64 AA       4.14 grande       —
+     VERDE (exito) .......   7.47 AAA      6.16 AA       5.49 AA           —
+     CARMIN (error) ......   8.52 AAA      7.02 AAA      6.27 AA           —
+     Blanco sobre MALVA ..   6.37 AA   ->  la etiqueta del boton sigue blanca.
+     CAUCE sobre MALVA CLARO 6.44 AA   ->  --cauce-acento-label sobre TINTA.
+
+   Limite anotado: MALVA (matiz 331) y CARMIN (matiz 350) quedan a 19 grados.
+   MALVA se lee violaceo y el error solo aparece como texto, pero conviene no
+   usar el error como relleno grande en esta pagina.
+   ========================================================================== */
+
+:root.plantilla--hormify {
+  --cauce-oxido:       #9A3F6B; /* MALVA        */
+  --cauce-oxido-claro: #E48AB2; /* MALVA CLARO  */
+  --cauce-sedimento:   #F3E6E9; /* RUBOR        */
+  --cauce-sedimento-2: #ECD8DE; /* RUBOR 2      */
+
+  --color-base-accent-1: 154, 63, 107;
+  --gradient-base-accent-1: #9A3F6B;
+  --color-base-background-2: 243, 230, 233;
+  --gradient-base-background-2: #F3E6E9;
+}
+
+/* ==========================================================================
+   21. Ancla del bloque de compra
+   Ver docs/DECISIONS.md D-054.
+
+   Los CTA del cuerpo de la landing vuelven al selector de packs con #comprar.
+   El id de la seccion (shopify-section-template--<id>__main) no sirve: lo
+   asigna Shopify por template y cambia en cada uno. El ancla es un bloque
+   custom_liquid justo antes del selector. El margen deja el selector visible
+   debajo del header fijo.
+
+   Es un <span> y no un <div>: base.css oculta div:empty (y a, p, h1-h6, ul
+   vacios), y un ancla con display:none no tiene posicion a la que saltar. El
+   hash cambiaba y la pagina no se movia.
+   ========================================================================== */
+
+.cauce-ancla {
+  display: block;
+  height: 0;
+  scroll-margin-top: var(--cauce-aire-xl);
 }
