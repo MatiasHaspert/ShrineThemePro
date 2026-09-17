@@ -1,0 +1,1691 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "resenas": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 5,
+            "star_color": "#5f99a2",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "Calificación de <strong>[[PENDIENTE: puntaje real]]</strong> · [[PENDIENTE: cantidad real]] reseñas",
+            "size": 12,
+            "alignment": "flex-start",
+            "scroll_id": "",
+            "margin_top": 15,
+            "margin_bottom": 15
+          },
+          "disabled": true
+        },
+        "titulo": {
+          "type": "title",
+          "settings": {
+            "text_size": "h1",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 9
+          }
+        },
+        "subtitulo": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 15,
+            "desktop_text_size": 17,
+            "alignment": "left",
+            "text_color": "#10262a",
+            "text_1": "¿Peso que no baja, hinchazón, sofocos o cambios de humor? Hormify reúne 8 activos de origen natural en una fórmula sin hormonas que ayuda a tu cuerpo a recuperar su equilibrio hormonal desde adentro.",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#5f99a2",
+            "icon_1": "",
+            "filled_icon_1": false,
+            "icon_2": "",
+            "filled_icon_2": false,
+            "icon_3": "",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "horizontal",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 0,
+            "margin_bottom": 21
+          }
+        },
+        "precio": {
+          "type": "price",
+          "disabled": true,
+          "settings": {
+            "layout": "price_first",
+            "price_color": "text",
+            "compare_price_color": "text",
+            "displayed_badge": "none",
+            "icon_scale": 140,
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "icon_1": "redeem",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "margin_top": 0,
+            "margin_bottom": 21
+          }
+        },
+        "bullets_a": {
+          "type": "icon_with_text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_color": "accent-2",
+            "desktop_icon_size": 28,
+            "desktop_spacing": 10,
+            "desktop_text_size": 16,
+            "mobile_icon_size": 24,
+            "mobile_spacing": 8,
+            "mobile_text_size": 14,
+            "icon_1": "balance",
+            "icon_1_fill": false,
+            "heading_1": "Ayuda a combatir el peso hormonal",
+            "icon_2": "water_drop",
+            "icon_2_fill": false,
+            "heading_2": "Menos hinchazón",
+            "icon_3": "",
+            "icon_3_fill": false,
+            "heading_3": "",
+            "margin_top": 0,
+            "margin_bottom": 12
+          }
+        },
+        "bullets_b": {
+          "type": "icon_with_text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_color": "accent-2",
+            "desktop_icon_size": 28,
+            "desktop_spacing": 10,
+            "desktop_text_size": 16,
+            "mobile_icon_size": 24,
+            "mobile_spacing": 8,
+            "mobile_text_size": 14,
+            "icon_1": "favorite",
+            "icon_1_fill": false,
+            "heading_1": "Equilibra tus hormonas, sin hormonas",
+            "icon_2": "battery_android_frame_bolt",
+            "icon_2_fill": false,
+            "heading_2": "Menos estrés, más energía y mejor humor",
+            "icon_3": "",
+            "icon_3_fill": false,
+            "heading_3": "",
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "separador": {
+          "type": "divider",
+          "settings": {
+            "color": "#dfdbce",
+            "height": 1,
+            "width": 100,
+            "Full_mobile_width": false,
+            "alignment": "flex-start",
+            "border_radius": 0,
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "ancla_comprar": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<span id=\"comprar\" class=\"cauce-ancla\" aria-hidden=\"true\"></span>"
+          }
+        },
+        "ofertas": {
+          "type": "quantity_selector",
+          "settings": {
+            "full_width_classic": true,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": true,
+            "style": "normal",
+            "headline": "2 CÁPSULAS AL DÍA · CADA FRASCO, UN MES",
+            "cauce_subtitulo": "La mayoría de las mujeres nota los cambios más claros entre el segundo y el tercer mes de uso diario.",
+            "cauce_cuotas_escalon": "option_3",
+            "preselected": "option_3",
+            "display_selected_indicator": true,
+            "border_radius": 6,
+            "border_width": 1,
+            "color_scheme": "text",
+            "enable_variant_selectors": false,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "update_prices": false,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "pickers_label": "",
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "2",
+            "option_1_badge_color": "accent-1",
+            "option_1_label": "1 frasco · 30 días",
+            "option_1_benefit": "",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "outlined",
+            "option_1_benefit_color": "text",
+            "option_1_caption": "+ envío",
+            "option_1_percentage_off_text": "",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "",
+            "option_2_badge_style": "2",
+            "option_2_badge_color": "accent-1",
+            "option_2_label": "2 frascos · 60 días",
+            "option_2_benefit": "",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "outlined",
+            "option_2_benefit_color": "text",
+            "option_2_caption": "[price_each] por frasco",
+            "option_2_percentage_off_text": "0",
+            "option_2_fixed_amount_off": "37900",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 3,
+            "option_3_badge": "RESULTADOS ÓPTIMOS · 90 DÍAS",
+            "option_3_badge_style": "2",
+            "option_3_badge_color": "accent-1",
+            "option_3_label": "3 frascos · 90 días",
+            "option_3_benefit": "",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "outlined",
+            "option_3_benefit_color": "text",
+            "option_3_caption": "[price_each] por frasco",
+            "option_3_percentage_off_text": "0",
+            "option_3_fixed_amount_off": "76800",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "Buy [quantity]",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "margin_top": 0,
+            "margin_bottom": 9
+          }
+        },
+        "nota_precios": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 12,
+            "desktop_text_size": 13,
+            "alignment": "left",
+            "text_color": "#10262a",
+            "text_1": "",
+            "text_2": "El precio tachado es lo que costarían esos frascos comprados de a uno.",
+            "text_3": "Los packs de 2 y 3 frascos van con envío sin cargo.",
+            "icon_scale": 110,
+            "icon_color": "#5f99a2",
+            "icon_1": "info",
+            "filled_icon_1": false,
+            "icon_2": "",
+            "filled_icon_2": false,
+            "icon_3": "",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 1,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 0,
+            "margin_bottom": 21
+          }
+        },
+        "suscripcion": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-suscripcion', producto: product, form_id: product_form_id %}"
+          }
+        },
+        "comprar": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": false,
+            "icon_scale": 110,
+            "icon_spacing": 10,
+            "display_price": false,
+            "enable_custom_color": false,
+            "custom_color": "#dd1d1d",
+            "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "margin_top": 0,
+            "margin_bottom": 15
+          }
+        },
+        "pagos": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}"
+          }
+        },
+        "beneficios": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Beneficios de Hormify",
+            "heading_size": "medium",
+            "icon": "verified",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<ul><li>Ayuda a combatir el aumento de peso de origen hormonal y los antojos.</li><li>Reduce la hinchazón y favorece una digestión más liviana.</li><li>Apoya el equilibrio natural del estrógeno y la progesterona.</li><li>Alivia los sofocos, los sudores nocturnos y los cambios de humor.</li><li>Ayuda a bajar el estrés y el cortisol.</li><li>Más energía y claridad mental durante el día.</li></ul><p><em>Los resultados pueden variar de una persona a otra.</em></p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "para_quien": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "¿Para quién es Hormify?",
+            "heading_size": "medium",
+            "icon": "favorite",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Para mujeres que sienten que su cuerpo cambió: el peso que antes bajaba ahora no se mueve, la hinchazón aparece todos los días, el ciclo se volvió irregular y el humor sube y baja sin aviso.</p><p>Acompaña cada etapa de cambio hormonal —el ciclo menstrual, el SOP, la perimenopausia y la menopausia— con una fórmula sin hormonas.</p><p><strong>No se recomienda durante el embarazo ni la lactancia.</strong></p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "cuando": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "¿Cuándo voy a notar cambios?",
+            "heading_size": "medium",
+            "icon": "trending_up",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Cada cuerpo tiene su tiempo. Algunas mujeres notan los primeros cambios en pocos días —menos hinchazón, más energía— y otras necesitan unas semanas.</p><p>Los cambios más claros suelen aparecer entre el segundo y el tercer mes de uso diario. Por eso recomendamos la rutina completa de 90 días.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "como_se_toma": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Cómo se toma",
+            "heading_size": "medium",
+            "icon": "settings_accessibility",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Dos cápsulas por día con un vaso de agua. Podés tomarlas juntas a la mañana o repartirlas: una a la mañana y otra a la noche.</p><p>Cada frasco trae 60 cápsulas y rinde un mes.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "ingredientes": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Ingredientes",
+            "heading_size": "medium",
+            "icon": "science",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Ashwagandha, raíz de maca, ginseng (Panax ginseng), raíz de jengibre, L-fenilalanina, zinc, vitamina B6 y extracto de pimienta negra (piperina).</p><p>[[PENDIENTE: composición completa y dosis por porción, copiadas del rótulo aprobado]]</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "acordeon_envios": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Envíos y entrega",
+            "heading_size": "medium",
+            "icon": "local_shipping",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Despachamos desde Buenos Aires. El plazo estimado es de 3 a 10 días habiles sujetos a la disponibilidad de stock y el costo se calcula en el checkout según tu código postal. Envío sin cargo en compras desde $55.000.</p>",
+            "page": "",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "acordeon_garantia": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Cambios y devoluciones",
+            "heading_size": "medium",
+            "icon": "undo",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Tenés 10 días corridos desde que recibís el pedido para arrepentirte de la compra y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). El producto tiene que estar sin abrir.</p><p>Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a cauce@caucearg.com.</p>",
+            "page": "",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "disclaimer": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-disclaimer' %}"
+          }
+        },
+        "sticky": {
+          "type": "sticky_atc",
+          "settings": {
+            "function": "add_to_cart",
+            "display_when": "after_scroll",
+            "button_label": "Agregar al carrito",
+            "enable_custom_btn_color": false,
+            "custom_btn_color": "#dd1d1d",
+            "color_scheme": "background-1",
+            "star_color": "#ffcc00",
+            "stars_label": "(xxxx Reviews)",
+            "picker_type": "combined",
+            "desktop_show_image": true,
+            "desktop_show_title": true,
+            "desktop_rating_stars": false,
+            "desktop_show_price": true,
+            "desktop_show_sale_badge": false,
+            "desktop_variant_picker": false,
+            "desktop_full_button_width": false,
+            "desktop_show_price_in_button": false,
+            "desktop_transparent_bg": false,
+            "mobile_show_image": false,
+            "mobile_show_title": false,
+            "mobile_rating_stars": false,
+            "mobile_show_price": true,
+            "mobile_show_sale_badge": false,
+            "mobile_variant_picker": false,
+            "mobile_full_button_width": true,
+            "mobile_show_price_in_button": false,
+            "mobile_transparent_bg": false
+          }
+        }
+      },
+      "block_order": [
+        "resenas",
+        "titulo",
+        "subtitulo",
+        "precio",
+        "bullets_a",
+        "bullets_b",
+        "separador",
+        "ancla_comprar",
+        "ofertas",
+        "nota_precios",
+        "suscripcion",
+        "comprar",
+        "pagos",
+        "beneficios",
+        "para_quien",
+        "cuando",
+        "como_se_toma",
+        "ingredientes",
+        "acordeon_envios",
+        "acordeon_garantia",
+        "disclaimer",
+        "sticky"
+      ],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": false,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "lightbox",
+        "arrows_color_scheme": "background-1",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_count": 5,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 4,
+        "mobile_spacing_pixels": 8,
+        "mobile_arrows_position": "hidden",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails": "show",
+        "mobile_thumbnails_count": 5,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 16,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 48
+      }
+    },
+    "marquee": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "m1": {
+          "type": "text",
+          "settings": {
+            "title": "Sin hormonas"
+          }
+        },
+        "m2": {
+          "type": "text",
+          "settings": {
+            "title": "Peso hormonal"
+          }
+        },
+        "m3": {
+          "type": "text",
+          "settings": {
+            "title": "Hinchazón"
+          }
+        },
+        "m4": {
+          "type": "text",
+          "settings": {
+            "title": "Sofocos"
+          }
+        },
+        "m5": {
+          "type": "text",
+          "settings": {
+            "title": "Estrés y cambios de humor"
+          }
+        },
+        "m6": {
+          "type": "text",
+          "settings": {
+            "title": "Envío a todo el país"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
+      "settings": {
+        "visibility": "always-display",
+        "speed": 3,
+        "direction": "normal",
+        "stop_on_hover": true,
+        "mobile_spacing": 40,
+        "desktop_spacing": 72,
+        "color_scheme": "background-2",
+        "mobile_text_size": 13,
+        "desktop_text_size": 14,
+        "italic_text": false,
+        "uppercase_text": true,
+        "bold_text": false,
+        "mobile_image_height": 26,
+        "desktop_image_height": 40,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39"
+      }
+    },
+    "contraste": {
+      "type": "cauce-contraste",
+      "blocks": {
+        "p1": {
+          "type": "par",
+          "settings": {
+            "sin": "Peso que sube y no baja",
+            "con": "Tu peso vuelve a responder"
+          }
+        },
+        "p2": {
+          "type": "par",
+          "settings": {
+            "sin": "Antojos que no podés frenar",
+            "con": "Mejor control del apetito"
+          }
+        },
+        "p3": {
+          "type": "par",
+          "settings": {
+            "sin": "Hinchazón todos los días",
+            "con": "Una panza más liviana"
+          }
+        },
+        "p4": {
+          "type": "par",
+          "settings": {
+            "sin": "Cansancio, ansiedad y cambios de humor",
+            "con": "Más energía y un ánimo estable"
+          }
+        },
+        "p5": {
+          "type": "par",
+          "settings": {
+            "sin": "Sofocos y sudores nocturnos",
+            "con": "Menos sofocos y noches tranquilas"
+          }
+        },
+        "p6": {
+          "type": "par",
+          "settings": {
+            "sin": "Ciclos irregulares",
+            "con": "Un ciclo más predecible"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6"
+      ],
+      "settings": {
+        "volanta": "Equilibrio hormonal",
+        "titulo": "Cómo te ves y cómo te sentís empieza en tus",
+        "titulo_acento": "hormonas",
+        "heading_size": "h1",
+        "bajada": "<p>Cuando tus hormonas se desordenan, lo notás en todo el cuerpo: en la balanza, en la digestión, en el humor y en el descanso.</p>",
+        "alineacion": "centrado",
+        "titulo_sin": "Con las hormonas en desequilibrio",
+        "etiqueta_con": "Con Hormify",
+        "titulo_con": "Con tus hormonas en equilibrio",
+        "boton_texto": "Quiero recuperar mi equilibrio",
+        "boton_link": "#comprar",
+        "pie": "<p>Los resultados pueden variar de una persona a otra.</p>",
+        "color_scheme": "background-2",
+        "ancho_maximo": 1040,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "solucion": {
+      "type": "cauce-solucion",
+      "blocks": {
+        "b1": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "balanza",
+            "texto": "Menos peso hormonal"
+          }
+        },
+        "b2": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "ola",
+            "texto": "Menos hinchazón"
+          }
+        },
+        "b3": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "flor",
+            "texto": "Hormonas en equilibrio"
+          }
+        },
+        "b4": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "corazon",
+            "texto": "Menos estrés, mejor humor"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "volanta": "Sin hormonas",
+        "titulo": "Apoyá tu equilibrio hormonal y combatí el peso hormonal",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "<p><strong>Hormify</strong> ayuda a tu cuerpo a recuperar el equilibrio desde adentro, con 8 activos de origen natural que trabajan juntos.</p>",
+        "alineacion": "centrado",
+        "columnas": "2",
+        "imagen": "",
+        "alt": "Frasco de Hormify de CAUCE, 60 cápsulas.",
+        "ancho_imagen": 900,
+        "estilo_imagen": "suelta",
+        "carga_prioritaria": false,
+        "pie": "",
+        "boton_texto": "",
+        "boton_link": "",
+        "color_scheme": "inverse",
+        "ancho_maximo": 1120,
+        "padding_top": 72,
+        "padding_bottom": 0
+      }
+    },
+    "ingredientes": {
+      "type": "cauce-ingredientes",
+      "blocks": {
+        "i1": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Ashwagandha",
+            "dosis": "",
+            "texto": "<p>Planta adaptógena que ayuda a bajar el estrés y el cortisol, y acompaña el metabolismo.</p>",
+            "icono": "hoja"
+          }
+        },
+        "i2": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Raíz de maca",
+            "dosis": "",
+            "texto": "<p>Apoyo natural para el estrógeno y la progesterona. Suma energía y resistencia.</p>",
+            "icono": "flor"
+          }
+        },
+        "i3": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Ginseng",
+            "dosis": "",
+            "texto": "<p>Más energía y claridad mental, y una mejor respuesta al estrés del día.</p>",
+            "icono": "rayo"
+          }
+        },
+        "i4": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Raíz de jengibre",
+            "dosis": "",
+            "texto": "<p>Reduce la hinchazón, favorece la digestión y tiene propiedades antiinflamatorias.</p>",
+            "icono": "ola"
+          }
+        },
+        "i5": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "L-fenilalanina",
+            "dosis": "",
+            "texto": "<p>Aminoácido que ayuda a controlar el apetito y los antojos, y a estabilizar el ánimo.</p>",
+            "icono": "molecula"
+          }
+        },
+        "i6": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Zinc",
+            "dosis": "",
+            "texto": "<p>Mineral esencial para el equilibrio hormonal, el metabolismo y la piel.</p>",
+            "icono": "escudo"
+          }
+        },
+        "i7": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Vitamina B6",
+            "dosis": "",
+            "texto": "<p>Contribuye a regular la actividad hormonal y a reducir el cansancio.</p>",
+            "icono": "gota"
+          }
+        },
+        "i8": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Pimienta negra",
+            "dosis": "",
+            "texto": "<p>Su extracto, la piperina, mejora la absorción del resto de los activos.</p>",
+            "icono": "llama"
+          }
+        },
+        "s1": {
+          "type": "sello",
+          "settings": {
+            "icono": "chequeo",
+            "texto": "Sin hormonas"
+          }
+        },
+        "s2": {
+          "type": "sello",
+          "settings": {
+            "icono": "hoja",
+            "texto": "Activos de origen natural"
+          }
+        },
+        "s3": {
+          "type": "sello",
+          "settings": {
+            "icono": "laboratorio",
+            "texto": "Analizado por laboratorio externo"
+          }
+        },
+        "s4": {
+          "type": "sello",
+          "settings": {
+            "icono": "nacional",
+            "texto": "Producción nacional"
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4",
+        "i5",
+        "i6",
+        "i7",
+        "i8",
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "volanta": "La fórmula",
+        "titulo": "8 activos en",
+        "titulo_acento": "una sola fórmula",
+        "heading_size": "h1",
+        "bajada": "<p>Cada ingrediente está elegido por lo que aporta al equilibrio hormonal, y juntos trabajan mejor que por separado.</p>",
+        "alineacion": "centrado",
+        "columnas": "4",
+        "boton_texto": "Ver precios",
+        "boton_link": "#comprar",
+        "pie": "<p>La composición completa y las dosis por porción están en el rótulo y en la pestaña Ingredientes.</p>",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1200,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "resultados": {
+      "type": "cauce-resultados",
+      "blocks": {
+        "d1": {
+          "type": "dato",
+          "settings": {
+            "valor": "[[PENDIENTE]] %",
+            "etiqueta": "Menos hinchazón",
+            "texto": "<p>Dijeron sentirse menos hinchadas.</p>",
+            "barra": 88
+          }
+        },
+        "d2": {
+          "type": "dato",
+          "settings": {
+            "valor": "[[PENDIENTE]] %",
+            "etiqueta": "Menos estrés",
+            "texto": "<p>Dijeron sentir menos estrés en el día a día.</p>",
+            "barra": 88
+          }
+        },
+        "d3": {
+          "type": "dato",
+          "settings": {
+            "valor": "[[PENDIENTE]] %",
+            "etiqueta": "Lo recomendarían",
+            "texto": "<p>Se lo recomendarían a una amiga.</p>",
+            "barra": 88
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3"
+      ],
+      "settings": {
+        "volanta": "[[PENDIENTE: encuesta real — cantidad de respuestas y fecha]]",
+        "titulo": "Lo que sienten las mujeres que toman",
+        "titulo_acento": "Hormify",
+        "heading_size": "h1",
+        "bajada": "<p>[[PENDIENTE: cómo se hizo la encuesta]]</p>",
+        "mostrar_barra": true,
+        "metodologia": "",
+        "imagen": "",
+        "alt": "",
+        "posicion_imagen": "izquierda",
+        "relacion": "4 / 5",
+        "boton_texto": "Ver precios",
+        "boton_link": "#comprar",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1120,
+        "padding_top": 40,
+        "padding_bottom": 40
+      },
+      "disabled": true
+    },
+    "resenas": {
+      "type": "ss-glow-testimonial",
+      "blocks": {
+        "r1": {
+          "type": "resena",
+          "settings": {
+            "texto": "[[PENDIENTE: reseña real, con permiso de la clienta]]",
+            "autor": "[[PENDIENTE]]",
+            "verificado": true,
+            "foto": "",
+            "puntaje": "5"
+          }
+        },
+        "r2": {
+          "type": "resena",
+          "settings": {
+            "texto": "[[PENDIENTE: reseña real, con permiso de la clienta]]",
+            "autor": "[[PENDIENTE]]",
+            "verificado": true,
+            "foto": "",
+            "puntaje": "5"
+          }
+        },
+        "r3": {
+          "type": "resena",
+          "settings": {
+            "texto": "[[PENDIENTE: reseña real, con permiso de la clienta]]",
+            "autor": "[[PENDIENTE]]",
+            "verificado": true,
+            "foto": "",
+            "puntaje": "5"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "name": "SS - Glow Testimonial",
+      "settings": {
+        "volanta": "",
+        "titulo_antes": "Por qué las mujeres eligen",
+        "destacado": "Hormify",
+        "titulo_despues": "",
+        "heading_size": "h1",
+        "etiqueta_a11y": "Reseñas de clientes",
+        "nota": "",
+        "filas": "2",
+        "velocidad": 6,
+        "ancho_tarjeta": 400,
+        "radio": 4,
+        "mostrar_puntaje": true,
+        "etiqueta_verificado": "Clienta verificada",
+        "color_scheme": "background-2",
+        "padding_top": 40,
+        "padding_bottom": 40
+      },
+      "disabled": true
+    },
+    "comparativa": {
+      "type": "comparison-table",
+      "blocks": {
+        "c1": {
+          "type": "row",
+          "settings": {
+            "benefit": "8 activos para el equilibrio hormonal en una cápsula",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c2": {
+          "type": "row",
+          "settings": {
+            "benefit": "Ayuda con el peso hormonal y la hinchazón",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c3": {
+          "type": "row",
+          "settings": {
+            "benefit": "Acompaña el SOP, la perimenopausia y la menopausia",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c4": {
+          "type": "row",
+          "settings": {
+            "benefit": "Sin hormonas y con activos de origen natural",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c5": {
+          "type": "row",
+          "settings": {
+            "benefit": "Con piperina para absorber mejor cada activo",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c6": {
+          "type": "row",
+          "settings": {
+            "benefit": "Analizado por laboratorio externo",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "c7": {
+          "type": "row",
+          "settings": {
+            "benefit": "Producción nacional",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Por qué Hormify es distinto",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "<p>Comparado con los multivitamínicos y suplementos para mujeres más habituales de la categoría.</p>",
+        "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "desktop_alignment": "left",
+        "mobile_alignment": "left",
+        "color_scheme": "background-1",
+        "layout": "table_second",
+        "style": "minimal",
+        "corner_radius": 4,
+        "number_of_competitors": 1,
+        "us_label": "HORMIFY",
+        "us_label_size": 18,
+        "logo": "",
+        "logo_width": 90,
+        "mobile_logo_width": 60,
+        "others_label": "Otros suplementos",
+        "others_label_size": 18,
+        "others_logo_width": 90,
+        "others_mobile_logo_width": 60,
+        "others_2_label": "Competitor 2",
+        "others_2_label_size": 18,
+        "others_2_logo_width": 90,
+        "others_2_mobile_logo_width": 60,
+        "others_3_label": "Competitor 3",
+        "others_3_label_size": 18,
+        "others_3_logo_width": 90,
+        "others_3_mobile_logo_width": 60,
+        "checkmark_style": "regular",
+        "checkmark_color": "#10262a",
+        "checkmark_bg_color": "#5f99a2",
+        "x_style": "regular",
+        "x_color": "#10262a",
+        "x_bg_color": "#dfdbce",
+        "opposite_icon_colors": "original",
+        "highlighted_color_scheme": "background-2",
+        "highlighted_separator_opacity": 0,
+        "highlighted_overlay_opacity": 0,
+        "other_cells_color_scheme": "background-1",
+        "regular_separator_opacity": 10,
+        "regular_overlay_opacity": 0,
+        "minimalistic_border_opacity": 16,
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_highlighted_background": "#2e2a39",
+        "custom_colors_highlighted_text": "#ffffff",
+        "custom_colors_others_background": "#ffffff",
+        "custom_colors_others_text": "#2e2a39"
+      }
+    },
+    "progreso": {
+      "type": "cauce-progreso",
+      "blocks": {
+        "h1": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Semana 1–2:",
+            "titulo": "Primeros cambios",
+            "texto": "<p>Tu cuerpo empieza a recibir los 8 activos todos los días.</p>",
+            "items": "Dos cápsulas, una rutina simple\nMenos hinchazón para muchas mujeres"
+          }
+        },
+        "h2": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Semana 3–4:",
+            "titulo": "Más energía, menos estrés",
+            "texto": "<p>El día se siente más parejo y el estrés pesa menos.</p>",
+            "items": "Más energía durante el día\nMenos antojos"
+          }
+        },
+        "h3": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Mes 2:",
+            "titulo": "El equilibrio se nota",
+            "texto": "<p>El ánimo se estabiliza y el cuerpo empieza a responder.</p>",
+            "items": "Cambios de humor más suaves\nMenos sofocos y mejor descanso*"
+          }
+        },
+        "h4": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Mes 3:",
+            "titulo": "Resultados completos",
+            "texto": "<p>Con la rutina completa, los cambios se sostienen.</p>",
+            "items": "Tu peso vuelve a responder*\nUn ciclo más predecible*"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ],
+      "settings": {
+        "volanta": "",
+        "titulo": "Qué esperar, mes a mes",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "",
+        "alineacion": "centrado",
+        "pie": "<p>*Los resultados varían de una persona a otra. Acompañá la rutina con una alimentación equilibrada y actividad física.</p>",
+        "icono": "visto",
+        "color_scheme": "inverse",
+        "ancho_maximo": 920,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "ugc": {
+      "type": "cauce-ugc",
+      "blocks": {
+        "v1": {
+          "type": "video",
+          "settings": {
+            "alt": "",
+            "autor": "",
+            "texto": ""
+          }
+        },
+        "v2": {
+          "type": "video",
+          "settings": {
+            "alt": "",
+            "autor": "",
+            "texto": ""
+          }
+        },
+        "v3": {
+          "type": "video",
+          "settings": {
+            "alt": "",
+            "autor": "",
+            "texto": ""
+          }
+        },
+        "v4": {
+          "type": "video",
+          "settings": {
+            "alt": "",
+            "autor": "",
+            "texto": ""
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
+      "settings": {
+        "volanta": "Comunidad",
+        "titulo": "Mujeres que ya lo toman",
+        "heading_size": "h1",
+        "etiqueta_a11y": "Videos de clientes",
+        "ancho_tarjeta": 280,
+        "color_scheme": "background-1",
+        "padding_top": 8,
+        "padding_bottom": 72
+      }
+    },
+    "banda": {
+      "type": "icon-bar",
+      "blocks": {
+        "f1": {
+          "type": "column",
+          "settings": {
+            "icon": "local_shipping",
+            "filled_icon": false,
+            "title": "Envío a todo el país",
+            "text": "<p>De 3 a 10 días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
+          }
+        },
+        "f2": {
+          "type": "column",
+          "settings": {
+            "icon": "undo",
+            "filled_icon": false,
+            "title": "10 días para arrepentirte",
+            "text": "<p>Sin costo y sin explicar por qué, como marca la Res. SCI 424/2020.</p>"
+          }
+        },
+        "f3": {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "filled_icon": false,
+            "title": "Pago procesado por Mercado Pago",
+            "text": "<p>Nosotros no vemos ni guardamos los datos de tu tarjeta.</p>"
+          }
+        },
+        "f4": {
+          "type": "column",
+          "settings": {
+            "icon": "mail",
+            "filled_icon": false,
+            "title": "Te contestamos",
+            "text": "<p>cauce@caucearg.com</p>"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Comprar acá",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "inverse",
+        "icon_layout": "horizontal",
+        "icon_size": "small",
+        "icon_color": "background-1",
+        "cards_color_scheme": "inverse",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 2,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 48,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "hidden",
+        "desktop_arrows_position": "hidden",
+        "columns_mobile": "1",
+        "slider_mobile": false,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "hidden",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "garantia": {
+      "type": "custom-columns",
+      "blocks": {
+        "g0": {
+          "type": "heading",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "Si te arrepentís, se devuelve",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g1": {
+          "type": "richtext",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "text": "<p>No es una promesa comercial: es un derecho que tenés por la Resolución SCI 424/2020 y que acá está escrito sin condiciones escondidas.</p>",
+            "text_style": "body",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g2": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "schedule",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-2",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "10 días corridos",
+            "text": "<p>Se cuentan desde que recibís el pedido, no desde que lo comprás.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g3": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "payments",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-2",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Sin costo para vos",
+            "text": "<p>Se devuelve el importe pagado. El costo de la devolución lo asumimos nosotros.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g4": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "help",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-2",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Sin explicar por qué",
+            "text": "<p>No hace falta que des un motivo. Basta con que nos avises dentro del plazo.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        }
+      },
+      "block_order": [
+        "g0",
+        "g1",
+        "g2",
+        "g3",
+        "g4"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "color_scheme": "background-1",
+        "columns_count": 2,
+        "column_gap_desktop": 64,
+        "row_gap_desktop": 24,
+        "desktop_vertical_alignment": "flex-start",
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 30,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 5,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 7,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "faq": {
+      "type": "cauce-faq",
+      "blocks": {
+        "q1": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Qué tiene Hormify?",
+            "respuesta": "<p>Ocho activos: ashwagandha, raíz de maca, ginseng, raíz de jengibre, L-fenilalanina, zinc, vitamina B6 y extracto de pimienta negra (piperina). No contiene hormonas.</p><p>La composición completa y las dosis por porción están en el rótulo.</p>"
+          }
+        },
+        "q2": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cómo ayuda Hormify al equilibrio hormonal?",
+            "respuesta": "<p>Combina plantas adaptógenas, vitaminas, un mineral y un aminoácido que acompañan los procesos naturales con los que tu cuerpo regula sus hormonas. Por eso ayuda con el peso, la hinchazón, el estrés y el ánimo al mismo tiempo.</p>"
+          }
+        },
+        "q3": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cómo y cuándo lo tomo?",
+            "respuesta": "<p>Dos cápsulas por día con un vaso de agua. Podés tomarlas juntas a la mañana o repartirlas: una a la mañana y otra a la noche. Repartirlas ayuda a que el efecto sea más parejo durante el día.</p>"
+          }
+        },
+        "q4": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cuándo voy a notar los cambios?",
+            "respuesta": "<p>Algunas mujeres notan los primeros cambios en pocos días y otras necesitan unas semanas. Los cambios más claros suelen aparecer entre el segundo y el tercer mes de uso diario.</p>"
+          }
+        },
+        "q5": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Sirve en la menopausia?",
+            "respuesta": "<p>Sí. Hormify está pensado para acompañar el equilibrio hormonal y ayuda con los sofocos, el ánimo, la energía y el estrés, que son de lo que más cambia en esa etapa.</p>"
+          }
+        },
+        "q6": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Lo puedo tomar si tengo SOP?",
+            "respuesta": "<p>Hormify acompaña el equilibrio hormonal y el control del apetito, dos puntos clave cuando hay SOP. Si estás en tratamiento, consultalo con tu médico antes de empezar.</p>"
+          }
+        },
+        "q7": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Lo puedo tomar si estoy embarazada o dando la teta?",
+            "respuesta": "<p>No. Hormify no está recomendado durante el embarazo ni la lactancia.</p>"
+          }
+        },
+        "q8": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Lo puedo tomar con anticonceptivos u otra medicación?",
+            "respuesta": "<p>Si tomás anticonceptivos, terapia hormonal o cualquier otra medicación, consultá con tu médico antes de empezar.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8"
+      ],
+      "name": "CAUCE · Preguntas",
+      "settings": {
+        "volanta": "Preguntas frecuentes",
+        "titulo": "Lo que más nos preguntan sobre Hormify",
+        "heading_size": "h1",
+        "pie": "",
+        "producto": "",
+        "emitir_schema": true,
+        "color_scheme": "background-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "cierre": {
+      "type": "custom-columns",
+      "blocks": {
+        "x0": {
+          "type": "heading",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "Dos cápsulas por día para volver a sentirte vos",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h0",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "x1": {
+          "type": "richtext",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "text": "<ul><li>8 activos de origen natural, sin hormonas</li><li>Ayuda con el peso hormonal, la hinchazón y los sofocos</li><li>Dos cápsulas por día: cada frasco rinde un mes</li><li>Envío a todo el país</li><li>10 días para arrepentirte, sin costo</li></ul>",
+            "text_style": "body",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "x2": {
+          "type": "atc_button",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "button_label": "Agregar al carrito",
+            "atc_product": "",
+            "atc_skip_cart": false,
+            "full_width": false,
+            "alignment": "flex-start",
+            "mobile_alignment": "center",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "x3": {
+          "type": "custom_liquid",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}\n{% render 'cauce-disclaimer', compacto: true %}",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "x0",
+        "x1",
+        "x2",
+        "x3"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "color_scheme": "background-1",
+        "columns_count": 1,
+        "column_gap_desktop": 40,
+        "row_gap_desktop": 24,
+        "desktop_vertical_alignment": "center",
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 24,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 12,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 4,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
+        "padding_top": 88,
+        "padding_bottom": 88,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "suscripcion": {
+      "type": "cauce-newsletter",
+      "settings": {
+        "volanta": "Novedades",
+        "titulo": "10 % en tu primer pedido",
+        "heading_size": "h2",
+        "bajada": "<p>Suscribite y te mandamos el código. Después, pocos mails: fórmulas nuevas y un aviso cuando se te esté por terminar el frasco.</p>",
+        "boton": "Suscribirme",
+        "pagina_privacidad": "",
+        "color_scheme": "background-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "main",
+    "marquee",
+    "contraste",
+    "solucion",
+    "ingredientes",
+    "resultados",
+    "resenas",
+    "comparativa",
+    "progreso",
+    "ugc",
+    "banda",
+    "garantia",
+    "faq",
+    "cierre",
+    "suscripcion"
+  ]
+}
