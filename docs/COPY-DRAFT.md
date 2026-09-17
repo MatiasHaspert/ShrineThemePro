@@ -490,3 +490,137 @@ que dice explícitamente que no hace falta dar un motivo.
 | 7 | RNPA/RNE | `settings.cauce_rnpa` |
 | 8 | Razón social, CUIT, domicilio, teléfono | grupo CAUCE de theme settings |
 | 9 | Cuotas sin interés, si el plan existe | `settings.cauce_cuotas` (0 = oculto) |
+
+---
+
+## 10. Hormify — PDP · `templates/product.hormify.json`
+
+Ver `DECISIONS.md` D-054 y `CLAIMS-AUDIT.md` §8. **Este SKU habla distinto por decisión
+comercial:** nombra síntomas, atribuye funciones y da plazos. El riesgo de cada texto ya no es
+`forma` o `dato` como arriba, sino el número de claim del §8.1 (H1…H13). Todo es borrador:
+ningún texto está aprobado y la fórmula es la de la referencia hasta que se confirme la real.
+
+Esta sección se generó leyendo el template: si cambia el template, se regenera.
+
+### 10.1 Hero
+
+| Campo | Texto |
+|---|---|
+| Subtítulo | ¿Peso que no baja, hinchazón, sofocos o cambios de humor? Hormify reúne 8 activos de origen natural en una fórmula sin hormonas que ayuda a tu cuerpo a recuperar su equilibrio hormonal desde adentro. |
+| Viñeta (`balance`) | Ayuda a combatir el peso hormonal |
+| Viñeta (`water_drop`) | Menos hinchazón |
+| Viñeta (`favorite`) | Equilibra tus hormonas, sin hormonas |
+| Viñeta (`battery_android_frame_bolt`) | Menos estrés, más energía y mejor humor |
+| Calificación | *apagada* — Calificación de [[PENDIENTE: puntaje real]] · [[PENDIENTE: cantidad real]] reseñas |
+
+### 10.2 Selector de oferta
+
+| Campo | Texto |
+|---|---|
+| Encabezado | 2 CÁPSULAS AL DÍA · CADA FRASCO, UN MES |
+| Bajada | La mayoría de las mujeres nota los cambios más claros entre el segundo y el tercer mes de uso diario. |
+| Escalón 1 | **1 frasco · 30 días** · caption `+ envío` · descuento $0 (provisorio, D-054 §4) |
+| Escalón 2 | **2 frascos · 60 días** · caption `[price_each] por frasco` · descuento $37.900 (provisorio, D-054 §4) |
+| Escalón 3 | **3 frascos · 90 días** · cinta **RESULTADOS ÓPTIMOS · 90 DÍAS** · caption `[price_each] por frasco` · descuento $76.800 (provisorio, D-054 §4) |
+| Letra chica | El precio tachado es lo que costarían esos frascos comprados de a uno. / Los packs de 2 y 3 frascos van con envío sin cargo. |
+
+### 10.3 Pestañas del hero
+
+| Pestaña | Texto |
+|---|---|
+| Beneficios de Hormify | Ayuda a combatir el aumento de peso de origen hormonal y los antojos. · Reduce la hinchazón y favorece una digestión más liviana. · Apoya el equilibrio natural del estrógeno y la progesterona. · Alivia los sofocos, los sudores nocturnos y los cambios de humor. · Ayuda a bajar el estrés y el cortisol. · Más energía y claridad mental durante el día. / Los resultados pueden variar de una persona a otra. |
+| ¿Para quién es Hormify? | Para mujeres que sienten que su cuerpo cambió: el peso que antes bajaba ahora no se mueve, la hinchazón aparece todos los días, el ciclo se volvió irregular y el humor sube y baja sin aviso. / Acompaña cada etapa de cambio hormonal —el ciclo menstrual, el SOP, la perimenopausia y la menopausia— con una fórmula sin hormonas. / No se recomienda durante el embarazo ni la lactancia. |
+| ¿Cuándo voy a notar cambios? | Cada cuerpo tiene su tiempo. Algunas mujeres notan los primeros cambios en pocos días —menos hinchazón, más energía— y otras necesitan unas semanas. / Los cambios más claros suelen aparecer entre el segundo y el tercer mes de uso diario. Por eso recomendamos la rutina completa de 90 días. |
+| Cómo se toma | Dos cápsulas por día con un vaso de agua. Podés tomarlas juntas a la mañana o repartirlas: una a la mañana y otra a la noche. / Cada frasco trae 60 cápsulas y rinde un mes. |
+| Ingredientes | Ashwagandha, raíz de maca, ginseng (Panax ginseng), raíz de jengibre, L-fenilalanina, zinc, vitamina B6 y extracto de pimienta negra (piperina). / [[PENDIENTE: composición completa y dosis por porción, copiadas del rótulo aprobado]] |
+| Envíos y entrega | Despachamos desde Buenos Aires. El plazo estimado es de 3 a 10 días habiles sujetos a la disponibilidad de stock y el costo se calcula en el checkout según tu código postal. Envío sin cargo en compras desde $55.000. |
+| Cambios y devoluciones | Tenés 10 días corridos desde que recibís el pedido para arrepentirte de la compra y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). El producto tiene que estar sin abrir. / Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a cauce@caucearg.com. |
+
+### 10.4 Contraste · `cauce-contraste`
+
+Volanta **Equilibrio hormonal** · título **Cómo te ves y cómo te sentís empieza en tus _hormonas_** · bajada: Cuando tus hormonas se desordenan, lo notás en todo el cuerpo: en la balanza, en la digestión, en el humor y en el descanso.
+
+| Con las hormonas en desequilibrio | Con Hormify · Con tus hormonas en equilibrio |
+|---|---|
+| Peso que sube y no baja | Tu peso vuelve a responder |
+| Antojos que no podés frenar | Mejor control del apetito |
+| Hinchazón todos los días | Una panza más liviana |
+| Cansancio, ansiedad y cambios de humor | Más energía y un ánimo estable |
+| Sofocos y sudores nocturnos | Menos sofocos y noches tranquilas |
+| Ciclos irregulares | Un ciclo más predecible |
+
+Botón **Quiero recuperar mi equilibrio** → `#comprar` · pie: Los resultados pueden variar de una persona a otra.
+
+### 10.5 Beneficios · `cauce-solucion`
+
+Volanta **Sin hormonas** · título **Apoyá tu equilibrio hormonal y combatí el peso hormonal** · bajada: Hormify ayuda a tu cuerpo a recuperar el equilibrio desde adentro, con 8 activos de origen natural que trabajan juntos.
+
+Grilla: Menos peso hormonal (`balanza`) · Menos hinchazón (`ola`) · Hormonas en equilibrio (`flor`) · Menos estrés, mejor humor (`corazon`)
+
+### 10.6 Ingredientes · `cauce-ingredientes`
+
+Volanta **La fórmula** · título **8 activos en _una sola fórmula_** · bajada: Cada ingrediente está elegido por lo que aporta al equilibrio hormonal, y juntos trabajan mejor que por separado.
+
+| Activo | Dosis | Para qué está |
+|---|---|---|
+| Ashwagandha | *pendiente* | Planta adaptógena que ayuda a bajar el estrés y el cortisol, y acompaña el metabolismo. |
+| Raíz de maca | *pendiente* | Apoyo natural para el estrógeno y la progesterona. Suma energía y resistencia. |
+| Ginseng | *pendiente* | Más energía y claridad mental, y una mejor respuesta al estrés del día. |
+| Raíz de jengibre | *pendiente* | Reduce la hinchazón, favorece la digestión y tiene propiedades antiinflamatorias. |
+| L-fenilalanina | *pendiente* | Aminoácido que ayuda a controlar el apetito y los antojos, y a estabilizar el ánimo. |
+| Zinc | *pendiente* | Mineral esencial para el equilibrio hormonal, el metabolismo y la piel. |
+| Vitamina B6 | *pendiente* | Contribuye a regular la actividad hormonal y a reducir el cansancio. |
+| Pimienta negra | *pendiente* | Su extracto, la piperina, mejora la absorción del resto de los activos. |
+
+Sellos: Sin hormonas · Activos de origen natural · Analizado por laboratorio externo · Producción nacional
+
+Botón **Ver precios** → `#comprar` · pie: La composición completa y las dosis por porción están en el rótulo y en la pestaña Ingredientes.
+
+### 10.7 Comparativa · `comparison-table`
+
+Título **Por qué Hormify es distinto** · Comparado con los multivitamínicos y suplementos para mujeres más habituales de la categoría. · columnas **HORMIFY** / **Otros suplementos**
+
+- 8 activos para el equilibrio hormonal en una cápsula
+- Ayuda con el peso hormonal y la hinchazón
+- Acompaña el SOP, la perimenopausia y la menopausia
+- Sin hormonas y con activos de origen natural
+- Con piperina para absorber mejor cada activo
+- Analizado por laboratorio externo
+- Producción nacional
+
+### 10.8 Qué esperar · `cauce-progreso`
+
+Título **Qué esperar, mes a mes** · pie: *Los resultados varían de una persona a otra. Acompañá la rutina con una alimentación equilibrada y actividad física.
+
+| Etiqueta | Hito | Texto | Ítems |
+|---|---|---|---|
+| Semana 1–2: | Primeros cambios | Tu cuerpo empieza a recibir los 8 activos todos los días. | Dos cápsulas, una rutina simple · Menos hinchazón para muchas mujeres |
+| Semana 3–4: | Más energía, menos estrés | El día se siente más parejo y el estrés pesa menos. | Más energía durante el día · Menos antojos |
+| Mes 2: | El equilibrio se nota | El ánimo se estabiliza y el cuerpo empieza a responder. | Cambios de humor más suaves · Menos sofocos y mejor descanso* |
+| Mes 3: | Resultados completos | Con la rutina completa, los cambios se sostienen. | Tu peso vuelve a responder* · Un ciclo más predecible* |
+
+### 10.9 Preguntas frecuentes · `cauce-faq`
+
+Título **Lo que más nos preguntan sobre Hormify**
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Qué tiene Hormify? | Ocho activos: ashwagandha, raíz de maca, ginseng, raíz de jengibre, L-fenilalanina, zinc, vitamina B6 y extracto de pimienta negra (piperina). No contiene hormonas. / La composición completa y las dosis por porción están en el rótulo. |
+| ¿Cómo ayuda Hormify al equilibrio hormonal? | Combina plantas adaptógenas, vitaminas, un mineral y un aminoácido que acompañan los procesos naturales con los que tu cuerpo regula sus hormonas. Por eso ayuda con el peso, la hinchazón, el estrés y el ánimo al mismo tiempo. |
+| ¿Cómo y cuándo lo tomo? | Dos cápsulas por día con un vaso de agua. Podés tomarlas juntas a la mañana o repartirlas: una a la mañana y otra a la noche. Repartirlas ayuda a que el efecto sea más parejo durante el día. |
+| ¿Cuándo voy a notar los cambios? | Algunas mujeres notan los primeros cambios en pocos días y otras necesitan unas semanas. Los cambios más claros suelen aparecer entre el segundo y el tercer mes de uso diario. |
+| ¿Sirve en la menopausia? | Sí. Hormify está pensado para acompañar el equilibrio hormonal y ayuda con los sofocos, el ánimo, la energía y el estrés, que son de lo que más cambia en esa etapa. |
+| ¿Lo puedo tomar si tengo SOP? | Hormify acompaña el equilibrio hormonal y el control del apetito, dos puntos clave cuando hay SOP. Si estás en tratamiento, consultalo con tu médico antes de empezar. |
+| ¿Lo puedo tomar si estoy embarazada o dando la teta? | No. Hormify no está recomendado durante el embarazo ni la lactancia. |
+| ¿Lo puedo tomar con anticonceptivos u otra medicación? | Si tomás anticonceptivos, terapia hormonal o cualquier otra medicación, consultá con tu médico antes de empezar. |
+
+### 10.10 Cierre · `custom-columns`
+
+Título **Dos cápsulas por día para volver a sentirte vos**
+
+8 activos de origen natural, sin hormonas · Ayuda con el peso hormonal, la hinchazón y los sofocos · Dos cápsulas por día: cada frasco rinde un mes · Envío a todo el país · 10 días para arrepentirte, sin costo
+
+Marquesina: Sin hormonas · Peso hormonal · Hinchazón · Sofocos · Estrés y cambios de humor · Envío a todo el país
+
+`banda`, `garantia` y `suscripcion` son las mismas del R-ALA. `resultados` y `resenas` están
+apagadas y sólo tienen `[[PENDIENTE]]` (D-054 §1).

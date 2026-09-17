@@ -165,3 +165,22 @@ Pendiente de datos reales. Lo que sigue es la forma esperada, no contenido aprob
 
 Ninguno de estos textos se puede redactar desde el marketing: son los que tienen que
 coincidir con el rótulo declarado. Ver `docs/CLAIMS-AUDIT.md`.
+
+---
+
+## 5. Contenido a cargar en Hormify
+
+Segundo SKU (D-054). Misma forma que el §4, con lo que ya se sabe del envase:
+
+| Metafield | Valor | Estado |
+|---|---|---|
+| `unidades_envase` | `60` | confirmado por el comercio |
+| `dosis_diaria` | `2` | confirmado por el comercio. Con los dos cargados, la duración del suministro da 30 días por frasco (§2), lo mismo que dicen a mano los títulos del selector |
+| `unidad` | `cápsula` | |
+| `formato` | `60 cápsulas` | |
+| `composicion` | **PENDIENTE** | textual del rótulo. Hoy la PDP lo dice en un bloque del template, no desde acá |
+| `modo_uso` | **PENDIENTE** | textual del rótulo. La PDP dice "dos cápsulas por día, juntas o repartidas" |
+| `analisis` | **PENDIENTE** | COA de este SKU |
+
+La plantilla del producto en Shopify tiene que ser **`hormify`**: sin eso la página sale con
+`product.json` y ninguna de estas piezas se ve.

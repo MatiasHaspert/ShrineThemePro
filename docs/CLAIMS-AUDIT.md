@@ -472,7 +472,7 @@ grep -rniE "cura|trata|previene|alivia|reduce el|mejora la|neuropat|glucem|diabe
 
 ### Dónde se renderiza `cauce-disclaimer`
 
-Son **cinco** lugares. El texto sale de un solo campo (`settings.cauce_disclaimer_texto`,
+Son **siete** lugares. El texto sale de un solo campo (`settings.cauce_disclaimer_texto`,
 con fallback al locale — ver D-044), así que cambiarlo es atómico; esta lista existe para
 saber dónde se ve.
 
@@ -483,6 +483,8 @@ saber dónde se ve.
 | `templates/product.cauce-landing.json` | bloque `cierre` de la landing | compacta |
 | `snippets/cart-drawer.liquid` | bloque `legal_note` del carrito lateral | compacta |
 | `sections/main-cart-items.liquid` | el mismo bloque en `/cart` | compacta |
+| `templates/product.hormify.json` | bloque `disclaimer` de la PDP de Hormify | completa |
+| `templates/product.hormify.json` | bloque `cierre` de Hormify | compacta |
 
 Los dos últimos entran con el carrito CAUCE (D-046). Son la misma pieza en las dos
 superficies del carrito, no dos redacciones.
@@ -506,5 +508,87 @@ después de escribir esta receta: `cura` matchea dentro de "os**cura**" y la sec
 filtro el comando devuelve cuarenta líneas de ruido y deja de servir para lo único que
 sirve, que es notar la coincidencia número nueve.
 
+Desde D-054 el grep devuelve además **cuatro líneas de `product.hormify.json`** ("alivia",
+"ansiedad", "mejora la" y "tratamiento"). Son decisión comercial y están en el §8.1; ese
+template se audita con su propio grep (§8.4).
+
 Cualquier coincidencia que no esté en esa tabla hay que mirarla. Si aparece en
 `templates/`, `locales/es.json` o `config/settings_data.json`, es un claim que se coló.
+
+---
+
+## 8. Hormify (`templates/product.hormify.json`) — otra regla, por decisión comercial
+
+Ver `DECISIONS.md` D-054. **Las §1 a §3 no aplican a este SKU.** El 2026-09-16 el comercio eligió
+que la PDP de Hormify hable como la referencia (hormify.com): síntomas con nombre, funciones
+atribuidas y plazos. Se le mostraron antes las dos alternativas (§2 de este archivo, o "síntomas
+sí, promesas no") y el riesgo ANMAT y de rechazo en Meta Ads. Este apartado no reabre la decisión:
+lista qué se publica, qué evidencia haría falta si alguien la pide, y qué **no** se hizo aunque la
+referencia lo hace.
+
+La regla 1 sí se mantiene: **ningún claim está en un `.liquid`**. `cauce-contraste` y
+`cauce-ingredientes` traen la advertencia en su cabecera, igual que `cauce-dolor`.
+
+### 8.1 Inventario
+
+| # | Afirmación (resumida) | Tipo | Dónde | Qué lo sostendría |
+|---|---|---|---|---|
+| H1 | Ayuda a combatir el peso hormonal / "tu peso vuelve a responder" | eficacia | hero, contraste, solución, pestaña Beneficios, comparativa, progreso, cierre | estudios de la fórmula, no de ingredientes sueltos |
+| H2 | Reduce la hinchazón / "una panza más liviana" | eficacia | hero, contraste, solución, Beneficios, ingredientes (jengibre), comparativa, progreso | ídem |
+| H3 | Equilibra las hormonas; apoyo al estrógeno y la progesterona | eficacia hormonal | hero, contraste, solución, Beneficios, ingredientes (maca), FAQ | ídem. Es el más cercano a un efecto farmacológico |
+| H4 | Alivia sofocos y sudores nocturnos | síntoma de menopausia | contraste, Beneficios, progreso, FAQ, cierre | ídem |
+| H5 | Menos estrés y cortisol, mejor humor, más energía | eficacia | hero, contraste, solución, Beneficios, ingredientes, progreso | ídem |
+| H6 | "Un ciclo más predecible" | síntoma ginecológico | contraste, progreso | ídem |
+| H7 | Acompaña el SOP, la perimenopausia y la menopausia | **patología con nombre** (SOP) | pestaña Para quién, comparativa, FAQ | — |
+| H8 | Plazos: cambios en días, los más claros entre el mes 2 y el 3 | plazo de resultado | bajada del selector, pestaña Cuándo, progreso, FAQ | datos propios de uso |
+| H9 | Ocho activos y qué hace cada uno | composición + función | ingredientes, pestaña Ingredientes, FAQ | **fórmula real y rótulo aprobado** |
+| H10 | Sin hormonas · activos de origen natural | composición | hero, solución, sellos, comparativa, FAQ | rótulo |
+| H11 | Analizado por laboratorio externo · producción nacional | proceso / origen | sellos, comparativa | COA de un tercero y RNE del elaborador **de este SKU** (A3 y A4 son del R-ALA) |
+| H12 | "Otros suplementos" no tienen H1–H11 | comparativa | `comparativa` | que sea verdad para la categoría; con una sola X en contra de todo el resto, es la fila más expuesta de la página (mismo riesgo que R5) |
+| H13 | Cinta `RESULTADOS ÓPTIMOS · 90 DÍAS` | eficacia + plazo | escalón 3 | ídem H8 |
+
+Los "*" de `progreso` remiten al pie: *"Los resultados varían de una persona a otra. Acompañá la
+rutina con una alimentación equilibrada y actividad física."* La leyenda de suplemento
+(`cauce-disclaimer`) sale en el bloque `disclaimer` del hero y en el `cierre`, igual que en el R-ALA.
+
+### 8.2 Lo que la referencia hace y esta página no
+
+| En hormify.com | Por qué no | Qué hay |
+|---|---|---|
+| "98,325 reviews", 4.8 estrellas | No hay reseñas. Un número inventado es publicidad engañosa (Ley 24.240 art. 9, Res. SC 270/2020) con o sin ANMAT | bloque `resenas` **apagado**, con `[[PENDIENTE]]` |
+| "11,327+ women in our internal study", 93 % / 92 % / 83 % / 97 % | No hay estudio | `resultados` **apagada**, con `[[PENDIENTE]]` |
+| Testimonios | No hay clientas | `resenas` (glow) **apagada**, sin nombres ni fotos |
+| Logos de Women's Health, Forbes, Healthline | Sería afirmar una cobertura que no existe | nada |
+| "Made in FDA registered facility" | No aplica en Argentina | nada |
+| "Most popular" | Popularidad sin ventas (D-047b) | cinta de resultado |
+| "Generally compatible with birth control" | Afirmación de seguridad sin respaldo. Ashwagandha y ginseng tienen interacciones descriptas | "consultá con tu médico" |
+
+### 8.3 Bloqueantes para publicar Hormify
+
+- [ ] **La fórmula real.** Los ocho activos son los de la referencia, cargados como borrador (H9).
+      Confirmar o reemplazar en `ingredientes`, pestaña Ingredientes, FAQ 1 y comparativa.
+- [ ] **Dosis por porción** en los ocho bloques `ingrediente` y el
+      `[[PENDIENTE: composición completa…]]` de la pestaña Ingredientes, copiados del rótulo.
+- [ ] **RNPA del producto** y RNE del elaborador de este SKU. Sin eso H11 no se puede publicar.
+- [ ] **COA de este SKU**, si se mantiene "Analizado por laboratorio externo".
+- [ ] **Advertencias del rótulo.** La página dice que no se recomienda en embarazo ni lactancia. Confirmar
+      que el rótulo dice lo mismo y sumar cualquier otra advertencia que traiga.
+- [ ] **Precio de Hormify** y los dos `fixed_amount_off` del bloque `ofertas` (hoy son los del
+      R-ALA, D-054 §4), con sus descuentos automáticos **limitados a este producto**.
+- [ ] **Fotos propias**, sin claims que no estén en esta tabla (R1 aplica igual).
+- [ ] **Nombre.** "Hormify" es el nombre de la marca de referencia. Verificar en INPI antes de
+      invertir en pauta.
+- [ ] **Metafields de categoría de Shopify** (R4): "Enfoque de salud" con hormonas o menopausia
+      puede disparar revisión en Google Merchant.
+- [ ] Revisión con criterio legal de 8.1 completo, en especial **H3, H4, H6 y H7**.
+
+### 8.4 Cómo auditar este SKU
+
+El grep del §7 está pensado para el R-ALA y casi no ve a Hormify (4 coincidencias: "alivia",
+"ansiedad", "mejora la" y "tratamiento", todas en 8.1). Para este template:
+
+```bash
+grep -niE "peso|hinchaz|panza|hormon|estr[oó]geno|progesterona|sofoco|sudor|ciclo|SOP|menopaus|cortisol|estr[eé]s|[aá]nimo|humor|antojo|d[ií]as|mes " templates/product.hormify.json
+```
+
+Cualquier coincidencia que no esté cubierta por una fila de 8.1 es un claim nuevo.

@@ -2565,3 +2565,177 @@ modos. Con dos momentos de publicación en vez de uno hay dos oportunidades de d
 medias.
 
 ---
+
+## D-054 · 2026-09-16 · Hormify: segundo SKU, línea mujer, con PDP propia inspirada en hormify.com
+
+**Decisión.** El primer testeo (R-ALA, `product.cauce-landing`) no funcionó y el siguiente es un
+producto nuevo de la línea CAUCE: **Hormify**, un frasco de **60 cápsulas** para el equilibrio
+hormonal de la mujer. Se arma su PDP como template alterno, **`templates/product.hormify.json`**,
+tomando como referencia la página de hormify.com. El template sale del de la landing del R-ALA
+(se hereda cada setting de Shrine tal como lo dejó el editor) y se le reescribe el copy, el orden
+y dos secciones nuevas.
+
+Cuatro definiciones las tomó el comercio el 2026-09-16, con las alternativas a la vista:
+
+| Pregunta | Respuesta | Alternativas que se descartaron |
+|---|---|---|
+| Cuán directo habla sobre síntomas y resultados | **Directo, como hormify.com**, más los síntomas del ciclo (hinchazón, cansancio, humor, ciclo irregular) | "Síntomas sí, promesas no" (la recomendada) y "sólo composición" (la línea original de CLAIMS-AUDIT) |
+| El nombre | **Queda Hormify** | Usarlo como nombre de trabajo y cambiarlo antes de publicar |
+| Toma y packs | **2 cápsulas por día · 1, 2 y 3 frascos** (1 frasco = 30 días) | 1, 3 y 6 frascos como la referencia; 1 cápsula por día |
+| Estética | **CAUCE con acento propio** | CAUCE sin cambios; identidad propia rosa/magenta |
+
+La primera respuesta **da vuelta la regla de §1–§3 de `CLAIMS-AUDIT.md` para este SKU**. Lo que
+eso implica está en el §8 nuevo de ese archivo. Acá sólo se anota que fue una decisión comercial
+explícita, tomada después de ver el riesgo ANMAT y el de Meta Ads, y que la del nombre también
+lo fue: *Hormify* es el nombre de la marca de referencia.
+
+### 1. Qué se tomó de la referencia y dónde quedó
+
+| hormify.com | En la PDP | Estado |
+|---|---|---|
+| Hero con la pregunta de síntomas | bloque `subtitulo` del `main` | activo |
+| "Choose your bundle", 3 tarjetas con precio por frasco | bloque `ofertas` (el selector de D-051), con los mismos cálculos | activo, precios **provisorios** (§4) |
+| Cinta "Most popular" / "Best value" | cinta del escalón 3: `RESULTADOS ÓPTIMOS · 90 DÍAS` | activo. No se copió "Más elegido": sin ventas es la afirmación falsa que D-047b sacó |
+| "Life with hormonal imbalance / with healthy balance" | **`cauce-contraste`**, sección nueva | activo |
+| "Support Hormone Balance", 4 beneficios | `cauce-solucion` | activo, sin packshot |
+| "8 Ingredients in 1 Powerful Formula" + sellos | **`cauce-ingredientes`**, sección nueva | activo, **sin dosis** |
+| Comparativa contra "other supplements" | `comparison-table` | activo |
+| Plazos de resultado (en su FAQ) | `cauce-progreso` y la bajada del selector | activo |
+| FAQ | `cauce-faq`, ocho preguntas adaptadas | activo |
+| "98,325 reviews", 4.8 estrellas | bloque `resenas` (rating) del `main` | **apagado** |
+| "Confirmed by 11,327+ women in our internal study", 93 % / 92 % / … | `cauce-resultados` | **apagado** |
+| Reseñas | `ss-glow-testimonial` | **apagado** |
+| Logos de prensa, "Made in FDA registered facility" | — | no se hizo |
+| Regalos digitales por pack, quiz | — | no se hizo (ver §6) |
+
+**Lo apagado no es por prolijidad.** Son las tres piezas de prueba social de la referencia y no
+hay un solo dato real detrás: el producto no existe todavía en Shopify. Se dejan armadas con
+`[[PENDIENTE]]` para que prenderlas sea cargar números reales, y no se escribe ningún número
+inventado. La landing del R-ALA sí tiene cargados desde el editor un "1574+ reseñas", una
+"encuesta a +700 clientes" y siete testimonios; eso está abierto en el §6 de `CLAIMS-AUDIT.md` y
+esta PDP no lo repite.
+
+### 2. Dos secciones nuevas, no multicolumn
+
+**`cauce-contraste`.** `cauce-dolor` tiene una sola lista, y el argumento de la referencia es poner
+las dos listas lado a lado. Cada bloque es un **par** (`sin` + `con`) para que nadie tenga que
+mantener dos listas sincronizadas; se dibujan dos `<ul>`, no una tabla, porque un lector de
+pantalla tiene que leer primero el problema entero y después la solución entera. La tarjeta
+positiva lleva `color-background-1` propio: reinicia los tokens del bloque 0 y el acento vale su
+versión sobre claro aunque la sección sea TINTA. Las dos columnas arrancan en 750 px y no en 990
+como `cauce-dolor`: acá el argumento *es* verlas juntas.
+
+**`cauce-ingredientes`.** `cauce-datos` es una ficha para un activo y no tiene dónde decir qué hace
+cada uno. Dos tipos de bloque (`ingrediente` y `sello`) en el mismo editor y dos listas en el
+markup. La dosis va aparte, en DM Mono, y **si está vacía no se dibuja**: hoy están vacías las
+ocho, porque la única fuente válida es el rótulo aprobado. En mobile cada activo es una fila con
+el ícono al costado (ocho tarjetas paradas en un teléfono son cuatro pantallas de scroll).
+
+`multicolumn` quedó descartado por lo mismo que en D-033 y D-034: no resuelve los tokens
+contextuales y la dosis necesitaba su propio renglón.
+
+Cinco íconos nuevos en `snippets/cauce-iconos.liquid` (`flor`, `luna`, `corazon`, `llama`, `ola`),
+sumados también al select de `cauce-solucion`.
+
+### 3. La paleta: una clase en `<html>` y un bloque de tokens
+
+| Token | CAUCE | Hormify | Rol |
+|---|---|---|---|
+| `--cauce-oxido` | `#B03A22` | **`#9A3F6B`** MALVA | acento sobre claro |
+| `--cauce-oxido-claro` | `#D9603F` | **`#E48AB2`** MALVA CLARO | acento sobre TINTA |
+| `--cauce-sedimento` | `#E9E6DC` | **`#F3E6E9`** RUBOR | superficie |
+| `--cauce-sedimento-2` | `#DFDBCE` | **`#ECD8DE`** RUBOR 2 | tarjeta sobre superficie |
+
+TINTA, BLANCO, VADO, la tipografía y la estructura no cambian: se lee como línea de CAUCE. Los
+contrastes están medidos en el bloque 20 de `cauce-brand.css`; los que importan son blanco sobre
+MALVA **6.37:1** (la etiqueta del botón sigue blanca) y VADO-TEXTO sobre RUBOR **4.64:1**.
+
+`layout/theme.liquid` agrega `plantilla--<sufijo>` al `<html>` de cualquier template alterno, y
+`cauce-brand.css` pisa los tokens bajo `:root.plantilla--hormify`, junto con las variables de
+Shrine que salen de los mismos settings (`--color-base-accent-1`, `--color-base-background-2` y
+sus gradientes).
+
+**Por qué en `<html>` y no en `<body>`.** `base.css` deriva `--color-button` y `--accent-color`
+sobre `:root`. Una regla sobre el mismo elemento con más especificidad los recalcula; una sobre
+`body` deja esos dos con el óxido heredado.
+
+**Alternativa descartada: `sections/colors-changer.liquid`.** Shrine trae una sección que pisa
+los colores "on this page only", y es la vía nativa (D-001). No alcanza: pisa sólo las
+`--color-base-*`, así que el título en acento, el precio y el fondo del escalón destacado —que
+leen `--cauce-oxido` y `--cauce-sedimento`— seguirían en óxido y sedimento. Y obliga a cargar los
+ocho hex de la marca dentro del template, que es lo que D-002 prohíbe.
+
+**Consecuencia aceptada.** El header, el carrito lateral y el pie también toman el acento MALVA
+mientras se está en esta página. Es coherente con la página y no toca ninguna otra.
+
+**Límite anotado.** MALVA (matiz 331) y el CARMIN de error (matiz 350) quedan a 19°. El error
+sólo aparece como texto, pero no conviene usarlo como relleno grande en esta página.
+
+### 4. La oferta: mismo selector, precios provisorios
+
+Se reusa el bloque `ofertas` de D-051 sin tocar código: títulos `1 frasco · 30 días` /
+`2 frascos · 60 días` / `3 frascos · 90 días`, el 3 preseleccionado y destacado, y el encabezado
+**`2 CÁPSULAS AL DÍA · CADA FRASCO, UN MES`** (con "DOS" cortaba "UN / MES" a 390 px). Las cintas
+van en `accent-1` (MALVA, blanco encima 6.37:1) y no en VADO: el límite de 3.20:1 que D-051 dejó
+anotado para la cinta del R-ALA acá no se repite.
+
+**Los montos son los del R-ALA** (`fixed_amount_off` 37.900 y 76.800, o sea $49.900 / $61.900 /
+$72.900) porque el precio de Hormify **no está definido**. Son un placeholder que se ve como un
+precio real, así que cambiarlos es condición para publicar. Contra el umbral de $55.000, con
+esos números: el frasco suelto queda a **$5.100** (lo mismo que hoy con el R-ALA, ya aceptado), el
+pack de 2 cruza por $6.900 y el de 3 por $17.900. Con cualquier otro precio hay que volver a medir
+las tres distancias antes de cargarlo (la lección del revert `dc6201a`).
+
+**Los descuentos automáticos tienen que quedar atados a cada producto.** Hasta hoy había un solo
+SKU y un descuento por "cantidad 2" no necesitaba saber de cuál. Con dos, un carrito de
+1 R-ALA + 1 Hormify no tiene que activar el precio de pack de ninguno de los dos.
+
+El empujón de envío del carrito (D-046 §3) no necesitó cambios: elige entre las líneas que ya
+están en el carrito, así que con dos SKU sugiere uno de los que la clienta ya eligió.
+
+### 5. El ancla `#comprar`, y un ancla rota en la landing del R-ALA
+
+Los CTA del cuerpo ("Quiero recuperar mi equilibrio", "Ver precios") vuelven al selector con
+**`#comprar`**, un bloque `custom_liquid` puesto justo antes de `ofertas`
+(`<span id="comprar" class="cauce-ancla">`, bloque 21 de `cauce-brand.css`).
+
+Dos cosas que salieron de probarlo:
+
+1. **Tiene que ser `<span>`.** `base.css` oculta `div:empty` (y `a`, `p`, `h1`–`h6`, `ul` vacíos).
+   Con un `<div>` el hash cambiaba y la página no se movía: un elemento con `display:none` no
+   tiene posición a la que saltar.
+2. **`#shopify-section-main` no existe.** En un template JSON el wrapper se llama
+   `shopify-section-template--<id>__main`, con un id que asigna Shopify y que cambia por
+   template. La landing del R-ALA tiene ese href en el botón de `resultados` ("Ver la fórmula y
+   el precio") y **hoy ese botón no lleva a ningún lado** (verificado en caucearg.com el
+   2026-09-16). El `info` del schema de `cauce-resultados` lo recomendaba; se corrigió. El
+   template del R-ALA no se tocó en esta rama: arreglarlo es sumarle el mismo bloque ancla y
+   cambiar el link, y ese template lo reescribe el editor seguido.
+
+### 6. Lo que queda fuera de esta rama
+
+- **El producto en Shopify.** No existe. Hay que crearlo, asignarle la plantilla `hormify`, cargar
+  fotos propias (el packshot de `solucion` está vacío y dibuja el placeholder) y los metafields
+  `cauce.*` (§5 de `METAFIELDS.md`).
+- **La fórmula real.** Los ocho activos son los que publica la referencia, cargados como
+  borrador. Si la fórmula de CAUCE es otra, cambian `ingredientes`, la pestaña Ingredientes, la
+  primera respuesta de la FAQ y la comparativa.
+- **La home.** Vende el único SKU (D-038). Hormify no aparece hasta que se decida cómo conviven
+  los dos productos.
+- **Regalos por pack y quiz.** Son dos de las palancas más fuertes de la referencia (una guía
+  descargable que sube con el pack, y un quiz como CTA principal). No se armaron porque no existe
+  el material; un regalo que no se entrega es una promesa incumplida bajo Ley 24.240.
+- **Suscripción.** La referencia la preselecciona; acá sigue apagada hasta instalar una app
+  (`cauce-suscripcion`, D-024).
+
+### 7. Cómo se verificó
+
+`theme check` sobre la rama y sobre una copia limpia de `HEAD`: **59 contra 59 offenses, 0
+errores, ninguna nueva**. Cada setting y cada bloque de `product.hormify.json` se validó contra el
+schema de su sección (theme check no lo hace). La página se miró con `theme dev` sobre el
+producto del R-ALA con `?view=hormify` a 1440 px y a 390 px: sin scroll horizontal, las dos
+secciones nuevas, la paleta, el selector y el ancla. El ancla se probó con scroll instantáneo: en
+la pestaña automatizada, que estaba en segundo plano, Chrome no anima el `scroll-behavior:
+smooth` del tema y ningún salto por hash se movía, ni siquiera a una sección.
+
+---
