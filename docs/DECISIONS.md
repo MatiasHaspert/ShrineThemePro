@@ -2739,3 +2739,80 @@ la pestaña automatizada, que estaba en segundo plano, Chrome no anima el `scrol
 smooth` del tema y ningún salto por hash se movía, ni siquiera a una sección.
 
 ---
+
+## D-055 · 2026-09-18 · La banda de solución de Hormify pasa a foto de fondo con el texto encima
+
+**Decisión.** El bloque `solucion` de la PDP de Hormify replica la sección de la referencia
+("Support Hormone Balance…"): la foto del producto ocupa una banda a sangre y el texto se apoya
+encima, en una columna a la izquierda, con la grilla de cuatro beneficios debajo. No se escribió
+una sección nueva: `cauce-solucion` suma una **disposición** (`apilado`, el default de siempre, y
+`fondo`). El contenido, los bloques y los claims son los mismos, y dos secciones para el mismo
+bloque significarían el mismo copy en dos lugares del editor.
+
+**Contexto del día.** Entre el 2026-09-17 y el 2026-09-18 el comercio creó el producto Hormify en
+Shopify con la plantilla `hormify` asignada, cargó fotos en el bloque de contraste
+(`capsulero130cc.jpg` e `image2.jpg`) y **borró el producto del R-ALA**: su URL da 404 y
+`product.cauce-landing.json` queda en el repo sin ningún producto que lo use. La PDP de Hormify ya
+se ve en caucearg.com.
+
+### 1. Lo que hace la variante
+
+| | |
+|---|---|
+| Markup | La foto es un `<img>` en una capa propia, hermana del contenido, no un `background-image`: así entra al `srcset` del tema, el browser elige el ancho y hay un `alt` de verdad |
+| Texto | Columna de ancho propio (`ancho_columna`, 520 px), a izquierda o derecha, centrada vertical con `min-height` |
+| Packshot | **No se dibuja.** La foto del fondo ya es la foto del producto |
+| Color | El texto y los íconos dejan sus tokens (VADO, secundario) y pasan al primer plano del esquema: encima de una foto no hay contraste calculable, y ahí el color no distingue nada |
+| Teléfono | La foto **no** va de fondo: se parte en dos, la foto arriba con su propio encuadre y el texto abajo sobre el color de la sección |
+
+Siete settings nuevos, todos bajo dos encabezados (`Disposición` y `Foto de fondo`): imagen, alt,
+lado de la columna, ancho de la columna, alto mínimo, velo y dos encuadres (escritorio y teléfono).
+
+### 2. El velo no es decoración, y el número salió de medir el render
+
+Sobre esta foto, el blanco **no se lee sin velo**: medido sobre la página renderizada, el peor
+píxel bajo la columna da **1.95:1 a 1440 px y 1.50:1 a 900 px**. El pliegue rosa claro cruza toda
+la columna, y el recorte de `cover` se cierra a medida que la ventana se angosta, así que **cuanto
+más chica la pantalla, más clara la zona del texto**. Por eso el velo es un setting y no una
+constante: cada foto necesita el suyo.
+
+Dos versiones antes de llegar al número:
+
+| Versión | Qué hacía | Medido |
+|---|---|---|
+| Rampa desde 70 % | Arrancaba fuerte en el borde y se apagaba al 65 % del ancho | 5.81:1 al principio de la columna y **2.57:1 al final**: el degradado se terminaba adentro del texto |
+| Meseta al 55 % | Parejo bajo el texto, desvanecido después | 5.78:1 a 1440 px, pero **4.36:1 a 760 px** |
+| **Meseta al 65 %** (queda) | Ídem, más oscuro | **7.3:1 a 1440 px · 6.4:1 a 900 px · 5.8:1 a 760 px** |
+
+El final de la meseta **se calcula**, no se estima: aire que deja `.page-width` + el padding de
+5 rem + el ancho de la columna + 2 rem, con un `max()` que lo sostiene cuando la ventana es más
+angosta que el bloque. Con un porcentaje fijo, a 760 px el velo se cortaba 65 px antes que el
+texto. El desvanecido lleva un punto intermedio porque con una rampa lineal sola se veía el borde
+recto donde terminaba la meseta.
+
+**Lo que esto implica para otra foto:** si mañana se cambia la imagen, hay que volver a mirar el
+velo. Una foto oscura del lado del texto puede bajar a 30 % y una más clara que esta puede
+necesitar más de 65 %.
+
+### 3. Dos cosas que solo aparecieron probándolo
+
+1. **Las variables no llegaban a la foto.** Estaban declaradas en el `style` de `__inner`, que es
+   **hermano** de la capa de la imagen, y una custom property solo baja a los descendientes. El
+   velo y los dos encuadres usaban siempre su valor por defecto: mover los tres sliders en el
+   editor no habría hecho nada. Ahora se declaran en el contenedor de la sección. Se detectó
+   midiendo `object-position` en el navegador, no mirando el CSS: tres capturas con encuadres
+   distintos habían salido idénticas byte a byte.
+2. **El flex se mudó de `__inner` a un `__cuerpo` nuevo.** La variante de fondo necesita una
+   columna de ancho propio adentro de la banda, y el padding de sección tiene que quedar en
+   `__inner`. Para la disposición apilada son las mismas propiedades un nivel más adentro.
+
+### 4. Lo que falta
+
+- **Subir la foto.** El template apunta a `shopify://shop_images/image3.jpg` y ese archivo **no
+  está** en Archivos de Shopify (sí están `image1.jpg`, `image2.jpg` y `capsulero130cc.jpg`).
+  Hasta que se suba con ese nombre —o se elija otra desde el editor— la banda se dibuja sin foto,
+  en TINTA, y el texto se lee igual.
+- El encuadre de teléfono quedó en 70 % probando tres valores contra esta foto. Con otra foto hay
+  que volver a mirarlo.
+
+---

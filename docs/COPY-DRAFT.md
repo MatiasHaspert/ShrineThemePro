@@ -553,6 +553,8 @@ Botón **Quiero recuperar mi equilibrio** → `#comprar` · pie: Los resultados 
 
 ### 10.5 Beneficios · `cauce-solucion`
 
+Desde D-055 esta banda va con **foto de fondo y el texto encima**, a la izquierda. Texto alternativo de la foto: *Dos frascos de Hormify de CAUCE, de 60 cápsulas cada uno, sobre un fondo de papel rosa.*
+
 Volanta **Sin hormonas** · título **Apoyá tu equilibrio hormonal y combatí el peso hormonal** · bajada: Hormify ayuda a tu cuerpo a recuperar el equilibrio desde adentro, con 8 activos de origen natural que trabajan juntos.
 
 Grilla: Menos peso hormonal (`balanza`) · Menos hinchazón (`ola`) · Hormonas en equilibrio (`flor`) · Menos estrés, mejor humor (`corazon`)
