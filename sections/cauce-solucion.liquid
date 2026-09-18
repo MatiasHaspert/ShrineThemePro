@@ -17,6 +17,17 @@
     producto.
   - Sin imagen no deja un hueco: cae en placeholder_svg_tag.
 
+  DOS DISPOSICIONES (`disposicion`), con el mismo contenido y los mismos bloques:
+
+  - `apilado` (el default, y lo que usa la landing del R-ALA): titulo, grilla y
+    packshot uno abajo del otro, dentro del ancho del bloque.
+  - `fondo` (D-055): la foto pasa a ser el fondo de una banda a sangre y el texto
+    se apoya encima, en una columna a un costado. Ahi el packshot NO se dibuja:
+    la foto del fondo ES la foto del producto. Encima de una foto no hay contraste
+    garantizado, asi que en esta variante el texto y los iconos van en el primer
+    plano del esquema (blanco sobre TINTA) y la legibilidad la sostiene el velo,
+    que es un setting. Ver el bloque 11 de cauce-brand.css.
+
   ADVERTENCIA DE CLAIMS (Disp. ANMAT 4980/05 · CAA art. 1381). Cada etiqueta de
   la grilla es una funcion atribuida al producto, que es exactamente lo que la
   disposicion mira. Por eso el texto vive entero en templates/*.json y no aca:
@@ -38,6 +49,19 @@
     assign cauce_hay = true
   endif
 
+  comment
+    La variante de fondo vive en una clase y no en dos secciones: el contenido, los
+    bloques y los claims son los mismos, y duplicar la seccion duplicaria el copy en
+    dos lugares del editor. Ver D-055.
+  endcomment
+  assign cauce_fondo = false
+  if section.settings.disposicion == 'fondo'
+    assign cauce_fondo = true
+    if section.settings.imagen_fondo != blank
+      assign cauce_hay = true
+    endif
+  endif
+
   assign cauce_loading = 'lazy'
   assign cauce_fetch = 'auto'
   if section.settings.carga_prioritaria
@@ -51,6 +75,14 @@
     el packshot es el producto, no un adorno.
   endcomment
   assign cauce_alt = section.settings.alt | default: section.settings.imagen.alt
+
+  comment
+    La foto del fondo no es decorativa: es el producto. Por eso el alt sale de su
+    propio campo, con el alt cargado en Shopify como respaldo, y nunca se fuerza a
+    vacio. Si el fondo se usara como textura, el alt correcto se carga vacio en
+    Shopify, no aca.
+  endcomment
+  assign cauce_alt_fondo = section.settings.alt_fondo | default: section.settings.imagen_fondo.alt
 
   comment
     El `sizes` se arma aca, no con var(), y va todo en px. Mismo motivo que en
@@ -71,11 +103,41 @@
 -%}
 
 {%- if cauce_hay -%}
-  <div class="cauce-solucion color-{{ section.settings.color_scheme }} gradient">
+  {%- comment -%}
+    Las variables de la variante de fondo van en el contenedor de la seccion y no
+    en __inner: la capa de la foto es HERMANA de __inner, y una custom property
+    solo baja a los descendientes. Declaradas en __inner, ni la imagen ni el velo
+    las ven y los settings del editor no hacen nada.
+  {%- endcomment -%}
+  <div
+    class="cauce-solucion{% if cauce_fondo %} cauce-solucion--fondo cauce-solucion--texto-{{ section.settings.posicion_columna }}{% endif %} color-{{ section.settings.color_scheme }} gradient"
+    {% if cauce_fondo %}style="--cauce-solucion-ancho: {{ section.settings.ancho_maximo }}px; --cauce-solucion-col: {{ section.settings.ancho_columna }}px; --cauce-solucion-alto: {{ section.settings.alto_minimo }}px; --cauce-solucion-foco: {{ section.settings.foco }}%; --cauce-solucion-foco-mobile: {{ section.settings.foco_mobile }}%; --cauce-solucion-velo: {{ section.settings.velo | divided_by: 100.0 }};"{% endif %}
+  >
+    {%- if cauce_fondo and section.settings.imagen_fondo != blank -%}
+      {%- comment -%}
+        A sangre y fuera de .page-width: la banda ocupa el ancho de la ventana, asi
+        que el sizes es 100vw y no el ancho del bloque.
+      {%- endcomment -%}
+      <div class="cauce-solucion__fondo">
+        {{
+          section.settings.imagen_fondo
+          | image_url: width: 3200
+          | image_tag:
+            loading: cauce_loading,
+            fetchpriority: cauce_fetch,
+            widths: '750, 1100, 1500, 1900, 2400, 3200',
+            sizes: '100vw',
+            class: 'cauce-solucion__fondo-imagen',
+            alt: cauce_alt_fondo
+        }}
+      </div>
+    {%- endif -%}
+
     <div
       class="page-width cauce-solucion__inner cauce-solucion__inner--{{ section.settings.alineacion }}"
       style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-solucion-ancho: {{ section.settings.ancho_maximo }}px; --cauce-solucion-imagen: {{ section.settings.ancho_imagen }}px; --cauce-solucion-cols: {{ section.settings.columnas }};"
     >
+      <div class="cauce-solucion__cuerpo">
       {%- if section.settings.volanta != blank or section.settings.titulo != blank or section.settings.bajada != blank -%}
         <div class="cauce-solucion__encabezado">
           {%- if section.settings.volanta != blank -%}
@@ -115,6 +177,11 @@
         </ul>
       {%- endif -%}
 
+      {%- comment -%}
+        En la variante de fondo el packshot no se dibuja: la foto del fondo ya es la
+        foto del producto, y dos veces el mismo frasco en la misma banda es ruido.
+      {%- endcomment -%}
+      {%- unless cauce_fondo -%}
       <figure class="cauce-solucion__media cauce-solucion__media--{{ section.settings.estilo_imagen }}">
         {%- if section.settings.imagen != blank -%}
           {{
@@ -132,6 +199,7 @@
           {{ 'product-1' | placeholder_svg_tag: 'cauce-solucion__imagen placeholder-svg placeholder' }}
         {%- endif -%}
       </figure>
+      {%- endunless -%}
 
       {%- if section.settings.pie != blank -%}
         <div class="cauce-solucion__pie rte">{{ section.settings.pie }}</div>
@@ -142,6 +210,7 @@
           {{- section.settings.boton_texto -}}
         </a>
       {%- endif -%}
+      </div>
     </div>
   </div>
 {%- endif -%}
@@ -203,12 +272,102 @@
       "default": "2"
     },
 
+    { "type": "header", "content": "Disposicion" },
+    {
+      "type": "select",
+      "id": "disposicion",
+      "label": "Como se arma la seccion",
+      "options": [
+        { "value": "apilado", "label": "Apilada: titulo, grilla y packshot" },
+        { "value": "fondo", "label": "Foto de fondo con el texto encima" }
+      ],
+      "default": "apilado",
+      "info": "Con foto de fondo, el packshot de mas abajo no se dibuja."
+    },
+
+    { "type": "header", "content": "Foto de fondo" },
+    {
+      "type": "image_picker",
+      "id": "imagen_fondo",
+      "label": "Imagen",
+      "info": "Apaisada y con un lado vacio para el texto. Se muestra a sangre, asi que conviene que mida 2400 px de ancho o mas."
+    },
+    {
+      "type": "text",
+      "id": "alt_fondo",
+      "label": "Texto alternativo",
+      "info": "Describi lo que se ve. Si lo dejas vacio se usa el alt cargado en Shopify."
+    },
+    {
+      "type": "select",
+      "id": "posicion_columna",
+      "label": "De que lado va el texto",
+      "options": [
+        { "value": "izquierda", "label": "Izquierda" },
+        { "value": "derecha", "label": "Derecha" }
+      ],
+      "default": "izquierda"
+    },
+    {
+      "type": "range",
+      "id": "ancho_columna",
+      "min": 360,
+      "max": 720,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho de la columna de texto",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "alto_minimo",
+      "min": 320,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "label": "Alto minimo de la banda",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "velo",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Velo sobre la foto",
+      "default": 65,
+      "info": "Oscurece la foto del lado del texto y se desvanece hacia el otro lado. Sin velo, el contraste del texto depende de la foto. Subilo hasta que el texto se lea en la parte mas clara."
+    },
+    {
+      "type": "range",
+      "id": "foco",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Encuadre en escritorio",
+      "default": 50,
+      "info": "Que parte de la foto se conserva cuando el recorte la achica. 50 = el centro."
+    },
+    {
+      "type": "range",
+      "id": "foco_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Encuadre en telefono",
+      "default": 65,
+      "info": "En telefono la foto va arriba del texto y el recorte es mucho mas angosto, asi que casi nunca es el mismo numero que en escritorio."
+    },
+
     { "type": "header", "content": "Imagen del producto" },
     {
       "type": "image_picker",
       "id": "imagen",
       "label": "Imagen",
-      "info": "Ideal: PNG con fondo transparente. Una foto con su propio fondo deja un rectangulo que no empalma con el color de la seccion."
+      "info": "Solo en la disposicion apilada. Ideal: PNG con fondo transparente. Una foto con su propio fondo deja un rectangulo que no empalma con el color de la seccion."
     },
     {
       "type": "text",

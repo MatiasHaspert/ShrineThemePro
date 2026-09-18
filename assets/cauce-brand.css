@@ -1746,11 +1746,19 @@ h1, h2, h3, h4,
    del titulo a la grilla y termina en el producto.
    ========================================================================== */
 
+/* El flex vive en __cuerpo y no en __inner desde D-055: la variante de fondo mete
+   una columna de ancho propio adentro de la banda, y el padding de la seccion
+   tiene que quedar en __inner. Para la disposicion apilada no cambia nada: las
+   mismas propiedades, un nivel mas adentro. */
 .cauce-solucion__inner {
+  max-width: min(var(--cauce-solucion-ancho, 1120px), var(--page-width, 1440px));
+}
+
+.cauce-solucion__cuerpo {
   display: flex;
   flex-direction: column;
   gap: var(--cauce-aire-m);
-  max-width: min(var(--cauce-solucion-ancho, 1120px), var(--page-width, 1440px));
+  min-width: 0;
 }
 
 /* Encabezado --------------------------------------------------------------- */
@@ -1877,7 +1885,7 @@ h1, h2, h3, h4,
   /* Mas aire entre pisos que el gap de mobile: el bloque son tres piezas
      distintas (dicho, grilla, producto) y a partir de tablet se pueden separar
      de verdad. */
-  .cauce-solucion__inner { gap: var(--cauce-aire-l); }
+  .cauce-solucion__cuerpo { gap: var(--cauce-aire-l); }
 
   .cauce-solucion__grilla {
     grid-template-columns: repeat(var(--cauce-solucion-cols, 2), minmax(0, 1fr));
@@ -1887,6 +1895,143 @@ h1, h2, h3, h4,
   .cauce-solucion__icono { width: 4rem; height: 4rem; }
   .cauce-solucion__bajada { font-size: 1.7rem; }
   .cauce-solucion__etiqueta { font-size: 1.7rem; }
+}
+
+/* Variante de fondo (D-055) ------------------------------------------------
+
+   La foto pasa a ser el fondo de una banda a sangre y el texto se apoya encima,
+   en una columna a un costado. Tres cosas que esto obliga a resolver:
+
+   1. Encima de una foto no hay contraste garantizado. Medido sobre el render de
+      la foto de Hormify a 1440 px, el blanco sobre la foto sola da 1.95:1 en el
+      peor pixel de la columna: el pliegue rosa claro la cruza entera. Por eso el
+      velo no es decoracion, es lo que sostiene la legibilidad, y es un setting
+      porque cada foto necesita el suyo.
+
+      El default es 65 % y sale de medir el render, no la foto suelta: el recorte
+      de `cover` se cierra a medida que la ventana se angosta, asi que a 900 px la
+      columna cae sobre la parte mas clara del pliegue, donde la foto sola da
+      1.50:1. Con 65 % el peor pixel de la columna queda en 6.4:1 a 900 px y en
+      7.3:1 a 1440 px.
+   2. El velo es parejo bajo el texto y se desvanece despues, ya del lado del
+      producto. El desvanecido tiene un punto intermedio a 6rem: con una rampa
+      lineal sola se veia el borde recto donde terminaba la meseta. Del otro lado
+      la foto queda limpia.
+   3. Los iconos y la bajada dejan sus tokens (VADO y el secundario) y pasan al
+      primer plano del esquema. VADO sobre una foto rosa no tiene contraste
+      calculable, y aca el color no distingue nada: todo el bloque es un mismo
+      mensaje sobre una imagen.
+
+   La imagen va como <img> y no como background-image: asi entra al srcset del
+   tema, el browser elige el ancho y hay un alt de verdad. Ver D-055.            */
+
+.cauce-solucion--fondo {
+  position: relative;
+  /* El velo y la foto van en z-index negativo para quedar debajo del texto sin
+     sacarlo del flujo. isolation los encierra en esta seccion: sin esto se
+     dibujarian abajo del fondo de la seccion anterior. */
+  isolation: isolate;
+}
+
+.cauce-solucion__fondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.cauce-solucion__fondo-imagen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--cauce-solucion-foco, 50%) center;
+}
+
+.cauce-solucion__fondo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+/* El velo es parejo hasta donde TERMINA la columna de texto y recien ahi se
+   desvanece. La primera version arrancaba fuerte y se iba apagando desde el
+   borde: medido sobre el render, el ultimo tercio del texto quedaba en 2.57:1
+   porque el pliegue claro de la foto cae justo ahi. Un velo plano y mas suave
+   (55 %) da mas contraste que uno degradado que empieza en 70 %.
+
+   El final de la meseta se calcula, no se estima: borde izquierdo del bloque
+   (el aire que deja .page-width cuando la ventana es mas ancha que el bloque)
+   + el padding de 5rem + el ancho de la columna. Con max() se sostiene tambien
+   cuando la ventana es mas angosta que el bloque, que es donde un porcentaje
+   fijo se corria 65 px y dejaba el final del texto sin velo. Los 2rem de mas
+   son para que el desvanecido no arranque pegado a la ultima letra: sin ellos,
+   a 800 px de ancho el ultimo decil de la columna quedaba en 4.36:1.           */
+
+.cauce-solucion__fondo::after {
+  --cauce-solucion-velo-fin: calc(
+    max(0px, 50% - var(--cauce-solucion-ancho, 1120px) / 2) + 5rem +
+      var(--cauce-solucion-col, 52rem) + 2rem
+  );
+}
+
+.cauce-solucion--texto-izquierda .cauce-solucion__fondo::after {
+  background: linear-gradient(
+    to right,
+    rgba(16, 38, 42, var(--cauce-solucion-velo, 0.65)) 0,
+    rgba(16, 38, 42, var(--cauce-solucion-velo, 0.65)) var(--cauce-solucion-velo-fin),
+    rgba(16, 38, 42, calc(var(--cauce-solucion-velo, 0.65) * 0.5)) calc(var(--cauce-solucion-velo-fin) + 6rem),
+    rgba(16, 38, 42, 0) calc(var(--cauce-solucion-velo-fin) + 18rem)
+  );
+}
+
+.cauce-solucion--texto-derecha .cauce-solucion__fondo::after {
+  background: linear-gradient(
+    to left,
+    rgba(16, 38, 42, var(--cauce-solucion-velo, 0.65)) 0,
+    rgba(16, 38, 42, var(--cauce-solucion-velo, 0.65)) var(--cauce-solucion-velo-fin),
+    rgba(16, 38, 42, calc(var(--cauce-solucion-velo, 0.65) * 0.5)) calc(var(--cauce-solucion-velo-fin) + 6rem),
+    rgba(16, 38, 42, 0) calc(var(--cauce-solucion-velo-fin) + 18rem)
+  );
+}
+
+.cauce-solucion--fondo .cauce-solucion__icono { color: currentColor; }
+
+.cauce-solucion--fondo .cauce-solucion__bajada { color: rgba(var(--color-foreground), 0.92); }
+
+/* Telefono: la foto NO va de fondo ------------------------------------------
+
+   A 390 px el recorte de una foto apaisada deja una franja donde el producto o
+   el texto sobran. Se parte en dos piezas: la foto arriba, con su propio
+   encuadre, y el texto abajo sobre el color de la seccion, donde el contraste
+   es el del esquema y no depende de la imagen. Por eso tampoco lleva velo.     */
+
+@media screen and (max-width: 749px) {
+  .cauce-solucion--fondo .cauce-solucion__fondo {
+    position: static;
+    aspect-ratio: 3 / 2;
+  }
+
+  .cauce-solucion--fondo .cauce-solucion__fondo-imagen {
+    object-position: var(--cauce-solucion-foco-mobile, 65%) center;
+  }
+
+  .cauce-solucion--fondo .cauce-solucion__fondo::after { content: none; }
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-solucion--fondo .cauce-solucion__inner {
+    display: flex;
+    align-items: center;
+    min-height: var(--cauce-solucion-alto, 48rem);
+  }
+
+  .cauce-solucion--fondo .cauce-solucion__cuerpo {
+    width: 100%;
+    max-width: var(--cauce-solucion-col, 52rem);
+  }
+
+  .cauce-solucion--texto-derecha .cauce-solucion__cuerpo { margin-inline-start: auto; }
 }
 
 /* ==========================================================================
