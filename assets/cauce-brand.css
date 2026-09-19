@@ -2004,7 +2004,8 @@ h1, h2, h3, h4,
    A 390 px el recorte de una foto apaisada deja una franja donde el producto o
    el texto sobran. Se parte en dos piezas: la foto arriba, con su propio
    encuadre, y el texto abajo sobre el color de la seccion, donde el contraste
-   es el del esquema y no depende de la imagen. Por eso tampoco lleva velo.     */
+   es el del esquema y no depende de la imagen. Por eso tampoco lleva velo.
+   En Hormify ese color es CIRUELA y no TINTA: ver el bloque 20 y D-056.        */
 
 @media screen and (max-width: 749px) {
   .cauce-solucion--fondo .cauce-solucion__fondo {
@@ -4318,7 +4319,8 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
    pares: el acento (OXIDO -> MALVA) y la superficie (SEDIMENTO -> RUBOR). Se
    pisan los tokens de marca y las variables de Shrine que salen de los mismos
    settings, asi las secciones nativas y las cauce-* cambian juntas y ninguna
-   seccion declara un hex.
+   seccion declara un hex. Suma ademas un color que CAUCE no tiene, CIRUELA,
+   que por ahora usa solo la banda de solucion (ver al final del bloque).
 
    Especificidad (0,2,0): le gana al :root de theme.liquid sin importar el
    orden de carga, y como es el mismo elemento, todo lo que base.css deriva
@@ -4345,11 +4347,42 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   --cauce-oxido-claro: #E48AB2; /* MALVA CLARO  */
   --cauce-sedimento:   #F3E6E9; /* RUBOR        */
   --cauce-sedimento-2: #ECD8DE; /* RUBOR 2      */
+  --cauce-ciruela:     #523444; /* CIRUELA      */
 
   --color-base-accent-1: 154, 63, 107;
   --gradient-base-accent-1: #9A3F6B;
   --color-base-background-2: 243, 230, 233;
   --gradient-base-background-2: #F3E6E9;
+}
+
+/* CIRUELA: el fondo de la banda de solucion (D-056) --------------------------
+
+   En escritorio el texto de esa banda se apoya en el velo, que es TINTA al 65 %
+   encima de la foto rosa, y lo que se ve detras del texto no es verde: medido
+   sobre el render, es #523444. En telefono la foto se parte y el texto baja al
+   color liso de la seccion, que era TINTA, asi que la misma banda se leia
+   ciruela en un tamano y verde en el otro. CIRUELA es ese color medido. Pasa a
+   ser el fondo de la banda en todos los anchos: en escritorio queda debajo de
+   la foto y solo se ve si la imagen falta o todavia no cargo.
+
+   El velo sigue siendo TINTA, porque es el que produce este color sobre la foto.
+
+   Solo reemplaza a TINTA (.color-inverse): si en el editor se elige un esquema
+   claro, la regla no aplica y no queda texto oscuro sobre ciruela. Se pisan las
+   dos variables del esquema y no el background, porque .gradient lee las dos.
+
+   Contraste sobre CIRUELA (WCAG 2.1, sRGB):
+     Blanco ....................  10.86 AAA   titulo y beneficios
+     Blanco al 92 % ............   9.49 AAA   bajada
+     Blanco al 75 % ............   6.90 AA    pie
+     MALVA CLARO ...............   4.44       acento del titulo y relleno del boton:
+                                              texto grande y componente, no texto
+     VADO ......................   3.40       no se usa: en la variante de fondo los
+                                              iconos y la bajada van en el primer plano */
+
+:root.plantilla--hormify .cauce-solucion--fondo.color-inverse {
+  --color-background: 82, 52, 68;
+  --gradient-background: var(--cauce-ciruela);
 }
 
 /* ==========================================================================
