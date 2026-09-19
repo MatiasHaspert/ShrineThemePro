@@ -578,9 +578,9 @@ Sellos: Sin hormonas · Activos de origen natural · Analizado por laboratorio e
 
 Botón **Ver precios** → `#comprar` · pie: La composición completa y las dosis por porción están en el rótulo y en la pestaña Ingredientes.
 
-### 10.7 Comparativa · `comparison-table`
+### 10.7 Comparativa · `cauce-comparativa`
 
-Título **Por qué Hormify es distinto** · Comparado con los multivitamínicos y suplementos para mujeres más habituales de la categoría. · columnas **HORMIFY** / **Otros suplementos**
+Título **Por qué Hormify es distinto** · Comparado con los multivitamínicos y suplementos para mujeres más habituales de la categoría. · columnas **Hormify** / **Otros suplementos**
 
 - 8 activos para el equilibrio hormonal en una cápsula
 - Ayuda con el peso hormonal y la hinchazón
@@ -589,6 +589,7 @@ Título **Por qué Hormify es distinto** · Comparado con los multivitamínicos 
 - Con piperina para absorber mejor cada activo
 - Analizado por laboratorio externo
 - Producción nacional
+- **Precio** · en Hormify, el costo por día: sale del precio del producto dividido por 30 días, no se escribe (hoy **$1.663/día**) · en Otros: *Según la marca*
 
 ### 10.8 Qué esperar · `cauce-progreso`
 

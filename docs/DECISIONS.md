@@ -2927,3 +2927,73 @@ solución de D-056: son las dos piezas de la página que ponen texto blanco sobr
 `image2.jpg` a `image4.jpg`.
 
 ---
+
+## D-058 · 2026-09-19 · La comparativa de Hormify pasa a una sección propia, con la tabla de hormify.com
+
+**Decisión.** El bloque `comparativa` de la PDP de Hormify deja `comparison-table` de Shrine y pasa a
+**`cauce-comparativa`**, una sección nueva (`sections/cauce-comparativa.liquid` + el snippet
+`cauce-comparativa-marca` + el bloque 22 de `cauce-brand.css`). Replica el diseño y los colores de la
+tabla de hormify.com: título centrado arriba, beneficios a la izquierda, la columna propia pintada
+de un degradado con las puntas redondeadas, tildes llenas en el acento, cruces finas en la columna
+de los otros y una fila de precio al final.
+
+**Por qué una sección nueva y no ajustar la de Shrine.** `comparison-table` no permite tres cosas de
+la referencia: el título arriba de la tabla (la pone siempre al costado desde 900 px), una columna
+con un degradado continuo (cada celda pinta su color de esquema) y una fila de precio. Las dos
+primeras se podían forzar con CSS atado a la plantilla; la tercera no, y el resultado habría sido
+una sección de Shrine que ya no hace lo que dicen sus settings. Las 7 filas pasaron tal cual; la sección
+vieja sigue en el tema y en `product.cauce-landing.json`.
+
+### 1. Cómo está hecha
+
+| | |
+|---|---|
+| Markup | `<table>` real: el beneficio es el `<th scope="row">`, las columnas llevan `<th scope="col">`, el título va de `<caption>` oculto y cada ícono lleva "Sí" / "No" oculto. Un lector de pantalla lee una tabla, no catorce dibujos |
+| Degradado | Uno solo aunque cada celda pinte el suyo: la celda recibe su índice (`--i`) y el total (`--n`), estira el degradado a `n` veces su alto y lo corre hasta su tramo. Si las filas miden distinto, cada tramo se estira distinto, pero el borde de abajo de una celda tiene siempre el color del de arriba de la siguiente |
+| Colores | Ninguno es propio de la sección. Va de la superficie (SEDIMENTO; RUBOR en Hormify) al acento claro mezclado con blanco (`color-mix`; sin soporte queda SEDIMENTO-2). Lo único que cambia por línea es cuánto acento lleva el final: 45 % en CAUCE, **60 % en Hormify** |
+| Anchos | `table-layout: fixed`: la columna propia mide lo mismo con o sin la fila de precio. Teléfono 26 / 22 %, desktop 24 / 24 %; las tres columnas se quedan en teléfono, como en la referencia |
+| Imagen | Opcional. Asoma por arriba de la columna, como el frasco de hormify.com. Tiene que ser un PNG sin fondo: una foto con fondo deja un recuadro. Sin imagen, la cabecera dice **Hormify** con el trazo del logo |
+
+### 2. El límite del rosa lo pone la tilde
+
+La tilde MALVA tiene que pasar 3:1 (componente) contra el tramo más oscuro de la columna:
+
+| Final del degradado | Hormify (tilde MALVA) | CAUCE (tilde OXIDO) |
+|---|---|---|
+| 45 % | 4.33 | **3.45** (queda) |
+| 55 % | 3.98 | 3.03 |
+| **60 %** (queda en Hormify) | **3.80** | 2.83, falla |
+
+Con el 45 % de los dos la columna de Hormify quedaba bastante más pálida que la de la referencia. Por
+eso la intensidad es un token (`--cauce-comparativa-intensidad`) y el bloque 20 la sube solo para
+Hormify. El resto: trazo blanco sobre la tilde 6.37, cruz MALVA sobre blanco 6.37, precio blanco
+sobre MALVA 6.37, texto CAUCE sobre el final 9.40.
+
+### 3. La fila de precio
+
+Se eligió con el comercio: **costo por día**, no el precio del frasco. La pastilla muestra el precio
+de la variante dividido por los días que dura un frasco (30, setting), redondeado al peso: hoy
+**$1.663/día**. No se escribe en ningún lado: si cambia el precio en Shopify, cambia la tabla. Fuera
+de una página de producto la fila no se dibuja. En la otra columna va un texto corto del editor, hoy
+*Según la marca*, que no afirma el precio de nadie; un precio de la competencia sería un claim a
+probar (CLAIMS-AUDIT §8.1, H14).
+
+Con una sola variante el precio no cambia al elegir otra; si Hormify suma variantes con precio
+propio, la fila muestra el de la variante con que carga la página.
+
+### 4. Cómo se probó
+
+Sin `theme dev`: sobre la página viva se reemplazó la tabla por el HTML que dibuja el Liquid nuevo y
+se cargó el `cauce-brand.css` local, a 390 y 1440 px. Sin desborde horizontal; la pastilla de precio
+entra en la columna a 390 (76 px en 94). `theme check` da lo mismo que `main`.
+
+### 5. Lo que falta
+
+- **El frasco en PNG sin fondo** para la cabecera de la columna (setting "Imagen de la columna
+  destacada"). Hasta entonces dice Hormify.
+- H12 sigue igual de expuesta que antes: la tabla cambió de forma, no de contenido.
+
+**Contexto.** El commit de Shopify del mismo día cargó las seis fotos de ingredientes que faltaban
+(D-057) y movió `contraste` debajo de `ingredientes`.
+
+---

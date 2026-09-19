@@ -546,6 +546,7 @@ La regla 1 sí se mantiene: **ningún claim está en un `.liquid`**. `cauce-cont
 | H11 | Analizado por laboratorio externo · producción nacional | proceso / origen | sellos, comparativa | COA de un tercero y RNE del elaborador **de este SKU** (A3 y A4 son del R-ALA) |
 | H12 | "Otros suplementos" no tienen H1–H11 | comparativa | `comparativa` | que sea verdad para la categoría; con una sola X en contra de todo el resto, es la fila más expuesta de la página (mismo riesgo que R5) |
 | H13 | Cinta `RESULTADOS ÓPTIMOS · 90 DÍAS` | eficacia + plazo | escalón 3 | ídem H8 |
+| H14 | Costo por día (`$1.663/día`) contra "Según la marca" | precio | `comparativa`, fila de precio | se calcula del precio de la variante sobre 30 días, redondeado al peso: si cambia el precio, cambia la fila. El precio total sigue en el bloque de compra. "Según la marca" no afirma ningún precio ajeno; poner uno sería un claim que hay que poder probar (D-058) |
 
 Los "*" de `progreso` remiten al pie: *"Los resultados varían de una persona a otra. Acompañá la
 rutina con una alimentación equilibrada y actividad física."* La leyenda de suplemento
