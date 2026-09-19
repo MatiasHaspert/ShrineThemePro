@@ -2816,3 +2816,45 @@ necesitar más de 65 %.
   que volver a mirarlo.
 
 ---
+
+## D-056 · 2026-09-19 · En Hormify la banda de solución es CIRUELA, no TINTA
+
+**Decisión.** La paleta de Hormify suma un color: **CIRUELA `#523444`**. Es el fondo de la banda
+de solución con foto (`cauce-solucion`, disposición `fondo`, esquema TINTA) en todos los anchos.
+El velo de escritorio no cambia: sigue siendo TINTA al 65 %.
+
+**Por qué.** En escritorio el texto se apoya en el velo encima de la foto rosa, y lo que se ve
+detrás del texto no es verde sino ciruela. En teléfono la foto se parte y el texto baja al color
+liso de la sección, que era TINTA: la misma banda se leía ciruela en un tamaño y verde oscuro en el
+otro. El comercio pidió que en teléfono el fondo tomara los colores de Hormify.
+
+**De dónde sale el número.** No es un tono elegido a ojo: es el promedio medido sobre una captura
+de escritorio de la página viva, en zonas sin texto de la columna (`#523444` bajo el título,
+`#513544` entre los beneficios). Con eso el teléfono muestra el mismo color que el escritorio ya
+tenía.
+
+| Opción probada a 390 px | Fondo | Texto | Por qué no |
+|---|---|---|---|
+| **CIRUELA** (queda) | `#523444` | blanco 10.86:1 | — |
+| MALVA | `#9A3F6B` | blanco 6.37:1 | Es el color del botón de compra y de la barra fija, que queda justo abajo: el botón pierde protagonismo |
+| RUBOR | `#F3E6E9` | TINTA 9.95:1 | Se pierde la banda oscura del escritorio y repite el fondo de la sección de arriba |
+
+**Cómo está hecho.** Un token nuevo en el bloque 20 de `cauce-brand.css` (`--cauce-ciruela`) y una
+regla que pisa las dos variables del esquema (`--color-background` y `--gradient-background`) solo
+en `.plantilla--hormify .cauce-solucion--fondo.color-inverse`. Queda atada a TINTA: si en el editor
+se elige un esquema claro para esa sección, la regla no aplica y no queda texto oscuro sobre
+ciruela. Ninguna otra banda TINTA de la página (la barra de íconos, el pie) cambia.
+
+| Sobre CIRUELA | Contraste | Uso |
+|---|---|---|
+| Blanco | 10.86 AAA | título y beneficios |
+| Blanco al 92 % | 9.49 AAA | bajada |
+| Blanco al 75 % | 6.90 AA | pie |
+| MALVA CLARO | 4.44 | acento del título y relleno del botón: texto grande y componente |
+| VADO | 3.40 | no se usa: en la variante de fondo íconos y bajada van en el primer plano |
+
+**Contexto.** `image3.jpg` ya está en Archivos de Shopify y la foto se ve en la tienda: queda
+resuelto el primer pendiente de D-055. El commit de Shopify del mismo día sumó fotos a dos
+ingredientes (`ashawanda.webp`, `zinc.webp`) y desactivó la sección "Qué esperar, mes a mes".
+
+---
