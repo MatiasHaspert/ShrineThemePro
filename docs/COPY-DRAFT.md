@@ -626,4 +626,6 @@ Título **Dos cápsulas por día para volver a sentirte vos**
 Marquesina: Sin hormonas · Peso hormonal · Hinchazón · Sofocos · Estrés y cambios de humor · Envío a todo el país
 
 `banda`, `garantia` y `suscripcion` son las mismas del R-ALA. `resultados` y `resenas` están
-apagadas y sólo tienen `[[PENDIENTE]]` (D-054 §1).
+apagadas y sólo tienen `[[PENDIENTE]]` (D-054 §1). `resultados` ya tiene armada la disposición de
+tarjetas de la referencia (D-059): lo único que falta para prenderla son los números de una encuesta
+propia, con su metodología.

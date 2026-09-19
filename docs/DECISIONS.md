@@ -2997,3 +2997,50 @@ entra en la columna a 390 (76 px en 94). `theme check` da lo mismo que `main`.
 (D-057) y movió `contraste` debajo de `ingredientes`.
 
 ---
+
+## D-059 · 2026-09-19 · El bloque de resultados suma la disposición de tarjetas, y sigue apagado
+
+**Decisión.** `cauce-resultados` suma una **disposición** (`lista`, la de siempre, y `tarjetas`).
+Con `tarjetas` replica la banda de resultados de hormify.com: fondo rosa, encabezado centrado, una
+tarjeta blanca por cifra con un gráfico de torta, la cifra grande y abajo lo que la produjo. La PDP
+de Hormify queda configurada así, **y la sección sigue apagada**: no hay encuesta.
+
+**Por qué apagada.** Los números de la referencia —93 %, 92 %, 83 %, 97 % y "11.327+ mujeres en
+nuestro estudio interno"— son de hormify.com. Copiarlos es publicidad engañosa (Ley 24.240 art. 9,
+Res. SC 270/2020), y ya estaba anotado como bloqueante en CLAIMS-AUDIT §8.2. El comercio eligió
+armar el diseño y dejar la sección apagada con los valores en `[[PENDIENTE]]` hasta tener una
+encuesta propia. Cuando la tenga: carga los porcentajes, el campo **Metodología** —quiénes
+respondieron, cuántas, cuándo y la pregunta textual— y la prende. Nada más.
+
+### 1. Lo que hace la disposición
+
+| | |
+|---|---|
+| Encabezado | Centrado. La bajada, que es la línea que dice de dónde salen las cifras, pasa al acento |
+| Cifras | Una tarjeta blanca cada una, dos columnas en teléfono y las que entren desde 750 px |
+| Torta | Un `conic-gradient` y no un SVG: la dibuja el mismo número que dibuja la barra en la disposición de lista (`barra`), sin markup nuevo. Decorativa y con `aria-hidden`, como la barra: la cifra ya está escrita al lado |
+| Imagen | No se dibuja, aunque esté cargada |
+
+### 2. La banda no sale del esquema
+
+La sección pisa `--gradient-background` con el acento claro mezclado con blanco: el mismo rosa donde
+termina la columna de la comparativa (D-058). Cuánto acento lleva es un token por línea, 45 % en
+CAUCE y **60 % en Hormify**. Se pisa `--gradient-background` y no `--color-background` porque
+`color-mix` devuelve un color y esa variable guarda una terna de canales.
+
+Sobre esa banda (`#EFB9D1` en Hormify) el secundario **no se usa**: da 3.36:1. Por eso la metodología
+—que es lo que sostiene las cifras— va en el color de texto al 80 % (5.96) y la volanta también sube
+al 80 %. La bajada en acento da 3.80:1, así que va a **1.9rem y 700**: ahí es texto grande y el
+mínimo es 3:1. Dentro de la tarjeta blanca, la cifra da 15.76, el detalle 5.63 y la torta 6.37.
+
+### 3. Cómo se probó
+
+Sin `theme dev` y con la sección apagada: se inyectó en la página viva el HTML que dibuja el Liquid,
+con el `cauce-brand.css` local, a 390 y 1440 px. Las cifras se vieron con **"00 %"** de relleno, para
+medir el ancho real sin escribir un número que no existe. `theme check` da lo mismo que `main`.
+
+El botón "Ver precios" queda oscuro y no en el acento: sobre los esquemas de color, Shrine pasa el
+botón al color de texto (`.color-background-2 { --color-button: var(--color-foreground) }`). Es el
+mismo botón que en las otras bandas de superficie de la página.
+
+---
