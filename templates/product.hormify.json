@@ -935,6 +935,7 @@
         "titulo_acento": "Hormify",
         "heading_size": "h1",
         "bajada": "<p>[[PENDIENTE: cómo se hizo la encuesta]]</p>",
+        "disposicion": "tarjetas",
         "mostrar_barra": true,
         "metodologia": "",
         "alt": "",
@@ -942,10 +943,10 @@
         "relacion": "4 / 5",
         "boton_texto": "Ver precios",
         "boton_link": "#comprar",
-        "color_scheme": "background-1",
+        "color_scheme": "background-2",
         "ancho_maximo": 1120,
-        "padding_top": 40,
-        "padding_bottom": 40
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     },
     "resenas": {
