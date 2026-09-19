@@ -776,6 +776,7 @@ h1, h2, h3, h4,
 /* Las secciones nativas de Shrine emiten su propio <style> con el padding.
    Las cauce-* lo bajan como custom property y lo resuelven aca, con la misma
    reduccion de 0.75 en mobile que usa el tema. */
+.cauce-comparativa__inner,
 .cauce-contraste__inner,
 .cauce-datos__inner,
 .cauce-detalle__inner,
@@ -794,6 +795,7 @@ h1, h2, h3, h4,
 }
 
 @media screen and (max-width: 749px) {
+  .cauce-comparativa__inner,
   .cauce-contraste__inner,
   .cauce-datos__inner,
   .cauce-detalle__inner,
@@ -3951,11 +3953,13 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   max-width: min(var(--cauce-contraste-ancho, 1040px), var(--page-width, 1440px));
 }
 
-/* Encabezado (compartido con el bloque 19) --------------------------------- */
+/* Encabezado (compartido con los bloques 19 y 22) -------------------------- */
 
+.cauce-comparativa__encabezado,
 .cauce-contraste__encabezado,
 .cauce-ingredientes__encabezado { max-width: 62ch; }
 
+.cauce-comparativa__titulo,
 .cauce-contraste__titulo,
 .cauce-ingredientes__titulo {
   margin: 0 0 var(--cauce-aire-s);
@@ -3964,6 +3968,7 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
 
 /* Secundario y no color de texto, igual que la bajada de cauce-solucion: el
    token resuelve el par por fondo. Sobre RUBOR (bloque 20) VADO-TEXTO da 4.64:1. */
+.cauce-comparativa__bajada,
 .cauce-contraste__bajada,
 .cauce-ingredientes__bajada {
   color: var(--cauce-secundario);
@@ -3972,17 +3977,21 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   line-height: 1.6;
 }
 
+.cauce-comparativa__bajada > :first-child,
 .cauce-contraste__bajada > :first-child,
 .cauce-ingredientes__bajada > :first-child { margin-top: 0; }
+.cauce-comparativa__bajada > :last-child,
 .cauce-contraste__bajada > :last-child,
 .cauce-ingredientes__bajada > :last-child { margin-bottom: 0; }
 
+.cauce-comparativa__encabezado--centrado,
 .cauce-contraste__encabezado--centrado,
 .cauce-ingredientes__encabezado--centrado {
   text-align: center;
   margin-inline: auto;
 }
 
+.cauce-comparativa__encabezado--centrado .cauce-comparativa__bajada,
 .cauce-contraste__encabezado--centrado .cauce-contraste__bajada,
 .cauce-ingredientes__encabezado--centrado .cauce-ingredientes__bajada { margin-inline: auto; }
 
@@ -4493,6 +4502,12 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   --cauce-ingredientes-velo: 82, 52, 68;
 }
 
+/* La columna propia de la comparativa (D-058) termina mas rosa que en CAUCE:
+   60 % de MALVA CLARO sobre blanco. La tilde MALVA da 3.80:1 contra ese final. */
+:root.plantilla--hormify .cauce-comparativa {
+  --cauce-comparativa-intensidad: 60%;
+}
+
 /* ==========================================================================
    21. Ancla del bloque de compra
    Ver docs/DECISIONS.md D-054.
@@ -4512,4 +4527,236 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   display: block;
   height: 0;
   scroll-margin-top: var(--cauce-aire-xl);
+}
+
+/* ==========================================================================
+   22. PDP — tabla comparativa
+   Ver sections/cauce-comparativa.liquid y docs/DECISIONS.md D-058.
+
+   La tabla de hormify.com: el titulo arriba, los beneficios a la izquierda, la
+   columna propia pintada de un degradado con las puntas redondeadas y la de los
+   otros sin fondo. Las mismas tres columnas en telefono, con el texto mas chico.
+
+   El degradado va de la superficie (SEDIMENTO, o RUBOR en Hormify) al acento
+   claro mezclado con blanco. Ningun color es propio de la seccion: los tokens
+   de la linea Hormify (bloque 20) la pasan a rosa sola. Lo unico que cambia
+   por linea es cuanto acento lleva el final (--cauce-comparativa-intensidad):
+   45 % en CAUCE y 60 % en Hormify, que es lo que le da el rosa de la
+   referencia. El limite lo pone la tilde, que tiene que pasar 3:1 contra el
+   tramo mas oscuro: con OXIDO, al 60 % bajaria a 2.83.
+
+   Contraste (WCAG 2.1, sRGB):
+     Hormify · tilde MALVA sobre el final (#EFB9D1) .......  3.80  componente
+     Hormify · tilde MALVA sobre RUBOR, arriba ............  5.25
+     Hormify · trazo blanco sobre la tilde ................  6.37
+     Hormify · cruz MALVA sobre blanco ....................  6.37
+     Hormify · precio blanco sobre MALVA ..................  6.37 AA
+     Hormify · texto CAUCE sobre el final .................  9.40
+     CAUCE   · tilde OXIDO sobre el final (#EEB7A9) .......  3.45  componente
+   ========================================================================== */
+
+.cauce-comparativa {
+  --cauce-comparativa-intensidad: 45%;
+  --cauce-comparativa-desde: var(--cauce-sedimento);
+  /* Sin color-mix queda SEDIMENTO-2: un degradado mas corto, pero el mismo. */
+  --cauce-comparativa-hasta: var(--cauce-sedimento-2);
+  --cauce-comparativa-radio: 1.2rem;
+  --cauce-comparativa-col: 26%;
+  --cauce-comparativa-col-otros: 22%;
+}
+
+@supports (color: color-mix(in srgb, red, blue)) {
+  .cauce-comparativa {
+    --cauce-comparativa-hasta: color-mix(in srgb, var(--cauce-oxido-claro) var(--cauce-comparativa-intensidad), var(--cauce-blanco));
+  }
+}
+
+/* Sobre la superficie el degradado arranca en blanco: si arrancara en su propio
+   color, la punta de arriba de la columna desapareceria contra la seccion. */
+.cauce-comparativa.color-background-2 { --cauce-comparativa-desde: var(--cauce-blanco); }
+
+.cauce-comparativa__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-l);
+  max-width: min(var(--cauce-comparativa-ancho, 960px), var(--page-width, 1440px));
+}
+
+/* Tabla -------------------------------------------------------------------- */
+
+/* separate y no collapse: con collapse las celdas no aceptan border-radius.
+   fixed: los anchos de columna salen de la primera fila y no del texto, asi la
+   columna propia mide lo mismo con o sin la fila de precio. */
+.cauce-comparativa__tabla {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+/* La imagen asoma por arriba de la columna: se le deja ese lugar. */
+.cauce-comparativa__tabla--imagen {
+  margin-top: calc(var(--cauce-comparativa-imagen, 64px) * 0.6);
+}
+
+.cauce-comparativa__tabla th,
+.cauce-comparativa__tabla td {
+  padding: 1.4rem 0.4rem;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--cauce-linea);
+}
+
+.cauce-comparativa__tabla tbody tr:last-child > * { border-bottom: 0; }
+
+.cauce-comparativa__tabla thead .cauce-comparativa__nosotros { width: var(--cauce-comparativa-col); }
+.cauce-comparativa__tabla thead .cauce-comparativa__otros { width: var(--cauce-comparativa-col-otros); }
+
+.cauce-comparativa__tabla .cauce-comparativa__beneficio {
+  padding-left: 0;
+  padding-right: 1.2rem;
+  text-align: left;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Encabezados de columna */
+.cauce-comparativa__tabla thead th {
+  font-family: var(--cauce-font-texto);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Sin imagen, el nombre de la columna va con el trazo del logo. */
+.cauce-comparativa__marca {
+  display: block;
+  font-family: var(--cauce-font-logo);
+  font-variation-settings: 'wdth' var(--cauce-logo-stretch), 'wght' var(--cauce-logo-weight);
+  font-weight: var(--cauce-logo-weight);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cauce-acento);
+}
+
+.cauce-comparativa__imagen {
+  display: block;
+  width: var(--cauce-comparativa-imagen, 64px);
+  max-width: 100%;
+  height: auto;
+  margin: calc(var(--cauce-comparativa-imagen, 64px) * -0.6 - 1.4rem) auto 0;
+}
+
+/* La columna propia. Cada celda pinta el degradado entero, estirado a --n veces
+   su alto, y lo corre hasta su tramo: la celda --i muestra del i/n al (i+1)/n.
+   Si las filas miden distinto, cada tramo se estira distinto, pero el color del
+   borde de abajo de una celda es siempre el de arriba de la siguiente. */
+.cauce-comparativa__nosotros {
+  background-color: var(--cauce-comparativa-desde);
+  background-image: linear-gradient(to bottom, var(--cauce-comparativa-desde), var(--cauce-comparativa-hasta));
+  background-size: 100% calc(var(--n, 2) * 100%);
+  background-position: 0 calc(var(--i, 0) / (var(--n, 2) - 1) * 100%);
+  background-repeat: no-repeat;
+}
+
+.cauce-comparativa__tabla .cauce-comparativa__nosotros { border-bottom-color: rgba(255, 255, 255, 0.7); }
+
+.cauce-comparativa__tabla thead .cauce-comparativa__nosotros {
+  border-radius: var(--cauce-comparativa-radio) var(--cauce-comparativa-radio) 0 0;
+}
+
+.cauce-comparativa__tabla tbody tr:last-child .cauce-comparativa__nosotros {
+  border-radius: 0 0 var(--cauce-comparativa-radio) var(--cauce-comparativa-radio);
+}
+
+/* Marcas */
+.cauce-comparativa__si {
+  display: block;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-inline: auto;
+  fill: var(--cauce-acento);
+}
+
+.cauce-comparativa__si path { stroke: var(--cauce-acento-label); }
+
+.cauce-comparativa__no {
+  display: block;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-inline: auto;
+  color: var(--cauce-acento);
+}
+
+/* Precio */
+.cauce-comparativa__precio {
+  display: inline-flex;
+  align-items: baseline;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.6rem;
+  background: var(--cauce-acento);
+  color: var(--cauce-acento-label);
+  font-family: var(--cauce-font-texto);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cauce-comparativa__precio small {
+  margin-left: 0.1em;
+  font-size: 0.72em;
+  font-weight: 600;
+}
+
+.cauce-comparativa__precio-otros {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.cauce-comparativa__pie {
+  font-size: 1.3rem;
+  opacity: 0.75;
+  text-align: center;
+}
+
+.cauce-comparativa__pie > :first-child { margin-top: 0; }
+.cauce-comparativa__pie > :last-child { margin-bottom: 0; }
+
+@media screen and (min-width: 750px) {
+  .cauce-comparativa {
+    --cauce-comparativa-radio: 1.6rem;
+    --cauce-comparativa-col: 24%;
+    --cauce-comparativa-col-otros: 24%;
+  }
+
+  .cauce-comparativa__tabla th,
+  .cauce-comparativa__tabla td { padding: 1.8rem 1.2rem; }
+
+  .cauce-comparativa__tabla .cauce-comparativa__beneficio {
+    padding-left: 0;
+    padding-right: 2.4rem;
+    font-size: 1.7rem;
+  }
+
+  .cauce-comparativa__tabla thead th { font-size: 1.6rem; }
+
+  .cauce-comparativa__imagen {
+    margin-top: calc(var(--cauce-comparativa-imagen, 64px) * -0.6 - 1.8rem);
+  }
+
+  .cauce-comparativa__si { width: 2.8rem; height: 2.8rem; }
+  .cauce-comparativa__no { width: 2rem; height: 2rem; }
+
+  .cauce-comparativa__precio {
+    padding: 0.7rem 1.2rem;
+    font-size: 1.9rem;
+  }
+
+  .cauce-comparativa__precio-otros { font-size: 1.5rem; }
 }

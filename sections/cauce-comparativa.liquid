@@ -1,0 +1,309 @@
+{% comment %}
+  CAUCE — tabla comparativa.
+
+  Nosotros contra "los otros", fila por fila, con una columna destacada. Entra con
+  Hormify (D-058) y reemplaza a comparison-table de Shrine, que no permite tres
+  cosas que la tabla de hormify.com tiene: el titulo arriba de la tabla, una
+  columna pintada de un degradado continuo y una fila de precio.
+
+  Lo que la seccion resuelve por construccion:
+
+  - Es una <table> de verdad: el beneficio es el <th> de su fila y los dos
+    encabezados de columna son <th scope="col">. Los iconos llevan "Si" / "No"
+    oculto, asi un lector de pantalla lee la tabla y no dos dibujos.
+  - El degradado de la columna destacada es uno solo aunque cada celda pinte el
+    suyo: cada celda recibe su indice (--i) y el total de filas (--n), y muestra
+    solo su tramo. Si las filas tienen alturas distintas el tramo se estira, pero
+    los bordes coinciden. Ver el bloque 22 de cauce-brand.css.
+  - La fila de precio NO lleva un precio escrito: sale del precio real de la
+    variante dividido por los dias que dura un frasco, redondeado al peso. Si
+    cambia el precio en Shopify, cambia la tabla. Fuera de una pagina de producto
+    la fila no se dibuja.
+
+  ADVERTENCIA DE CLAIMS. Es publicidad comparativa: cada fila afirma algo de este
+  producto y, con la X, lo niega de toda la categoria. Ver docs/CLAIMS-AUDIT.md
+  §8.1 (H12) y R5. Todo el texto vive en templates/*.json. No escribas copy
+  adentro de este archivo: "Si" y "No" son etiquetas de accesibilidad, no claims.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_filas = 0
+  for block in section.blocks
+    if block.type == 'fila' and block.settings.beneficio != blank
+      assign cauce_filas = cauce_filas | plus: 1
+    endif
+  endfor
+
+  assign cauce_precio = false
+  if section.settings.mostrar_precio and product != blank
+    assign cauce_variante = product.selected_or_first_available_variant
+    assign cauce_dias = section.settings.dias | at_least: 1
+    # Centavos -> pesos, redondeado al peso, y de vuelta a centavos para el filtro money.
+    assign cauce_por_dia = cauce_variante.price | times: 1.0 | divided_by: cauce_dias | divided_by: 100 | round | times: 100
+    assign cauce_precio = true
+  endif
+
+  # Total de tramos del degradado: el encabezado, las filas y la de precio.
+  assign cauce_tramos = cauce_filas | plus: 1
+  if cauce_precio
+    assign cauce_tramos = cauce_tramos | plus: 1
+  endif
+
+  assign cauce_etiqueta = section.settings.nosotros_etiqueta | default: shop.name
+-%}
+
+{%- if cauce_filas > 0 -%}
+  <div class="cauce-comparativa color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="page-width cauce-comparativa__inner"
+      style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-comparativa-ancho: {{ section.settings.ancho_maximo }}px;"
+    >
+      {%- if section.settings.volanta != blank or section.settings.titulo != blank or section.settings.bajada != blank -%}
+        <div class="cauce-comparativa__encabezado cauce-comparativa__encabezado--{{ section.settings.alineacion }}">
+          {%- if section.settings.volanta != blank -%}
+            <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.titulo != blank -%}
+            <h2 class="cauce-comparativa__titulo {{ section.settings.heading_size }}">
+              {{- section.settings.titulo -}}
+              {%- if section.settings.titulo_acento != blank -%}
+                <span class="cauce-acento"> {{ section.settings.titulo_acento }}</span>
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.bajada != blank -%}
+            <div class="cauce-comparativa__bajada rte">{{ section.settings.bajada }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <table
+        class="cauce-comparativa__tabla{% if section.settings.imagen != blank %} cauce-comparativa__tabla--imagen{% endif %}"
+        style="--n: {{ cauce_tramos }}; --cauce-comparativa-imagen: {{ section.settings.ancho_imagen }}px;"
+      >
+        {%- if section.settings.titulo != blank -%}
+          <caption class="visually-hidden">{{ section.settings.titulo | strip_html }}</caption>
+        {%- endif -%}
+        <thead>
+          <tr>
+            <td class="cauce-comparativa__esquina"></td>
+            <th scope="col" class="cauce-comparativa__nosotros" style="--i: 0;">
+              {%- if section.settings.imagen != blank -%}
+                {{
+                  section.settings.imagen
+                  | image_url: width: 300
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '100, 150, 200, 300',
+                    sizes: '(min-width: 750px) 120px, 80px',
+                    class: 'cauce-comparativa__imagen',
+                    alt: ''
+                }}
+                <span class="visually-hidden">{{ cauce_etiqueta }}</span>
+              {%- else -%}
+                <span class="cauce-comparativa__marca">{{ cauce_etiqueta }}</span>
+              {%- endif -%}
+            </th>
+            <th scope="col" class="cauce-comparativa__otros">{{ section.settings.otros_etiqueta }}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {%- assign cauce_i = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type != 'fila' or block.settings.beneficio == blank -%}
+              {%- continue -%}
+            {%- endif -%}
+            {%- assign cauce_i = cauce_i | plus: 1 -%}
+            <tr {{ block.shopify_attributes }}>
+              <th scope="row" class="cauce-comparativa__beneficio">{{ block.settings.beneficio }}</th>
+              <td class="cauce-comparativa__nosotros" style="--i: {{ cauce_i }};">
+                {%- render 'cauce-comparativa-marca', si: block.settings.nosotros -%}
+              </td>
+              <td class="cauce-comparativa__otros">
+                {%- render 'cauce-comparativa-marca', si: block.settings.otros -%}
+              </td>
+            </tr>
+          {%- endfor -%}
+
+          {%- if cauce_precio -%}
+            <tr class="cauce-comparativa__fila-precio">
+              <th scope="row" class="cauce-comparativa__beneficio">{{ section.settings.precio_etiqueta }}</th>
+              <td class="cauce-comparativa__nosotros" style="--i: {{ cauce_i | plus: 1 }};">
+                <span class="cauce-comparativa__precio">
+                  {{- cauce_por_dia | money_without_trailing_zeros -}}
+                  {%- if section.settings.precio_sufijo != blank -%}
+                    <small>{{ section.settings.precio_sufijo }}</small>
+                  {%- endif -%}
+                </span>
+              </td>
+              <td class="cauce-comparativa__otros">
+                <span class="cauce-comparativa__precio-otros">{{ section.settings.otros_precio }}</span>
+              </td>
+            </tr>
+          {%- endif -%}
+        </tbody>
+      </table>
+
+      {%- if section.settings.pie != blank -%}
+        <div class="cauce-comparativa__pie rte">{{ section.settings.pie }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CAUCE · Comparativa",
+  "tag": "section",
+  "class": "section cauce-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Es publicidad comparativa: cada fila afirma algo del producto y, con la X, lo niega de toda la categoria. Ver docs/CLAIMS-AUDIT.md."
+    },
+
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "volanta", "label": "Volanta" },
+    { "type": "inline_richtext", "id": "titulo", "label": "Titulo" },
+    {
+      "type": "inline_richtext",
+      "id": "titulo_acento",
+      "label": "Cierre del titulo en acento",
+      "info": "Se agrega al final del titulo, en el color de acento. Vacio = titulo de un solo color."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamano del titulo",
+      "options": [
+        { "value": "h2", "label": "Chico" },
+        { "value": "h1", "label": "Mediano" },
+        { "value": "h0", "label": "Grande" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "richtext",
+      "id": "bajada",
+      "label": "Bajada",
+      "info": "Conviene decir contra que se compara: sin eso, \"otros suplementos\" es toda la categoria."
+    },
+    {
+      "type": "select",
+      "id": "alineacion",
+      "label": "Alineacion del encabezado",
+      "options": [
+        { "value": "centrado", "label": "Centrado" },
+        { "value": "izquierda", "label": "A la izquierda" }
+      ],
+      "default": "centrado"
+    },
+
+    { "type": "header", "content": "Columnas" },
+    {
+      "type": "text",
+      "id": "nosotros_etiqueta",
+      "label": "Nombre de la columna destacada",
+      "info": "Se ve si no hay imagen. Con imagen queda oculto, para lectores de pantalla. Vacio = nombre de la tienda."
+    },
+    {
+      "type": "image_picker",
+      "id": "imagen",
+      "label": "Imagen de la columna destacada",
+      "info": "El frasco en PNG sin fondo. Asoma por arriba de la columna."
+    },
+    {
+      "type": "range",
+      "id": "ancho_imagen",
+      "min": 40,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Ancho de la imagen",
+      "default": 64
+    },
+    { "type": "text", "id": "otros_etiqueta", "label": "Nombre de la otra columna", "default": "Otros" },
+
+    { "type": "header", "content": "Fila de precio" },
+    {
+      "type": "checkbox",
+      "id": "mostrar_precio",
+      "label": "Mostrar fila de precio",
+      "default": false,
+      "info": "Precio de la variante dividido por los dias que dura un frasco, redondeado al peso. Sale del producto: no se escribe."
+    },
+    { "type": "text", "id": "precio_etiqueta", "label": "Nombre de la fila", "default": "Precio" },
+    {
+      "type": "range",
+      "id": "dias",
+      "min": 7,
+      "max": 120,
+      "step": 1,
+      "unit": "d",
+      "label": "Dias que dura un frasco",
+      "default": 30
+    },
+    { "type": "text", "id": "precio_sufijo", "label": "Despues del precio", "default": "/día" },
+    {
+      "type": "text",
+      "id": "otros_precio",
+      "label": "Texto en la otra columna",
+      "info": "Corto. Un precio de la competencia es un claim y tiene que poder probarse."
+    },
+
+    { "type": "header", "content": "Cierre" },
+    { "type": "richtext", "id": "pie", "label": "Texto al pie" },
+
+    { "type": "header", "content": "Presentacion" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "options": [
+        { "value": "background-1", "label": "Blanco" },
+        { "value": "background-2", "label": "Superficie" }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "ancho_maximo",
+      "min": 640,
+      "max": 1200,
+      "step": 40,
+      "unit": "px",
+      "label": "Ancho de la tabla",
+      "default": 960
+    },
+
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "fila",
+      "name": "Fila",
+      "settings": [
+        { "type": "text", "id": "beneficio", "label": "Beneficio", "info": "Es un claim: tiene que poder respaldarse." },
+        { "type": "checkbox", "id": "nosotros", "label": "Lo tiene la columna destacada", "default": true },
+        { "type": "checkbox", "id": "otros", "label": "Lo tiene la otra columna", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CAUCE · Comparativa",
+      "blocks": [
+        { "type": "fila" },
+        { "type": "fila" },
+        { "type": "fila" },
+        { "type": "fila" }
+      ]
+    }
+  ]
+}
+{% endschema %}

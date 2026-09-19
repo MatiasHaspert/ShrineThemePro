@@ -1,0 +1,26 @@
+{% comment %}
+  CAUCE — la marca de una celda de cauce-comparativa: tilde o cruz.
+
+  La tilde es un circulo lleno en el acento con el trazo en su etiqueta (blanco
+  sobre MALVA en Hormify, 6.37:1). La cruz va sola, sin circulo, en el acento:
+  la diferencia de peso entre las dos es lo que se lee de lejos. El color lo pone
+  el bloque 22 de cauce-brand.css.
+
+  El SVG es decorativo y el "Si" / "No" oculto es lo que lee un lector de pantalla.
+
+  Uso:
+    {% render 'cauce-comparativa-marca', si: block.settings.nosotros %}
+{% endcomment %}
+
+{%- if si -%}
+  <svg class="cauce-comparativa__si" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="12"/>
+    <path d="m7.4 12.4 3.1 3.1 6.1-6.6" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span class="visually-hidden">Sí</span>
+{%- else -%}
+  <svg class="cauce-comparativa__no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
+    <path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>
+  </svg>
+  <span class="visually-hidden">No</span>
+{%- endif -%}
