@@ -23,6 +23,10 @@
   - La cifra va en la fuente de datos (DM Mono, tabular) y no en la de titulos. Es
     la misma decision de .cauce-datos__valor: los numeros de esta marca son datos,
     no titulares.
+  - Dos disposiciones (`disposicion`, D-059). `lista` es la de siempre: la imagen a
+    un costado y las cifras una debajo de la otra, con su barra. `tarjetas` deja la
+    imagen afuera, centra el encabezado y pone cada cifra en su tarjeta, con una
+    torta en vez de barra. El dato es el mismo: cambia como se muestra.
 
   ADVERTENCIA DE CLAIMS (Res. SC 270/2020 · Disp. ANMAT 4980/05 · Ley 24.240 art. 8).
   Un porcentaje de resultado es la afirmacion mas fuerte que puede hacer una pagina
@@ -46,8 +50,13 @@
     assign cauce_hay = true
   endif
 
+  assign cauce_tarjetas = false
+  if section.settings.disposicion == 'tarjetas'
+    assign cauce_tarjetas = true
+  endif
+
   assign cauce_con_imagen = false
-  if section.settings.imagen != blank and section.settings.posicion_imagen != 'sin'
+  if section.settings.imagen != blank and section.settings.posicion_imagen != 'sin' and cauce_tarjetas == false
     assign cauce_con_imagen = true
   endif
 
@@ -70,7 +79,7 @@
 -%}
 
 {%- if cauce_hay -%}
-  <div class="cauce-resultados color-{{ section.settings.color_scheme }} gradient">
+  <div class="cauce-resultados{% if cauce_tarjetas %} cauce-resultados--tarjetas{% endif %} color-{{ section.settings.color_scheme }} gradient">
     <div
       class="page-width cauce-resultados__inner cauce-resultados__inner--{{ section.settings.posicion_imagen }}{% unless cauce_con_imagen %} cauce-resultados__inner--sin{% endunless %}"
       style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-resultados-ancho: {{ section.settings.ancho_maximo }}px; --cauce-resultados-ratio: {{ section.settings.relacion }};"
@@ -92,7 +101,7 @@
 
       <div class="cauce-resultados__cuerpo">
         {%- if section.settings.volanta != blank or section.settings.titulo != blank or section.settings.bajada != blank -%}
-          <div class="cauce-resultados__encabezado">
+          <div class="cauce-resultados__encabezado{% if cauce_tarjetas %} cauce-resultados__encabezado--centrado{% endif %}">
             {%- if section.settings.volanta != blank -%}
               <p class="cauce-eyebrow">{{ section.settings.volanta }}</p>
             {%- endif -%}
@@ -119,6 +128,14 @@
                 {%- continue -%}
               {%- endif -%}
               <li class="cauce-resultados__dato" {{ block.shopify_attributes }}>
+                {%- if cauce_tarjetas and block.settings.barra > 0 -%}
+                  {%- comment -%}
+                    Decorativa y con aria-hidden, como la barra: dibuja el mismo
+                    numero que ya esta escrito al lado.
+                  {%- endcomment -%}
+                  <span class="cauce-resultados__torta" style="--cauce-resultados-torta: {{ block.settings.barra }};" aria-hidden="true"></span>
+                {%- endif -%}
+
                 {%- if block.settings.valor != blank -%}
                   <p class="cauce-resultados__valor">{{ block.settings.valor }}</p>
                 {%- endif -%}
@@ -132,7 +149,7 @@
                   {%- endif -%}
                 </div>
 
-                {%- if section.settings.mostrar_barra and block.settings.barra > 0 -%}
+                {%- if cauce_tarjetas == false and section.settings.mostrar_barra and block.settings.barra > 0 -%}
                   <div class="cauce-resultados__barra" aria-hidden="true">
                     <span style="width: {{ block.settings.barra }}%"></span>
                   </div>
@@ -191,10 +208,22 @@
 
     { "type": "header", "content": "Cifras" },
     {
+      "type": "select",
+      "id": "disposicion",
+      "label": "Disposicion",
+      "options": [
+        { "value": "lista", "label": "Lista con barras" },
+        { "value": "tarjetas", "label": "Tarjetas con torta" }
+      ],
+      "default": "lista",
+      "info": "Con tarjetas, el encabezado va centrado, cada cifra tiene su tarjeta con una torta y la imagen no se dibuja."
+    },
+    {
       "type": "checkbox",
       "id": "mostrar_barra",
       "label": "Mostrar la barra de cada cifra",
-      "default": true
+      "default": true,
+      "info": "Solo en la disposicion de lista. Con tarjetas, el mismo numero dibuja la torta."
     },
     {
       "type": "richtext",
@@ -297,8 +326,8 @@
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Largo de la barra",
-          "info": "0 = sin barra. Va aparte de la cifra para que una cifra que no es un porcentaje igual pueda dibujarse.",
+          "label": "Largo de la barra o de la torta",
+          "info": "0 = sin dibujo. Va aparte de la cifra para que una cifra que no es un porcentaje igual pueda dibujarse.",
           "default": 0
         }
       ]

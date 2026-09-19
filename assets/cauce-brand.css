@@ -2583,6 +2583,129 @@ h1, h2, h3, h4,
   }
 }
 
+/* Disposicion de tarjetas (D-059) -------------------------------------------
+
+   El encabezado centrado y cada cifra en su tarjeta, con una torta en vez de
+   barra: la banda de resultados de hormify.com. La imagen no se dibuja.
+
+   La torta es un conic-gradient y no un SVG: la dibuja el mismo numero que
+   dibuja la barra (`barra`), sin markup nuevo. Es decorativa y va con
+   aria-hidden, igual que la barra, porque la cifra ya esta escrita al lado.
+
+   La banda no toma el color del esquema: lo pisa con el acento claro mezclado
+   con blanco, el mismo rosa donde termina la columna de la comparativa (bloque
+   22), y las tarjetas van blancas encima. Cuanto acento lleva es un token por
+   linea: 45 % en CAUCE y 60 % en Hormify. Se pisa --gradient-background y no
+   --color-background porque color-mix devuelve un color y esa variable guarda
+   una terna de canales.
+
+   Contraste sobre la banda de Hormify (#EFB9D1):
+     Titulo TINTA ..............................  9.40 AAA
+     Bajada MALVA ..............................  3.80  a 1.9rem y 700: texto
+                                                  grande, donde el minimo es 3:1
+     Volanta TINTA al 80 % .....................  5.96 AA
+     Metodologia TINTA al 80 % .................  5.96 AA
+   Sobre la banda de CAUCE (#EEB7A9) los mismos dan 8.99, 3.45, 5.77 y 5.77. El
+   secundario (VADO-TEXTO) NO se usa encima de la banda: da 3.36.
+
+   Dentro de la tarjeta blanca: la cifra en TINTA 15.76, el detalle en el
+   secundario 5.63 y la torta —objeto grafico, 3:1— en MALVA 6.37.             */
+
+.cauce-resultados--tarjetas {
+  --cauce-resultados-intensidad: 45%;
+  --cauce-resultados-tarjeta: var(--cauce-blanco);
+  /* Sin color-mix la banda se queda en la superficie de la marca. */
+  --cauce-resultados-banda: var(--cauce-sedimento);
+}
+
+@supports (color: color-mix(in srgb, red, blue)) {
+  .cauce-resultados--tarjetas {
+    --cauce-resultados-banda: color-mix(in srgb, var(--cauce-oxido-claro) var(--cauce-resultados-intensidad), var(--cauce-blanco));
+  }
+}
+
+.cauce-resultados--tarjetas.color-background-1,
+.cauce-resultados--tarjetas.color-background-2 { --gradient-background: var(--cauce-resultados-banda); }
+
+/* Sobre TINTA la banda no se pinta: ahi el bloque ya es una banda oscura. */
+.cauce-resultados--tarjetas.color-inverse { --cauce-resultados-tarjeta: rgba(255, 255, 255, 0.06); }
+
+.cauce-resultados--tarjetas .cauce-eyebrow { opacity: 0.8; }
+
+.cauce-resultados__encabezado--centrado {
+  max-width: 62ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.cauce-resultados__encabezado--centrado .cauce-resultados__bajada { margin-inline: auto; }
+
+/* La bajada es la linea que dice de donde salen las cifras. En tarjetas va en el
+   acento y no en el secundario: es lo que sostiene todo lo que hay abajo.
+
+   1.9rem y 700 no son decorativos: encima de la banda el acento da 3.80:1, que
+   alcanza para texto grande (>=18.66px en negrita) y no para texto normal. */
+.cauce-resultados--tarjetas .cauce-resultados__bajada {
+  color: var(--cauce-acento);
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+.cauce-resultados--tarjetas .cauce-resultados__lista {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.cauce-resultados--tarjetas .cauce-resultados__dato {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 2rem;
+  border-radius: 8px;
+  background: var(--cauce-resultados-tarjeta);
+}
+
+.cauce-resultados__torta {
+  display: block;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--cauce-acento) calc(var(--cauce-resultados-torta, 0) * 1%),
+    rgba(var(--color-foreground), 0.12) 0
+  );
+}
+
+.cauce-resultados--tarjetas .cauce-resultados__valor { font-size: 3.2rem; }
+
+/* Encima de la banda el secundario da 3.36:1. La metodologia es lo que sostiene
+   las cifras: va en el color de texto, bajado al 80 %. */
+.cauce-resultados--tarjetas .cauce-resultados__metodologia {
+  margin-inline: auto;
+  color: rgba(var(--color-foreground), 0.8);
+  text-align: center;
+}
+
+/* display: flex y no inline-flex: un inline no se centra con margin auto. */
+.cauce-resultados--tarjetas .cauce-resultados__cta {
+  display: flex;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-resultados--tarjetas .cauce-resultados__lista {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: var(--cauce-aire-s);
+  }
+
+  .cauce-resultados--tarjetas .cauce-resultados__dato { padding: 2.4rem; }
+  .cauce-resultados--tarjetas .cauce-resultados__valor { font-size: 4rem; }
+  .cauce-resultados--tarjetas .cauce-resultados__bajada { font-size: 2rem; }
+  .cauce-resultados__torta { width: 3.2rem; height: 3.2rem; }
+}
+
 /* ==========================================================================
    15. Hero con media
    Ver sections/cauce-hero.liquid y docs/DECISIONS.md D-039.
@@ -4506,6 +4629,11 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
    60 % de MALVA CLARO sobre blanco. La tilde MALVA da 3.80:1 contra ese final. */
 :root.plantilla--hormify .cauce-comparativa {
   --cauce-comparativa-intensidad: 60%;
+}
+
+/* La banda de resultados en tarjetas (D-059) es ese mismo rosa. */
+:root.plantilla--hormify .cauce-resultados--tarjetas {
+  --cauce-resultados-intensidad: 60%;
 }
 
 /* ==========================================================================
