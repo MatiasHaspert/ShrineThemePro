@@ -1006,76 +1006,62 @@
       }
     },
     "comparativa": {
-      "type": "comparison-table",
+      "type": "cauce-comparativa",
       "blocks": {
         "c1": {
-          "type": "row",
+          "type": "fila",
           "settings": {
-            "benefit": "8 activos para el equilibrio hormonal en una cápsula",
-            "us": true,
-            "others": false,
-            "others_2": false,
-            "others_3": false
+            "beneficio": "8 activos para el equilibrio hormonal en una cápsula",
+            "nosotros": true,
+            "otros": false
           }
         },
         "c2": {
-          "type": "row",
+          "type": "fila",
           "settings": {
-            "benefit": "Ayuda con el peso hormonal y la hinchazón",
-            "us": true,
-            "others": false,
-            "others_2": false,
-            "others_3": false
+            "beneficio": "Ayuda con el peso hormonal y la hinchazón",
+            "nosotros": true,
+            "otros": false
           }
         },
         "c3": {
-          "type": "row",
+          "type": "fila",
           "settings": {
-            "benefit": "Acompaña el SOP, la perimenopausia y la menopausia",
-            "us": true,
-            "others": false,
-            "others_2": false,
-            "others_3": false
+            "beneficio": "Acompaña el SOP, la perimenopausia y la menopausia",
+            "nosotros": true,
+            "otros": false
           }
         },
         "c4": {
-          "type": "row",
+          "type": "fila",
           "settings": {
-            "benefit": "Sin hormonas y con activos de origen natural",
-            "us": true,
-            "others": false,
-            "others_2": false,
-            "others_3": false
+            "beneficio": "Sin hormonas y con activos de origen natural",
+            "nosotros": true,
+            "otros": false
           }
         },
         "c5": {
-          "type": "row",
+          "type": "fila",
           "settings": {
-            "benefit": "Con piperina para absorber mejor cada activo",
-            "us": true,
-            "others": false,
-            "others_2": false,
-            "others_3": false
+            "beneficio": "Con piperina para absorber mejor cada activo",
+            "nosotros": true,
+            "otros": false
           }
         },
         "c6": {
-          "type": "row",
+          "type": "fila",
           "settings": {
-            "benefit": "Analizado por laboratorio externo",
-            "us": true,
-            "others": false,
-            "others_2": false,
-            "others_3": false
+            "beneficio": "Analizado por laboratorio externo",
+            "nosotros": true,
+            "otros": false
           }
         },
         "c7": {
-          "type": "row",
+          "type": "fila",
           "settings": {
-            "benefit": "Producción nacional",
-            "us": true,
-            "others": false,
-            "others_2": false,
-            "others_3": false
+            "beneficio": "Producción nacional",
+            "nosotros": true,
+            "otros": false
           }
         }
       },
@@ -1089,67 +1075,25 @@
         "c7"
       ],
       "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "Por qué Hormify es distinto",
-        "title_highlight_color": "#6d388b",
+        "volanta": "",
+        "titulo": "Por qué Hormify es distinto",
+        "titulo_acento": "",
         "heading_size": "h1",
-        "text": "<p>Comparado con los multivitamínicos y suplementos para mujeres más habituales de la categoría.</p>",
-        "button_label": "",
-        "link": "",
-        "button_style_secondary": false,
-        "atc_button_label": "",
-        "atc_product": "",
-        "atc_skip_cart": false,
-        "desktop_alignment": "left",
-        "mobile_alignment": "left",
+        "bajada": "<p>Comparado con los multivitamínicos y suplementos para mujeres más habituales de la categoría.</p>",
+        "alineacion": "centrado",
+        "nosotros_etiqueta": "Hormify",
+        "ancho_imagen": 64,
+        "otros_etiqueta": "Otros suplementos",
+        "mostrar_precio": true,
+        "precio_etiqueta": "Precio",
+        "dias": 30,
+        "precio_sufijo": "/día",
+        "otros_precio": "Según la marca",
+        "pie": "",
         "color_scheme": "background-1",
-        "layout": "table_second",
-        "style": "minimal",
-        "corner_radius": 4,
-        "number_of_competitors": 1,
-        "us_label": "HORMIFY",
-        "us_label_size": 18,
-        "logo_width": 90,
-        "mobile_logo_width": 60,
-        "others_label": "Otros suplementos",
-        "others_label_size": 18,
-        "others_logo_width": 90,
-        "others_mobile_logo_width": 60,
-        "others_2_label": "Competitor 2",
-        "others_2_label_size": 18,
-        "others_2_logo_width": 90,
-        "others_2_mobile_logo_width": 60,
-        "others_3_label": "Competitor 3",
-        "others_3_label_size": 18,
-        "others_3_logo_width": 90,
-        "others_3_mobile_logo_width": 60,
-        "checkmark_style": "regular",
-        "checkmark_color": "#10262a",
-        "checkmark_bg_color": "#5f99a2",
-        "x_style": "regular",
-        "x_color": "#10262a",
-        "x_bg_color": "#dfdbce",
-        "opposite_icon_colors": "original",
-        "highlighted_color_scheme": "background-2",
-        "highlighted_separator_opacity": 0,
-        "highlighted_overlay_opacity": 0,
-        "other_cells_color_scheme": "background-1",
-        "regular_separator_opacity": 10,
-        "regular_overlay_opacity": 0,
-        "minimalistic_border_opacity": 16,
+        "ancho_maximo": 960,
         "padding_top": 72,
-        "padding_bottom": 72,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_colors_highlighted_background": "#2e2a39",
-        "custom_colors_highlighted_text": "#ffffff",
-        "custom_colors_others_background": "#ffffff",
-        "custom_colors_others_text": "#2e2a39"
+        "padding_bottom": 72
       }
     },
     "progreso": {
