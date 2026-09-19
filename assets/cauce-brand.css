@@ -4311,6 +4311,107 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   .cauce-ingredientes__icono .cauce-icono { width: 3.6rem; height: 3.6rem; }
 }
 
+/* Estilo con foto de fondo (D-057) ------------------------------------------
+
+   La foto ocupa toda la tarjeta y el texto va en blanco encima, en una columna
+   que deja libre la franja derecha (--cauce-ingredientes-visual): ahi la foto se
+   ve limpia, o va el icono si la tarjeta no tiene foto. La tarjeta es apaisada
+   en todos los anchos, asi que no hay cambio de fila a columna en desktop.
+
+   El velo es parejo hasta donde puede llegar el texto y recien ahi se
+   desvanece, igual que en la banda de solucion (D-055). Lo que cambia es que
+   aca no hay una foto sola para medir, sino ocho que se cargan desde el editor.
+   Por eso el velo se calcula contra el peor caso, una foto blanca pura: con
+   CIRUELA, el blanco da 4.51:1 al 70 % y 5.18:1 al 75 %, que es el default. El
+   rango del editor no baja de 70.
+
+   La tarjeta sin foto es del color del velo, liso. Su icono va a la derecha en
+   una pastilla translucida, en el mismo lugar donde las otras muestran la foto.  */
+
+.cauce-ingredientes--foto {
+  /* TINTA en CAUCE. La linea Hormify lo pasa a CIRUELA (bloque 20). */
+  --cauce-ingredientes-velo: 16, 38, 42;
+  --cauce-ingredientes-pad: 2rem;
+  --cauce-ingredientes-visual: 7.2rem;
+}
+
+.cauce-ingredientes--foto .cauce-ingredientes__tarjeta {
+  /* El texto sale del primer plano del esquema: se pisa aca y el nombre, la
+     descripcion y el icono lo toman solos. */
+  --color-foreground: 255, 255, 255;
+  --cauce-secundario: rgba(255, 255, 255, 0.85);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  flex-direction: row;
+  align-items: center;
+  min-height: 14rem;
+  padding: var(--cauce-ingredientes-pad);
+  color: rgb(var(--color-foreground));
+  background: rgb(var(--cauce-ingredientes-velo));
+}
+
+.cauce-ingredientes--foto .cauce-ingredientes__texto {
+  max-width: calc(100% - var(--cauce-ingredientes-visual));
+}
+
+.cauce-ingredientes__fondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.cauce-ingredientes__fondo-imagen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* El final de la meseta es el borde derecho de la columna de texto mas 1rem:
+   el ancho de la tarjeta, menos su padding, menos la franja de la foto. En el
+   borde el velo no llega a cero: con una foto de fondo blanco, como la del
+   zinc, la tarjeta se fundia con la seccion y perdia el contorno. */
+.cauce-ingredientes__fondo::after {
+  --cauce-ingredientes-velo-fin: calc(
+    100% - var(--cauce-ingredientes-pad) - var(--cauce-ingredientes-visual) + 1rem
+  );
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(var(--cauce-ingredientes-velo), var(--cauce-ingredientes-velo-alfa, 0.75)) 0,
+    rgba(var(--cauce-ingredientes-velo), var(--cauce-ingredientes-velo-alfa, 0.75)) var(--cauce-ingredientes-velo-fin),
+    rgba(var(--cauce-ingredientes-velo), calc(var(--cauce-ingredientes-velo-alfa, 0.75) * 0.35)) calc(var(--cauce-ingredientes-velo-fin) + 3rem),
+    rgba(var(--cauce-ingredientes-velo), calc(var(--cauce-ingredientes-velo-alfa, 0.75) * 0.15)) 100%
+  );
+}
+
+.cauce-ingredientes--foto .cauce-ingredientes__icono {
+  position: absolute;
+  top: 50%;
+  right: var(--cauce-ingredientes-pad);
+  transform: translateY(-50%);
+  width: 5.6rem;
+  height: 5.6rem;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cauce-ingredientes--foto .cauce-ingredientes__icono .cauce-icono {
+  width: 2.8rem;
+  height: 2.8rem;
+  color: currentColor;
+}
+
+@media screen and (min-width: 990px) {
+  .cauce-ingredientes--foto {
+    --cauce-ingredientes-pad: 2.4rem;
+  }
+
+  .cauce-ingredientes--foto .cauce-ingredientes__tarjeta { min-height: 17rem; }
+}
+
 /* ==========================================================================
    20. Linea Hormify — paleta propia del template product.hormify
    Ver docs/DECISIONS.md D-054 y layout/theme.liquid (clase plantilla--*).
@@ -4383,6 +4484,13 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
 :root.plantilla--hormify .cauce-solucion--fondo.color-inverse {
   --color-background: 82, 52, 68;
   --gradient-background: var(--cauce-ciruela);
+}
+
+/* El velo de las tarjetas de ingredientes con foto de fondo (D-057) tambien es
+   CIRUELA: son las dos piezas de la pagina que ponen texto blanco sobre una
+   foto, y asi se leen del mismo color. */
+:root.plantilla--hormify .cauce-ingredientes--foto {
+  --cauce-ingredientes-velo: 82, 52, 68;
 }
 
 /* ==========================================================================

@@ -19,6 +19,13 @@
   - Las dos listas son <ul> reales. La grilla cambia de columnas por CSS, no por
     markup, asi que el orden de lectura es siempre el del editor.
 
+  Dos estilos de tarjeta (`estilo_tarjeta`, D-057). `icono` es el de siempre: la
+  imagen, si hay, va en un circulo chico arriba del nombre. `foto` pone la imagen
+  de fondo, a sangre en toda la tarjeta, con un velo oscuro y el texto en blanco
+  encima. En ese estilo una tarjeta sin imagen queda en el color del velo, liso,
+  con su icono en el lugar donde iria la foto: la grilla se lee pareja mientras
+  faltan fotos, y cada tarjeta cambia sola cuando se le carga la suya.
+
   ADVERTENCIA DE CLAIMS (Disp. ANMAT 4980/05 · CAA art. 1381). El texto de cada
   tarjeta atribuye una funcion a un ingrediente, y la dosis tiene que ser la del
   rotulo aprobado. Todo el texto vive en templates/*.json (regla 1 de
@@ -41,10 +48,24 @@
   if cauce_hay_ingredientes or cauce_hay_sellos or section.settings.titulo != blank
     assign cauce_hay = true
   endif
+
+  assign cauce_foto = false
+  if section.settings.estilo_tarjeta == 'foto'
+    assign cauce_foto = true
+  endif
+
+  # Ancho de una tarjeta en desktop, para que el browser no baje una foto mas
+  # grande que la tarjeta. Tablet son dos columnas y telefono una.
+  assign cauce_cols = section.settings.columnas | plus: 0
+  assign cauce_ancho_tarjeta = section.settings.ancho_maximo | divided_by: cauce_cols
+  assign cauce_sizes = '(min-width: 990px) ' | append: cauce_ancho_tarjeta | append: 'px, (min-width: 750px) 50vw, 100vw'
 -%}
 
 {%- if cauce_hay -%}
-  <div class="cauce-ingredientes color-{{ section.settings.color_scheme }} gradient">
+  <div
+    class="cauce-ingredientes{% if cauce_foto %} cauce-ingredientes--foto{% endif %} color-{{ section.settings.color_scheme }} gradient"
+    {% if cauce_foto %}style="--cauce-ingredientes-velo-alfa: {{ section.settings.velo | divided_by: 100.0 }};"{% endif %}
+  >
     <div
       class="page-width cauce-ingredientes__inner"
       style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-ingredientes-ancho: {{ section.settings.ancho_maximo }}px; --cauce-ingredientes-cols: {{ section.settings.columnas }};"
@@ -76,8 +97,30 @@
             {%- if block.type != 'ingrediente' or block.settings.nombre == blank -%}
               {%- continue -%}
             {%- endif -%}
-            <li class="cauce-ingredientes__tarjeta" {{ block.shopify_attributes }}>
-              {%- if block.settings.imagen != blank -%}
+            <li
+              class="cauce-ingredientes__tarjeta{% if cauce_foto and block.settings.imagen != blank %} cauce-ingredientes__tarjeta--foto{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.imagen != blank and cauce_foto -%}
+                {%- liquid
+                  # El punto focal se elige en Archivos de Shopify, foto por foto.
+                  assign cauce_foco = block.settings.imagen.presentation.focal_point | default: '50% 50%'
+                  assign cauce_foco = 'object-position: ' | append: cauce_foco
+                -%}
+                <div class="cauce-ingredientes__fondo">
+                  {{
+                    block.settings.imagen
+                    | image_url: width: 1200
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '400, 600, 800, 1000, 1200',
+                      sizes: cauce_sizes,
+                      class: 'cauce-ingredientes__fondo-imagen',
+                      style: cauce_foco,
+                      alt: ''
+                  }}
+                </div>
+              {%- elsif block.settings.imagen != blank -%}
                 {{
                   block.settings.imagen
                   | image_url: width: 240
@@ -194,6 +237,28 @@
       ],
       "default": "4"
     },
+    {
+      "type": "select",
+      "id": "estilo_tarjeta",
+      "label": "Estilo de tarjeta",
+      "options": [
+        { "value": "icono", "label": "Icono o foto chica" },
+        { "value": "foto", "label": "Foto de fondo" }
+      ],
+      "default": "icono",
+      "info": "Con foto de fondo, la imagen de cada ingrediente ocupa toda la tarjeta y el texto va en blanco encima. Las tarjetas sin imagen quedan en el color oscuro, con su icono."
+    },
+    {
+      "type": "range",
+      "id": "velo",
+      "min": 70,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "label": "Velo sobre la foto",
+      "default": 75,
+      "info": "Solo con foto de fondo. Oscurece la foto debajo del texto. No baja de 70 %: con menos, el texto blanco deja de leerse sobre una foto clara."
+    },
 
     { "type": "header", "content": "Cierre" },
     { "type": "text", "id": "boton_texto", "label": "Texto del boton", "info": "Vacio = sin boton." },
@@ -249,7 +314,7 @@
           "type": "image_picker",
           "id": "imagen",
           "label": "Imagen",
-          "info": "Cuadrada, fondo liso o transparente. Si hay imagen, el icono no se dibuja."
+          "info": "Con el estilo de icono: cuadrada, fondo liso o transparente. Con foto de fondo: apaisada y de 800 px de ancho o mas; el recorte sigue el punto focal que se elige en Archivos. Si hay imagen, el icono no se dibuja."
         },
         {
           "type": "select",
