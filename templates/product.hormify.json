@@ -875,6 +875,8 @@
         "bajada": "<p>Cada ingrediente está elegido por lo que aporta al equilibrio hormonal, y juntos trabajan mejor que por separado.</p>",
         "alineacion": "centrado",
         "columnas": "4",
+        "estilo_tarjeta": "foto",
+        "velo": 75,
         "boton_texto": "Ver precios",
         "boton_link": "#comprar",
         "pie": "<p>La composición completa y las dosis por porción están en el rótulo y en la pestaña Ingredientes.</p>",
