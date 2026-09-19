@@ -2599,17 +2599,17 @@ h1, h2, h3, h4,
    --color-background porque color-mix devuelve un color y esa variable guarda
    una terna de canales.
 
-   Contraste sobre la banda de Hormify (#EFB9D1):
-     Titulo TINTA ..............................  9.40 AAA
-     Bajada MALVA ..............................  3.80  a 1.9rem y 700: texto
-                                                  grande, donde el minimo es 3:1
-     Volanta TINTA al 80 % .....................  5.96 AA
-     Metodologia TINTA al 80 % .................  5.96 AA
-   Sobre la banda de CAUCE (#EEB7A9) los mismos dan 8.99, 3.45, 5.77 y 5.77. El
-   secundario (VADO-TEXTO) NO se usa encima de la banda: da 3.36.
+   Contraste sobre la banda de Hormify (#FFABE6, D-060):
+     Titulo TINTA ..............................  9.17 AAA
+     Bajada TINTA al 90 % ......................  7.47 AAA
+     Volanta TINTA al 80 % .....................  5.88 AA
+     Metodologia TINTA al 80 % .................  5.88 AA
+   Sobre la banda de CAUCE (#EEB7A9) los mismos dan 8.99, 7.33, 5.77 y 5.77. El
+   secundario (VADO-TEXTO) NO se usa encima de la banda: da 3.36. El acento
+   tampoco: sobre su propio tinte da 2.07.
 
    Dentro de la tarjeta blanca: la cifra en TINTA 15.76, el detalle en el
-   secundario 5.63 y la torta —objeto grafico, 3:1— en MALVA 6.37.             */
+   secundario 5.63 y la torta —objeto grafico— en MAGENTA 3.55.                */
 
 .cauce-resultados--tarjetas {
   --cauce-resultados-intensidad: 45%;
@@ -2640,13 +2640,14 @@ h1, h2, h3, h4,
 
 .cauce-resultados__encabezado--centrado .cauce-resultados__bajada { margin-inline: auto; }
 
-/* La bajada es la linea que dice de donde salen las cifras. En tarjetas va en el
-   acento y no en el secundario: es lo que sostiene todo lo que hay abajo.
+/* La bajada es la linea que dice de donde salen las cifras: va grande y en
+   negrita, no en el secundario.
 
-   1.9rem y 700 no son decorativos: encima de la banda el acento da 3.80:1, que
-   alcanza para texto grande (>=18.66px en negrita) y no para texto normal. */
+   En el color de texto al 90 % y no en el acento (D-060): encima de la banda
+   —que es un tinte del propio acento— MAGENTA daba 2.07 y no se leia. Asi da
+   7.47 en Hormify y 7.33 en CAUCE. */
 .cauce-resultados--tarjetas .cauce-resultados__bajada {
-  color: var(--cauce-acento);
+  color: rgba(var(--color-foreground), 0.9);
   font-size: 1.9rem;
   font-weight: 700;
 }
@@ -4549,7 +4550,7 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
    Ver docs/DECISIONS.md D-054 y layout/theme.liquid (clase plantilla--*).
 
    La estructura, la tipografia, TINTA y VADO son los de CAUCE. Cambian dos
-   pares: el acento (OXIDO -> MALVA) y la superficie (SEDIMENTO -> RUBOR). Se
+   pares: el acento (OXIDO -> MAGENTA) y la superficie (SEDIMENTO -> RUBOR). Se
    pisan los tokens de marca y las variables de Shrine que salen de los mismos
    settings, asi las secciones nativas y las cauce-* cambian juntas y ninguna
    seccion declara un hex. Suma ademas un color que CAUCE no tiene, CIRUELA,
@@ -4561,31 +4562,57 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
 
    Contraste medido (WCAG 2.1, sRGB):
                           sobre BLANCO   sobre RUBOR   sobre RUBOR 2   sobre CAUCE
-     MALVA ...............   6.37 AA       5.25 AA       4.68 AA          —
-     MALVA CLARO .........     —             —             —            6.44 AA
-     CAUCE ...............  15.76 AAA     12.99 AAA     11.59 AAA          —
-     VADO-TEXTO ..........   5.63 AA       4.64 AA       4.14 grande       —
-     VERDE (exito) .......   7.47 AAA      6.16 AA       5.49 AA           —
-     CARMIN (error) ......   8.52 AAA      7.02 AAA      6.27 AA           —
-     Blanco sobre MALVA ..   6.37 AA   ->  la etiqueta del boton sigue blanca.
-     CAUCE sobre MALVA CLARO 6.44 AA   ->  --cauce-acento-label sobre TINTA.
+     MAGENTA .............   3.55          2.93          2.61            —
+     MAGENTA CLARO .......     —             —             —           6.51 AA
+     CAUCE ...............  15.76 AAA     12.99 AAA     11.59 AAA         —
+     VADO-TEXTO ..........   5.63 AA       4.64 AA       4.14 grande      —
+     VERDE (exito) .......   7.47 AAA      6.16 AA       5.49 AA          —
+     CARMIN (error) ......   8.52 AAA      7.02 AAA      6.27 AA          —
+     Blanco sobre MAGENTA .  3.55   ->  la etiqueta del boton sigue blanca.
+     CAUCE sobre MAGENTA CLARO 6.51 AA  ->  --cauce-acento-label sobre TINTA.
+     MAGENTA CLARO sobre CIRUELA 4.49
 
-   Limite anotado: MALVA (matiz 331) y CARMIN (matiz 350) quedan a 19 grados.
-   MALVA se lee violaceo y el error solo aparece como texto, pero conviene no
-   usar el error como relleno grande en esta pagina.
+   ATENCION, y es una decision comercial anotada en D-060: MAGENTA es el color
+   exacto de la referencia y NO llega al minimo de texto. El blanco encima da
+   3.55 (AA pide 4.5; 3.0 si la etiqueta es de 18.66px en negrita o mas), y como
+   icono sobre RUBOR da 2.93, abajo del 3.0 que pide un objeto grafico. Es un
+   color de luminosidad media: ni el blanco ni TINTA (4.44) llegan encima suyo.
+   Por eso el acento NO se usa como texto chico sobre ningun rosa; donde caia
+   asi, se cambio por el color de texto (el nombre de la columna en el bloque 22
+   y la bajada de las tarjetas en el bloque 14).
+
+   Limite anotado: MAGENTA (matiz 318) y CARMIN (matiz 350) quedan a 32 grados,
+   mas lejos que antes, asi que el error se distingue mejor que con MALVA.
    ========================================================================== */
 
 :root.plantilla--hormify {
-  --cauce-oxido:       #9A3F6B; /* MALVA        */
-  --cauce-oxido-claro: #E48AB2; /* MALVA CLARO  */
-  --cauce-sedimento:   #F3E6E9; /* RUBOR        */
-  --cauce-sedimento-2: #ECD8DE; /* RUBOR 2      */
-  --cauce-ciruela:     #523444; /* CIRUELA      */
+  --cauce-oxido:       #FF00B4; /* MAGENTA       */
+  --cauce-oxido-claro: #FF73D6; /* MAGENTA CLARO */
+  --cauce-sedimento:   #F3E6E9; /* RUBOR         */
+  --cauce-sedimento-2: #ECD8DE; /* RUBOR 2       */
+  --cauce-ciruela:     #523444; /* CIRUELA       */
 
-  --color-base-accent-1: 154, 63, 107;
-  --gradient-base-accent-1: #9A3F6B;
+  --color-base-accent-1: 255, 0, 180;
+  --gradient-base-accent-1: #FF00B4;
   --color-base-background-2: 243, 230, 233;
   --gradient-base-background-2: #F3E6E9;
+}
+
+/* Los iconos de la linea van en el acento y no en VADO (D-060). Se pisa el token
+   contextual del bloque 0 esquema por esquema, con los mismos selectores: sobre
+   claro queda MAGENTA (3.55 sobre blanco, 2.93 sobre RUBOR) y sobre oscuro
+   MAGENTA CLARO (6.51 sobre TINTA), porque el acento ya resuelve ese par.
+
+   Los dos esquemas de acento quedan afuera a proposito: adentro de una seccion
+   rellena con el acento, el icono no puede ser del mismo color. */
+:root.plantilla--hormify,
+.plantilla--hormify .color-background-1,
+.plantilla--hormify .color-background-2,
+.plantilla--hormify .color-inverse,
+.plantilla--hormify .color-text,
+.plantilla--hormify .cauce-banda-oscura,
+.plantilla--hormify .cauce-legal {
+  --cauce-icono: var(--cauce-acento);
 }
 
 /* CIRUELA: el fondo de la banda de solucion (D-056) --------------------------
@@ -4625,10 +4652,12 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   --cauce-ingredientes-velo: 82, 52, 68;
 }
 
-/* La columna propia de la comparativa (D-058) termina mas rosa que en CAUCE:
-   60 % de MALVA CLARO sobre blanco. La tilde MALVA da 3.80:1 contra ese final. */
+/* La columna propia de la comparativa (D-058) termina en 30 % de MAGENTA CLARO
+   sobre blanco (#FFD5F3) y no en 60 %: encima del rosa fuerte la tilde MAGENTA
+   caia a 2.07 y el circulo se perdia. Con 30 % da 2.72; lo que lleva el dato es
+   el trazo blanco de adentro, que sobre la tilde da 3.55. Ver D-060. */
 :root.plantilla--hormify .cauce-comparativa {
-  --cauce-comparativa-intensidad: 60%;
+  --cauce-comparativa-intensidad: 30%;
 }
 
 /* La banda de resultados en tarjetas (D-059) es ese mismo rosa. */
@@ -4673,14 +4702,18 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
    referencia. El limite lo pone la tilde, que tiene que pasar 3:1 contra el
    tramo mas oscuro: con OXIDO, al 60 % bajaria a 2.83.
 
-   Contraste (WCAG 2.1, sRGB):
-     Hormify · tilde MALVA sobre el final (#EFB9D1) .......  3.80  componente
-     Hormify · tilde MALVA sobre RUBOR, arriba ............  5.25
-     Hormify · trazo blanco sobre la tilde ................  6.37
-     Hormify · cruz MALVA sobre blanco ....................  6.37
-     Hormify · precio blanco sobre MALVA ..................  6.37 AA
-     Hormify · texto CAUCE sobre el final .................  9.40
+   Contraste (WCAG 2.1, sRGB). Los de Hormify cambiaron con el acento (D-060):
+     Hormify · tilde MAGENTA sobre el final (#FFD5F3) .....  2.72  ver abajo
+     Hormify · tilde MAGENTA sobre RUBOR, arriba ..........  2.93  ver abajo
+     Hormify · trazo blanco sobre la tilde ................  3.55  es el que lleva el dato
+     Hormify · cruz MAGENTA sobre blanco ..................  3.55  componente
+     Hormify · precio blanco sobre MAGENTA ................  3.55  AA solo a 1.9rem/700
+     Hormify · texto CAUCE sobre el final .................  12.05
      CAUCE   · tilde OXIDO sobre el final (#EEB7A9) .......  3.45  componente
+
+   MAGENTA no llega a 3:1 contra su propio rosa: el circulo de la tilde se
+   distingue por forma y el trazo blanco de adentro es el que lleva el dato. Es
+   parte de la decision de D-060, que elige el color exacto de la referencia.
    ========================================================================== */
 
 .cauce-comparativa {
@@ -4758,7 +4791,12 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   line-height: 1.3;
 }
 
-/* Sin imagen, el nombre de la columna va con el trazo del logo. */
+/* Sin imagen, el nombre de la columna va con el trazo del logo.
+
+   En el color de texto y no en el acento (D-060): es texto chico encima de la
+   cabecera de la columna, que es la superficie de la marca, y ahi el acento no
+   esta garantizado. Con MAGENTA daba 2.93 sobre RUBOR; en el color de texto da
+   12.99. */
 .cauce-comparativa__marca {
   display: block;
   font-family: var(--cauce-font-logo);
@@ -4766,7 +4804,6 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   font-weight: var(--cauce-logo-weight);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--cauce-acento);
 }
 
 .cauce-comparativa__imagen {
