@@ -725,6 +725,15 @@
         "bajada": "<p><strong>Hormify</strong> ayuda a tu cuerpo a recuperar el equilibrio desde adentro, con 8 activos de origen natural que trabajan juntos.</p>",
         "alineacion": "izquierda",
         "columnas": "2",
+        "disposicion": "fondo",
+        "imagen_fondo": "shopify://shop_images/image3.jpg",
+        "alt_fondo": "Dos frascos de Hormify de CAUCE, de 60 cápsulas cada uno, sobre un fondo de papel rosa.",
+        "posicion_columna": "izquierda",
+        "ancho_columna": 520,
+        "alto_minimo": 480,
+        "velo": 65,
+        "foco": 50,
+        "foco_mobile": 70,
         "alt": "Frasco de Hormify de CAUCE, 60 cápsulas.",
         "ancho_imagen": 900,
         "estilo_imagen": "suelta",
@@ -735,16 +744,7 @@
         "color_scheme": "inverse",
         "ancho_maximo": 1120,
         "padding_top": 96,
-        "padding_bottom": 96,
-        "disposicion": "fondo",
-        "imagen_fondo": "shopify://shop_images/image3.jpg",
-        "alt_fondo": "Dos frascos de Hormify de CAUCE, de 60 cápsulas cada uno, sobre un fondo de papel rosa.",
-        "posicion_columna": "izquierda",
-        "ancho_columna": 520,
-        "alto_minimo": 480,
-        "velo": 65,
-        "foco": 50,
-        "foco_mobile": 70
+        "padding_bottom": 96
       }
     },
     "ingredientes": {
@@ -756,6 +756,7 @@
             "nombre": "Ashwagandha",
             "dosis": "",
             "texto": "<p>Planta adaptógena que ayuda a bajar el estrés y el cortisol, y acompaña el metabolismo.</p>",
+            "imagen": "shopify://shop_images/ashawanda.webp",
             "icono": "hoja"
           }
         },
@@ -801,6 +802,7 @@
             "nombre": "Zinc",
             "dosis": "",
             "texto": "<p>Mineral esencial para el equilibrio hormonal, el metabolismo y la piel.</p>",
+            "imagen": "shopify://shop_images/zinc.webp",
             "icono": "escudo"
           }
         },
@@ -1188,6 +1190,7 @@
         "h3",
         "h4"
       ],
+      "disabled": true,
       "settings": {
         "volanta": "",
         "titulo": "Qué esperar, mes a mes",
