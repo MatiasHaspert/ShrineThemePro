@@ -2858,3 +2858,72 @@ resuelto el primer pendiente de D-055. El commit de Shopify del mismo día sumó
 ingredientes (`ashawanda.webp`, `zinc.webp`) y desactivó la sección "Qué esperar, mes a mes".
 
 ---
+
+## D-057 · 2026-09-19 · Ingredientes de Hormify: la foto de cada activo pasa a ser el fondo de su tarjeta
+
+**Decisión.** `cauce-ingredientes` suma un **estilo de tarjeta** (`estilo_tarjeta`: `icono`, el de
+siempre, y `foto`). Con `foto`, la imagen de cada ingrediente ocupa toda la tarjeta, un velo oscuro
+la cubre del lado del texto y el nombre y la descripción van en blanco encima. Es la tarjeta de la
+sección de ingredientes de hormify.com. La PDP de Hormify usa `foto` con velo al 75 %.
+
+Igual que en D-055, no es una sección nueva: el contenido, los bloques y los claims son los mismos.
+
+### 1. Lo que se decidió con el comercio
+
+| | Queda | Descartado |
+|---|---|---|
+| Tarjeta sin foto (hoy 6 de 8) | **Ciruela liso, con el ícono** en una pastilla translúcida a la derecha, donde las otras muestran la foto. La grilla se lee pareja y cada tarjeta pasa a foto sola cuando se le carga la suya | Dejarlas en RUBOR con el círculo: la grilla quedaba mitad oscura y mitad clara hasta tener las 8 fotos |
+| Teléfono | **Una columna de tarjetas apaisadas** (≈ 360 × 140 px), texto a 14 px | Dos columnas como hormify.com: con los textos en castellano cada tarjeta quedaba de ≈ 165 px de ancho, la descripción en 5 o 6 renglones y la foto tapada |
+
+Tablet va a dos columnas y desktop a las del setting (4 en Hormify). La tarjeta es apaisada en todos
+los anchos, así que en desktop deja de pasar de fila a columna.
+
+### 2. El velo se calcula contra el peor caso, no contra una foto
+
+En la banda de solución (D-055) había una foto sola y el velo salió de medirla. Acá son ocho fotos
+que se cargan desde el editor, así que el número sale del peor caso posible: **una foto blanca
+pura** debajo del texto. Con el velo en CIRUELA, el blanco da **4.51:1 al 70 %** y **5.18:1 al
+75 %**. Por eso el default es 75 y el rango del editor **no baja de 70**: cualquier foto que se suba
+deja el texto en AA sin que nadie tenga que medir.
+
+Medido sobre el render, renglón por renglón, el píxel más claro debajo del texto:
+
+| Ancho | Ashwagandha | Zinc (fondo blanco) |
+|---|---|---|
+| 390 | 5.32:1 | 5.15:1 |
+| 820 | 5.39:1 | 5.15:1 |
+| 1440 | 5.39:1 | 5.17:1 |
+
+El velo es parejo hasta donde puede llegar el texto (el borde de la columna + 1 rem) y recién ahí se
+desvanece, como en D-055. En el borde derecho **no llega a cero** (queda en 15 % del valor): con la
+foto del zinc, de fondo blanco, la tarjeta se fundía con la sección y perdía el contorno.
+
+El velo es TINTA en CAUCE y **CIRUELA en Hormify** (bloque 20), el mismo color de la banda de
+solución de D-056: son las dos piezas de la página que ponen texto blanco sobre una foto.
+
+### 3. Detalles de construcción
+
+- La foto es un `<img>` con `srcset`, no un `background-image`, y el `sizes` sale del ancho del
+  bloque dividido por las columnas (300 px en Hormify). El `alt` va vacío: el nombre del
+  ingrediente ya está en el `<h3>` de la tarjeta.
+- El recorte sigue el **punto focal** que se elige en Archivos de Shopify, foto por foto
+  (`image.presentation.focal_point`). No hace falta un setting de encuadre por bloque.
+- El texto toma el blanco pisando `--color-foreground` en la tarjeta, y la dosis pasa a blanco al
+  85 % pisando `--cauce-secundario`. Ninguna regla nombra el nombre ni la descripción.
+- Se probó sin `theme dev`: el DOM de la página viva se reescribió como lo dibuja el Liquid de la
+  rama, con el `cauce-brand.css` local. `theme check` da lo mismo que `main` (80 avisos, el único
+  error es el de `card-product.liquid:44`, de antes).
+
+### 4. Lo que falta
+
+- **Las otras 6 fotos** (maca, ginseng, jengibre, L-fenilalanina, B6 y pimienta).
+- **Resolución.** `ashawanda.webp` y `zinc.webp` miden **400 × 266 px**. En un teléfono la tarjeta
+  pide unos 720 px reales y la foto se ve blanda. Conviene subirlas de **800 px de ancho o más**
+  (el `info` del bloque ya lo pide).
+- **Origen de las fotos.** Si salen de hormify.com, reemplazarlas por fotos propias o de stock con
+  licencia antes de pautar.
+
+**Contexto.** El commit de Shopify del mismo día cambió la foto "con" del bloque de contraste de
+`image2.jpg` a `image4.jpg`.
+
+---
