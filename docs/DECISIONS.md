@@ -2926,6 +2926,10 @@ solución de D-056: son las dos piezas de la página que ponen texto blanco sobr
 **Contexto.** El commit de Shopify del mismo día cambió la foto "con" del bloque de contraste de
 `image2.jpg` a `image4.jpg`.
 
+**Actualización (D-060).** El acento de la línea pasó a MAGENTA y con él cambiaron los números de
+esta sección: la columna termina en 30 % y no en 60 %, la tilde da 2.72 contra ese final y el nombre
+de la columna dejó el acento. Los valores vigentes están en el bloque 22 de `cauce-brand.css`.
+
 ---
 
 ## D-058 · 2026-09-19 · La comparativa de Hormify pasa a una sección propia, con la tabla de hormify.com
@@ -3042,5 +3046,61 @@ medir el ancho real sin escribir un número que no existe. `theme check` da lo m
 El botón "Ver precios" queda oscuro y no en el acento: sobre los esquemas de color, Shrine pasa el
 botón al color de texto (`.color-background-2 { --color-button: var(--color-foreground) }`). Es el
 mismo botón que en las otras bandas de superficie de la página.
+
+**Actualización (D-060).** Con el acento en MAGENTA, la bajada dejó el acento y pasó al color de
+texto al 90 %: sobre la banda —que es un tinte del propio acento— MAGENTA daba 2.07.
+
+---
+
+## D-060 · 2026-09-19 · El acento de Hormify pasa a MAGENTA #FF00B4, con contraste por debajo de AA
+
+**Decisión del comercio.** El acento de la línea Hormify deja MALVA `#9A3F6B` y pasa a **MAGENTA
+`#FF00B4`**, el color exacto del botón de hormify.com, medido sobre la captura que pasó el comercio.
+Su par para las bandas oscuras es **MAGENTA CLARO `#FF73D6`** (tinte del mismo color, 6.51 sobre
+TINTA y 4.49 sobre CIRUELA, casi lo mismo que daba MALVA CLARO). Los íconos de la página dejan VADO
+y pasan al acento. RUBOR, RUBOR 2 y CIRUELA no cambian.
+
+**Lo que esto cuesta, con los números a la vista.** MAGENTA es un color de luminosidad media: nada
+se lee bien encima. Se le ofrecieron al comercio tres opciones y eligió el color exacto:
+
+| | Blanco encima | Como ícono sobre blanco | Como ícono sobre RUBOR |
+|---|---|---|---|
+| MALVA, el de antes | 6.37 | 6.37 | 5.25 |
+| #C20089, mismo tono más oscuro | 5.76 | 5.76 | 4.74 |
+| #E0009E | 4.49 | 4.49 | 3.70 |
+| **#FF00B4** (queda) | **3.55** | **3.55** | **2.93** |
+
+El mínimo de WCAG AA es 4.5 para texto normal, 3.0 para texto grande (≥18.66 px en negrita) y 3.0
+para objetos gráficos. Entonces, **en la etiqueta blanca de los botones de compra el contraste queda
+por debajo del mínimo** (3.55), y también como ícono sobre las bandas RUBOR (2.93). TINTA encima
+tampoco resuelve: da 4.44. Queda anotado como decisión comercial.
+
+**Si se quisiera cumplir sin cambiar el color:** subir la etiqueta de los botones a 1.9rem en
+negrita la convierte en texto grande, donde el mínimo baja a 3.0 y 3.55 alcanza. Es un cambio de
+tipografía, no de color, y está sin hacer.
+
+### 1. Dónde NO se usó el acento, justamente por esto
+
+| Pieza | Antes | Ahora | Por qué |
+|---|---|---|---|
+| Nombre de la columna en la comparativa (bloque 22) | acento | color de texto | Texto chico sobre RUBOR: MAGENTA daba 2.93, el color de texto da 12.99 |
+| Bajada de las tarjetas de resultados (bloque 14) | acento | color de texto al 90 % | Sobre la banda, que es un tinte del propio acento, MAGENTA daba 2.07; ahora 7.47 |
+| Final de la columna de la comparativa | 60 % del acento claro | 30 % | Con el rosa fuerte la tilde MAGENTA caía a 2.07 y el círculo se perdía. Con 30 % da 2.72, y lo que lleva el dato es el trazo blanco de adentro, que da 3.55 |
+
+El resto sigue igual: la tilde y la cruz son objetos gráficos con su trazo blanco adentro, la torta
+de resultados va sobre tarjeta blanca (3.55) y el precio del bloque de compra es texto grande.
+
+### 2. Cómo se aplicó
+
+- **Bloque 20** de `cauce-brand.css`: los dos hexes del acento y la terna `--color-base-accent-1`,
+  que es de donde salen los botones de las secciones nativas de Shrine.
+- **Íconos:** se pisa el token contextual `--cauce-icono` esquema por esquema, con los mismos
+  selectores del bloque 0. Los dos esquemas de acento quedan afuera: dentro de una sección rellena
+  con el acento, el ícono no puede ser del mismo color.
+- **Template:** cinco bloques nativos tenían los íconos en "Accent 2" (VADO) y pasaron a "Accent 1":
+  los dos de beneficios del hero y tres de la sección de garantía. Los íconos de los bloques de texto
+  ya salían del token, así que no hubo que tocarlos.
+- Los íconos de las pestañas del hero siguen en el color de texto: son parte del título de cada
+  pestaña, no un ícono de acento.
 
 ---
