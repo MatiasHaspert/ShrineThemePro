@@ -190,7 +190,7 @@
     "cauce_rnpa": "",
     "cauce_umbral_envio_gratis": 55000,
     "cauce_cuotas": 3,
-    "cauce_medios_pago": "mercadopago,visa,mastercard,amex,cabal,naranja,transferencia",
+    "cauce_medios_pago": "mercadopago,visa,mastercard,amex,cabal,naranja",
     "cauce_transferencia_pct": 10,
     "cauce_transferencia_codigo": "TRANSFERENCIA10",
     "checkout_accent_color": "#dd1d1d",
