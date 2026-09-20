@@ -1473,7 +1473,7 @@
           "type": "pregunta",
           "settings": {
             "pregunta": "¿Sirve en la menopausia?",
-            "respuesta": "<p>Sí. Hormify está pensado para acompañar el equilibrio hormonal y ayuda con los sofocos, el ánimo, la energía y el estrés, que son de lo que más cambia en esa etapa.</p>"
+            "respuesta": "<p>Sí, Hormify está formulado con hierbas adaptógenas y nutrientes clave que pueden ayudar a mantener el equilibrio hormonal, así como a mejorar el estado de ánimo, los niveles de energía y el manejo del estrés, aspectos que suelen verse afectados durante la menopausia.</p>"
           }
         },
         "q6": {
@@ -1486,15 +1486,15 @@
         "q7": {
           "type": "pregunta",
           "settings": {
-            "pregunta": "¿Lo puedo tomar si estoy embarazada o dando la teta?",
-            "respuesta": "<p>No. Hormify no está recomendado durante el embarazo ni la lactancia.</p>"
+            "pregunta": "¿Puedo usar este suplemento si estoy embarazada o en período de lactancia?",
+            "respuesta": "<p>Hormify no se recomienda para mujeres embarazadas o en período de lactancia. Antes de usar cualquier suplemento alimenticio durante estos períodos, es importante consultar con un profesional de la salud calificado para garantizar su seguridad tanto para usted como para su bebé.</p>"
           }
         },
         "q8": {
           "type": "pregunta",
           "settings": {
             "pregunta": "¿Lo puedo tomar con anticonceptivos u otra medicación?",
-            "respuesta": "<p>Si tomás anticonceptivos, terapia hormonal o cualquier otra medicación, consultá con tu médico antes de empezar.</p>"
+            "respuesta": "<p>Hormify está formulado con ingredientes que generalmente se consideran compatibles con la mayoría de los medicamentos, incluyendo muchos métodos anticonceptivos. Sin embargo, dado que las respuestas individuales pueden variar, es recomendable consultar con su médico para asegurarse de que sea adecuado para su caso particular.</p>"
           }
         }
       },
