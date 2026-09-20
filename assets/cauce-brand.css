@@ -480,6 +480,17 @@ h1, h2, h3, h4,
   max-width: 46ch;
 }
 
+/* El icono de cada pestana del bloque de compra va en el acento, como el resto
+   de los iconos de la pagina (D-062). Shrine lo dibuja con fill="currentColor",
+   asi que hereda el color del titulo: con esto pasa al token y sigue el par por
+   fondo, sin tocar el markup de la seccion nativa.
+
+   Solo el de la izquierda: la flecha de abrir y cerrar se queda en el color de
+   texto, porque es un control y no una vineta. */
+.product__accordion .summary__title > .material-icon {
+  color: var(--cauce-acento);
+}
+
 /* Escalones de cantidad --------------------------------------------------- */
 
 /* Si el producto no tiene los metafields de dosis, [duracion] se reemplaza por
