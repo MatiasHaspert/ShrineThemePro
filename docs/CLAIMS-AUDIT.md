@@ -558,7 +558,8 @@ rutina con una alimentación equilibrada y actividad física."* La leyenda de su
 |---|---|---|
 | "98,325 reviews", 4.8 estrellas | No hay reseñas. Un número inventado es publicidad engañosa (Ley 24.240 art. 9, Res. SC 270/2020) con o sin ANMAT | bloque `resenas` **apagado**, con `[[PENDIENTE]]` |
 | "11,327+ women in our internal study", 93 % / 92 % / 83 % / 97 % | No hay estudio | `resultados` **apagada**, con `[[PENDIENTE]]` |
-| Testimonios | No hay clientas | `resenas` (glow) **apagada**, sin nombres ni fotos |
+| Testimonios | No hay clientas | `resenas` (glow) **apagada**, sin nombres ni fotos. `ugc` tiene el diseño de las tarjetas listo (D-061) y las cuatro en `[[PENDIENTE]]`: sin foto cargada no se dibuja |
+| Las fotos de clientas de hormify.com | Son de otra marca, muestran **otro frasco** y salen personas identificables. Publicarlas sería testimonio inventado (Ley 24.240 art. 9), foto ajena y uso de imagen sin consentimiento (Ley 11.723 art. 31) | nada: las tarjetas piden foto propia y permiso escrito |
 | Logos de Women's Health, Forbes, Healthline | Sería afirmar una cobertura que no existe | nada |
 | "Made in FDA registered facility" | No aplica en Argentina | nada |
 | "Most popular" | Popularidad sin ventas (D-047b) | cinta de resultado |

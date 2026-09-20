@@ -3104,3 +3104,45 @@ de resultados va sobre tarjeta blanca (3.55) y el precio del bloque de compra es
   pestaña, no un ícono de acento.
 
 ---
+
+## D-061 · 2026-09-19 · Las tarjetas de UGC suman el texto encima de la foto, y siguen vacías
+
+**Decisión.** `cauce-ugc` suma una **disposición** (`debajo`, la de siempre, y `encima`). Con
+`encima` replica la tira de reseñas de hormify.com: foto vertical, el texto apoyado sobre la foto
+con un velo que lo sostiene, una línea de qué compró con la foto del pack, el nombre, y la tarjeta
+cierra con una cinta de **clienta verificada** en el acento. La sección suma además un botón al pie.
+La PDP de Hormify queda configurada así, **y sigue sin dibujarse**: las cuatro tarjetas están vacías.
+
+**Por qué vacía.** No hay UGC real. Las tres fotos que pasó el comercio son de hormify.com: muestran
+**otro frasco** (etiqueta en inglés) y a mujeres identificables. Publicarlas sería, a la vez,
+testimonio inventado (Ley 24.240 art. 9, Res. SC 270/2020), foto ajena y uso de la imagen de una
+persona sin su consentimiento (Ley 11.723 art. 31). La sección no dibuja nada mientras una tarjeta
+no tenga foto o video, así que el bloqueo es por construcción y no por acordarse.
+
+**Qué hace falta para prenderla:** foto o video de una clienta real con el frasco de CAUCE, permiso
+escrito de esa persona para publicar su imagen, y que la frase y el "compró X frascos" sean ciertos
+y se puedan mostrar. El texto sigue sin poder mencionar patologías, plazos ni profesionales de la
+salud (ANMAT 4980/05), que ya estaba en la cabecera de la sección.
+
+### 1. Construcción
+
+| | |
+|---|---|
+| Pie | Se arma una sola vez y se dibuja adentro de la foto o abajo, según la disposición: el mismo contenido en los dos lados, sin duplicar el markup |
+| Velo | Plano debajo del texto, desvanecido hacia arriba, como en D-055 y D-057. No hay una foto para medir —las carga el comercio— así que sale del peor caso, una foto blanca: con CIRUELA al 88 % el blanco da 7.4:1 |
+| Cinta | En el acento, con su etiqueta. En Hormify eso es blanco sobre MAGENTA, 3.55:1: el mismo límite que el botón de compra (D-060) |
+| Orden | Qué compró, la frase, el nombre. La disposición de abajo también cambió a ese orden: la frase antes que la firma |
+
+**Un número que salió de medir el render:** con el desvanecido cruzando el texto —la primera versión
+tenía la meseta al 62 % de la caja— el primer renglón, el de la compra, caía a **4.06:1** sobre una
+foto clara. Ahora la meseta cubre el bloque de texto entero y el desvanecido vive en el padding de
+arriba, que está vacío: medido sobre el render, el peor píxel queda en **8.37:1**.
+
+### 2. Cómo se probó
+
+Sin `theme dev` y sin UGC: se inyectó en la página viva el HTML que dibuja el Liquid, con el
+`cauce-brand.css` local, a 390 y 1440 px. Las fotos de las tarjetas fueron **fotos del producto de
+la tienda**, de relleno, y el texto de ejemplo: no se usó ninguna de las imágenes de hormify.com, ni
+siquiera para maquetar. `theme check` da lo mismo que `main`.
+
+---

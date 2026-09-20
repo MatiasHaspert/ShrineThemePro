@@ -628,4 +628,5 @@ Marquesina: Sin hormonas · Peso hormonal · Hinchazón · Sofocos · Estrés y 
 `banda`, `garantia` y `suscripcion` son las mismas del R-ALA. `resultados` y `resenas` están
 apagadas y sólo tienen `[[PENDIENTE]]` (D-054 §1). `resultados` ya tiene armada la disposición de
 tarjetas de la referencia (D-059): lo único que falta para prenderla son los números de una encuesta
-propia, con su metodología.
+propia, con su metodología. `ugc` tiene armada la tarjeta con el texto encima y la cinta de clienta
+verificada (D-061), con las cuatro tarjetas en `[[PENDIENTE]]` y sin foto: falta UGC real.
