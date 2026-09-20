@@ -331,6 +331,34 @@ h1, h2, h3, h4,
 .text-color-accent-1 { color: var(--cauce-acento); }
 .text-color-accent-2 { color: var(--cauce-secundario); }
 
+/* Los botones van en mayuscula (D-063).
+
+   Es text-transform y no texto escrito en mayuscula en el editor: el contenido
+   sigue guardado como se lee ("Agregar al carrito"), que es lo que anuncia un
+   lector de pantalla y lo que se ve en el theme editor. Escribirlo en mayuscula
+   ademas obliga a acordarse en cada boton nuevo.
+
+   La lista de selectores es la misma que usa base.css para el boton, asi entran
+   todas sus variantes —el ATC de la PDP, el del carrito, los de las secciones
+   cauce-* y los de las nativas— sin enumerarlas una por una.
+
+   El tracking no es decorativo: en mayuscula, Archivo a 700 pega las letras.
+   0.02em y no el 0.04em de la volanta y los sellos: la etiqueta del boton mas
+   largo ("Agregar 3 frascos · $72.900") se va a dos renglones a 390 px. Por lo
+   mismo el boton a todo el ancho afloja el aire lateral, que con 3rem de cada
+   lado deja 300px utiles en un telefono. */
+.button,
+.customer button,
+.shopify-challenge__button,
+button.shopify-payment-button__button--unbranded {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media screen and (max-width: 749px) {
+  .button--full-width { padding-inline: 1.6rem; }
+}
+
 /* horizontal-ticker no respeta prefers-reduced-motion (AUDIT 2, bloque 11). */
 @media (prefers-reduced-motion: reduce) {
   .horizontal-ticker__content,
