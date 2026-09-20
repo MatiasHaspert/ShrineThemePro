@@ -12,8 +12,20 @@
   - una tarjeta sin video renderiza igual con el poster, asi se puede maquetar
     con placeholders antes de tener UGC real.
 
+  Dos disposiciones (`disposicion`, D-061). `debajo` es la de siempre: el nombre y
+  el texto abajo de la tarjeta. `encima` es la de la referencia de Hormify: el
+  texto se apoya sobre la foto, con un velo que lo sostiene, y la tarjeta cierra
+  con una cinta de cliente verificado.
+
   El texto de cada tarjeta es contenido de bloque. No puede mencionar patologias,
   plazos de resultado ni profesionales de la salud (Disp. ANMAT 4980/05).
+
+  ADVERTENCIA, y vale para la foto tanto como para el texto: cada tarjeta es un
+  testimonio. Tiene que ser de una clienta real, la foto tiene que ser propia (o
+  con licencia) y la persona que aparece tiene que haber dado permiso para
+  publicarla (Ley 24.240 art. 9 y Res. SC 270/2020 por el testimonio, Ley 11.723
+  art. 31 por la imagen). Sin eso, la seccion no se publica. Si no hay tarjetas
+  cargadas no se dibuja nada, que es como queda hasta tener UGC real.
 {% endcomment %}
 
 {%- liquid
@@ -24,10 +36,15 @@
       break
     endif
   endfor
+
+  assign cauce_encima = false
+  if section.settings.disposicion == 'encima'
+    assign cauce_encima = true
+  endif
 -%}
 
 {%- if cauce_hay -%}
-  <div class="cauce-ugc color-{{ section.settings.color_scheme }} gradient">
+  <div class="cauce-ugc{% if cauce_encima %} cauce-ugc--encima{% endif %} color-{{ section.settings.color_scheme }} gradient">
     <div
       class="cauce-ugc__inner"
       style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --cauce-ugc-ancho: {{ section.settings.ancho_tarjeta }}px;"
@@ -60,6 +77,35 @@
               assign cauce_poster = block.settings.video.preview_image
             endif
           -%}
+
+          {%- comment -%}
+            El pie se arma una sola vez y se dibuja adentro de la foto o abajo,
+            segun la disposicion: el mismo contenido en los dos lados.
+          {%- endcomment -%}
+          {%- capture cauce_pie -%}
+            {%- if block.settings.compra != blank or block.settings.autor != blank or block.settings.texto != blank -%}
+              <div class="cauce-ugc__pie">
+                {%- if block.settings.compra != blank -%}
+                  <p class="cauce-ugc__compra">
+                    {%- if block.settings.imagen_compra != blank -%}
+                      {{
+                        block.settings.imagen_compra
+                        | image_url: width: 120
+                        | image_tag: loading: 'lazy', widths: '60, 90, 120', sizes: '30px', class: 'cauce-ugc__compra-imagen', alt: ''
+                      }}
+                    {%- endif -%}
+                    <span>{{ block.settings.compra }}</span>
+                  </p>
+                {%- endif -%}
+                {%- if block.settings.texto != blank -%}
+                  <p class="cauce-ugc__texto">{{ block.settings.texto }}</p>
+                {%- endif -%}
+                {%- if block.settings.autor != blank -%}
+                  <p class="cauce-ugc__autor cauce-dato">{{ block.settings.autor }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endcapture -%}
 
           <article class="cauce-ugc__card" {{ block.shopify_attributes }}>
             <div class="cauce-ugc__media">
@@ -115,21 +161,29 @@
                   <span aria-hidden="true" class="cauce-ugc__sonido-icono"></span>
                 </button>
               {%- endif -%}
+
+              {%- if cauce_encima -%}{{ cauce_pie }}{%- endif -%}
             </div>
 
-            {%- if block.settings.autor != blank or block.settings.texto != blank -%}
-              <div class="cauce-ugc__pie">
-                {%- if block.settings.autor != blank -%}
-                  <p class="cauce-ugc__autor cauce-dato">{{ block.settings.autor }}</p>
-                {%- endif -%}
-                {%- if block.settings.texto != blank -%}
-                  <p class="cauce-ugc__texto">{{ block.settings.texto }}</p>
-                {%- endif -%}
-              </div>
+            {%- unless cauce_encima -%}{{ cauce_pie }}{%- endunless -%}
+
+            {%- if cauce_encima and section.settings.sello != blank -%}
+              <p class="cauce-ugc__sello">
+                {%- render 'cauce-iconos', icono: 'chequeo' -%}
+                <span>{{ section.settings.sello }}</span>
+              </p>
             {%- endif -%}
           </article>
         {%- endfor -%}
       </cauce-ugc>
+
+      {%- if section.settings.boton_texto != blank and section.settings.boton_link != blank -%}
+        <div class="page-width">
+          <a class="cauce-ugc__cta button" href="{{ section.settings.boton_link }}">
+            {{- section.settings.boton_texto -}}
+          </a>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 {%- endif -%}
@@ -143,6 +197,10 @@
     {
       "type": "paragraph",
       "content": "PROHIBIDO en el texto de las tarjetas: patologias, sintomas, plazos de resultado, comparaciones con medicamentos y menciones a medicos o profesionales de la salud. Un testimonio que diga cualquiera de esas cosas es claim terapeutico (Disp. ANMAT 4980/05) aunque lo diga un cliente."
+    },
+    {
+      "type": "paragraph",
+      "content": "Cada tarjeta es un testimonio: clienta real, foto propia o con licencia, y permiso de la persona que aparece para publicarla. Sin eso no se publica."
     },
     { "type": "text", "id": "volanta", "label": "Volanta" },
     { "type": "inline_richtext", "id": "titulo", "label": "Titulo", "default": "Quienes ya lo toman" },
@@ -158,6 +216,24 @@
       "default": "h1"
     },
     { "type": "text", "id": "etiqueta_a11y", "label": "Etiqueta para lectores de pantalla", "default": "Videos de clientes" },
+    {
+      "type": "select",
+      "id": "disposicion",
+      "label": "Disposicion de la tarjeta",
+      "options": [
+        { "value": "debajo", "label": "Texto debajo de la foto" },
+        { "value": "encima", "label": "Texto encima de la foto" }
+      ],
+      "default": "debajo",
+      "info": "Con el texto encima, la tarjeta cierra con la cinta de cliente verificado."
+    },
+    {
+      "type": "text",
+      "id": "sello",
+      "label": "Cinta de la tarjeta",
+      "default": "Clienta verificada",
+      "info": "Solo con el texto encima. Vacio = sin cinta. Es un dato: tiene que ser verdad que la compra existe."
+    },
     { "type": "range", "id": "ancho_tarjeta", "min": 200, "max": 400, "step": 20, "unit": "px", "label": "Ancho de tarjeta", "default": 280 },
     {
       "type": "select",
@@ -170,6 +246,10 @@
       ],
       "default": "background-1"
     },
+    { "type": "header", "content": "Boton" },
+    { "type": "text", "id": "boton_texto", "label": "Texto", "info": "Vacio = sin boton." },
+    { "type": "url", "id": "boton_link", "label": "Enlace", "info": "Para volver al bloque de compra usa #comprar." },
+
     { "type": "header", "content": "Espaciado" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Arriba", "default": 72 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Abajo", "default": 72 }
@@ -182,6 +262,8 @@
         { "type": "video", "id": "video", "label": "Video vertical", "info": "9:16. Si lo dejas vacio, la tarjeta muestra solo el poster." },
         { "type": "image_picker", "id": "poster", "label": "Poster" },
         { "type": "text", "id": "alt", "label": "Texto alternativo del poster" },
+        { "type": "text", "id": "compra", "label": "Que compro", "info": "Ej: Compro 3 frascos. Es un dato de la venta: tiene que poder mostrarse." },
+        { "type": "image_picker", "id": "imagen_compra", "label": "Foto del pack", "info": "Chica y cuadrada. Se ve al lado de que compro." },
         { "type": "text", "id": "autor", "label": "Nombre" },
         { "type": "text", "id": "texto", "label": "Texto", "info": "Sin patologias, sintomas ni plazos de resultado." }
       ]
