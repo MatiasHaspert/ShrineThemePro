@@ -359,6 +359,27 @@ button.shopify-payment-button__button--unbranded {
   .button--full-width { padding-inline: 1.6rem; }
 }
 
+/* El boton primario sobre la superficie vuelve al acento (D-064).
+
+   base.css manda el boton al color de texto en todos los esquemas que no son el
+   blanco:
+       .color-accent-1, .color-accent-2, .color-background-2, .color-inverse {
+         --color-button: var(--color-foreground);
+         --color-button-text: var(--color-background) }
+   En una banda de superficie eso deja el CTA en TINTA al lado de los botones de
+   compra, que van en el acento, y el mismo boton cambia de color segun donde
+   cayo. Se restituye el mapeo del esquema blanco: acento con su etiqueta.
+
+   Solo background-2. Los dos esquemas de acento quedan afuera —un boton del
+   color del fondo no se ve— y TINTA tambien: ahi el par correcto es el del
+   token contextual (acento claro con etiqueta oscura), no este.
+
+   Empata en especificidad con base.css y gana por orden de carga. */
+.color-background-2 {
+  --color-button: var(--color-base-accent-1);
+  --color-button-text: var(--color-base-solid-button-labels);
+}
+
 /* horizontal-ticker no respeta prefers-reduced-motion (AUDIT 2, bloque 11). */
 @media (prefers-reduced-motion: reduce) {
   .horizontal-ticker__content,
@@ -4308,14 +4329,21 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
 
 .cauce-contraste__media { margin: 0; }
 
+/* La regla fina no es decoracion (D-064): la tarjeta positiva es blanca y la
+   otra toma el fondo de la seccion, asi que un packshot sobre fondo blanco se
+   funde con la tarjeta y se lee como un hueco. Con la regla, la foto tiene
+   borde aunque no lo traiga. El arreglo de fondo es una foto que no sea blanca. */
 .cauce-contraste__imagen {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  border: 1px solid var(--cauce-linea);
   border-radius: 4px;
 }
+
+.color-inverse .cauce-contraste__imagen { border-color: var(--cauce-linea-clara); }
 
 /* La clase h4 del tema da 1.5rem: a ese tamano el titulo de la tarjeta pesa
    menos que sus propios items en negrita. */
