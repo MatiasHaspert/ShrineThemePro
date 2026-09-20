@@ -3173,3 +3173,29 @@ contraste, sacó la pestaña "Ingredientes" del bloque de compra —la que tení
 `[[PENDIENTE]]`— y apagó la barra de íconos.
 
 ---
+
+## D-063 · 2026-09-19 · Los botones van en mayúscula, por CSS y no escritos así
+
+**Decisión del comercio.** Todos los CTA del tema se dibujan en mayúscula: los de la PDP, los del
+carrito y los de cualquier página que se arme después. Es un cambio de toda la tienda, no de la
+plantilla de Hormify.
+
+**Por CSS y no escribiendo el texto en mayúscula.** El contenido sigue guardado como se lee
+("Agregar al carrito"), que es lo que anuncia un lector de pantalla —varios deletrean las palabras
+todo en mayúscula— y lo que se ve en el theme editor. Escribirlo a mano además obliga a acordarse en
+cada botón nuevo. La lista de selectores es la misma que usa `base.css` para el botón, así entran
+todas sus variantes sin enumerarlas.
+
+**Dos números que salieron de probarlo a 390 px:**
+
+- El tracking quedó en **0.02em** y no en el 0.04em que usan la volanta y los sellos: con 0.04 la
+  etiqueta del botón más largo ("Agregar 3 frascos · $72.900") se iba a dos renglones.
+- Por lo mismo, el botón a todo el ancho afloja el aire lateral a 1.6rem en teléfono. Con los 3rem
+  de cada lado que trae el tema quedaban 300 px útiles y la etiqueta no entraba.
+
+**De paso.** Cuatro etiquetas estaban escritas en mayúscula desde el editor ("VER PRECIOS",
+"COMPRAR AHORA", "QUIERO RECUPERAR MI EQUILIBRIO" y el "AGREGAR AL CARRITO" del cierre). Vuelven a
+su forma normal: se ven igual, y así el dato queda limpio para quien lo lea o lo escuche. Coinciden
+otra vez con COPY-DRAFT.
+
+---
