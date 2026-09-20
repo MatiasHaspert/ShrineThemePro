@@ -12,9 +12,8 @@
     "hero": {
       "type": "cauce-hero",
       "settings": {
-        "imagen": "shopify://shop_images/frascosinfondo.webp",
+        "imagen": "shopify://shop_images/image2_68abf328-6b70-4cd7-bc4d-f7e20ae9dcd4.jpg",
         "alt": "Frasco de Hormify de CAUCE, 60 capsulas.",
-        "video": "",
         "posicion_media": "derecha",
         "orden_mobile": "media",
         "relacion": "1 / 1",
@@ -447,6 +446,7 @@
         "h3",
         "h4"
       ],
+      "disabled": true,
       "settings": {
         "volanta": "",
         "titulo": "Qué esperar, mes a mes",
@@ -704,7 +704,7 @@
         "mobile_arrows_position": "hidden",
         "padding_top": 72,
         "padding_bottom": 72,
-        "custom_colors_background": "#ffffff",
+        "custom_colors_background": "#FFFFFF",
         "custom_gradient_background": "",
         "custom_colors_text": "#2e2a39",
         "custom_cards_colors_background": "#f3f3f3",
@@ -932,16 +932,6 @@
             "margin_bottom": 24
           }
         },
-        "x3": {
-          "type": "custom_liquid",
-          "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}\n{% render 'cauce-disclaimer', compacto: true %}",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
         "x2": {
           "type": "buttons",
           "settings": {
@@ -958,6 +948,16 @@
             "mobile_alignment": "center",
             "margin_top": 0,
             "margin_bottom": 16
+          }
+        },
+        "x3": {
+          "type": "custom_liquid",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}\n{% render 'cauce-disclaimer', compacto: true %}",
+            "margin_top": 0,
+            "margin_bottom": 0
           }
         }
       },
