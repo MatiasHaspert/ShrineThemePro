@@ -3235,3 +3235,123 @@ esquema. En Hormify el relleno es MAGENTA y arrastra lo de D-060: la etiqueta bl
 relleno contra RUBOR 2.93:1.
 
 ---
+## D-065 · 2026-09-19 · La home pasa a vender Hormify, con las secciones de su PDP
+
+**Decisión.** `templates/index.json` se reescribe entero: deja de vender el R-ALA y pasa a ser la
+página de venta de Hormify, con trece secciones. La home ya no es una portada corta que empuja a
+la ficha; hace casi todo el argumento, como la referencia.
+
+D-054 §6 había dejado esto afuera —*"la home vende el único SKU (D-038); Hormify no aparece hasta
+que se decida cómo conviven los dos productos"*—. La tienda lo resolvió sola: el 2026-09-19
+`caucearg.com/collections/all` lista **un solo producto publicado**, Hormify, a $49.900. No hay dos
+productos que hacer convivir.
+
+### 1. Qué hay, en orden
+
+| # | Sección | Tipo | Esquema | De dónde sale |
+|---|---|---|---|---|
+| 1 | `hero` | `cauce-hero` | blanco | nueva; el packshot y el subtítulo de la PDP |
+| 2 | `marquee` | `horizontal-ticker` | superficie | copiada de la PDP |
+| 3 | `contraste` | `cauce-contraste` | blanco | copiada (en la PDP va sobre superficie) |
+| 4 | `solucion` | `cauce-solucion` | TINTA | copiada, + CTA |
+| 5 | `ingredientes` | `cauce-ingredientes` | blanco | copiada |
+| 6 | `progreso` | `cauce-progreso` | TINTA | copiada, **encendida** |
+| 7 | `comparativa` | `cauce-comparativa` | superficie | copiada, sin fila de precio |
+| 8 | `producto` | `featured-product` | blanco | la de la home vieja, con el SKU nuevo |
+| 9 | `banda` | `icon-bar` | TINTA | copiada, **encendida** |
+| 10 | `garantia` | `custom-columns` | superficie | copiada |
+| 11 | `faq` | `cauce-faq` | blanco | cinco preguntas de las ocho |
+| 12 | `cierre` | `custom-columns` | TINTA | copiada, sin el botón de carrito |
+| 13 | `suscripcion` | `cauce-newsletter` | superficie | copiada |
+
+Los esquemas alternan blanco → superficie → TINTA sin que dos iguales queden pegados.
+
+**Las secciones se copiaron con sus settings, no se escribieron a mano.** Cada una arrastra el
+objeto entero de `product.hormify.json`, y encima se pisan las claves que cambian. Así ninguna
+queda con un setting fuera del schema de su sección, que es lo que `theme check` no mira.
+
+**Nada de copy nuevo.** Cada línea de la home ya existía en la PDP o en `COPY-DRAFT.md` §10. No se
+abre ningún claim que no esté en el inventario de `CLAIMS-AUDIT.md` §8.1.
+
+### 2. Lo que la referencia hace y esta home tampoco
+
+Vale igual que §8.2 de `CLAIMS-AUDIT.md`, y por los mismos motivos: sin reseñas, sin porcentajes de
+un estudio que no existe, sin logos de prensa, sin quiz y sin regalos por pack. La home larga que
+pidió el comercio se sostiene con composición, contraste, plazos y comparativa —lo que sí se puede
+escribir—, no con prueba social inventada.
+
+### 3. La paleta: la home también entra en `plantilla--hormify`
+
+`layout/theme.liquid` derivaba la clase de `template.suffix`. La home no tiene sufijo, así que
+quedaba en ÓXIDO mientras el producto —a un clic— se ve en MAGENTA. Ahora hay un paso intermedio:
+
+```liquid
+assign cauce_plantilla = template.suffix
+if template.name == 'index'
+  assign cauce_plantilla = 'hormify'
+endif
+```
+
+Es a mano y a propósito: no es que la home "sea" la plantilla de Hormify, es que hoy vende ese SKU.
+Si mañana vuelve a haber dos productos, se borran esas tres líneas y la home vuelve a ÓXIDO sola.
+
+### 4. Los CTA siguen yendo a la ficha
+
+D-038 no se reabre. Los seis botones de la home —hero, contraste, solución, ingredientes, producto y
+cierre— llevan a `/products/hormify-favorece-un-equilibrio-hormonal-saludable`. El bloque `cierre`
+de la PDP trae un `atc_button`: acá se reemplazó por un `buttons` con el mismo destino. En la home se
+ve el precio y no se puede comprar sin haber pasado por la composición, las dosis y el plazo de
+devolución.
+
+**La fila de precio de la comparativa se apaga.** `cauce-comparativa` calcula el costo por día con
+`product.selected_or_first_available_variant`, y fuera de una página de producto no hay variante que
+leer: con `mostrar_precio` prendido la fila no se dibuja igual. Queda apagada para que el editor
+diga lo mismo que la página. El `$1.663/día` contra "Según la marca" sigue solo en la PDP.
+
+### 5. La FAQ toma el texto de COPY-DRAFT, no el de la PDP
+
+Las cinco preguntas de la home salen de `COPY-DRAFT.md` §10.9. Tres respuestas de la PDP —menopausia,
+embarazo y anticonceptivos— están escritas en **"usted"** y son bastante más largas que el borrador
+aprobado; el resto de las dos páginas vosea. La home usa las del borrador. La PDP no se tocó en esta
+rama, pero esas tres respuestas habría que emparejarlas.
+
+`emitir_schema` queda apagado: el `FAQPage` lo emite la PDP y no conviene que dos URLs del mismo
+sitio declaren el mismo bloque. `producto` queda vacío a propósito: si mañana se cargan los
+metafields `cauce.faq`, la PDP los toma y la home sigue mostrando estas cinco.
+
+### 6. Un hallazgo: en la PDP hay dos secciones apagadas que no debían estarlo
+
+Copiar las secciones trajo el flag `"disabled": true` pegado, y por eso en la primera vuelta la home
+salió con once de trece. Buscando por qué apareció esto: **en `product.hormify.json`, `progreso` y
+`banda` están apagadas**, además de `resultados` y `resenas`, que sí lo están a propósito (§8.2).
+
+Ninguna decisión dice que tengan que estarlo. Al contrario: D-054 §2 lista los plazos de resultado
+como **activos**, y la banda de condiciones de compra es D-040. Se verificó contra el server de
+`theme dev`: la PDP de Hormify hoy se sirve **sin** "Qué esperar, mes a mes" y **sin** "Comprar acá".
+En la home las dos van encendidas. **La PDP no se tocó** —el flag lo escribe el editor de temas y no
+se sabe si fue a propósito—, pero hay que mirarlo.
+
+### 7. Cómo se verificó
+
+- Cada setting y cada bloque de las trece secciones, validado contra el schema de su sección: **0
+  claves fuera de schema, 0 opciones de `select` inválidas**.
+- `theme check` sobre la rama y sobre una copia limpia de `HEAD`, con el mismo CLI 4.8.0 y sin
+  `carpetalocal/`: **80 contra 80 offenses, 0 errores, ninguna nueva**.
+- La página, con `theme dev` a 1440 px: las trece secciones dibujan, la paleta MAGENTA llega a la
+  home, el packshot del hero entra, la banda de solución muestra su CTA nuevo y el cierre sobre
+  TINTA queda legible. El marcador cuadrado de `progreso` es el de D-036, no un ícono que falta.
+- **A 390 px no se miró.** La ventana del navegador automatizado no acepta el resize y el iframe de
+  prueba lo bloquea el `X-Frame-Options` de Shopify. Las trece secciones son las mismas que ya se
+  revisaron a 390 px en D-054, D-055 y D-057, pero el orden nuevo no se vio en un teléfono.
+
+### 8. Lo que queda afuera
+
+- **El umbral de envío gratis.** La barra de anuncio dice desde $55.000 (D-052) y el frasco sale
+  $49.900: la unidad suelta queda a $5.100 del envío sin cargo y no hay escalones de pack cargados
+  con precio real. Con un solo SKU el número hay que rehacerlo.
+- **El producto está agotado.** `collections/all` lo marca así, y el bloque `producto` de la home
+  muestra el precio igual.
+- Todo lo de `CLAIMS-AUDIT.md` §8.3 sigue en pie: fórmula real, dosis, RNPA, COA, y el nombre en
+  INPI.
+
+---

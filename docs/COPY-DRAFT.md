@@ -27,7 +27,11 @@ Convenciones:
 
 ---
 
-## 2. Home · `templates/index.json`
+## 2. Home · `templates/index.json` — **reemplazada (D-065)**
+
+> Lo que sigue es la home del R-ALA y **ya no está publicada**. Desde D-065 `index.json` vende
+> Hormify reusando las secciones de su PDP, así que el copy de la home vive en el §10 de este
+> archivo, no acá. Se deja el texto viejo porque el R-ALA puede volver.
 
 ### Hero
 

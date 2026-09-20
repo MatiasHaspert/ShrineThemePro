@@ -548,9 +548,17 @@ La regla 1 sí se mantiene: **ningún claim está en un `.liquid`**. `cauce-cont
 | H13 | Cinta `RESULTADOS ÓPTIMOS · 90 DÍAS` | eficacia + plazo | escalón 3 | ídem H8 |
 | H14 | Costo por día (`$1.663/día`) contra "Según la marca" | precio | `comparativa`, fila de precio | se calcula del precio de la variante sobre 30 días, redondeado al peso: si cambia el precio, cambia la fila. El precio total sigue en el bloque de compra. "Según la marca" no afirma ningún precio ajeno; poner uno sería un claim que hay que poder probar (D-058) |
 
+**Desde D-065 la tabla vale también para `templates/index.json`.** La home dejó de vender el R-ALA y
+pasó a vender Hormify reusando estas mismas secciones —hero, contraste, solución, ingredientes,
+progreso, comparativa, FAQ y cierre—, con el texto copiado, así que H1 a H12 se publican además en
+la portada. No hay ningún claim nuevo: lo que no está en esta tabla no entró. Las dos filas que
+**no** viajaron son H13, que vive en el escalón de packs, y H14, que necesita una variante para
+calcular el costo por día y fuera de una página de producto no se dibuja.
+
 Los "*" de `progreso` remiten al pie: *"Los resultados varían de una persona a otra. Acompañá la
 rutina con una alimentación equilibrada y actividad física."* La leyenda de suplemento
-(`cauce-disclaimer`) sale en el bloque `disclaimer` del hero y en el `cierre`, igual que en el R-ALA.
+(`cauce-disclaimer`) sale en el bloque `disclaimer` del hero y en el `cierre`, igual que en el R-ALA
+— y en la home, en el `cierre`.
 
 ### 8.2 Lo que la referencia hace y esta página no
 
@@ -590,7 +598,7 @@ El grep del §7 está pensado para el R-ALA y casi no ve a Hormify (4 coincidenc
 "ansiedad", "mejora la" y "tratamiento", todas en 8.1). Para este template:
 
 ```bash
-grep -niE "peso|hinchaz|panza|hormon|estr[oó]geno|progesterona|sofoco|sudor|ciclo|SOP|menopaus|cortisol|estr[eé]s|[aá]nimo|humor|antojo|d[ií]as|mes " templates/product.hormify.json
+grep -niE "peso|hinchaz|panza|hormon|estr[oó]geno|progesterona|sofoco|sudor|ciclo|SOP|menopaus|cortisol|estr[eé]s|[aá]nimo|humor|antojo|d[ií]as|mes " templates/product.hormify.json templates/index.json
 ```
 
 Cualquier coincidencia que no esté cubierta por una fila de 8.1 es un claim nuevo.
