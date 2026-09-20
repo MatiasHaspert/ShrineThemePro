@@ -3045,7 +3045,8 @@ medir el ancho real sin escribir un número que no existe. `theme check` da lo m
 
 El botón "Ver precios" queda oscuro y no en el acento: sobre los esquemas de color, Shrine pasa el
 botón al color de texto (`.color-background-2 { --color-button: var(--color-foreground) }`). Es el
-mismo botón que en las otras bandas de superficie de la página.
+mismo botón que en las otras bandas de superficie de la página. **Resuelto en D-064:** sobre la
+superficie el botón vuelve al acento.
 
 **Actualización (D-060).** Con el acento en MAGENTA, la bajada dejó el acento y pasó al color de
 texto al 90 %: sobre la banda —que es un tinte del propio acento— MAGENTA daba 2.07.
@@ -3197,5 +3198,40 @@ todas sus variantes sin enumerarlas.
 "COMPRAR AHORA", "QUIERO RECUPERAR MI EQUILIBRIO" y el "AGREGAR AL CARRITO" del cierre). Vuelven a
 su forma normal: se ven igual, y así el dato queda limpio para quien lo lea o lo escuche. Coinciden
 otra vez con COPY-DRAFT.
+
+---
+
+## D-064 · 2026-09-19 · La foto del contraste lleva regla fina, y el botón sobre la superficie vuelve al acento
+
+Dos correcciones que salieron de mirar la PDP ya publicada.
+
+**1. La foto de las tarjetas de contraste tenía borde invisible.** La tarjeta positiva es blanca y la
+otra toma el fondo de la sección, así que un packshot sobre fondo blanco —los dos que hay cargados lo
+son— se funde con la tarjeta y se lee como un hueco, no como una foto. La imagen suma una regla fina
+(`--cauce-linea`, y la clara sobre TINTA): así tiene borde aunque la foto no lo traiga.
+
+Es una corrección de construcción, no un reemplazo del arreglo de fondo, que es **cargar una foto
+que no sea blanca**. La del lado "sin equilibrio" hoy es un frasco genérico blanco: dice poco de lo
+que ese lado tiene que contar.
+
+**2. El botón primario sobre la superficie volvió al acento.** `base.css` manda el botón al color de
+texto en todos los esquemas que no son el blanco:
+
+```
+.color-accent-1, .color-accent-2, .color-background-2, .color-inverse {
+  --color-button: var(--color-foreground);
+  --color-button-text: var(--color-background);
+}
+```
+
+En una banda de superficie eso dejaba el CTA en TINTA al lado de los botones de compra, que van en el
+acento: el mismo botón cambiaba de color según en qué sección cayó. Se restituye el mapeo del esquema
+blanco, solo para `background-2`. Los dos esquemas de acento quedan afuera —un botón del color del
+fondo no se ve— y TINTA también: ahí el par correcto es el del token contextual, acento claro con
+etiqueta oscura, y no este.
+
+En la PDP toca tres bandas: el contraste, la marquesina y la suscripción. El carrito no usa ese
+esquema. En Hormify el relleno es MAGENTA y arrastra lo de D-060: la etiqueta blanca da 3.55:1 y el
+relleno contra RUBOR 2.93:1.
 
 ---
