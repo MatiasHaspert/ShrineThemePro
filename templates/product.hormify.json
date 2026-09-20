@@ -1166,32 +1166,36 @@
           "type": "video",
           "settings": {
             "alt": "",
-            "autor": "",
-            "texto": ""
+            "compra": "[[PENDIENTE: que compro]]",
+            "autor": "[[PENDIENTE: nombre]]",
+            "texto": "[[PENDIENTE: frase textual de una clienta real, con su permiso]]"
           }
         },
         "v2": {
           "type": "video",
           "settings": {
             "alt": "",
-            "autor": "",
-            "texto": ""
+            "compra": "[[PENDIENTE: que compro]]",
+            "autor": "[[PENDIENTE: nombre]]",
+            "texto": "[[PENDIENTE: frase textual de una clienta real, con su permiso]]"
           }
         },
         "v3": {
           "type": "video",
           "settings": {
             "alt": "",
-            "autor": "",
-            "texto": ""
+            "compra": "[[PENDIENTE: que compro]]",
+            "autor": "[[PENDIENTE: nombre]]",
+            "texto": "[[PENDIENTE: frase textual de una clienta real, con su permiso]]"
           }
         },
         "v4": {
           "type": "video",
           "settings": {
             "alt": "",
-            "autor": "",
-            "texto": ""
+            "compra": "[[PENDIENTE: que compro]]",
+            "autor": "[[PENDIENTE: nombre]]",
+            "texto": "[[PENDIENTE: frase textual de una clienta real, con su permiso]]"
           }
         }
       },
@@ -1206,6 +1210,10 @@
         "titulo": "Mujeres que ya lo toman",
         "heading_size": "h1",
         "etiqueta_a11y": "Videos de clientes",
+        "disposicion": "encima",
+        "sello": "Clienta verificada",
+        "boton_texto": "Ver precios",
+        "boton_link": "#comprar",
         "ancho_tarjeta": 280,
         "color_scheme": "background-1",
         "padding_top": 8,
