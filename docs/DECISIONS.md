@@ -3146,3 +3146,30 @@ la tienda**, de relleno, y el texto de ejemplo: no se usó ninguna de las imáge
 siquiera para maquetar. `theme check` da lo mismo que `main`.
 
 ---
+
+## D-062 · 2026-09-19 · Sale el chip de "Transferencia bancaria" y los íconos de las pestañas toman el acento
+
+**Dos cambios chicos pedidos por el comercio, sobre el bloque de compra.**
+
+**1. El chip de transferencia sale de la tira de medios de pago.** La tira sale de
+`settings.cauce_medios_pago`, que es un setting del tema, así que el cambio es de toda la tienda y
+no solo de Hormify: la lista queda `mercadopago, visa, mastercard, amex, cabal, naranja`. Las marcas
+tienen logo y la transferencia caía al chip tipográfico (`.cauce-pagos__chip`), que es lo único que
+se leía como texto en una fila de logos y además empujaba la tira a dos renglones en teléfono.
+
+No se pierde el dato: el beneficio por transferencia sigue en el precio de cada escalón
+("$44.910 con transferencia"), en la tarjeta del carrito y en el checkout. Lo que sale es el sello,
+no el medio de pago. Si algún día se quiere de vuelta, se agrega `transferencia` a esa lista desde
+Configuración del tema → CAUCE → Pagos.
+
+**2. Los íconos de las pestañas van en el acento.** Shrine los dibuja con `fill="currentColor"`
+dentro del título, así que heredaban el color de texto y eran los únicos íconos de la página que no
+estaban en el acento (D-060). La regla toma solo el ícono de la izquierda: la flecha de abrir y
+cerrar se queda en el color de texto, porque es un control y no una viñeta. En Hormify el ícono
+queda en MAGENTA sobre blanco, 3.55:1, que es lo que pide un objeto gráfico.
+
+**Contexto.** En el mismo día, desde el editor, el comercio movió el bloque de UGC arriba del de
+contraste, sacó la pestaña "Ingredientes" del bloque de compra —la que tenía la composición en
+`[[PENDIENTE]]`— y apagó la barra de íconos.
+
+---
