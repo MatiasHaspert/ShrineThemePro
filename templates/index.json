@@ -12,66 +12,150 @@
     "hero": {
       "type": "cauce-hero",
       "settings": {
-        "alt": "",
-        "video": "shopify://files/videos/descarga (14).mp4",
+        "imagen": "shopify://shop_images/frascosinfondo.webp",
+        "alt": "Frasco de Hormify de CAUCE, 60 capsulas.",
+        "video": "",
         "posicion_media": "derecha",
-        "orden_mobile": "texto",
+        "orden_mobile": "media",
         "relacion": "1 / 1",
         "carga_prioritaria": true,
-        "volanta": "Fórmulas de uso diario",
-        "titulo": "Lo que tomás todos los días debería explicarse en una sola línea.",
+        "volanta": "Sin hormonas",
+        "titulo": "¿Peso que no baja, hinchazón, sofocos o cambios de humor?",
         "titulo_acento": "",
         "titulo_principal": false,
         "heading_size": "h0",
-        "bajada": "<p>Cada fórmula lleva la lista completa de lo que contiene y en qué cantidad. Sin mezclas propietarias, sin letra chica y sin promesas que no podamos sostener.</p>",
+        "bajada": "<p>Hormify reúne 8 activos de origen natural en una fórmula sin hormonas que ayuda a tu cuerpo a recuperar su equilibrio hormonal desde adentro.</p>",
         "pie": "",
-        "boton_texto": "Ver la fórmula",
-        "boton_link": "/products/acido-r-alfa-lipoico-capsulas-de-600-mg-en-forma-r-pura",
+        "boton_texto": "Ver la fórmula y el precio",
+        "boton_link": "/products/hormify-favorece-un-equilibrio-hormonal-saludable",
         "boton2_texto": "",
         "boton2_link": "",
         "color_scheme": "background-1",
         "ancho_maximo": 1200,
-        "padding_top": 64,
+        "padding_top": 56,
         "padding_bottom": 64
       }
     },
-    "pilares": {
-      "type": "icon-bar",
+    "marquee": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "m1": {
+          "type": "text",
+          "settings": {
+            "title": "Sin hormonas"
+          }
+        },
+        "m2": {
+          "type": "text",
+          "settings": {
+            "title": "Peso hormonal"
+          }
+        },
+        "m3": {
+          "type": "text",
+          "settings": {
+            "title": "Hinchazón"
+          }
+        },
+        "m4": {
+          "type": "text",
+          "settings": {
+            "title": "Sofocos"
+          }
+        },
+        "m5": {
+          "type": "text",
+          "settings": {
+            "title": "Estrés y cambios de humor"
+          }
+        },
+        "m6": {
+          "type": "text",
+          "settings": {
+            "title": "Envío a todo el país"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
+      "settings": {
+        "visibility": "always-display",
+        "speed": 3,
+        "direction": "normal",
+        "stop_on_hover": true,
+        "mobile_spacing": 40,
+        "desktop_spacing": 72,
+        "color_scheme": "background-2",
+        "mobile_text_size": 13,
+        "desktop_text_size": 14,
+        "italic_text": false,
+        "uppercase_text": true,
+        "bold_text": false,
+        "mobile_image_height": 26,
+        "desktop_image_height": 40,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39"
+      }
+    },
+    "contraste": {
+      "type": "cauce-contraste",
       "blocks": {
         "p1": {
-          "type": "column",
+          "type": "par",
           "settings": {
-            "icon": "science",
-            "filled_icon": false,
-            "title": "Forma R pura",
-            "text": "<p>El isómero R, no la mezcla racémica que se usa por defecto porque sale más barata.</p>"
+            "sin": "Peso que sube y no baja",
+            "con": "Tu peso vuelve a responder"
           }
         },
         "p2": {
-          "type": "column",
+          "type": "par",
           "settings": {
-            "icon": "medication",
-            "filled_icon": false,
-            "title": "600 mg por cápsula",
-            "text": "<p>La cantidad está en la etiqueta y coincide con el análisis. Una cápsula, una dosis.</p>"
+            "sin": "Antojos que no podés frenar",
+            "con": "Mejor control del apetito"
           }
         },
         "p3": {
-          "type": "column",
+          "type": "par",
           "settings": {
-            "icon": "biotech",
-            "filled_icon": false,
-            "title": "Análisis por laboratorio externo",
-            "text": "<p>Cada lote se analiza en un laboratorio que no es el nuestro.</p>"
+            "sin": "Hinchazón todos los días",
+            "con": "Una panza más liviana"
           }
         },
         "p4": {
-          "type": "column",
+          "type": "par",
           "settings": {
-            "icon": "factory",
-            "filled_icon": false,
-            "title": "Producción nacional",
-            "text": "<p>Se produce en Argentina. Trazabilidad de lote y tiempos de entrega reales.</p>"
+            "sin": "Cansancio, ansiedad y cambios de humor",
+            "con": "Más energía y un ánimo estable"
+          }
+        },
+        "p5": {
+          "type": "par",
+          "settings": {
+            "sin": "Sofocos y sudores nocturnos",
+            "con": "Menos sofocos y noches tranquilas"
+          }
+        },
+        "p6": {
+          "type": "par",
+          "settings": {
+            "sin": "Ciclos irregulares",
+            "con": "Un ciclo más predecible"
           }
         }
       },
@@ -79,50 +163,394 @@
         "p1",
         "p2",
         "p3",
-        "p4"
+        "p4",
+        "p5",
+        "p6"
       ],
       "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h2",
-        "text": "",
+        "volanta": "Equilibrio hormonal",
+        "titulo": "Cómo te ves y cómo te sentís empieza en tus",
+        "titulo_acento": "hormonas",
+        "heading_size": "h1",
+        "bajada": "<p>Cuando tus hormonas se desordenan, lo notás en todo el cuerpo: en la balanza, en la digestión, en el humor y en el descanso.</p>",
+        "alineacion": "centrado",
+        "titulo_sin": "Con las hormonas en desequilibrio",
+        "imagen_sin": "shopify://shop_images/capsulero130cc.jpg",
+        "etiqueta_con": "Con Hormify",
+        "titulo_con": "Con tus hormonas en equilibrio",
+        "imagen_con": "shopify://shop_images/image4.jpg",
+        "boton_texto": "Quiero recuperar mi equilibrio",
+        "boton_link": "/products/hormify-favorece-un-equilibrio-hormonal-saludable",
+        "pie": "<p>Los resultados pueden variar de una persona a otra.</p>",
         "color_scheme": "background-1",
-        "icon_layout": "vertical",
-        "icon_size": "medium",
-        "icon_color": "accent-2",
-        "cards_color_scheme": "background-1",
-        "type": "slide",
-        "autoplay": false,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": false,
-        "columns_desktop": 4,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "hidden",
-        "desktop_arrows_position": "hidden",
-        "columns_mobile": "1",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "hidden",
-        "padding_top": 8,
-        "padding_bottom": 72,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_cards_colors_background": "#f3f3f3",
-        "custom_cards_gradient_background": "",
-        "custom_cards_colors_text": "#2e2a39"
+        "ancho_maximo": 1040,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "solucion": {
+      "type": "cauce-solucion",
+      "blocks": {
+        "b1": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "balanza",
+            "texto": "Menos peso hormonal"
+          }
+        },
+        "b2": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "ola",
+            "texto": "Menos hinchazón"
+          }
+        },
+        "b3": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "flor",
+            "texto": "Hormonas en equilibrio"
+          }
+        },
+        "b4": {
+          "type": "beneficio",
+          "settings": {
+            "icono": "corazon",
+            "texto": "Menos estrés, mejor humor"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "volanta": "Sin hormonas",
+        "titulo": "Apoyá tu equilibrio hormonal y combatí el peso hormonal",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "<p><strong>Hormify</strong> ayuda a tu cuerpo a recuperar el equilibrio desde adentro, con 8 activos de origen natural que trabajan juntos.</p>",
+        "alineacion": "izquierda",
+        "columnas": "2",
+        "disposicion": "fondo",
+        "imagen_fondo": "shopify://shop_images/image3.jpg",
+        "alt_fondo": "Dos frascos de Hormify de CAUCE, de 60 cápsulas cada uno, sobre un fondo de papel rosa.",
+        "posicion_columna": "izquierda",
+        "ancho_columna": 520,
+        "alto_minimo": 480,
+        "velo": 65,
+        "foco": 50,
+        "foco_mobile": 70,
+        "alt": "Frasco de Hormify de CAUCE, 60 cápsulas.",
+        "ancho_imagen": 900,
+        "estilo_imagen": "suelta",
+        "carga_prioritaria": false,
+        "pie": "",
+        "boton_texto": "Ver la fórmula y el precio",
+        "boton_link": "/products/hormify-favorece-un-equilibrio-hormonal-saludable",
+        "color_scheme": "inverse",
+        "ancho_maximo": 1120,
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "ingredientes": {
+      "type": "cauce-ingredientes",
+      "blocks": {
+        "i1": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Ashwagandha",
+            "dosis": "",
+            "texto": "<p>Planta adaptógena que ayuda a bajar el estrés y el cortisol, y acompaña el metabolismo.</p>",
+            "imagen": "shopify://shop_images/ashawanda.webp",
+            "icono": "hoja"
+          }
+        },
+        "i2": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Raíz de maca",
+            "dosis": "",
+            "texto": "<p>Apoyo natural para el estrógeno y la progesterona. Suma energía y resistencia.</p>",
+            "imagen": "shopify://shop_images/images_5.webp",
+            "icono": "flor"
+          }
+        },
+        "i3": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Ginseng",
+            "dosis": "",
+            "texto": "<p>Más energía y claridad mental, y una mejor respuesta al estrés del día.</p>",
+            "imagen": "shopify://shop_images/ginseng.webp",
+            "icono": "rayo"
+          }
+        },
+        "i4": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Raíz de jengibre",
+            "dosis": "",
+            "texto": "<p>Reduce la hinchazón, favorece la digestión y tiene propiedades antiinflamatorias.</p>",
+            "imagen": "shopify://shop_images/raizdejenjibre.webp",
+            "icono": "ola"
+          }
+        },
+        "i5": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "L-fenilalanina",
+            "dosis": "",
+            "texto": "<p>Aminoácido que ayuda a controlar el apetito y los antojos, y a estabilizar el ánimo.</p>",
+            "imagen": "shopify://shop_images/lfenilala.webp",
+            "icono": "molecula"
+          }
+        },
+        "i6": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Zinc",
+            "dosis": "",
+            "texto": "<p>Mineral esencial para el equilibrio hormonal, el metabolismo y la piel.</p>",
+            "imagen": "shopify://shop_images/zinc.webp",
+            "icono": "escudo"
+          }
+        },
+        "i7": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Vitamina B6",
+            "dosis": "",
+            "texto": "<p>Contribuye a regular la actividad hormonal y a reducir el cansancio.</p>",
+            "imagen": "shopify://shop_images/vitaminb6.webp",
+            "icono": "gota"
+          }
+        },
+        "i8": {
+          "type": "ingrediente",
+          "settings": {
+            "nombre": "Pimienta negra",
+            "dosis": "",
+            "texto": "<p>Su extracto, la piperina, mejora la absorción del resto de los activos.</p>",
+            "imagen": "shopify://shop_images/pimientarecienmolida.webp",
+            "icono": "llama"
+          }
+        },
+        "s1": {
+          "type": "sello",
+          "settings": {
+            "icono": "chequeo",
+            "texto": "Sin hormonas"
+          }
+        },
+        "s2": {
+          "type": "sello",
+          "settings": {
+            "icono": "hoja",
+            "texto": "Activos de origen natural"
+          }
+        },
+        "s3": {
+          "type": "sello",
+          "settings": {
+            "icono": "laboratorio",
+            "texto": "Analizado por laboratorio externo"
+          }
+        },
+        "s4": {
+          "type": "sello",
+          "settings": {
+            "icono": "nacional",
+            "texto": "Producción nacional"
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4",
+        "i5",
+        "i6",
+        "i7",
+        "i8",
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "volanta": "La fórmula",
+        "titulo": "8 activos en",
+        "titulo_acento": "una sola fórmula",
+        "heading_size": "h1",
+        "bajada": "<p>Cada ingrediente está elegido por lo que aporta al equilibrio hormonal, y juntos trabajan mejor que por separado.</p>",
+        "alineacion": "centrado",
+        "columnas": "4",
+        "estilo_tarjeta": "foto",
+        "velo": 75,
+        "boton_texto": "Ver precios",
+        "boton_link": "/products/hormify-favorece-un-equilibrio-hormonal-saludable",
+        "pie": "<p>La composición completa y las dosis por porción están en el rótulo y en la pestaña Ingredientes.</p>",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1200,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "progreso": {
+      "type": "cauce-progreso",
+      "blocks": {
+        "h1": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Semana 1–2:",
+            "titulo": "Primeros cambios",
+            "texto": "<p>Tu cuerpo empieza a recibir los 8 activos todos los días.</p>",
+            "items": "Dos cápsulas, una rutina simple\nMenos hinchazón para muchas mujeres"
+          }
+        },
+        "h2": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Semana 3–4:",
+            "titulo": "Más energía, menos estrés",
+            "texto": "<p>El día se siente más parejo y el estrés pesa menos.</p>",
+            "items": "Más energía durante el día\nMenos antojos"
+          }
+        },
+        "h3": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Mes 2:",
+            "titulo": "El equilibrio se nota",
+            "texto": "<p>El ánimo se estabiliza y el cuerpo empieza a responder.</p>",
+            "items": "Cambios de humor más suaves\nMenos sofocos y mejor descanso*"
+          }
+        },
+        "h4": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Mes 3:",
+            "titulo": "Resultados completos",
+            "texto": "<p>Con la rutina completa, los cambios se sostienen.</p>",
+            "items": "Tu peso vuelve a responder*\nUn ciclo más predecible*"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ],
+      "settings": {
+        "volanta": "",
+        "titulo": "Qué esperar, mes a mes",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "",
+        "alineacion": "centrado",
+        "pie": "<p>*Los resultados varían de una persona a otra. Acompañá la rutina con una alimentación equilibrada y actividad física.</p>",
+        "icono": "visto",
+        "color_scheme": "inverse",
+        "ancho_maximo": 920,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "comparativa": {
+      "type": "cauce-comparativa",
+      "blocks": {
+        "c1": {
+          "type": "fila",
+          "settings": {
+            "beneficio": "8 activos para el equilibrio hormonal en una cápsula",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "c2": {
+          "type": "fila",
+          "settings": {
+            "beneficio": "Ayuda con el peso hormonal y la hinchazón",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "c3": {
+          "type": "fila",
+          "settings": {
+            "beneficio": "Acompaña el SOP, la perimenopausia y la menopausia",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "c4": {
+          "type": "fila",
+          "settings": {
+            "beneficio": "Sin hormonas y con activos de origen natural",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "c5": {
+          "type": "fila",
+          "settings": {
+            "beneficio": "Con piperina para absorber mejor cada activo",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "c6": {
+          "type": "fila",
+          "settings": {
+            "beneficio": "Analizado por laboratorio externo",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "c7": {
+          "type": "fila",
+          "settings": {
+            "beneficio": "Producción nacional",
+            "nosotros": true,
+            "otros": false
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "settings": {
+        "volanta": "",
+        "titulo": "Por qué Hormify es distinto",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "<p>Comparado con los multivitamínicos y suplementos para mujeres más habituales de la categoría.</p>",
+        "alineacion": "centrado",
+        "nosotros_etiqueta": "Hormify",
+        "ancho_imagen": 64,
+        "otros_etiqueta": "Otros suplementos",
+        "mostrar_precio": false,
+        "precio_etiqueta": "Precio",
+        "dias": 30,
+        "precio_sufijo": "/día",
+        "otros_precio": "Según la marca",
+        "pie": "",
+        "color_scheme": "background-2",
+        "ancho_maximo": 960,
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     },
     "producto": {
@@ -158,8 +586,8 @@
         "cta": {
           "type": "button",
           "settings": {
-            "button_label": "Comprar",
-            "button_link": "/products/acido-r-alfa-lipoico-capsulas-de-600-mg-en-forma-r-pura",
+            "button_label": "Ver la fórmula y el precio",
+            "button_link": "/products/hormify-favorece-un-equilibrio-hormonal-saludable",
             "button_style_secondary": false,
             "full_width": false,
             "large_font_size": false,
@@ -178,7 +606,7 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "product": "acido-r-alfa-lipoico-capsulas-de-600-mg-en-forma-r-pura",
+        "product": "hormify-favorece-un-equilibrio-hormonal-saludable",
         "color_scheme": "background-1",
         "secondary_background": false,
         "media_size": "medium",
@@ -245,19 +673,19 @@
         "visibility": "always-display",
         "title": "Comprar acá",
         "title_highlight_color": "#6d388b",
-        "heading_size": "h2",
+        "heading_size": "h1",
         "text": "",
-        "color_scheme": "background-2",
+        "color_scheme": "inverse",
         "icon_layout": "horizontal",
         "icon_size": "small",
-        "icon_color": "accent-2",
-        "cards_color_scheme": "background-2",
+        "icon_color": "background-1",
+        "cards_color_scheme": "inverse",
         "type": "slide",
         "autoplay": false,
         "autoplay_speed": 5,
-        "arrows_color_scheme": "background-2",
+        "arrows_color_scheme": "inverse",
         "transparent_arrows": true,
-        "dots_color_scheme": "background-2",
+        "dots_color_scheme": "inverse",
         "desktop_full_page": false,
         "columns_desktop": 2,
         "slider_desktop": false,
@@ -274,8 +702,8 @@
         "mobile_adaptive_height": false,
         "mobile_dots_position": "hidden",
         "mobile_arrows_position": "hidden",
-        "padding_top": 56,
-        "padding_bottom": 40,
+        "padding_top": 72,
+        "padding_bottom": 72,
         "custom_colors_background": "#ffffff",
         "custom_gradient_background": "",
         "custom_colors_text": "#2e2a39",
@@ -284,89 +712,290 @@
         "custom_cards_colors_text": "#2e2a39"
       }
     },
-    "faq": {
-      "type": "cauce-faq",
+    "garantia": {
+      "type": "custom-columns",
       "blocks": {
-        "p1": {
-          "type": "pregunta",
-          "settings": {
-            "pregunta": "¿En qué se diferencia del ácido alfa lipoico común?",
-            "respuesta": "<p>Sintetizado en laboratorio, el ácido alfa lipoico se obtiene como una mezcla de dos isómeros en partes iguales: R y S. El R es la forma que existe en la naturaleza; el S es su imagen especular y no aparece por fuera de la síntesis química.</p><p>Separar los dos encarece la producción. Por eso la mayoría de los suplementos se venden como mezcla racémica, sin aclararlo. Esta fórmula usa únicamente el isómero R, y el análisis de lote lo verifica.</p>"
-          }
-        },
-        "p2": {
-          "type": "pregunta",
-          "settings": {
-            "pregunta": "¿Cómo verifico que es la forma R?",
-            "respuesta": "<p>Cada envase tiene un número de lote y para ese lote hay un certificado de análisis hecho por un laboratorio externo. El certificado indica identidad del compuesto y contenido por cápsula.</p>"
-          }
-        },
-        "p3": {
-          "type": "pregunta",
-          "settings": {
-            "pregunta": "¿Puedo devolverlo si me arrepiento?",
-            "respuesta": "<p>Sí. Tenés 10 días corridos desde que recibís el pedido para arrepentirte y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). Se inicia desde el botón de arrepentimiento que está en el pie de página.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3"
-      ],
-      "settings": {
-        "volanta": "Antes de comprar",
-        "titulo": "Preguntas frecuentes",
-        "heading_size": "h2",
-        "pie": "",
-        "producto": "",
-        "emitir_schema": false,
-        "color_scheme": "background-2",
-        "padding_top": 24,
-        "padding_bottom": 72
-      }
-    },
-    "manifiesto": {
-      "type": "rich-text",
-      "blocks": {
-        "titulo": {
+        "g0": {
           "type": "heading",
           "settings": {
-            "title": "Hecho para todos los días",
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "Si te arrepentís, se devuelve",
             "title_highlight_color": "#6d388b",
-            "heading_size": "h1"
+            "heading_size": "h1",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
           }
         },
-        "texto": {
-          "type": "text",
+        "g1": {
+          "type": "richtext",
           "settings": {
-            "text": "<p>CAUCE es una marca argentina de fórmulas de uso diario. Elegimos contar la composición completa, publicar los análisis y no prometer resultados. Si algo no lo podemos sostener con un documento, no lo escribimos.</p>"
+            "column": "col_1",
+            "visibility": "always-display",
+            "text": "<p>No es una promesa comercial: es un derecho que tenés por la Resolución SCI 424/2020 y que acá está escrito sin condiciones escondidas.</p>",
+            "text_style": "body",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
           }
         },
-        "cta": {
-          "type": "button",
+        "g2": {
+          "type": "icon_with_text",
           "settings": {
-            "button_label": "Ver la fórmula",
-            "button_link": "/products/acido-r-alfa-lipoico-capsulas-de-600-mg-en-forma-r-pura",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "schedule",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "10 días corridos",
+            "text": "<p>Se cuentan desde que recibís el pedido, no desde que lo comprás.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g3": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "payments",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Sin costo para vos",
+            "text": "<p>Se devuelve el importe pagado. El costo de la devolución lo asumimos nosotros.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g4": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "help",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Sin explicar por qué",
+            "text": "<p>No hace falta que des un motivo. Basta con que nos avises dentro del plazo.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
           }
         }
       },
       "block_order": [
-        "titulo",
-        "texto",
-        "cta"
+        "g0",
+        "g1",
+        "g2",
+        "g3",
+        "g4"
       ],
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "full_width": true,
+        "color_scheme": "background-2",
+        "columns_count": 2,
+        "column_gap_desktop": 64,
+        "row_gap_desktop": 24,
+        "desktop_vertical_alignment": "flex-start",
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 30,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 5,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 7,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "faq": {
+      "type": "cauce-faq",
+      "blocks": {
+        "q1": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Qué tiene Hormify?",
+            "respuesta": "<p>Ocho activos: ashwagandha, raíz de maca, ginseng, raíz de jengibre, L-fenilalanina, zinc, vitamina B6 y extracto de pimienta negra (piperina). No contiene hormonas.</p><p>La composición completa y las dosis por porción están en el rótulo.</p>"
+          }
+        },
+        "q2": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cómo y cuándo lo tomo?",
+            "respuesta": "<p>Dos cápsulas por día con un vaso de agua. Podés tomarlas juntas a la mañana o repartirlas: una a la mañana y otra a la noche. Repartirlas ayuda a que el efecto sea más parejo durante el día.</p>"
+          }
+        },
+        "q3": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cuándo voy a notar los cambios?",
+            "respuesta": "<p>Algunas mujeres notan los primeros cambios en pocos días y otras necesitan unas semanas. Los cambios más claros suelen aparecer entre el segundo y el tercer mes de uso diario.</p>"
+          }
+        },
+        "q4": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Sirve en la menopausia?",
+            "respuesta": "<p>Sí. Hormify está pensado para acompañar el equilibrio hormonal y ayuda con los sofocos, el ánimo, la energía y el estrés, que son de lo que más cambia en esa etapa.</p>"
+          }
+        },
+        "q5": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Lo puedo tomar si estoy embarazada o dando la teta?",
+            "respuesta": "<p>No. Hormify no está recomendado durante el embarazo ni la lactancia.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "name": "CAUCE · Preguntas",
+      "settings": {
+        "volanta": "Preguntas frecuentes",
+        "titulo": "Lo que más nos preguntan sobre Hormify",
+        "heading_size": "h1",
+        "pie": "",
+        "producto": "",
+        "emitir_schema": false,
+        "color_scheme": "background-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "cierre": {
+      "type": "custom-columns",
+      "blocks": {
+        "x0": {
+          "type": "heading",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "Dos cápsulas por día para volver a sentirte vos",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h0",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "x1": {
+          "type": "richtext",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "text": "<ul><li>8 activos de origen natural, sin hormonas</li><li>Ayuda con el peso hormonal, la hinchazón y los sofocos</li><li>Dos cápsulas por día: cada frasco rinde un mes</li><li>Envío a todo el país</li><li>10 días para arrepentirte, sin costo</li></ul>",
+            "text_style": "body",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "x3": {
+          "type": "custom_liquid",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}\n{% render 'cauce-disclaimer', compacto: true %}",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "x2": {
+          "type": "buttons",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "button_label_1": "Ver la fórmula y el precio",
+            "button_link_1": "/products/hormify-favorece-un-equilibrio-hormonal-saludable",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false,
+            "full_width": false,
+            "alignment": "flex-start",
+            "mobile_alignment": "center",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        }
+      },
+      "block_order": [
+        "x0",
+        "x1",
+        "x2",
+        "x3"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
         "color_scheme": "inverse",
+        "columns_count": 1,
+        "column_gap_desktop": 40,
+        "row_gap_desktop": 24,
+        "desktop_vertical_alignment": "center",
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 24,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 12,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 4,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
         "padding_top": 88,
         "padding_bottom": 88,
         "custom_colors_background": "#ffffff",
@@ -376,14 +1005,35 @@
         "custom_colors_solid_button_text": "#ffffff",
         "custom_colors_outline_button": "#dd1d1d"
       }
+    },
+    "suscripcion": {
+      "type": "cauce-newsletter",
+      "settings": {
+        "volanta": "Novedades",
+        "titulo": "10 % en tu primer pedido",
+        "heading_size": "h2",
+        "bajada": "<p>Suscribite y te mandamos el código. Después, pocos mails: fórmulas nuevas y un aviso cuando se te esté por terminar el frasco.</p>",
+        "boton": "Suscribirme",
+        "pagina_privacidad": "",
+        "color_scheme": "background-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
     "hero",
-    "pilares",
+    "marquee",
+    "contraste",
+    "solucion",
+    "ingredientes",
+    "progreso",
+    "comparativa",
     "producto",
     "banda",
+    "garantia",
     "faq",
-    "manifiesto"
+    "cierre",
+    "suscripcion"
   ]
 }

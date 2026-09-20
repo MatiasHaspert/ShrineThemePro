@@ -4,8 +4,18 @@
   template alterno entero (bloque 20, linea Hormify). Va en <html> y no en <body>
   porque base.css deriva --color-button y --accent-color sobre :root: una regla
   `:root.plantilla--x` los recalcula, una sobre body no. Ver D-054.
+
+  La home no tiene sufijo, pero vende el mismo SKU que la PDP de Hormify: toma la
+  misma paleta a mano. Sin esto la portada quedaba en OXIDO y el producto en
+  MAGENTA, con el salto de color a un clic de distancia. Ver D-065.
 {%- endcomment -%}
-<html class="no-js{% if template.suffix != blank %} plantilla--{{ template.suffix | handle }}{% endif %}" lang="{{ request.locale.iso_code }}">
+{%- liquid
+  assign cauce_plantilla = template.suffix
+  if template.name == 'index'
+    assign cauce_plantilla = 'hormify'
+  endif
+-%}
+<html class="no-js{% if cauce_plantilla != blank %} plantilla--{{ cauce_plantilla | handle }}{% endif %}" lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
