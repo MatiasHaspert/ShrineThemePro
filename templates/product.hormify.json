@@ -604,81 +604,6 @@
         "custom_colors_text": "#2e2a39"
       }
     },
-    "contraste": {
-      "type": "cauce-contraste",
-      "blocks": {
-        "p1": {
-          "type": "par",
-          "settings": {
-            "sin": "Peso que sube y no baja",
-            "con": "Tu peso vuelve a responder"
-          }
-        },
-        "p2": {
-          "type": "par",
-          "settings": {
-            "sin": "Antojos que no podés frenar",
-            "con": "Mejor control del apetito"
-          }
-        },
-        "p3": {
-          "type": "par",
-          "settings": {
-            "sin": "Hinchazón todos los días",
-            "con": "Una panza más liviana"
-          }
-        },
-        "p4": {
-          "type": "par",
-          "settings": {
-            "sin": "Cansancio, ansiedad y cambios de humor",
-            "con": "Más energía y un ánimo estable"
-          }
-        },
-        "p5": {
-          "type": "par",
-          "settings": {
-            "sin": "Sofocos y sudores nocturnos",
-            "con": "Menos sofocos y noches tranquilas"
-          }
-        },
-        "p6": {
-          "type": "par",
-          "settings": {
-            "sin": "Ciclos irregulares",
-            "con": "Un ciclo más predecible"
-          }
-        }
-      },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3",
-        "p4",
-        "p5",
-        "p6"
-      ],
-      "settings": {
-        "volanta": "Equilibrio hormonal",
-        "titulo": "Cómo te ves y cómo te sentís empieza en tus",
-        "titulo_acento": "hormonas",
-        "heading_size": "h1",
-        "bajada": "<p>Cuando tus hormonas se desordenan, lo notás en todo el cuerpo: en la balanza, en la digestión, en el humor y en el descanso.</p>",
-        "alineacion": "centrado",
-        "titulo_sin": "Con las hormonas en desequilibrio",
-        "imagen_sin": "shopify://shop_images/capsulero130cc.jpg",
-        "etiqueta_con": "Con Hormify",
-        "titulo_con": "Con tus hormonas en equilibrio",
-        "imagen_con": "shopify://shop_images/image4.jpg",
-        "boton_texto": "Quiero recuperar mi equilibrio",
-        "boton_link": "#comprar",
-        "pie": "<p>Los resultados pueden variar de una persona a otra.</p>",
-        "color_scheme": "background-2",
-        "ancho_maximo": 1040,
-        "padding_top": 72,
-        "padding_bottom": 72
-      }
-    },
     "solucion": {
       "type": "cauce-solucion",
       "blocks": {
@@ -883,11 +808,86 @@
         "columnas": "4",
         "estilo_tarjeta": "foto",
         "velo": 75,
-        "boton_texto": "Ver precios",
+        "boton_texto": "VER PRECIOS",
         "boton_link": "#comprar",
         "pie": "<p>La composición completa y las dosis por porción están en el rótulo y en la pestaña Ingredientes.</p>",
         "color_scheme": "background-1",
         "ancho_maximo": 1200,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "contraste": {
+      "type": "cauce-contraste",
+      "blocks": {
+        "p1": {
+          "type": "par",
+          "settings": {
+            "sin": "Peso que sube y no baja",
+            "con": "Tu peso vuelve a responder"
+          }
+        },
+        "p2": {
+          "type": "par",
+          "settings": {
+            "sin": "Antojos que no podés frenar",
+            "con": "Mejor control del apetito"
+          }
+        },
+        "p3": {
+          "type": "par",
+          "settings": {
+            "sin": "Hinchazón todos los días",
+            "con": "Una panza más liviana"
+          }
+        },
+        "p4": {
+          "type": "par",
+          "settings": {
+            "sin": "Cansancio, ansiedad y cambios de humor",
+            "con": "Más energía y un ánimo estable"
+          }
+        },
+        "p5": {
+          "type": "par",
+          "settings": {
+            "sin": "Sofocos y sudores nocturnos",
+            "con": "Menos sofocos y noches tranquilas"
+          }
+        },
+        "p6": {
+          "type": "par",
+          "settings": {
+            "sin": "Ciclos irregulares",
+            "con": "Un ciclo más predecible"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6"
+      ],
+      "settings": {
+        "volanta": "Equilibrio hormonal",
+        "titulo": "Cómo te ves y cómo te sentís empieza en tus",
+        "titulo_acento": "hormonas",
+        "heading_size": "h1",
+        "bajada": "<p>Cuando tus hormonas se desordenan, lo notás en todo el cuerpo: en la balanza, en la digestión, en el humor y en el descanso.</p>",
+        "alineacion": "centrado",
+        "titulo_sin": "Con las hormonas en desequilibrio",
+        "imagen_sin": "shopify://shop_images/capsulero130cc.jpg",
+        "etiqueta_con": "Con Hormify",
+        "titulo_con": "Con tus hormonas en equilibrio",
+        "imagen_con": "shopify://shop_images/image4.jpg",
+        "boton_texto": "QUIERO RECUPERAR MI EQUILIBRIO",
+        "boton_link": "#comprar",
+        "pie": "<p>Los resultados pueden variar de una persona a otra.</p>",
+        "color_scheme": "background-2",
+        "ancho_maximo": 1040,
         "padding_top": 72,
         "padding_bottom": 72
       }
@@ -1162,48 +1162,44 @@
     "ugc": {
       "type": "cauce-ugc",
       "blocks": {
-        "v1": {
+        "video_yQabQ8": {
           "type": "video",
           "settings": {
+            "poster": "shopify://shop_images/ig18.jpg",
             "alt": "",
-            "compra": "[[PENDIENTE: que compro]]",
-            "autor": "[[PENDIENTE: nombre]]",
-            "texto": "[[PENDIENTE: frase textual de una clienta real, con su permiso]]"
+            "compra": "Compro 2 meses de suplementación",
+            "imagen_compra": "shopify://shop_images/frascosinfondo.webp",
+            "autor": "Laura Pérez",
+            "texto": "\"Por fin he encontrado el alivio que buscaba.\""
           }
         },
         "v2": {
           "type": "video",
           "settings": {
+            "poster": "shopify://shop_images/ig7.jpg",
             "alt": "",
-            "compra": "[[PENDIENTE: que compro]]",
-            "autor": "[[PENDIENTE: nombre]]",
-            "texto": "[[PENDIENTE: frase textual de una clienta real, con su permiso]]"
+            "compra": "Compro 1 mes de suplementación",
+            "imagen_compra": "shopify://shop_images/frascosinfondo.webp",
+            "autor": "Victoria Leina",
+            "texto": "\"¡Uno de los pocos productos que realmente funciona!\""
           }
         },
         "v3": {
           "type": "video",
           "settings": {
+            "poster": "shopify://shop_images/ig17.jpg",
             "alt": "",
-            "compra": "[[PENDIENTE: que compro]]",
-            "autor": "[[PENDIENTE: nombre]]",
-            "texto": "[[PENDIENTE: frase textual de una clienta real, con su permiso]]"
-          }
-        },
-        "v4": {
-          "type": "video",
-          "settings": {
-            "alt": "",
-            "compra": "[[PENDIENTE: que compro]]",
-            "autor": "[[PENDIENTE: nombre]]",
-            "texto": "[[PENDIENTE: frase textual de una clienta real, con su permiso]]"
+            "compra": "Compro 3 meses de suplementación",
+            "imagen_compra": "shopify://shop_images/frascosinfondo.webp",
+            "autor": "Mia Madeline",
+            "texto": "\"Hormify me ayudó a perder 20 libras sin esfuerzo, ¡y me encanta lo bien que me siento!\""
           }
         }
       },
       "block_order": [
-        "v1",
+        "video_yQabQ8",
         "v2",
-        "v3",
-        "v4"
+        "v3"
       ],
       "settings": {
         "volanta": "Comunidad",
@@ -1212,10 +1208,10 @@
         "etiqueta_a11y": "Videos de clientes",
         "disposicion": "encima",
         "sello": "Clienta verificada",
-        "boton_texto": "Ver precios",
-        "boton_link": "#comprar",
         "ancho_tarjeta": 280,
         "color_scheme": "background-1",
+        "boton_texto": "COMPRAR AHORA",
+        "boton_link": "#comprar",
         "padding_top": 8,
         "padding_bottom": 72
       }
@@ -1266,6 +1262,7 @@
         "f3",
         "f4"
       ],
+      "disabled": true,
       "settings": {
         "display_id": false,
         "visibility": "always-display",
@@ -1559,7 +1556,7 @@
           "settings": {
             "column": "col_1",
             "visibility": "always-display",
-            "button_label": "Agregar al carrito",
+            "button_label": "AGREGAR AL CARRITO",
             "atc_product": "",
             "atc_skip_cart": false,
             "full_width": false,
