@@ -371,22 +371,6 @@
             "margin_bottom": 0
           }
         },
-        "ingredientes": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Ingredientes",
-            "heading_size": "medium",
-            "icon": "science",
-            "filled_icon": false,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>Ashwagandha, raíz de maca, ginseng (Panax ginseng), raíz de jengibre, L-fenilalanina, zinc, vitamina B6 y extracto de pimienta negra (piperina).</p><p>[[PENDIENTE: composición completa y dosis por porción, copiadas del rótulo aprobado]]</p>",
-            "page": "",
-            "margin_top": 24,
-            "margin_bottom": 0
-          }
-        },
         "acordeon_envios": {
           "type": "collapsible_tab",
           "settings": {
@@ -476,7 +460,6 @@
         "para_quien",
         "cuando",
         "como_se_toma",
-        "ingredientes",
         "acordeon_envios",
         "acordeon_garantia",
         "disclaimer",
