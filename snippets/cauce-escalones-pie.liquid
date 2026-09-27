@@ -1,0 +1,53 @@
+{% comment %}
+  CAUCE: renglon debajo de las tarjetas de escalon, en modo compacto.
+
+  "10 % menos pagando por transferencia · 3 cuotas sin interes de $24.300 en el
+  pack de 3". Es lo que antes eran dos lineas dentro de cada tarjeta
+  (snippets/cauce-escalon-extras.liquid): con el precio por dia como numero
+  principal, la tarjeta se queda con un solo chip y esto baja a un renglon.
+
+  Parametros:
+    total_cuotas  {number}  total EN CENTAVOS del escalon que anuncia las cuotas,
+                            ya descontado. 0 no dibuja la parte de cuotas.
+    cantidad      {number}  unidades de ese escalon, para "en el pack de N".
+
+  Las dos partes se calculan con las mismas condiciones que las lineas que
+  reemplazan:
+    transferencia  settings.cauce_transferencia_pct Y cauce_transferencia_codigo
+                   cargados. Aca va el porcentaje y no un precio, porque el
+                   renglon vale para las tres tarjetas.
+    cuotas         settings.cauce_cuotas > 0. Ese setting ya significa cuotas SIN
+                   interes (asi lo pide su texto de ayuda), y el comercio confirmo
+                   el 2026-09-27 que el plan esta activo en Mercado Pago.
+
+  Si ninguna aplica no se dibuja el <p>. Textos: locales/es.json > cauce.pdp.pie_*.
+  Ver docs/DECISIONS.md D-066.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_partes = ''
+
+  assign cauce_transf_pct = settings.cauce_transferencia_pct | plus: 0
+  assign cauce_transf_codigo = settings.cauce_transferencia_codigo | strip
+  if cauce_transf_pct > 0 and cauce_transf_codigo != blank
+    assign cauce_parte_transf = 'cauce.pdp.pie_transferencia' | t: pct: cauce_transf_pct
+    assign cauce_partes = cauce_parte_transf
+  endif
+
+  assign cauce_cuotas_n = settings.cauce_cuotas | plus: 0
+  assign cauce_total = total_cuotas | plus: 0
+  assign cauce_cant = cantidad | plus: 0
+  if cauce_cuotas_n > 0 and cauce_total > 0 and cauce_cant > 0
+    assign cauce_cuota_money = cauce_total | divided_by: cauce_cuotas_n | money_without_trailing_zeros
+    assign cauce_parte_cuotas = 'cauce.pdp.pie_cuotas' | t: cuotas: cauce_cuotas_n, monto: cauce_cuota_money, count: cauce_cant
+    if cauce_partes != blank
+      assign cauce_partes = cauce_partes | append: ' · ' | append: cauce_parte_cuotas
+    else
+      assign cauce_partes = cauce_parte_cuotas
+    endif
+  endif
+-%}
+
+{%- if cauce_partes != blank -%}
+  <p class="quantity-breaks__pie">{{ cauce_partes }}</p>
+{%- endif -%}

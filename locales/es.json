@@ -525,19 +525,32 @@
       "duracion_dias": "{{ dias }} días de uso",
       "envio_gratis_escalon": "Envío gratis",
       "ahorro_escalon": "Ahorrás {{ monto }}",
-      "cuotas_escalon": "{{ cuotas }} cuotas de {{ monto }}",
+      "cuotas_escalon": "{{ cuotas }} cuotas sin interés de {{ monto }}",
       "transferencia_escalon": "{{ monto }} con transferencia",
       "cta_agregar": {
         "one": "Agregar {{ count }} frasco · {{ total }}",
         "other": "Agregar {{ count }} frascos · {{ total }}"
       },
       "medios_pago_titulo": "Medios de pago",
-      "cuotas": "Hasta {{ cuotas }} cuotas con tarjeta",
+      "cuotas": "Hasta {{ cuotas }} cuotas sin interés con tarjeta",
       "suscripcion_titulo": "Frecuencia de entrega",
       "suscripcion_unica": "Compra única",
       "acordeon_composicion": "Composición",
       "acordeon_modo_uso": "Modo de uso",
-      "acordeon_analisis": "Análisis de laboratorio"
+      "acordeon_analisis": "Análisis de laboratorio",
+      "pie_transferencia": "{{ pct }} % menos pagando por transferencia",
+      "pie_cuotas": {
+        "one": "{{ cuotas }} cuotas sin interés de {{ monto }} llevando {{ count }} frasco",
+        "other": "{{ cuotas }} cuotas sin interés de {{ monto }} en el pack de {{ count }}"
+      }
+    },
+    "whatsapp": {
+      "flotante": "Escribinos por WhatsApp",
+      "linea_pregunta": "¿Dudas antes de comprar?",
+      "linea_link": "Escribinos por WhatsApp",
+      "pie": "Escribinos por WhatsApp",
+      "mensaje": "Hola, tengo una consulta.",
+      "mensaje_producto": "Hola, tengo una consulta sobre {{ producto }}."
     },
     "newsletter": {
       "consentimiento": "Acepto recibir emails de CAUCE y que mis datos se traten según la Política de Privacidad (Ley 25.326). Puedo darme de baja cuando quiera.",

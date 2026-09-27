@@ -5098,3 +5098,159 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
 
   .cauce-comparativa__precio-otros { font-size: 1.5rem; }
 }
+
+/* ==========================================================================
+   23. PDP — volanta del producto y promesa por angulo
+   Ver snippets/cauce-angulo.liquid y docs/DECISIONS.md D-066.
+
+   Arriba del titulo va una volanta con lo que el producto ES (suplemento
+   dietario, para quien, cuantas capsulas): el h1 dice el nombre y nada mas.
+   Abajo del titulo, la promesa: un renglon fuerte y una bajada, con una
+   variante por angulo de anuncio.
+
+   El renglon fuerte va en Archivo y no en Newsreader: justo arriba esta el h1
+   en serif, y dos titulos serif apilados se leen como un titulo de dos
+   renglones. La bajada toma el cuerpo que tenia el bloque `text` al que
+   reemplaza (15 px en telefono, 17 en escritorio) para no mover el resto.
+   ========================================================================== */
+
+.product__info-container > .cauce-eyebrow {
+  margin: 0 0 0.6rem;
+}
+
+.cauce-angulo {
+  margin: 0.4rem 0 2rem;
+}
+
+.cauce-angulo__titulo {
+  margin: 0 0 0.8rem;
+  max-width: 34ch;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--cauce-cauce);
+}
+
+.cauce-angulo__bajada {
+  margin: 0;
+  max-width: 46ch;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.5rem;
+  line-height: 1.5;
+  color: var(--cauce-cauce);
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-angulo__titulo { font-size: 2rem; }
+  .cauce-angulo__bajada { font-size: 1.7rem; }
+}
+
+/* ==========================================================================
+   24. WhatsApp — boton flotante, linea del bloque de compra y pie
+   Ver snippets/cauce-whatsapp.liquid y docs/DECISIONS.md D-066.
+
+   Contraste (WCAG 2.1, sRGB):
+     glifo blanco sobre #168A41 ...................  4.42
+     boton #168A41 contra BLANCO ..................  4.42  componente, pide 3:1
+     boton #168A41 contra RUBOR (#F3E6E9) .........  3.65
+     icono #168A41 de la linea, sobre BLANCO ......  4.42
+   El #25D366 de la marca daba 1.98 y 1.63: por eso no se usa.
+
+   El flotante va abajo a la derecha, APILADO sobre el boton de volver arriba de
+   Shrine (offset 20 px + 4 rem de alto + 1.2 rem de aire), que ya ocupa esa
+   esquina. Cuando aparece la barra fija de compra sube lo que la barra tapa:
+   assets/cauce.js mide la barra y escribe --cauce-wa-offset. El boton de volver
+   arriba hace lo mismo por su cuenta (main.js le escribe --sticky-atc-offset),
+   asi que los dos suben juntos.
+
+   z-index 2, el mismo que la barra y el boton de Shrine: queda arriba del
+   contenido y abajo del carrito lateral y los modales.
+   ========================================================================== */
+
+.cauce-wa--flotante {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + 4rem + 1.2rem + env(safe-area-inset-bottom, 0px));
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.2rem;
+  height: 5.2rem;
+  border-radius: 50%;
+  background: #168A41;
+  color: #FFFFFF;
+  box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.3);
+  transform: translateY(calc(-1 * var(--cauce-wa-offset, 0px)));
+  transition: transform 0.15s ease-in-out;
+}
+
+.cauce-wa--flotante .cauce-wa__icono {
+  width: 2.8rem;
+  height: 2.8rem;
+}
+
+.cauce-wa--flotante:focus-visible {
+  outline: 0.2rem solid #168A41;
+  outline-offset: 0.3rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cauce-wa--flotante { transition: none; }
+}
+
+.cauce-wa--linea {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 1.2rem 0 0;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.4rem;
+  line-height: 1.4;
+  color: var(--cauce-cauce);
+}
+
+.cauce-wa--linea .cauce-wa__icono {
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  color: #168A41;
+}
+
+.cauce-wa--linea a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+/* ==========================================================================
+   25. PDP — escalones en modo compacto
+   Ver snippets/quantity-breaks.liquid, snippets/cauce-escalones-pie.liquid y
+   docs/DECISIONS.md D-066.
+
+   Con cauce_compacto la tarjeta muestra dias, precio por dia, total, tachado y
+   un solo chip. El precio por dia es el argumento: sube a 2 rem, por encima
+   del total de la derecha (1.6 rem), para que sea lo primero que se compara
+   entre tarjetas. Sigue en mono y en CAUCE pleno como el caption de siempre
+   (15.76:1 sobre blanco, 12.62:1 sobre la superficie).
+
+   Transferencia y cuotas bajan a un renglon centrado debajo de las tarjetas,
+   en el mismo mono chico que tenian adentro.
+   ========================================================================== */
+
+.quantity-breaks--cauce-compacto .quantity-break__caption {
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+.quantity-breaks__pie {
+  margin: 1.2rem auto 0;
+  max-width: 52ch;
+  font-family: var(--cauce-font-dato);
+  font-size: 1.3rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: var(--cauce-cauce);
+}

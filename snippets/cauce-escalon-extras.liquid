@@ -10,6 +10,10 @@
     cuotas_en  {string}  opcional. 'option_1'..'option_4' o vacio: en que escalon
                          se dibujan las cuotas. Sale del setting
                          cauce_cuotas_escalon del bloque.
+    compacto   {boolean} opcional. true dibuja solo el chip de envio; ahorro,
+                         transferencia y cuotas no salen. Lo usa el modo
+                         cauce_compacto del bloque, que las pasa a un renglon
+                         debajo de las tarjetas. Ver D-066.
 
   Las cuatro se calculan, ninguna se escribe a mano:
 
@@ -52,7 +56,7 @@
   assign cauce_ahorro_money = cauce_ahorro | money_without_trailing_zeros
 -%}
 
-{%- if cauce_ahorro > 0 -%}
+{%- if cauce_ahorro > 0 and compacto != true -%}
   <span class="quantity-break__ahorro">
     {{- 'cauce.pdp.ahorro_escalon' | t: monto: cauce_ahorro_money -}}
   </span>
@@ -67,7 +71,7 @@
   assign cauce_transf_pct = settings.cauce_transferencia_pct | plus: 0
   assign cauce_transf_codigo = settings.cauce_transferencia_codigo | strip
 -%}
-{%- if cauce_transf_pct > 0 and cauce_transf_codigo != blank and cauce_total > 0 -%}
+{%- if cauce_transf_pct > 0 and cauce_transf_codigo != blank and cauce_total > 0 and compacto != true -%}
   {%- liquid
     assign cauce_transf_ahorro = cauce_total | times: cauce_transf_pct | divided_by: 100
     assign cauce_transf_total = cauce_total | minus: cauce_transf_ahorro
@@ -78,7 +82,7 @@
   </span>
 {%- endif -%}
 
-{%- if cauce_cuotas_n > 0 and cuotas_en == cauce_indice_actual -%}
+{%- if cauce_cuotas_n > 0 and cuotas_en == cauce_indice_actual and compacto != true -%}
   {%- liquid
     assign cauce_cuota_monto = cauce_total | divided_by: cauce_cuotas_n
     assign cauce_cuota_money = cauce_cuota_monto | money_without_trailing_zeros

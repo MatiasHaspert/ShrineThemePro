@@ -2870,6 +2870,12 @@
       },
       {
         "type": "text",
+        "id": "cauce_whatsapp",
+        "label": "t:settings_schema.cauce.settings.whatsapp.label",
+        "info": "t:settings_schema.cauce.settings.whatsapp.info"
+      },
+      {
+        "type": "text",
         "id": "cauce_horario",
         "label": "t:settings_schema.cauce.settings.horario.label",
         "info": "t:settings_schema.cauce.settings.horario.info"

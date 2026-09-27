@@ -397,6 +397,43 @@
 
   cauceCtaSync();
 
+  /* ----------------------------------------------------------------------
+     El boton flotante de WhatsApp (snippets/cauce-whatsapp.liquid) sube
+     cuando aparece la barra fija de compra de la PDP, igual que el boton de
+     volver arriba de Shrine.
+
+     main.js esta ofuscado y no expone como muestra la barra, asi que no se
+     engancha a su estado: se mide la barra misma. Lo que la barra tapa de la
+     ventana es lo que el boton sube. Se remide cuando la barra termina su
+     transicion (Shrine la esconde con un translateY de 0.15 s) y cuando cambia
+     cualquier atributo suyo, que cubre un cambio sin transicion. Una barra
+     con display:none mide 0 de alto y no tapa nada. Sin barra -el resto de
+     las paginas- no hace nada.
+     -------------------------------------------------------------------- */
+  function cauceWhatsappSobreBarra() {
+    const boton = document.querySelector('.cauce-wa--flotante');
+    const barra = document.querySelector('.sticky-atc');
+    if (!boton || !barra) return;
+
+    function medir() {
+      const r = barra.getBoundingClientRect();
+      let tapa = 0;
+      if (r.height > 0) {
+        tapa = Math.min(r.height, Math.max(0, window.innerHeight - r.top));
+      }
+      boton.style.setProperty('--cauce-wa-offset', Math.round(tapa) + 'px');
+    }
+
+    barra.addEventListener('transitionend', function (e) {
+      if (e.target === barra) medir();
+    });
+    new MutationObserver(medir).observe(barra, { attributes: true });
+    window.addEventListener('resize', medir);
+    medir();
+  }
+
+  cauceWhatsappSobreBarra();
+
   if (!customElements.get('cauce-tabs')) customElements.define('cauce-tabs', CauceTabs);
   if (!customElements.get('cauce-ugc')) customElements.define('cauce-ugc', CauceUgc);
   if (!customElements.get('cauce-hero')) customElements.define('cauce-hero', CauceHero);

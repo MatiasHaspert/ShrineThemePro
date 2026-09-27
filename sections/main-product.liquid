@@ -2413,6 +2413,20 @@
           "default": ""
         },
         {
+          "type": "checkbox",
+          "id": "cauce_compacto",
+          "label": "CAUCE · Tarjetas compactas",
+          "info": "Cada tarjeta deja solo el chip de envio gratis. El precio con transferencia y las cuotas pasan a un renglon debajo de las tarjetas, y el ahorro en pesos sale (lo dice el tachado). El caption sube de cuerpo: pensado para [precio_dia]. Ver D-066.",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "cauce_dias_frasco",
+          "label": "CAUCE · Dias que dura una unidad",
+          "info": "Para el token [precio_dia]. Solo se usa si el producto no tiene cargados los metafields cauce.unidades_envase y cauce.dosis_diaria; si los tiene, manda el calculo de ellos.",
+          "default": 30
+        },
+        {
           "type": "select",
           "id": "preselected",
           "options": [

@@ -39,6 +39,24 @@
             "text_alignment": "center",
             "mobile_text_size": 12,
             "desktop_text_size": 13,
+            "icon": "sell",
+            "filled_icon": false,
+            "mobile_icon_size": 16,
+            "desktop_icon_size": 18,
+            "desktop_layout": "horizontal",
+            "mobile_layout": "horizontal",
+            "hidden_products": "",
+            "enable_specific_display": false,
+            "displayed_products": ""
+          }
+        },
+        "cuotas": {
+          "type": "announcement",
+          "settings": {
+            "text": "3 cuotas sin interés",
+            "text_alignment": "center",
+            "mobile_text_size": 12,
+            "desktop_text_size": 13,
             "icon": "payments",
             "filled_icon": false,
             "mobile_icon_size": 16,
@@ -50,14 +68,14 @@
             "displayed_products": ""
           }
         },
-        "produccion": {
+        "devolucion": {
           "type": "announcement",
           "settings": {
-            "text": "Producción nacional. Análisis por laboratorio externo.",
+            "text": "30 días para devolverlo",
             "text_alignment": "center",
             "mobile_text_size": 12,
             "desktop_text_size": 13,
-            "icon": "verified",
+            "icon": "undo",
             "filled_icon": false,
             "mobile_icon_size": 16,
             "desktop_icon_size": 18,
@@ -71,8 +89,9 @@
       },
       "block_order": [
         "envio",
+        "cuotas",
         "transferencia",
-        "produccion"
+        "devolucion"
       ],
       "settings": {
         "columns_desktop": 0,

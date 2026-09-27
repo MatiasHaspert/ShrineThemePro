@@ -606,6 +606,14 @@
         })
       </script>
     {% endif %}
-  
+
+    {%- comment -%}
+      CAUCE: boton flotante de WhatsApp, en todas las paginas. En una pagina de
+      producto el mensaje precargado nombra el producto; en el resto `product` es
+      nil y va el generico. Si settings.cauce_whatsapp esta vacio no dibuja nada.
+      Ver snippets/cauce-whatsapp.liquid y D-066.
+    {%- endcomment -%}
+    {% render 'cauce-whatsapp', variante: 'flotante', producto: product %}
+
 </body>
 </html>

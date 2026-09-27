@@ -22,11 +22,30 @@
   descontado contra settings.cauce_umbral_envio_gratis. No es un token de
   block.settings: no hay nada que cargar en el editor y no puede quedar
   desfasada del precio. Ver D-050c.
+
+  Tercer agregado CAUCE: el token [precio_dia] y las tarjetas compactas (D-066).
+  [precio_dia] es el total del escalon ya descontado dividido por los dias que
+  cubre, redondeado al peso, con el mismo money que el resto de la tarjeta. Los
+  dias salen de los metafields de dosis si estan (unidades_envase / dosis_diaria)
+  y si no del setting cauce_dias_frasco del bloque. Se resuelve igual que
+  [duracion] -en el servidor, antes de escribir data-text- pero mas abajo, dentro
+  de cada escalon, porque necesita option_N_price y ese precio recien existe ahi.
+  Con cauce_compacto las lineas de cauce-escalon-extras se reducen al chip de
+  envio y lo demas pasa a un renglon debajo de las tarjetas
+  (snippets/cauce-escalones-pie.liquid).
 {%- endcomment -%}
 {%- capture cauce_duracion_1 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_1_quantity %}{% endcapture -%}
 {%- capture cauce_duracion_2 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_2_quantity %}{% endcapture -%}
 {%- capture cauce_duracion_3 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_3_quantity %}{% endcapture -%}
 {%- capture cauce_duracion_4 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_4_quantity %}{% endcapture -%}
+{%- liquid
+  assign cauce_dias_unidad = block.settings.cauce_dias_frasco | plus: 0
+  assign cauce_md_envase = product.metafields.cauce.unidades_envase.value | plus: 0
+  assign cauce_md_dosis = product.metafields.cauce.dosis_diaria.value | plus: 0
+  if cauce_md_envase > 0 and cauce_md_dosis > 0
+    assign cauce_dias_unidad = cauce_md_envase | divided_by: cauce_md_dosis
+  endif
+-%}
 {%- liquid
   assign cauce_o1_badge = block.settings.option_1_badge | replace: '[duracion]', cauce_duracion_1
   assign cauce_o1_label = block.settings.option_1_label | replace: '[duracion]', cauce_duracion_1
@@ -84,7 +103,7 @@
   assign variants_option3_arr = product.variants | map: 'option3'
 %}
 <quantity-breaks
-  class="quantity-breaks quantity-breaks--{{ block.settings.style }} accent-color-{{ block.settings.color_scheme }}{% if block.settings.space_images %} quantity-breaks--space-images{% endif %}{% if has_badge %} quantity-breaks--has-badge{% endif %}{% if block.settings.full_width_pickers %} quantity-breaks-full-width-pickers{% endif %} quantity-breaks--vertical-image-{{ block.settings.vertical_images_position }} quantity-breaks--vertical-prices-{{ block.settings.vertical_prices_layout }}{% if block.settings.display_selected_indicator %} quantity-breaks--show-indicator{% endif %}{% if block.settings.image_width == 100 %} quantity-breaks--max-width-images{% endif %}"
+  class="quantity-breaks quantity-breaks--{{ block.settings.style }} accent-color-{{ block.settings.color_scheme }}{% if block.settings.space_images %} quantity-breaks--space-images{% endif %}{% if has_badge %} quantity-breaks--has-badge{% endif %}{% if block.settings.full_width_pickers %} quantity-breaks-full-width-pickers{% endif %} quantity-breaks--vertical-image-{{ block.settings.vertical_images_position }} quantity-breaks--vertical-prices-{{ block.settings.vertical_prices_layout }}{% if block.settings.display_selected_indicator %} quantity-breaks--show-indicator{% endif %}{% if block.settings.cauce_compacto %} quantity-breaks--cauce-compacto{% endif %}{% if block.settings.image_width == 100 %} quantity-breaks--max-width-images{% endif %}"
   id="quantity-breaks-{{ section.id }}"
   data-section="{{ section.id }}"
   data-items="{{ item_count }}"
@@ -140,6 +159,23 @@
         assign option_1_price_each = option_1_price | divided_by: block.settings.option_1_quantity
         assign option_1_compare_price_each = option_1_compare_price | divided_by: block.settings.option_1_quantity
       %}
+      {%- comment -%}
+        CAUCE: token [precio_dia]. Mismo redondeo que la fila de precio de
+        sections/cauce-comparativa.liquid, para que los dos numeros coincidan.
+        Sin dias (setting vacio y sin metafields) el token queda vacio. D-066.
+      {%- endcomment -%}
+      {%- liquid
+        assign cauce_dia_1_money = ''
+        if cauce_dias_unidad > 0
+          assign cauce_dias_1 = cauce_dias_unidad | times: block.settings.option_1_quantity
+          assign cauce_dia_1 = option_1_price | times: 1.0 | divided_by: cauce_dias_1 | divided_by: 100 | round | times: 100
+          assign cauce_dia_1_money = cauce_dia_1 | money_without_trailing_zeros
+        endif
+        assign cauce_o1_badge = cauce_o1_badge | replace: '[precio_dia]', cauce_dia_1_money
+        assign cauce_o1_label = cauce_o1_label | replace: '[precio_dia]', cauce_dia_1_money
+        assign cauce_o1_benefit = cauce_o1_benefit | replace: '[precio_dia]', cauce_dia_1_money
+        assign cauce_o1_caption = cauce_o1_caption | replace: '[precio_dia]', cauce_dia_1_money
+      -%}
       {%- comment -%}
         CAUCE: texto que el boton de agregar al carrito toma cuando este escalon queda
         elegido. Se arma aca, en el servidor, con el mismo money del resto del bloque;
@@ -248,7 +284,8 @@
                 indice: 1,
                 total: option_1_price,
                 ahorro: option_1_price_difference,
-                cuotas_en: block.settings.cauce_cuotas_escalon
+                cuotas_en: block.settings.cauce_cuotas_escalon,
+                compacto: block.settings.cauce_compacto
               %}
             </div>
             <div class="quantity-break__right dynamic-price">
@@ -387,6 +424,18 @@
         assign option_2_price_each = option_2_price | divided_by: block.settings.option_2_quantity
         assign option_2_compare_price_each = option_2_compare_price | divided_by: block.settings.option_2_quantity
       %}
+      {%- liquid
+        assign cauce_dia_2_money = ''
+        if cauce_dias_unidad > 0
+          assign cauce_dias_2 = cauce_dias_unidad | times: block.settings.option_2_quantity
+          assign cauce_dia_2 = option_2_price | times: 1.0 | divided_by: cauce_dias_2 | divided_by: 100 | round | times: 100
+          assign cauce_dia_2_money = cauce_dia_2 | money_without_trailing_zeros
+        endif
+        assign cauce_o2_badge = cauce_o2_badge | replace: '[precio_dia]', cauce_dia_2_money
+        assign cauce_o2_label = cauce_o2_label | replace: '[precio_dia]', cauce_dia_2_money
+        assign cauce_o2_benefit = cauce_o2_benefit | replace: '[precio_dia]', cauce_dia_2_money
+        assign cauce_o2_caption = cauce_o2_caption | replace: '[precio_dia]', cauce_dia_2_money
+      -%}
       {%- comment -%}
         CAUCE: texto que el boton de agregar al carrito toma cuando este escalon queda
         elegido. Se arma aca, en el servidor, con el mismo money del resto del bloque;
@@ -495,7 +544,8 @@
                 indice: 2,
                 total: option_2_price,
                 ahorro: option_2_price_difference,
-                cuotas_en: block.settings.cauce_cuotas_escalon
+                cuotas_en: block.settings.cauce_cuotas_escalon,
+                compacto: block.settings.cauce_compacto
               %}
             </div>
             <div class="quantity-break__right dynamic-price">
@@ -634,6 +684,18 @@
         assign option_3_price_each = option_3_price | divided_by: block.settings.option_3_quantity
         assign option_3_compare_price_each = option_3_compare_price | divided_by: block.settings.option_3_quantity
       %}
+      {%- liquid
+        assign cauce_dia_3_money = ''
+        if cauce_dias_unidad > 0
+          assign cauce_dias_3 = cauce_dias_unidad | times: block.settings.option_3_quantity
+          assign cauce_dia_3 = option_3_price | times: 1.0 | divided_by: cauce_dias_3 | divided_by: 100 | round | times: 100
+          assign cauce_dia_3_money = cauce_dia_3 | money_without_trailing_zeros
+        endif
+        assign cauce_o3_badge = cauce_o3_badge | replace: '[precio_dia]', cauce_dia_3_money
+        assign cauce_o3_label = cauce_o3_label | replace: '[precio_dia]', cauce_dia_3_money
+        assign cauce_o3_benefit = cauce_o3_benefit | replace: '[precio_dia]', cauce_dia_3_money
+        assign cauce_o3_caption = cauce_o3_caption | replace: '[precio_dia]', cauce_dia_3_money
+      -%}
       {%- comment -%}
         CAUCE: texto que el boton de agregar al carrito toma cuando este escalon queda
         elegido. Se arma aca, en el servidor, con el mismo money del resto del bloque;
@@ -742,7 +804,8 @@
                 indice: 3,
                 total: option_3_price,
                 ahorro: option_3_price_difference,
-                cuotas_en: block.settings.cauce_cuotas_escalon
+                cuotas_en: block.settings.cauce_cuotas_escalon,
+                compacto: block.settings.cauce_compacto
               %}
             </div>
             <div class="quantity-break__right dynamic-price">
@@ -881,6 +944,18 @@
         assign option_4_price_each = option_4_price | divided_by: block.settings.option_4_quantity
         assign option_4_compare_price_each = option_4_compare_price | divided_by: block.settings.option_4_quantity
       %}
+      {%- liquid
+        assign cauce_dia_4_money = ''
+        if cauce_dias_unidad > 0
+          assign cauce_dias_4 = cauce_dias_unidad | times: block.settings.option_4_quantity
+          assign cauce_dia_4 = option_4_price | times: 1.0 | divided_by: cauce_dias_4 | divided_by: 100 | round | times: 100
+          assign cauce_dia_4_money = cauce_dia_4 | money_without_trailing_zeros
+        endif
+        assign cauce_o4_badge = cauce_o4_badge | replace: '[precio_dia]', cauce_dia_4_money
+        assign cauce_o4_label = cauce_o4_label | replace: '[precio_dia]', cauce_dia_4_money
+        assign cauce_o4_benefit = cauce_o4_benefit | replace: '[precio_dia]', cauce_dia_4_money
+        assign cauce_o4_caption = cauce_o4_caption | replace: '[precio_dia]', cauce_dia_4_money
+      -%}
       {%- comment -%}
         CAUCE: texto que el boton de agregar al carrito toma cuando este escalon queda
         elegido. Se arma aca, en el servidor, con el mismo money del resto del bloque;
@@ -989,7 +1064,8 @@
                 indice: 4,
                 total: option_4_price,
                 ahorro: option_4_price_difference,
-                cuotas_en: block.settings.cauce_cuotas_escalon
+                cuotas_en: block.settings.cauce_cuotas_escalon,
+                compacto: block.settings.cauce_compacto
               %}
             </div>
             <div class="quantity-break__right dynamic-price">
@@ -1111,6 +1187,33 @@
       </label>
     {% endif %}
   </div>
+
+  {%- comment -%}
+    CAUCE: en modo compacto, transferencia y cuotas van en un solo renglon debajo
+    de las tarjetas. Las cuotas se calculan contra el total del escalon que elige
+    cauce_cuotas_escalon, el mismo que antes las mostraba adentro. D-066.
+  {%- endcomment -%}
+  {%- if block.settings.cauce_compacto -%}
+    {%- liquid
+      assign cauce_pie_total = 0
+      assign cauce_pie_cantidad = 0
+      case block.settings.cauce_cuotas_escalon
+        when 'option_1'
+          assign cauce_pie_total = option_1_price
+          assign cauce_pie_cantidad = block.settings.option_1_quantity
+        when 'option_2'
+          assign cauce_pie_total = option_2_price
+          assign cauce_pie_cantidad = block.settings.option_2_quantity
+        when 'option_3'
+          assign cauce_pie_total = option_3_price
+          assign cauce_pie_cantidad = block.settings.option_3_quantity
+        when 'option_4'
+          assign cauce_pie_total = option_4_price
+          assign cauce_pie_cantidad = block.settings.option_4_quantity
+      endcase
+    -%}
+    {% render 'cauce-escalones-pie', total_cuotas: cauce_pie_total, cantidad: cauce_pie_cantidad %}
+  {%- endif -%}
 
   <script data-has-variants="{{ has_variants }}" type="application/json">
     {{ product.variants | json }}

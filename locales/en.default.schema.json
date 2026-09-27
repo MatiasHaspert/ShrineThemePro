@@ -417,9 +417,13 @@
         "telefono": {
           "label": "Teléfono de contacto"
         },
+        "whatsapp": {
+          "label": "WhatsApp",
+          "info": "Número en formato internacional, solo dígitos y sin el +. Un celular argentino lleva 549 + característica + número, sin el 15: 5493406461636. Vacío saca el botón flotante, la línea del bloque de compra y el link del pie."
+        },
         "horario": {
           "label": "Horario de atención",
-          "info": "Se publica en la columna de contacto del pie. Ejemplo: 06:00 a 00:00."
+          "info": "Se publica en la columna de contacto del pie, después de \"Horario de atención:\". Ejemplo: lunes a viernes de 9 a 18 h."
         },
         "header__legales": {
           "content": "Obligatorios de Argentina"

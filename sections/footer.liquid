@@ -116,6 +116,14 @@
                           {% render 'cauce-dato-legal', valor: '', clave: 'telefono' %}
                         {%- endif -%}
                       </p>
+                      {%- comment -%}
+                        CAUCE: WhatsApp va entre el telefono y el horario porque el
+                        horario vale para los dos canales. Sin settings.cauce_whatsapp
+                        el snippet no dibuja nada y el <p> no se abre. D-066.
+                      {%- endcomment -%}
+                      {%- if settings.cauce_whatsapp != blank -%}
+                        <p>{% render 'cauce-whatsapp', variante: 'pie' %}</p>
+                      {%- endif -%}
                       {%- if settings.cauce_horario != blank -%}
                         <p class="cauce-pie__horario">
                           {{- 'cauce.footer.horario' | t: horario: settings.cauce_horario -}}

@@ -38,37 +38,6 @@
             "margin_bottom": 9
           }
         },
-        "subtitulo": {
-          "type": "text",
-          "settings": {
-            "mobile_text_size": 15,
-            "desktop_text_size": 17,
-            "alignment": "left",
-            "text_color": "#10262a",
-            "text_1": "¿Peso que no baja, hinchazón, sofocos o cambios de humor? Hormify reúne 8 activos de origen natural en una fórmula sin hormonas que ayuda a tu cuerpo a recuperar su equilibrio hormonal desde adentro.",
-            "text_2": "",
-            "text_3": "",
-            "icon_scale": 120,
-            "icon_color": "#5f99a2",
-            "icon_1": "",
-            "filled_icon_1": false,
-            "icon_2": "",
-            "filled_icon_2": false,
-            "icon_3": "",
-            "filled_icon_3": false,
-            "width": "100%",
-            "direction": "horizontal",
-            "column_gap": 3,
-            "enable_bg": false,
-            "bg_color": "#f3f3f3",
-            "corner_radius": 40,
-            "padding": 3,
-            "border_size": 0,
-            "border_color": "#b7b7b7",
-            "margin_top": 0,
-            "margin_bottom": 21
-          }
-        },
         "precio": {
           "type": "price",
           "disabled": true,
@@ -98,12 +67,12 @@
             "mobile_icon_size": 24,
             "mobile_spacing": 8,
             "mobile_text_size": 14,
-            "icon_1": "balance",
+            "icon_1": "check_circle",
             "icon_1_fill": false,
-            "heading_1": "Ayuda a combatir el peso hormonal",
-            "icon_2": "water_drop",
+            "heading_1": "Sin hormonas",
+            "icon_2": "medication",
             "icon_2_fill": false,
-            "heading_2": "Menos hinchazón",
+            "heading_2": "2 cápsulas al día · 30 días por frasco",
             "icon_3": "",
             "icon_3_fill": false,
             "heading_3": "",
@@ -122,12 +91,12 @@
             "mobile_icon_size": 24,
             "mobile_spacing": 8,
             "mobile_text_size": 14,
-            "icon_1": "favorite",
+            "icon_1": "science",
             "icon_1_fill": false,
-            "heading_1": "Equilibra tus hormonas, sin hormonas",
-            "icon_2": "battery_android_frame_bolt",
+            "heading_1": "Con vitaminas B6, B5, B12 y zinc",
+            "icon_2": "undo",
             "icon_2_fill": false,
-            "heading_2": "Menos estrés, más energía y mejor humor",
+            "heading_2": "30 días para devolverlo",
             "icon_3": "",
             "icon_3_fill": false,
             "heading_3": "",
@@ -163,7 +132,7 @@
             "enable_quantity_discounts": true,
             "style": "normal",
             "headline": "2 CÁPSULAS AL DÍA · CADA FRASCO, UN MES",
-            "cauce_subtitulo": "La mayoría de las mujeres nota los cambios más claros entre el segundo y el tercer mes de uso diario.",
+            "cauce_subtitulo": "",
             "cauce_cuotas_escalon": "option_3",
             "preselected": "option_3",
             "display_selected_indicator": true,
@@ -190,14 +159,14 @@
             "option_1_benefit_position": "top",
             "option_1_benefit_style": "outlined",
             "option_1_benefit_color": "text",
-            "option_1_caption": "+ envío",
+            "option_1_caption": "[precio_dia] por día",
             "option_1_percentage_off_text": "",
             "option_1_fixed_amount_off": "0",
             "option_1_price_text": "[price]",
             "option_1_compare_price": "compare_price",
             "option_1_compare_price_text": "[compare_price]",
             "option_2_quantity": 2,
-            "option_2_badge": "",
+            "option_2_badge": "EL MÁS ELEGIDO",
             "option_2_badge_style": "2",
             "option_2_badge_color": "accent-1",
             "option_2_label": "2 frascos · 60 días",
@@ -205,14 +174,14 @@
             "option_2_benefit_position": "top",
             "option_2_benefit_style": "outlined",
             "option_2_benefit_color": "text",
-            "option_2_caption": "[price_each] por frasco",
+            "option_2_caption": "[precio_dia] por día",
             "option_2_percentage_off_text": "0",
             "option_2_fixed_amount_off": "37900",
             "option_2_price_text": "[price]",
             "option_2_compare_price": "compare_price",
             "option_2_compare_price_text": "[compare_price]",
             "option_3_quantity": 3,
-            "option_3_badge": "RESULTADOS ÓPTIMOS · 90 DÍAS",
+            "option_3_badge": "MEJOR PRECIO POR DÍA",
             "option_3_badge_style": "2",
             "option_3_badge_color": "accent-1",
             "option_3_label": "3 frascos · 90 días",
@@ -220,7 +189,7 @@
             "option_3_benefit_position": "top",
             "option_3_benefit_style": "outlined",
             "option_3_benefit_color": "text",
-            "option_3_caption": "[price_each] por frasco",
+            "option_3_caption": "[precio_dia] por día",
             "option_3_percentage_off_text": "0",
             "option_3_fixed_amount_off": "76800",
             "option_3_price_text": "[price]",
@@ -242,7 +211,9 @@
             "option_4_compare_price": "compare_price",
             "option_4_compare_price_text": "[compare_price]",
             "margin_top": 0,
-            "margin_bottom": 9
+            "margin_bottom": 9,
+            "cauce_compacto": true,
+            "cauce_dias_frasco": 30
           }
         },
         "nota_precios": {
@@ -307,54 +278,6 @@
             "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}"
           }
         },
-        "beneficios": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Beneficios de Hormify",
-            "heading_size": "medium",
-            "icon": "verified",
-            "filled_icon": false,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<ul><li>Ayuda a combatir el aumento de peso de origen hormonal y los antojos.</li><li>Reduce la hinchazón y favorece una digestión más liviana.</li><li>Apoya el equilibrio natural del estrógeno y la progesterona.</li><li>Alivia los sofocos, los sudores nocturnos y los cambios de humor.</li><li>Ayuda a bajar el estrés y el cortisol.</li><li>Más energía y claridad mental durante el día.</li></ul><p><em>Los resultados pueden variar de una persona a otra.</em></p>",
-            "page": "",
-            "margin_top": 24,
-            "margin_bottom": 0
-          }
-        },
-        "para_quien": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "¿Para quién es Hormify?",
-            "heading_size": "medium",
-            "icon": "favorite",
-            "filled_icon": false,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>Para mujeres que sienten que su cuerpo cambió: el peso que antes bajaba ahora no se mueve, la hinchazón aparece todos los días, el ciclo se volvió irregular y el humor sube y baja sin aviso.</p><p>Acompaña cada etapa de cambio hormonal —el ciclo menstrual, el SOP, la perimenopausia y la menopausia— con una fórmula sin hormonas.</p><p><strong>No se recomienda durante el embarazo ni la lactancia.</strong></p>",
-            "page": "",
-            "margin_top": 24,
-            "margin_bottom": 0
-          }
-        },
-        "cuando": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "¿Cuándo voy a notar cambios?",
-            "heading_size": "medium",
-            "icon": "trending_up",
-            "filled_icon": false,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>Cada cuerpo tiene su tiempo. Algunas mujeres notan los primeros cambios en pocos días —menos hinchazón, más energía— y otras necesitan unas semanas.</p><p>Los cambios más claros suelen aparecer entre el segundo y el tercer mes de uso diario. Por eso recomendamos la rutina completa de 90 días.</p>",
-            "page": "",
-            "margin_top": 24,
-            "margin_bottom": 0
-          }
-        },
         "como_se_toma": {
           "type": "collapsible_tab",
           "settings": {
@@ -367,7 +290,7 @@
             "open": false,
             "content": "<p>Dos cápsulas por día con un vaso de agua. Podés tomarlas juntas a la mañana o repartirlas: una a la mañana y otra a la noche.</p><p>Cada frasco trae 60 cápsulas y rinde un mes.</p>",
             "page": "",
-            "margin_top": 24,
+            "margin_top": 0,
             "margin_bottom": 0
           }
         },
@@ -381,7 +304,7 @@
             "collapse_icon": "carret",
             "display_top_border": true,
             "open": false,
-            "content": "<p>Despachamos desde Buenos Aires. El plazo estimado es de 3 a 10 días habiles sujetos a la disponibilidad de stock y el costo se calcula en el checkout según tu código postal. Envío sin cargo en compras desde $55.000.</p>",
+            "content": "<p>Despachamos desde Buenos Aires a todo el país. El plazo estimado de entrega es de 3 a 10 días hábiles y el costo se calcula en el checkout según tu código postal.</p><p>El envío es sin cargo en compras desde $55.000.</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0
@@ -390,14 +313,14 @@
         "acordeon_garantia": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Cambios y devoluciones",
+            "heading": "Devoluciones: 30 días",
             "heading_size": "medium",
             "icon": "undo",
             "filled_icon": false,
             "collapse_icon": "carret",
             "display_top_border": true,
             "open": false,
-            "content": "<p>Tenés 10 días corridos desde que recibís el pedido para arrepentirte de la compra y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). El producto tiene que estar sin abrir.</p><p>Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a cauce@caucearg.com.</p>",
+            "content": "<p>Tenés 30 días corridos desde que recibís el pedido para devolverlo, sin explicar por qué. El frasco tiene que estar cerrado: si compraste un pack, podés devolver los frascos que no abriste. Te devolvemos lo que pagaste por ellos y el envío de vuelta corre por nuestra cuenta.</p><p>Los primeros 10 días son, además, tu derecho de arrepentimiento (Res. SCI 424/2020). Para iniciar la devolución, entrá al botón de arrepentimiento del pie de página o escribinos a cauce@caucearg.com.</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0
@@ -412,9 +335,9 @@
         "sticky": {
           "type": "sticky_atc",
           "settings": {
-            "function": "add_to_cart",
+            "function": "scroll_#quantity-breaks-id",
             "display_when": "after_scroll",
-            "button_label": "Agregar al carrito",
+            "button_label": "Elegir mi pack",
             "enable_custom_btn_color": false,
             "custom_btn_color": "#dd1d1d",
             "color_scheme": "background-1",
@@ -424,7 +347,7 @@
             "desktop_show_image": true,
             "desktop_show_title": true,
             "desktop_rating_stars": false,
-            "desktop_show_price": true,
+            "desktop_show_price": false,
             "desktop_show_sale_badge": false,
             "desktop_variant_picker": false,
             "desktop_full_button_width": false,
@@ -433,19 +356,101 @@
             "mobile_show_image": false,
             "mobile_show_title": false,
             "mobile_rating_stars": false,
-            "mobile_show_price": true,
+            "mobile_show_price": false,
             "mobile_show_sale_badge": false,
             "mobile_variant_picker": false,
             "mobile_full_button_width": true,
             "mobile_show_price_in_button": false,
             "mobile_transparent_bg": false
           }
+        },
+        "volanta": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<p class=\"cauce-eyebrow\">Suplemento dietario para mujeres · 60 cápsulas</p>"
+          }
+        },
+        "angulo": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-angulo',\n  defecto: 'identidad',\n  clave_1: 'identidad',\n  titulo_1: 'Para cuando sentís que dejaste de ser vos',\n  bajada_1: 'Dormís mal, estás sin paciencia y sin ganas, y todos te dicen que es la edad. Hormify es una rutina de 2 cápsulas por día, sin hormonas, con vitamina B6, ácido pantoténico, B12 y zinc: nutrientes que tu cuerpo usa para regular su actividad hormonal.',\n  clave_2: 'energia',\n  titulo_2: '¿Cansada todo el día, aunque duermas?',\n  bajada_2: 'La vitamina B6, la B12 y el ácido pantoténico contribuyen a disminuir el cansancio y la fatiga. Hormify los junta con zinc y 15 plantas en 2 cápsulas por día. Sin hormonas.',\n  clave_3: 'transparencia',\n  titulo_3: 'Sin hormonas. Sin promesas mágicas. Con la etiqueta a la vista.',\n  bajada_3: 'Hormify es un suplemento dietario de 2 cápsulas por día con vitaminas B6, B5 y B12, zinc y 15 plantas. El rótulo completo está en las fotos y en la pestaña Ingredientes y, si cambiás de idea, tenés 30 días para devolverlo con el frasco cerrado.'\n%}"
+          }
+        },
+        "confianza": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 13,
+            "desktop_text_size": 14,
+            "alignment": "left",
+            "text_color": "#10262a",
+            "text_1": "30 días para devolverlo, con el frasco cerrado",
+            "text_2": "Envío a todo el país",
+            "text_3": "",
+            "icon_scale": 110,
+            "icon_color": "#5f99a2",
+            "icon_1": "undo",
+            "filled_icon_1": false,
+            "icon_2": "local_shipping",
+            "filled_icon_2": false,
+            "icon_3": "",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "horizontal",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "whatsapp": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-whatsapp', variante: 'linea', producto: product %}"
+          }
+        },
+        "ingredientes_tab": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Ingredientes",
+            "heading_size": "medium",
+            "icon": "science",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p><strong>Cada porción (2 cápsulas) tiene:</strong></p><ul><li>Vitamina A (como betacaroteno): 50 mcg</li><li>Tiamina, vitamina B1 (como mononitrato de tiamina): 1,25 mg</li><li>Niacina, vitamina B3: 1 mg</li><li>Vitamina B6 (como piridoxina HCl): 3,8 mg</li><li>Vitamina B12 (como cianocobalamina): 54 mcg</li><li>Ácido pantoténico, vitamina B5 (como pantotenato de calcio): 2,5 mg</li><li>Zinc (como óxido de zinc): 26 mg</li><li>L-arginina: 100 mg</li><li>Extracto de pimienta negra (BioPerine®): 1 mg</li></ul><p><strong>Mezcla de plantas, 802 mg:</strong> epimedio (<em>Epimedium sagittatum</em>), tribulus (<em>Tribulus terrestris</em>), catuaba (<em>Trichilia catigua</em>), dong quai (<em>Angelica sinensis</em>), ginkgo (<em>Ginkgo biloba</em>), ginseng asiático (<em>Panax ginseng</em>), damiana (<em>Turnera diffusa</em>), ashwagandha (<em>Withania somnifera</em>), jengibre (<em>Zingiber officinale</em>), maca (<em>Lepidium meyenii</em>), muira puama (<em>Ptychopetalum olacoides</em>), L-fenilalanina, espárrago (<em>Asparagus officinalis</em>) y zarzaparrilla china (<em>Smilax china</em>).</p><p><strong>Otros ingredientes:</strong> harina de arroz, hipromelosa (cápsula vegetal), estearato de magnesio vegetal y dióxido de silicio.</p><p>No contiene hormonas. El rótulo completo está en las fotos del producto.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "contraindicaciones": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "¿Quién no debería tomarlo?",
+            "heading_size": "medium",
+            "icon": "help",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>No lo tomes si estás embarazada o amamantando, ni si tenés fenilcetonuria: contiene L-fenilalanina.</p><p>Consultá antes con tu médico si:</p><ul><li>tomás anticoagulantes o antiagregantes,</li><li>tomás antidepresivos o medicación para la tiroides o la diabetes,</li><li>tenés endometriosis, miomas o antecedentes de cáncer de mama,</li><li>tenés una cirugía programada.</li></ul><p>No superes la porción diaria. Mantenelo fuera del alcance de los niños.</p>",
+            "page": "",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
         }
       },
       "block_order": [
         "resenas",
+        "volanta",
         "titulo",
-        "subtitulo",
+        "angulo",
         "precio",
         "bullets_a",
         "bullets_b",
@@ -455,11 +460,12 @@
         "nota_precios",
         "suscripcion",
         "comprar",
+        "confianza",
+        "whatsapp",
         "pagos",
-        "beneficios",
-        "para_quien",
-        "cuando",
+        "ingredientes_tab",
         "como_se_toma",
+        "contraindicaciones",
         "acordeon_envios",
         "acordeon_garantia",
         "disclaimer",
@@ -522,31 +528,31 @@
         "m2": {
           "type": "text",
           "settings": {
-            "title": "Peso hormonal"
+            "title": "3 cuotas sin interés"
           }
         },
         "m3": {
           "type": "text",
           "settings": {
-            "title": "Hinchazón"
+            "title": "10 % off pagando con transferencia"
           }
         },
         "m4": {
           "type": "text",
           "settings": {
-            "title": "Sofocos"
+            "title": "30 días para devolverlo"
           }
         },
         "m5": {
           "type": "text",
           "settings": {
-            "title": "Estrés y cambios de humor"
+            "title": "Envío a todo el país"
           }
         },
         "m6": {
           "type": "text",
           "settings": {
-            "title": "Envío a todo el país"
+            "title": "Atención por WhatsApp"
           }
         }
       },
@@ -1298,7 +1304,7 @@
           "settings": {
             "column": "col_1",
             "visibility": "always-display",
-            "heading": "Si te arrepentís, se devuelve",
+            "heading": "Tenés 30 días para devolverlo",
             "title_highlight_color": "#6d388b",
             "heading_size": "h1",
             "alignment": "left",
@@ -1312,7 +1318,7 @@
           "settings": {
             "column": "col_1",
             "visibility": "always-display",
-            "text": "<p>No es una promesa comercial: es un derecho que tenés por la Resolución SCI 424/2020 y que acá está escrito sin condiciones escondidas.</p>",
+            "text": "<p>La ley te da 10 días para arrepentirte de una compra online. Nosotros te damos 30: si cambiás de idea, nos avisás y te devolvemos lo que pagaste.</p>",
             "text_style": "body",
             "alignment": "left",
             "mobile_alignment": "mobile-left",
@@ -1332,13 +1338,31 @@
             "icon_color": "accent-1",
             "icon_heading_size": "h4",
             "icon_text_alignment": "left",
-            "title": "10 días corridos",
+            "title": "30 días corridos",
             "text": "<p>Se cuentan desde que recibís el pedido, no desde que lo comprás.</p>",
             "margin_top": 0,
             "margin_bottom": 20
           }
         },
         "g3": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "medication",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Con el frasco cerrado",
+            "text": "<p>Lo devolvés sin abrir. Si compraste un pack, podés devolver los frascos que no abriste y te devolvemos lo que pagaste por ellos.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g4": {
           "type": "icon_with_text",
           "settings": {
             "column": "col_2",
@@ -1350,34 +1374,27 @@
             "icon_color": "accent-1",
             "icon_heading_size": "h4",
             "icon_text_alignment": "left",
-            "title": "Sin costo para vos",
-            "text": "<p>Se devuelve el importe pagado. El costo de la devolución lo asumimos nosotros.</p>",
+            "title": "Sin costo y sin explicar por qué",
+            "text": "<p>El envío de vuelta lo pagamos nosotros y no hace falta que des un motivo. Escribinos por WhatsApp o a cauce@caucearg.com.</p>",
             "margin_top": 0,
             "margin_bottom": 20
           }
         },
-        "g4": {
-          "type": "icon_with_text",
+        "g5": {
+          "type": "custom_liquid",
           "settings": {
-            "column": "col_2",
+            "column": "col_1",
             "visibility": "always-display",
-            "icon": "help",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h4",
-            "icon_text_alignment": "left",
-            "title": "Sin explicar por qué",
-            "text": "<p>No hace falta que des un motivo. Basta con que nos avises dentro del plazo.</p>",
-            "margin_top": 0,
-            "margin_bottom": 20
+            "custom_liquid": "<a class=\"button button--primary\" href=\"#comprar\">Elegir mi pack</a>",
+            "margin_top": 4,
+            "margin_bottom": 0
           }
         }
       },
       "block_order": [
         "g0",
         "g1",
+        "g5",
         "g2",
         "g3",
         "g4"
@@ -1526,27 +1543,12 @@
           "settings": {
             "column": "col_1",
             "visibility": "always-display",
-            "text": "<ul><li>8 activos de origen natural, sin hormonas</li><li>Ayuda con el peso hormonal, la hinchazón y los sofocos</li><li>Dos cápsulas por día: cada frasco rinde un mes</li><li>Envío a todo el país</li><li>10 días para arrepentirte, sin costo</li></ul>",
+            "text": "<ul><li>Dos cápsulas por día: cada frasco rinde 30 días</li><li>Sin hormonas. Con vitaminas B6, B5, B12 y zinc, y 15 plantas</li><li>El pack de 3 frascos es el de mejor precio por día</li><li>3 cuotas sin interés o 10 % off pagando con transferencia</li><li>Envío a todo el país y 30 días para devolverlo, con el frasco cerrado</li></ul>",
             "text_style": "body",
             "alignment": "left",
             "mobile_alignment": "mobile-left",
             "margin_top": 0,
             "margin_bottom": 24
-          }
-        },
-        "x2": {
-          "type": "atc_button",
-          "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "button_label": "Agregar al carrito",
-            "atc_product": "",
-            "atc_skip_cart": false,
-            "full_width": false,
-            "alignment": "flex-start",
-            "mobile_alignment": "center",
-            "margin_top": 0,
-            "margin_bottom": 16
           }
         },
         "x3": {
@@ -1558,12 +1560,22 @@
             "margin_top": 0,
             "margin_bottom": 0
           }
+        },
+        "x2b": {
+          "type": "custom_liquid",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "custom_liquid": "<a class=\"button button--primary\" href=\"#comprar\">Elegir mi pack</a>",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
         }
       },
       "block_order": [
         "x0",
         "x1",
-        "x2",
+        "x2b",
         "x3"
       ],
       "settings": {
@@ -1611,10 +1623,61 @@
         "volanta": "Novedades",
         "titulo": "10 % en tu primer pedido",
         "heading_size": "h2",
-        "bajada": "<p>Suscribite y te mandamos el código. Después, pocos mails: fórmulas nuevas y un aviso cuando se te esté por terminar el frasco.</p>",
+        "bajada": "<p>Suscribite y te mandamos el código por mail. No se suma al descuento por transferencia. Después, pocos mails: fórmulas nuevas y un aviso cuando se te esté por terminar el frasco.</p>",
         "boton": "Suscribirme",
         "pagina_privacidad": "",
         "color_scheme": "background-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "rutina": {
+      "type": "cauce-progreso",
+      "blocks": {
+        "r1": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Antes de empezar",
+            "titulo": "Consultá con tu médico",
+            "texto": "<p>Sobre todo si tomás medicación, estás en tratamiento o tenés una condición de salud. Llevale el rótulo completo: está en la pestaña Ingredientes.</p>",
+            "items": ""
+          }
+        },
+        "r2": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Todos los días",
+            "titulo": "Dos cápsulas",
+            "texto": "<p>Con un vaso de agua. Juntas a la mañana, o una a la mañana y otra a la noche.</p>",
+            "items": ""
+          }
+        },
+        "r3": {
+          "type": "hito",
+          "settings": {
+            "etiqueta": "Cada frasco",
+            "titulo": "Un mes de rutina",
+            "texto": "<p>60 cápsulas rinden 30 días. Con el pack de 3 frascos tenés 90 días sin volver a comprar.</p>",
+            "items": ""
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "volanta": "Cómo se usa",
+        "titulo": "Una rutina,",
+        "titulo_acento": "no un tratamiento",
+        "heading_size": "h1",
+        "bajada": "<p>Hormify se toma todos los días, como cualquier hábito. Así es:</p>",
+        "alineacion": "centrado",
+        "pie": "",
+        "icono": "visto",
+        "color_scheme": "background-2",
+        "ancho_maximo": 920,
         "padding_top": 72,
         "padding_bottom": 72
       }
@@ -1623,16 +1686,17 @@
   "order": [
     "main",
     "marquee",
+    "contraste",
     "solucion",
     "ingredientes",
     "ugc",
-    "contraste",
-    "resultados",
     "resenas",
-    "comparativa",
+    "resultados",
+    "rutina",
     "progreso",
-    "banda",
+    "comparativa",
     "garantia",
+    "banda",
     "faq",
     "cierre",
     "suscripcion"
