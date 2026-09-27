@@ -1,7 +1,8 @@
 # POLITICAS.md — textos de las políticas de la tienda
 
 Las políticas **no son páginas del tema**: se escriben en el admin, en **Configuración →
-Políticas**, y Shopify las publica en `/policies/...`. Este archivo guarda el texto que va en cada
+Políticas**, y Shopify las publica en `/policies/...`. **Las tres de este archivo están cargadas desde
+el 2026-09-27** (D-067), igual que la página de preguntas y los links del menú. Este archivo guarda el texto que va en cada
 una, para que lo que publica la tienda sea auditable como el resto (`CLAIMS-AUDIT.md` §1). Si se
 cambia una política en el admin, se cambia también acá.
 

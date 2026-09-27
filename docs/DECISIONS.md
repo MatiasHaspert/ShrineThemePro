@@ -3579,8 +3579,37 @@ después la página, con la plantilla `faq`; y al final el menú.
 Las preguntas son de compra y ninguna es de salud. Lo que tiene el producto se contesta
 enlazando a la PDP, por la misma regla que el comentario de `sections/cauce-faq.liquid`.
 
+**Datos del titular.** El comercio pasó los datos el 2026-09-27: Matias Haspert, CUIT
+20-44526051-8, Vera Mujica 431, Rosario (2000), Santa Fe. Quedaron en los Términos y en
+`cauce_razon_social` / `cauce_domicilio`, que publica la barra legal del pie. En el mismo mensaje
+confirmó dos criterios de los textos: que el plazo de entrega corre desde que se acredita el pago y
+que una devolución dentro de los 10 días de arrepentimiento reintegra también el envío. "Un solo
+código por pedido" salió de los Términos: no se verificó, y TRANSFERENCIA10 sí se combina con los
+descuentos automáticos de los packs.
+
+**Cómo se cargó.** Todo desde el admin, en el navegador y con la sesión del comercio:
+
+- Las tres políticas, en Configuración → Políticas (`/settings/legal`). El editor tiene un modo HTML
+  que es un CodeMirror y no un textarea, así que `form_input` no le escribe: se pegó con un
+  `ClipboardEvent('paste')` sobre `.cm-content` y se volvió a la vista normal para guardar.
+- La página "Preguntas frecuentes": visible, con la plantilla `faq`, y el handle quedó
+  `preguntas-frecuentes`. Se creó **después** del push de la plantilla (`7e62116`), para que nunca
+  se sirviera la demo en inglés.
+- El menú `footer` ya tenía los cuatro ítems, cargados por el comercio, pero los cuatro apuntaban a
+  `/pages/arrepentimiento`. Se reapuntaron a las tres políticas y a la página. "Buscar" quedó como
+  estaba: sacarlo era una sugerencia y no se confirmó.
+
 **Cómo se verificó.** `page.faq.json` validado contra el schema de `cauce-faq` (0 claves fuera de
-schema). En la tienda, el 2026-09-27, `/pages/preguntas-frecuentes` y las tres políticas daban 404;
-solo existían `/pages/contact`, `/pages/arrepentimiento` y `/policies/privacy-policy`.
+schema). Antes de cargar nada, en la tienda `/pages/preguntas-frecuentes` y las tres políticas
+daban 404; solo existían `/pages/contact`, `/pages/arrepentimiento` y `/policies/privacy-policy`.
+Después, leyendo el HTML público:
+
+- Las tres políticas responden 200 con su texto: "Tenés 30 días para devolverlo", "Matias
+  Haspert", "TRANSFERENCIA10" y "no tienen código de seguimiento".
+- La página de preguntas sale con `cauce-faq`, las once preguntas y su `FAQPage`.
+- En el pie, el menú "Ayuda" enlaza a `/policies/shipping-policy`, `/policies/refund-policy`,
+  `/pages/preguntas-frecuentes` y `/policies/terms-of-service`, y el renglón de abajo lista las
+  cuatro políticas.
+- La barra legal muestra "Matias Haspert" y "Vera Mujica 431, Rosario (2000), Santa Fe".
 
 ---
