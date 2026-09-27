@@ -635,8 +635,10 @@
         "s5"
       ],
       "settings": {
+        "alt": "",
         "posicion_imagen": "sin",
         "relacion": "21 / 9",
+        "epigrafe": "",
         "carga_prioritaria": false,
         "volanta": "¿Te está pasando?",
         "titulo": "Hay días en que",
@@ -870,21 +872,10 @@
     "ugc": {
       "type": "cauce-ugc",
       "blocks": {
-        "video_yQabQ8": {
-          "type": "video",
-          "settings": {
-            "poster": "shopify://shop_images/ig18.jpg",
-            "alt": "",
-            "compra": "Compro 2 meses de suplementación",
-            "imagen_compra": "shopify://shop_images/frascosinfondo.webp",
-            "autor": "Laura Pérez",
-            "texto": "\"Por fin he encontrado el alivio que buscaba.\""
-          }
-        },
         "v2": {
           "type": "video",
           "settings": {
-            "poster": "shopify://shop_images/ig7.jpg",
+            "poster": "shopify://shop_images/instagram6.jpg",
             "alt": "",
             "compra": "Compro 1 mes de suplementación",
             "imagen_compra": "shopify://shop_images/frascosinfondo.webp",
@@ -895,19 +886,30 @@
         "v3": {
           "type": "video",
           "settings": {
-            "poster": "shopify://shop_images/ig17.jpg",
+            "poster": "shopify://shop_images/Woman_holding_supplement_bottle_2K_20260927204235.jpg",
             "alt": "",
             "compra": "Compro 3 meses de suplementación",
             "imagen_compra": "shopify://shop_images/frascosinfondo.webp",
             "autor": "Mia Madeline",
             "texto": "\"Hormify me ayudó a perder 20 libras sin esfuerzo, ¡y me encanta lo bien que me siento!\""
           }
+        },
+        "video_yQabQ8": {
+          "type": "video",
+          "settings": {
+            "poster": "shopify://shop_images/Woman_holding_supplement_bottle_2K_20260927204230.jpg",
+            "alt": "",
+            "compra": "Compro 2 meses de suplementación",
+            "imagen_compra": "shopify://shop_images/frascosinfondo.webp",
+            "autor": "Laura Pérez",
+            "texto": "\"Por fin he encontrado el alivio que buscaba.\""
+          }
         }
       },
       "block_order": [
-        "video_yQabQ8",
         "v2",
-        "v3"
+        "v3",
+        "video_yQabQ8"
       ],
       "settings": {
         "volanta": "Comunidad",
