@@ -47,7 +47,7 @@
         "angulo": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% render 'cauce-angulo',\n  defecto: 'identidad',\n  clave_1: 'identidad',\n  titulo_1: 'Para cuando sentís que dejaste de ser vos',\n  bajada_1: 'Dormís mal, estás sin paciencia y sin ganas, y todos te dicen que es la edad. Hormify es una rutina de 2 cápsulas por día, sin hormonas, con vitamina B6, ácido pantoténico, B12 y zinc: nutrientes que tu cuerpo usa para regular su actividad hormonal.',\n  clave_2: 'energia',\n  titulo_2: '¿Cansada todo el día, aunque duermas?',\n  bajada_2: 'La vitamina B6, la B12 y el ácido pantoténico contribuyen a disminuir el cansancio y la fatiga. Hormify los junta con zinc y 15 plantas en 2 cápsulas por día. Sin hormonas.',\n  clave_3: 'transparencia',\n  titulo_3: 'Sin hormonas. Sin promesas mágicas. Con la etiqueta a la vista.',\n  bajada_3: 'Hormify es un suplemento dietario de 2 cápsulas por día con vitaminas B6, B5 y B12, zinc y 15 plantas. El rótulo completo está en las fotos y en la pestaña Ingredientes y, si cambiás de idea, tenés 30 días para devolverlo con el frasco cerrado.'\n%}"
+            "custom_liquid": "{% render 'cauce-angulo',\n  defecto: 'identidad',\n  clave_1: 'identidad',\n  titulo_1: 'Para cuando sentís que dejaste de ser vos',\n  bajada_1: 'Dormís mal, te levantás cansada, estás sin paciencia y sin ganas, y todos te dicen que es la edad. Hormify es una rutina de 2 cápsulas por día, sin hormonas, con vitamina B6, ácido pantoténico, B12 y zinc: nutrientes que tu cuerpo usa para regular su actividad hormonal.',\n  clave_2: 'energia',\n  titulo_2: '¿Cansada todo el día, aunque duermas?',\n  bajada_2: 'La vitamina B6, la B12 y el ácido pantoténico contribuyen a disminuir el cansancio y la fatiga. Hormify los junta con zinc y 15 plantas en 2 cápsulas por día. Sin hormonas.',\n  clave_3: 'transparencia',\n  titulo_3: 'Sin hormonas. Sin promesas mágicas. Con la etiqueta a la vista.',\n  bajada_3: 'Hormify es un suplemento dietario de 2 cápsulas por día con vitaminas B6, B5 y B12, zinc y 15 plantas. El rótulo completo está en las fotos y en la pestaña Ingredientes y, si cambiás de idea, tenés 30 días para devolverlo con el frasco cerrado.'\n%}"
           }
         },
         "precio": {
@@ -593,77 +593,63 @@
         "custom_colors_text": "#2e2a39"
       }
     },
-    "contraste": {
-      "type": "cauce-contraste",
+    "dolor": {
+      "type": "cauce-dolor",
       "blocks": {
-        "p1": {
-          "type": "par",
+        "s1": {
+          "type": "sintoma",
           "settings": {
-            "sin": "Peso que sube y no baja",
-            "con": "Tu peso vuelve a responder"
+            "texto": "Te levantás cansada aunque hayas dormido."
           }
         },
-        "p2": {
-          "type": "par",
+        "s2": {
+          "type": "sintoma",
           "settings": {
-            "sin": "Antojos que no podés frenar",
-            "con": "Mejor control del apetito"
+            "texto": "A la tarde el jean te aprieta, aunque comas lo de siempre."
           }
         },
-        "p3": {
-          "type": "par",
+        "s3": {
+          "type": "sintoma",
           "settings": {
-            "sin": "Hinchazón todos los días",
-            "con": "Una panza más liviana"
+            "texto": "Saltás por cosas que antes te daban igual, y después te sentís culpable."
           }
         },
-        "p4": {
-          "type": "par",
+        "s4": {
+          "type": "sintoma",
           "settings": {
-            "sin": "Cansancio, ansiedad y cambios de humor",
-            "con": "Más energía y un ánimo estable"
+            "texto": "Te despertás de madrugada y ya no te volvés a dormir."
           }
         },
-        "p5": {
-          "type": "par",
+        "s5": {
+          "type": "sintoma",
           "settings": {
-            "sin": "Sofocos y sudores nocturnos",
-            "con": "Menos sofocos y noches tranquilas"
-          }
-        },
-        "p6": {
-          "type": "par",
-          "settings": {
-            "sin": "Ciclos irregulares",
-            "con": "Un ciclo más predecible"
+            "texto": "Tenés menos ganas. De salir, de hacer cosas, de estar con tu pareja."
           }
         }
       },
       "block_order": [
-        "p1",
-        "p2",
-        "p3",
-        "p4",
-        "p5",
-        "p6"
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
       ],
       "settings": {
-        "volanta": "Equilibrio hormonal",
-        "titulo": "Cómo te ves y cómo te sentís empieza en tus",
-        "titulo_acento": "hormonas",
+        "posicion_imagen": "sin",
+        "relacion": "21 / 9",
+        "carga_prioritaria": false,
+        "volanta": "¿Te está pasando?",
+        "titulo": "Hay días en que",
+        "titulo_acento": "no te reconocés",
         "heading_size": "h1",
-        "bajada": "<p>Cuando tus hormonas se desordenan, lo notás en todo el cuerpo: en la balanza, en la digestión, en el humor y en el descanso.</p>",
-        "alineacion": "centrado",
-        "titulo_sin": "Con las hormonas en desequilibrio",
-        "imagen_sin": "shopify://shop_images/capsulero130cc.jpg",
-        "etiqueta_con": "Con Hormify",
-        "titulo_con": "Con tus hormonas en equilibrio",
-        "imagen_con": "shopify://shop_images/image4.jpg",
-        "boton_texto": "Quiero recuperar mi equilibrio",
+        "bajada": "",
+        "pie": "<p>No es falta de voluntad, y tampoco es “la edad” y listo. Tus hormonas cambian a lo largo de la vida, y cuando cambian, se nota en todo. Lo que sí podés hacer es darle a tu cuerpo, todos los días, los nutrientes que usa para regularlas.</p>",
+        "icono": "cruz",
+        "columnas_lista": "1",
+        "boton_texto": "Quiero probarlo",
         "boton_link": "#comprar",
-        "pie": "<p>Los resultados pueden variar de una persona a otra.</p>",
         "color_scheme": "background-2",
-        "ancho_maximo": 1040,
+        "ancho_maximo": 920,
         "padding_top": 72,
         "padding_bottom": 72
       }
@@ -674,29 +660,29 @@
         "b1": {
           "type": "beneficio",
           "settings": {
-            "icono": "balanza",
-            "texto": "Menos peso hormonal"
+            "icono": "flor",
+            "texto": "Vitamina B6: actividad hormonal"
           }
         },
         "b2": {
           "type": "beneficio",
           "settings": {
-            "icono": "ola",
-            "texto": "Menos hinchazón"
+            "icono": "molecula",
+            "texto": "Ácido pantoténico: síntesis de hormonas"
           }
         },
         "b3": {
           "type": "beneficio",
           "settings": {
-            "icono": "flor",
-            "texto": "Hormonas en equilibrio"
+            "icono": "rayo",
+            "texto": "Vitamina B12: menos cansancio"
           }
         },
         "b4": {
           "type": "beneficio",
           "settings": {
-            "icono": "corazon",
-            "texto": "Menos estrés, mejor humor"
+            "icono": "escudo",
+            "texto": "Zinc: piel, pelo y uñas"
           }
         }
       },
@@ -707,11 +693,11 @@
         "b4"
       ],
       "settings": {
-        "volanta": "Sin hormonas",
-        "titulo": "Apoyá tu equilibrio hormonal y combatí el peso hormonal",
-        "titulo_acento": "",
+        "volanta": "Cómo funciona",
+        "titulo": "Nutrientes que tu cuerpo ya usa,",
+        "titulo_acento": "todos los días",
         "heading_size": "h1",
-        "bajada": "<p><strong>Hormify</strong> ayuda a tu cuerpo a recuperar el equilibrio desde adentro, con 8 activos de origen natural que trabajan juntos.</p>",
+        "bajada": "<p>Tu cuerpo fabrica y regula sus hormonas con lo que saca de la comida. Algunas vitaminas cumplen un rol directo en ese proceso, y Hormify las junta en una toma diaria: vitamina B6 (3,8 mg), ácido pantoténico (2,5 mg), vitamina B12 (54 mcg) y zinc (26 mg). Cada una contribuye a una función normal de tu cuerpo:</p>",
         "alineacion": "izquierda",
         "columnas": "2",
         "disposicion": "fondo",
@@ -727,7 +713,7 @@
         "ancho_imagen": 900,
         "estilo_imagen": "suelta",
         "carga_prioritaria": false,
-        "pie": "",
+        "pie": "<p>Además trae una mezcla de 15 plantas de uso tradicional en la mujer (maca, ashwagandha, ginseng, dong quai y damiana, entre otras), en 802 mg por porción. Hormify es un suplemento dietario: no es un tratamiento ni reemplaza la consulta médica.</p>",
         "boton_texto": "",
         "boton_link": "",
         "color_scheme": "inverse",
@@ -1686,7 +1672,7 @@
   "order": [
     "main",
     "marquee",
-    "contraste",
+    "dolor",
     "solucion",
     "ingredientes",
     "ugc",

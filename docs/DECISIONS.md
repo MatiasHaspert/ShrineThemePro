@@ -3613,3 +3613,60 @@ Después, leyendo el HTML público:
 - La barra legal muestra "Matias Haspert" y "Vera Mujica 431, Rosario (2000), Santa Fe".
 
 ---
+
+## D-068 · 2026-09-27 · Hormify: una sola PDP para todos los dolores — bloque de dolores y mecanismo
+
+**Decisión.** La PDP unifica los dolores de los tres sub-avatares en el cuerpo, no en el titular.
+Son tres cambios en `templates/product.hormify.json`, pedidos por el comercio:
+
+1. **`contraste` sale y en su lugar entra `dolor`** (`cauce-dolor`, la sección del R-ALA de D-033).
+   Es una sola lista, sin nombrar etapas (ni SOP ni menopausia), con cinco situaciones que tocan
+   a los tres sub-avatares: cansancio al levantarse, el jean que aprieta a la tarde,
+   irritabilidad, despertarse de madrugada y menos ganas. Cierra con la causa común ("tus hormonas
+   cambian… se nota en todo") y un botón "Quiero probarlo" a `#comprar`. Va sobre RUBOR, sin
+   imagen, a 920 px.
+2. **`solucion` pasa a ser el mecanismo** ("Nutrientes que tu cuerpo ya usa, todos los días"). La
+   bajada da las dosis de B6, B5, B12 y zinc, y los cuatro beneficios dicen la función de cada
+   uno en pocas palabras. La mezcla de 15 plantas y la leyenda de suplemento van al pie. La foto de
+   fondo, la disposición y los colores no cambian.
+3. **La variante `identidad` de la bajada** suma "te levantás cansada", así que el paraguas cubre
+   también el ángulo de energía para quien llega sin `?angulo=`.
+
+**Por qué en el cuerpo y no en el titular.** Un titular que junta todos los dolores es lo que
+hacía la bajada vieja ("¿Peso que no baja, hinchazón, sofocos o cambios de humor?"): le habla a
+todas y no le habla a ninguna, y un producto que resuelve seis cosas se lee como "cura todo". El
+titular sigue al anuncio (D-066 §3). El cuerpo hace el argumento único: una causa, muchas
+situaciones, una rutina. El mecanismo es lo que vuelve creíble la lista; sin él, la lista es un
+catálogo de promesas.
+
+El ángulo `transparencia` no es un dolor sino la respuesta a la desconfianza. Lo cubren la pestaña
+Ingredientes, el rótulo y los 30 días para devolverlo, así que no necesita un bloque propio.
+
+**Alternativa descartada:** reescribir `contraste`. Su columna derecha está hecha para resultados
+("Con Hormify: tu peso vuelve a responder"), que es justo lo que no se puede escribir. Y dos
+secciones de problema seguidas se pisan.
+
+**Claims.** El texto nuevo no atribuye efectos al producto:
+
+- La lista de `dolor` describe situaciones (H20 en `CLAIMS-AUDIT.md`). El riesgo es la
+  yuxtaposición con el producto, igual que en D-033.
+- Las funciones del mecanismo son las de H15: nutrientes en cantidad significativa, con la
+  redacción de las declaraciones autorizadas. Las etiquetas son la versión corta ("Vitamina B6:
+  actividad hormonal") y la bajada las presenta como "cada una contribuye a una función normal de
+  tu cuerpo".
+- Con esto salen de la PDP H1–H6 en `contraste` y `solucion`. **La home no se tocó** y sigue con
+  su propio `contraste` y su `solucion` viejos (D-065).
+
+`contraste` se borró del template, no se apagó: el texto está en la historia de git. Antes de
+editar se integró `8639f5d`, un commit del editor de temas. Además de reordenar las claves del
+JSON, el comercio había cambiado el margen inferior del título de 9 a 0, y ese valor se conservó.
+
+**Cómo se verificó.**
+
+- `product.hormify.json` validado contra los schemas de sus secciones: 0 claves fuera de schema, 0
+  valores inválidos.
+- `cauce-dolor` dibuja el pie y el botón sin imagen (`posicion_imagen: sin`), según su markup.
+- `boton_link` es de tipo `url` en `cauce-dolor` y en `cauce-contraste`, y el de `contraste` ya
+  aceptaba `#comprar` en la tienda.
+
+---
