@@ -3355,3 +3355,204 @@ se sabe si fue a propósito—, pero hay que mirarlo.
   INPI.
 
 ---
+
+## D-066 · 2026-09-27 · Hormify: fase 2 de la auditoría CRO — bloque de compra, promesa por ángulo, confianza y orden nuevo
+
+**Decisión.** Se aplica en `templates/product.hormify.json` la fase 2 de la auditoría CRO del
+2026-09-26 y la estructura de su fase 4, con el alcance que fijó el comercio:
+
+- **Cambian:** barra de anuncio, above the fold, bloque de compra, acordeones, marquesina,
+  garantía, cierre, newsletter y pie.
+- **Se reordenan sin tocar el contenido:** contraste, solución, ingredientes, UGC y comparativa.
+- **No se toca:** la FAQ.
+
+El informe de la auditoría quedó en la conversación, no en el repo. Lo que importa de él para
+entender esta entrada está acá y en `CLAIMS-AUDIT.md` §8.
+
+El comercio confirmó cuatro datos el 2026-09-27, con las alternativas a la vista:
+
+| Pregunta | Respuesta | Se descartó |
+|---|---|---|
+| Garantía | **30 días para devolverlo, con el frasco cerrado** | 30 días aunque esté abierto (la recomendada) · solo los 10 días legales |
+| Cuotas | **3 cuotas sin interés**, plan activo en Mercado Pago | con interés · "todavía no sé" |
+| WhatsApp | el +54 3406 46-1636 tiene WhatsApp; **lunes a viernes de 9 a 18 h** | — |
+| Envío | **no hay código de seguimiento** | seguimiento con despacho en 24–48 h · seguimiento sin plazo |
+
+### 1. Qué cambió, por zona
+
+| Zona | Antes | Ahora |
+|---|---|---|
+| Barra de anuncio (global) | envío · transferencia · "Producción nacional. Análisis por laboratorio externo." | envío · **3 cuotas sin interés** · transferencia · **30 días para devolverlo** |
+| Arriba del título | — | volanta `Suplemento dietario para mujeres · 60 cápsulas` |
+| Bajada | un bloque `text` con peso, hinchazón y sofocos | `snippets/cauce-angulo.liquid`: tres variantes por ángulo (§3) |
+| Íconos | cuatro efectos (peso, hinchazón, hormonas, estrés) | cuatro hechos: sin hormonas · 2 cápsulas, 30 días · B6, B5, B12 y zinc · 30 días para devolverlo |
+| Selector | "La mayoría de las mujeres nota…" · cinta `RESULTADOS ÓPTIMOS` · 5–6 renglones por tarjeta | sin bajada · cinta `EL MÁS ELEGIDO` en el 2 y `MEJOR PRECIO POR DÍA` en el 3 · tarjeta compacta con `[precio_dia]` (§4) |
+| Debajo del botón | medios de pago | `30 días para devolverlo` · `Envío a todo el país` · línea de WhatsApp · medios de pago |
+| Acordeones | Beneficios · Para quién · Cuándo · Cómo se toma · Envíos · Cambios | **Ingredientes** (rótulo transcripto) · Cómo se toma · **¿Quién no debería tomarlo?** · Envíos · **Devoluciones: 30 días** |
+| Barra fija | "Agregar al carrito" con precio | "Elegir mi pack", sin precio, lleva al selector (`scroll_#quantity-breaks-id`) |
+| Marquesina | síntomas (peso, hinchazón, sofocos, estrés) | hechos: sin hormonas · cuotas · transferencia · devolución · envío · WhatsApp |
+| Garantía | "Si te arrepentís, se devuelve" · 10 días | "Tenés 30 días para devolverlo" + botón a `#comprar` |
+| Cierre | viñetas con claims · botón que agregaba al carrito sin decir qué | viñetas de hechos · botón "Elegir mi pack" a `#comprar` |
+| Newsletter | — | aclara que el código no se suma al de transferencia |
+| Pie | horario "06:00 a 00:00" | WhatsApp en la columna de contacto · "lunes a viernes de 9 a 18 h" |
+| Sección nueva | — | `rutina` (`cauce-progreso`): "Una rutina, no un tratamiento" |
+
+Salen del template tres acordeones (Beneficios, Para quién y Cuándo) y el bloque de bajada viejo.
+No se apagaron: se borraron. El texto está en la historia de git.
+
+**La pestaña "Ingredientes" arregla una referencia rota.** La sección `ingredientes` y la FAQ
+remitían a "la pestaña Ingredientes", que no existía. Ahora existe y transcribe el rótulo completo:
+nueve componentes con dosis y la mezcla de 15 plantas de 802 mg. Por decisión de esta misma
+entrada, la sección `ingredientes` sigue diciendo "8 activos": la contradicción queda a la vista y
+anotada en `CLAIMS-AUDIT.md` §8.3.
+
+### 2. "Garantía" no: 30 días para devolverlo
+
+Con el frasco cerrado, lo que se ofrece es **un plazo de devolución más largo que el legal**, no
+una garantía de satisfacción: nadie puede evaluar un suplemento sin abrirlo. Por eso ninguna
+superficie dice "garantía" ni "probalo". Dicen "30 días para devolverlo" y, donde hay lugar, "con
+el frasco cerrado". La sección de garantía resolvió de paso la contradicción que tenía: decía
+"sin condiciones escondidas" mientras el acordeón pedía "sin abrir". Ahora la condición está en el
+título de uno de sus tres puntos.
+
+Condiciones publicadas: 30 días corridos desde la recepción, frasco cerrado (en un pack se
+devuelven los que no se abrieron y se reintegra lo pagado por ellos), envío de vuelta a cargo de
+CAUCE y sin pedir motivo. Los primeros 10 días siguen siendo el arrepentimiento de la Res. SCI
+424/2020, y la barra legal del pie los sigue citando así.
+
+**La barra de anuncio es global, así que la promesa vale para toda la tienda**, no solo para
+Hormify. Hoy hay un solo producto publicado (D-065) y no cambia nada, pero si vuelve el R-ALA, la
+regla también es suya. Es una oferta que obliga (Ley 24.240, art. 7 y 8): tiene que estar escrita
+en los Términos del servicio antes de la primera devolución.
+
+### 3. La bajada por ángulo: una página y `?angulo=`
+
+Cada anuncio entra con un gancho distinto, y la PDP tiene que repetirlo. Se descartaron **tres
+templates alternos** porque cada cambio del bloque de compra habría que hacerlo tres veces, y el
+editor de temas los desincroniza en una semana. Queda una sola página, y el anuncio elige la
+variante por URL:
+
+| URL | Variante |
+|---|---|
+| `/products/<handle>` | `identidad` — "Para cuando sentís que dejaste de ser vos" |
+| `?angulo=energia` | `energia` — "¿Cansada todo el día, aunque duermas?" |
+| `?angulo=transparencia` | `transparencia` — "Sin hormonas. Sin promesas mágicas. Con la etiqueta a la vista." |
+
+Las tres van en el HTML y una sola sin `hidden`. El script inline del snippet corre cuando el
+parser llega a él, antes del primer pintado, así que nadie ve la de defecto y después el cambio. Un
+valor desconocido cae en la de defecto. El copy está en el bloque `custom_liquid` del template,
+como parámetros del `render`, y no en el snippet (regla 1 de `CLAIMS-AUDIT.md`).
+
+**Límite anotado.** Si Shrine re-renderiza el bloque de compra (pasa al cambiar de variante), el
+script no vuelve a correr y queda la de defecto. Hormify tiene una sola variante, así que hoy no
+pasa. **Para medir por ángulo**, los anuncios tienen que llevar además sus `utm_content`: el
+parámetro `angulo` elige el texto, pero no aparece en los reportes de Shopify.
+
+### 4. El selector compacto y `[precio_dia]`
+
+Dos settings nuevos en el bloque `quantity_selector`, los dos apagados por defecto, así que la
+landing del R-ALA no cambia:
+
+- **`cauce_compacto`.** La tarjeta muestra días, precio por día, total, tachado y un solo chip (el
+  de envío gratis). "Ahorrás $X" sale, porque lo dice el tachado. Transferencia y cuotas bajan a un
+  renglón debajo de las tarjetas (`snippets/cauce-escalones-pie.liquid`), calculado con las mismas
+  condiciones que las líneas que reemplaza. El caption sube a 2 rem, por encima del total, porque el
+  precio por día es lo que se compara entre tarjetas.
+- **`[precio_dia]`**, un token nuevo en badge, label, benefit y caption. Es el total del escalón
+  ya descontado dividido por los días que cubre, redondeado al peso, con el mismo redondeo que la
+  fila de precio de `cauce-comparativa`. Los días salen de los metafields
+  `cauce.unidades_envase / cauce.dosis_diaria` si están cargados, y si no del setting
+  `cauce_dias_frasco` (30). Con los precios de hoy da $1.663, $1.032 y $810.
+
+Se resuelve en el servidor, dentro de cada escalón, antes de escribir `data-text`: es el mismo
+motivo por el que `[duracion]` se resuelve arriba del archivo (el JS del tema re-renderiza desde
+`data-text`). Tiene el mismo límite que las líneas de extras: con `update_prices` activado y
+variantes de distinto precio no se recalcularía. Hoy `update_prices` está en `false`.
+
+**"Sin interés".** `settings.cauce_cuotas` siempre significó cuotas sin interés: así se llama en el
+editor y así lo pide su texto de ayuda. Lo que faltaba era decirlo. `cauce.pdp.cuotas` y
+`cauce.pdp.cuotas_escalon` ahora dicen "sin interés", en la PDP y en el carrito. Si el plan de
+Mercado Pago se da de baja, `cauce_cuotas` vuelve a 0 y todas las superficies se apagan juntas.
+
+### 5. WhatsApp
+
+`settings.cauce_whatsapp` es nuevo, en Configuración del tema → CAUCE, y está cargado como
+`5493406461636`: un celular argentino en `wa.me` lleva 549 y la característica sin el 15. Un solo
+snippet (`cauce-whatsapp`) lo dibuja de tres formas: botón flotante en todas las páginas, línea
+debajo del botón de compra y renglón del pie. Si el setting está vacío, no se dibuja ninguna de las
+tres.
+
+- El verde es **#168A41**, no el #25D366 de WhatsApp: el blanco sobre el de la marca daba 1,98:1 y
+  el botón contra RUBOR 1,63:1. Con #168A41 son 4,42:1 y 3,65:1.
+- El flotante va **apilado sobre el botón de volver arriba** de Shrine, que ya ocupa la esquina
+  inferior derecha. No se lo movió.
+- Cuando aparece la barra fija de compra, el flotante sube lo que la barra tapa. `main.js` está
+  ofuscado y no expone el estado de la barra, así que `cauce.js` la mide directamente: remide en
+  `transitionend` y ante cualquier cambio de atributo de la barra.
+
+### 6. "El más elegido" vuelve, a pedido
+
+La cinta del escalón 2 dice `EL MÁS ELEGIDO` porque lo pidió el comercio el 2026-09-27. Es la
+misma afirmación que D-047b agregó y D-051 sacó: habla de la conducta de otras compradoras, y
+todavía no hay ventas que la respalden (Res. SC 270/2020, Ley 24.240 art. 8). Vuelve a figurar
+como bloqueante en `CLAIMS-AUDIT.md` §8.3. Cuando haya pedidos, se confirma contra ellos o se saca.
+
+### 7. El orden nuevo
+
+`main` → `marquee` → **`contraste`** → `solucion` → `ingredientes` → `ugc` → *(resenas, resultados:
+apagadas)* → **`rutina`** → *(progreso: apagada)* → `comparativa` → `garantia` → *(banda: apagada)*
+→ `faq` → `cierre` → `suscripcion`.
+
+El cambio de fondo es `contraste`: pasa del sexto lugar al primero después del bloque de compra.
+El tráfico frío de Meta llega consciente del problema, y la página le vendía la solución antes de
+que reconociera el problema como suyo. Después viene cómo funciona (`solucion`), qué tiene
+(`ingredientes`), quiénes lo toman (`ugc`), cómo se usa (`rutina`) y contra qué se compara
+(`comparativa`); los 30 días para devolverlo van justo antes de la FAQ.
+
+### 8. Lo que no se pudo hacer desde el tema
+
+- **El título.** El bloque `title` imprime `product.title`, así que para que diga solo "Hormify"
+  había que cambiar el nombre en el admin (lo ven también el carrito, el checkout y los mails).
+  **Hecho por el comercio antes del merge:** `/products.json` ya lo da como "Hormify". El handle
+  sigue siendo `hormify-favorece-un-equilibrio-hormonal-saludable`, y así tiene que quedar: si se
+  cambia, se rompen los links de los anuncios.
+- **El menú "Ayuda" del pie** es la navegación `footer` del admin y hoy solo tiene "Buscar".
+  Faltan Envíos, Devoluciones, Preguntas frecuentes y Términos, y las políticas correspondientes en
+  Configuración → Políticas.
+- **Datos que faltan:** la ciudad del domicilio (`cauce_domicilio`) y, como el CUIT es de persona
+  física, el nombre del titular en `cauce_razon_social`.
+- **"Quién está detrás"**, la sección nueva de la fase 4, necesita una persona real y fotos. No se
+  armó una vacía.
+
+### 9. Cómo se verificó
+
+- Cada setting y cada bloque de `product.hormify.json`, `header-group.json` y `footer-group.json`,
+  validado contra el schema de su sección: **0 claves fuera de schema, 0 valores de `range` o
+  `select` inválidos**.
+- `theme check` sobre la rama y sobre una copia limpia de `main`, con el mismo CLI 4.8.0 y sin
+  `carpetalocal/`, comparando offenses distintas (archivo + check + mensaje): **62 contra 63, 0
+  errores**. Hay dos warnings nuevos:
+  `OrphanedSnippet` en `cauce-angulo` (lo llama el JSON del template, y theme check no lo ve) y
+  la complejidad de `quantity-breaks.liquid`, que ya pasaba el límite (175) y sube a 188.
+- **En la tienda viva, después del push** (`e03aca9`), leyendo el HTML de
+  `/products/hormify-favorece-un-equilibrio-hormonal-saludable` y no solo el CSS: un archivo que
+  Shopify rechaza no da ningún error desde el repo, simplemente queda viejo en la tienda.
+  - Los captions calculados dicen **$1.663, $1.032 y $810 por día**, y el renglón de abajo dice
+    *"10 % menos pagando por transferencia · 3 cuotas sin interés de $24.300 en el pack de 3"*.
+  - Adentro de las tarjetas quedaron solo los dos chips de envío: 0 líneas de ahorro y 0 de
+    transferencia.
+  - Las tres variantes de la bajada están en el HTML, con `energia` y `transparencia` en `hidden`.
+  - Las cintas, los acordeones nuevos, `rutina`, la garantía, "Elegir mi pack" (tres veces:
+    garantía, cierre y barra fija) y el horario del pie aparecen.
+  - Lo que salió no aparece: `RESULTADOS ÓPTIMOS`, "La mayoría de las mujeres", "Beneficios de
+    Hormify" y "Producción nacional. Análisis…".
+  - El link de WhatsApp sale como `wa.me/5493406461636?text=Hola%2C%20tengo%20una%20consulta%20sobre%20Hormify.`
+  - El orden de secciones coincide con §7.
+  - `cauce-brand.css` y `cauce.js` servidos traen las reglas y la función nuevas.
+  - La barra de anuncio nueva también se ve en la home.
+- El nombre del producto ya es "Hormify": el comercio lo cambió en el admin antes del merge (§8).
+- **Sin mirar con los ojos.** `theme dev` pidió login interactivo y no se completó, así que la
+  página no se vio renderizada ni a 1440 ni a 390 px. Lo verificado es el HTML y los assets
+  servidos, no cómo se ven.
+
+---

@@ -322,7 +322,10 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       racémico) cuyo protocolo esté en esa ventana, guardada con el resto de la evidencia
       documental. Si no se consigue, el renglón sale: es un campo del editor
       (`cauce_subtitulo`), no toca código.
-- [ ] **BLOQUEANTE · "3 cuotas de $24.300" en el escalón 3 (D-051).** Sale de
+- [x] ~~**BLOQUEANTE · "3 cuotas de $24.300" en el escalón 3 (D-051).**~~ — **cerrado 2026-09-27
+      (D-066):** el comercio confirmó que el plan de 3 cuotas sin interés está activo en Mercado
+      Pago, y los textos (`cauce.pdp.cuotas` y `cauce.pdp.cuotas_escalon`) ahora dicen "sin
+      interés". Si el plan se da de baja, `cauce_cuotas` vuelve a 0. El texto original: sale de
       `settings.cauce_cuotas`, que está en 3, dividiendo el total del escalón. La aritmética es
       exacta ($72.900 ÷ 3), pero el número **promete financiación sin interés**: si el medio de
       pago real cobra CFT, el precio por cuota que ve el cliente no es el que va a pagar. Tiene
@@ -533,20 +536,25 @@ La regla 1 sí se mantiene: **ningún claim está en un `.liquid`**. `cauce-cont
 
 | # | Afirmación (resumida) | Tipo | Dónde | Qué lo sostendría |
 |---|---|---|---|---|
-| H1 | Ayuda a combatir el peso hormonal / "tu peso vuelve a responder" | eficacia | hero, contraste, solución, pestaña Beneficios, comparativa, progreso, cierre | estudios de la fórmula, no de ingredientes sueltos |
-| H2 | Reduce la hinchazón / "una panza más liviana" | eficacia | hero, contraste, solución, Beneficios, ingredientes (jengibre), comparativa, progreso | ídem |
-| H3 | Equilibra las hormonas; apoyo al estrógeno y la progesterona | eficacia hormonal | hero, contraste, solución, Beneficios, ingredientes (maca), FAQ | ídem. Es el más cercano a un efecto farmacológico |
-| H4 | Alivia sofocos y sudores nocturnos | síntoma de menopausia | contraste, Beneficios, progreso, FAQ, cierre | ídem |
-| H5 | Menos estrés y cortisol, mejor humor, más energía | eficacia | hero, contraste, solución, Beneficios, ingredientes, progreso | ídem |
+| H1 | Ayuda a combatir el peso hormonal / "tu peso vuelve a responder" | eficacia | hero (home), contraste, solución, comparativa, progreso, cierre (home) | estudios de la fórmula, no de ingredientes sueltos |
+| H2 | Reduce la hinchazón / "una panza más liviana" | eficacia | hero (home), contraste, solución, ingredientes (jengibre), comparativa, progreso | ídem |
+| H3 | Equilibra las hormonas; apoyo al estrógeno y la progesterona | eficacia hormonal | hero (home), contraste, solución, ingredientes (maca), FAQ | ídem. Es el más cercano a un efecto farmacológico |
+| H4 | Alivia sofocos y sudores nocturnos | síntoma de menopausia | contraste, progreso, FAQ, cierre (home) | ídem |
+| H5 | Menos estrés y cortisol, mejor humor, más energía | eficacia | hero (home), contraste, solución, ingredientes, progreso | ídem |
 | H6 | "Un ciclo más predecible" | síntoma ginecológico | contraste, progreso | ídem |
-| H7 | Acompaña el SOP, la perimenopausia y la menopausia | **patología con nombre** (SOP) | pestaña Para quién, comparativa, FAQ | — |
-| H8 | Plazos: cambios en días, los más claros entre el mes 2 y el 3 | plazo de resultado | bajada del selector, pestaña Cuándo, progreso, FAQ | datos propios de uso |
-| H9 | Ocho activos y qué hace cada uno | composición + función | ingredientes, pestaña Ingredientes, FAQ | **fórmula real y rótulo aprobado** |
+| H7 | Acompaña el SOP, la perimenopausia y la menopausia | **patología con nombre** (SOP) | comparativa, FAQ | — |
+| H8 | Plazos: cambios en días, los más claros entre el mes 2 y el 3 | plazo de resultado | progreso, FAQ | datos propios de uso |
+| H9 | Ocho activos y qué hace cada uno | composición + función | ingredientes, comparativa, FAQ | **el rótulo tiene 24 componentes, no 8** (§8.3). La pestaña Ingredientes lo transcribe entero desde D-066 |
 | H10 | Sin hormonas · activos de origen natural | composición | hero, solución, sellos, comparativa, FAQ | rótulo |
 | H11 | Analizado por laboratorio externo · producción nacional | proceso / origen | sellos, comparativa | COA de un tercero y RNE del elaborador **de este SKU** (A3 y A4 son del R-ALA) |
 | H12 | "Otros suplementos" no tienen H1–H11 | comparativa | `comparativa` | que sea verdad para la categoría; con una sola X en contra de todo el resto, es la fila más expuesta de la página (mismo riesgo que R5) |
-| H13 | Cinta `RESULTADOS ÓPTIMOS · 90 DÍAS` | eficacia + plazo | escalón 3 | ídem H8 |
+| H13 | ~~Cinta `RESULTADOS ÓPTIMOS · 90 DÍAS`~~ | eficacia + plazo | — | salió en D-066; en su lugar va H17 |
 | H14 | Costo por día (`$1.663/día`) contra "Según la marca" | precio | `comparativa`, fila de precio | se calcula del precio de la variante sobre 30 días, redondeado al peso: si cambia el precio, cambia la fila. El precio total sigue en el bloque de compra. "Según la marca" no afirma ningún precio ajeno; poner uno sería un claim que hay que poder probar (D-058) |
+| H15 | La B6 contribuye a regular la actividad hormonal y a disminuir el cansancio; el ácido pantoténico, a la síntesis de hormonas esteroideas; la B12, a la función psicológica normal | función de nutriente | bajada por ángulo (`identidad`, `energia`) | cantidad significativa en el rótulo (B6 224 %, B12 2.250 %, B5 50 %) y la redacción de las declaraciones autorizadas del Reg. UE 432/2012. En Argentina la tiene que validar quien tramite el RNPA |
+| H16 | Cinta `EL MÁS ELEGIDO` | popularidad | escalón 2 | pedidos reales. **Bloqueante** (§8.3): es el mismo caso que D-047b |
+| H17 | Cinta `MEJOR PRECIO POR DÍA` | precio | escalón 3 | verdadera por cálculo: $810 contra $1.032 y $1.663 (`[precio_dia]`, D-066). Si cambia la escalera de precios, hay que revisarla |
+| H18 | "30 días para devolverlo", con el frasco cerrado | condición comercial | barra de anuncio (global), íconos, línea bajo el botón, marquesina, garantía, acordeón Devoluciones, cierre, bajada `transparencia` | la regla escrita en los Términos del servicio (§8.3). Vale para toda la tienda porque la barra es global |
+| H19 | 3 cuotas sin interés | condición comercial | barra, marquesina, renglón bajo los escalones, medios de pago, carrito, cierre | plan activo en Mercado Pago, confirmado por el comercio el 2026-09-27 |
 
 **Desde D-065 la tabla vale también para `templates/index.json`.** La home dejó de vender el R-ALA y
 pasó a vender Hormify reusando estas mismas secciones —hero, contraste, solución, ingredientes,
@@ -554,6 +562,13 @@ progreso, comparativa, FAQ y cierre—, con el texto copiado, así que H1 a H12 
 la portada. No hay ningún claim nuevo: lo que no está en esta tabla no entró. Las dos filas que
 **no** viajaron son H13, que vive en el escalón de packs, y H14, que necesita una variante para
 calcular el costo por día y fuera de una página de producto no se dibuja.
+
+**Desde D-066 la PDP publica menos de esta tabla que la home.** Salieron de la PDP la bajada y los
+íconos del bloque de compra (H1, H2, H3, H5), las pestañas Beneficios, Para quién y Cuándo (H1–H5,
+H7, H8), la bajada del selector (H8), la cinta H13, las viñetas del cierre (H1, H2, H4 y "de origen
+natural") y los síntomas de la marquesina. **La home no se tocó** y sigue publicando todo eso en su
+hero y en su cierre. Siguen en la PDP, por decisión del comercio del 2026-09-27: `contraste`,
+`solucion`, `ingredientes`, `ugc`, `comparativa` y la FAQ, tal como estaban.
 
 Los "*" de `progreso` remiten al pie: *"Los resultados varían de una persona a otra. Acompañá la
 rutina con una alimentación equilibrada y actividad física."* La leyenda de suplemento
@@ -566,17 +581,22 @@ rutina con una alimentación equilibrada y actividad física."* La leyenda de su
 |---|---|---|
 | "98,325 reviews", 4.8 estrellas | No hay reseñas. Un número inventado es publicidad engañosa (Ley 24.240 art. 9, Res. SC 270/2020) con o sin ANMAT | bloque `resenas` **apagado**, con `[[PENDIENTE]]` |
 | "11,327+ women in our internal study", 93 % / 92 % / 83 % / 97 % | No hay estudio | `resultados` **apagada**, con `[[PENDIENTE]]` |
-| Testimonios | No hay clientas | `resenas` (glow) **apagada**, sin nombres ni fotos. `ugc` tiene el diseño de las tarjetas listo (D-061) y las cuatro en `[[PENDIENTE]]`: sin foto cargada no se dibuja |
+| Testimonios | No hay clientas | `resenas` (glow) **apagada**, sin nombres ni fotos. **`ugc` dejó de estar vacía el 2026-09-20** (`c68e91e`, desde el editor): tres tarjetas con los testimonios de hormify.com traducidos, un nombre copiado tal cual y el frasco con rótulo en inglés. Se quedan por decisión del comercio del 2026-09-27; ver §8.3 |
 | Las fotos de clientas de hormify.com | Son de otra marca, muestran **otro frasco** y salen personas identificables. Publicarlas sería testimonio inventado (Ley 24.240 art. 9), foto ajena y uso de imagen sin consentimiento (Ley 11.723 art. 31) | nada: las tarjetas piden foto propia y permiso escrito |
 | Logos de Women's Health, Forbes, Healthline | Sería afirmar una cobertura que no existe | nada |
 | "Made in FDA registered facility" | No aplica en Argentina | nada |
 | "Most popular" | Popularidad sin ventas (D-047b) | cinta de resultado |
-| "Generally compatible with birth control" | Afirmación de seguridad sin respaldo. Ashwagandha y ginseng tienen interacciones descriptas | "consultá con tu médico" |
+| "Generally compatible with birth control" | Afirmación de seguridad sin respaldo. Ashwagandha y ginseng tienen interacciones descriptas | **dejó de ser cierto el 2026-09-20** (`eae3603`, desde el editor): la FAQ dice que es "generalmente compatible con la mayoría de los medicamentos, incluyendo muchos métodos anticonceptivos". La FAQ se dejó como estaba por decisión del 2026-09-27; ver §8.3 |
 
 ### 8.3 Bloqueantes para publicar Hormify
 
-- [ ] **La fórmula real.** Los ocho activos son los de la referencia, cargados como borrador (H9).
-      Confirmar o reemplazar en `ingredientes`, pestaña Ingredientes, FAQ 1 y comparativa.
+- [ ] **La fórmula real.** Se conoce desde el 2026-09-26: el rótulo trae 9 componentes con dosis y una
+      "Mezcla Patentada" de 802 mg con 15 plantas, o sea 24, no 8. Los 8 de la PDP son los mismos que
+      destaca hormify.com. La pestaña Ingredientes transcribe el rótulo entero (D-066); la sección
+      `ingredientes`, la comparativa ("8 activos… en una cápsula": la porción es de 2) y la FAQ 1
+      siguen con los 8 por decisión del comercio del 2026-09-27. Dos detalles del rótulo: los %VD están
+      calculados con valores de la FDA y no con las IDR del CAA, y "Mezcla Patentada" traduce mal
+      *proprietary blend*: habla de una patente.
 - [ ] **Dosis por porción** en los ocho bloques `ingrediente` y el
       `[[PENDIENTE: composición completa…]]` de la pestaña Ingredientes, copiados del rótulo.
 - [ ] **RNPA del producto** y RNE del elaborador de este SKU. Sin eso H11 no se puede publicar.
@@ -590,7 +610,20 @@ rutina con una alimentación equilibrada y actividad física."* La leyenda de su
       invertir en pauta.
 - [ ] **Metafields de categoría de Shopify** (R4): "Enfoque de salud" con hormonas o menopausia
       puede disparar revisión en Google Merchant.
-- [ ] Revisión con criterio legal de 8.1 completo, en especial **H3, H4, H6 y H7**.
+- [ ] Revisión con criterio legal de 8.1 completo, en especial **H3, H4, H6, H7 y H15**.
+- [ ] **BLOQUEANTE · `EL MÁS ELEGIDO` en el escalón 2 (H16, D-066 §6).** Afirma algo sobre lo que eligen
+      otras compradoras sin ventas que lo respalden. Confirmarlo contra los pedidos cuando los haya, o
+      sacarlo: es `option_2_badge` del bloque `ofertas`.
+- [ ] **La regla de los 30 días en los Términos del servicio (H18, D-066 §2)**, antes de la primera
+      devolución: plazo desde la recepción, frasco cerrado, qué se reintegra en un pack y quién paga
+      el envío de vuelta. Va junto con la regla de `TRANSFERENCIA10` que ya pedía el §6.
+- [ ] **`¿Quién no debería tomarlo?`**, el acordeón nuevo (D-066), validado por un farmacéutico y
+      contra el rótulo: embarazo y lactancia, fenilcetonuria (L-fenilalanina), anticoagulantes,
+      antidepresivos, tiroides, diabetes, condiciones sensibles a hormonas y cirugías programadas.
+- [ ] **Los testimonios de `ugc`** son de otra marca (§8.2). Siguen siendo testimonio inventado aunque
+      la sección se haya quedado por decisión comercial: Ley 24.240 art. 9 y uso de imagen ajena.
+- [ ] **La FAQ de anticonceptivos** (§8.2) afirma una compatibilidad que nadie estudió con esta fórmula,
+      que lleva ginkgo, dong quai y ginseng. Es la frase más expuesta de la página.
 
 ### 8.4 Cómo auditar este SKU
 
