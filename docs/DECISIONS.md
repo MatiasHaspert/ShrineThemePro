@@ -3668,5 +3668,13 @@ JSON, el comercio había cambiado el margen inferior del título de 9 a 0, y ese
 - `cauce-dolor` dibuja el pie y el botón sin imagen (`posicion_imagen: sin`), según su markup.
 - `boton_link` es de tipo `url` en `cauce-dolor` y en `cauce-contraste`, y el de `contraste` ya
   aceptaba `#comprar` en la tienda.
+- **En la tienda viva, después del push** (`cf21aac`), leyendo el HTML de la PDP:
+  - `dolor` va tercera, después de la marquesina, con las cinco situaciones y el botón a
+    `#comprar`.
+  - `solucion` muestra el mecanismo, los cuatro beneficios nuevos y el pie con las 15 plantas.
+  - La variante `identidad` dice "te levantás cansada".
+  - Ya no aparecen "Tu peso vuelve a responder", "Menos peso hormonal", "Cómo te ves y cómo te
+    sentís" ni "combatí el peso hormonal".
+- **No se miró renderizada**, ni a 1440 ni a 390 px: es el mismo límite de D-066 §9.
 
 ---
