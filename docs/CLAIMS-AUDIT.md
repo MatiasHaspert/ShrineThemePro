@@ -224,7 +224,10 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
 - [ ] Razón social, CUIT, domicilio, email y teléfono en Configuración → CAUCE
 - [ ] URL del formulario de arrepentimiento (la página `page.arrepentimiento` ya existe)
 - [ ] Imagen y URL de Data Fiscal AFIP
-- [ ] Redactar las cuatro políticas en Configuración → Políticas (el footer las muestra solo si existen)
+- [ ] Redactar las cuatro políticas en Configuración → Políticas (el footer las muestra solo si existen).
+      **Privacidad ya está publicada.** Envío, reembolso y términos tienen borrador en
+      `docs/POLITICAS.md` (2026-09-27, D-067), con dos `[[PENDIENTE]]` en los Términos: el nombre
+      del titular y el domicilio completo.
 - [ ] **BLOQUEANTE · R6 · Los descuentos automáticos de los escalones (D-047).** Dos descuentos
       automáticos de Shopify: cantidad 2 → precio final $61.900 (−$37.900) y cantidad 3 → precio
       final $72.900 (−$76.800). Tienen que coincidir al peso con `option_2_fixed_amount_off` y

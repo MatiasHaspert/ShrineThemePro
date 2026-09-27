@@ -3556,3 +3556,31 @@ que reconociera el problema como suyo. Después viene cómo funciona (`solucion`
   servidos, no cómo se ven.
 
 ---
+
+## D-067 · 2026-09-27 · El menú "Ayuda": tres políticas y una página de preguntas de compra
+
+**Decisión.** Los cuatro ítems nuevos del menú "Ayuda" del pie (D-066 §8) no son cuatro páginas.
+Envíos, Devoluciones y Términos enlazan a **políticas de Shopify** (`/policies/shipping-policy`,
+`/policies/refund-policy` y `/policies/terms-of-service`), que se escriben en Configuración →
+Políticas. Solo "Preguntas frecuentes" es una página, y su contenido vive en el tema:
+`templates/page.faq.json` pasa de la demo de Shrine (en inglés, filas vacías) a `cauce-faq` con
+once preguntas de compra.
+
+**Alternativa descartada:** crear páginas "Envíos", "Devoluciones" y "Términos" con el texto
+adentro. Duplicarían las políticas y el checkout no las enlaza. Una política con texto, en cambio,
+Shopify la muestra sola en el pie del checkout, y el pie del tema la lista en su renglón de abajo
+(`show_policy`).
+
+Los textos de las tres políticas están en `docs/POLITICAS.md`, con qué sostiene cada dato y dos
+`[[PENDIENTE]]` en los Términos (el titular del CUIT y el domicilio completo). Ahí queda también el
+orden de carga: primero las políticas, porque la página de preguntas enlaza a la de reembolso;
+después la página, con la plantilla `faq`; y al final el menú.
+
+Las preguntas son de compra y ninguna es de salud. Lo que tiene el producto se contesta
+enlazando a la PDP, por la misma regla que el comentario de `sections/cauce-faq.liquid`.
+
+**Cómo se verificó.** `page.faq.json` validado contra el schema de `cauce-faq` (0 claves fuera de
+schema). En la tienda, el 2026-09-27, `/pages/preguntas-frecuentes` y las tres políticas daban 404;
+solo existían `/pages/contact`, `/pages/arrepentimiento` y `/policies/privacy-policy`.
+
+---
