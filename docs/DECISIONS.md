@@ -3740,6 +3740,20 @@ tema ya promete los precios y el envío gratis:
 4. **Política de envío** (Configuración → Políticas, `/settings/legal`): reemplazar el párrafo de
    "Costo" por el de `docs/POLITICAS.md`. La publicada todavía dice "sin cargo desde $55.000".
 
+**Estado al merge (2026-09-28).** El comercio cargó el precio, los montos de los descuentos y la
+política de envío. Desde el navegador se hicieron la tarifa y la reactivación:
+
+- **Los dos descuentos automáticos estaban vencidos desde el 17/9 a las 16:03.** Shopify los
+  desactivó porque "se eliminaron productos, variantes o colecciones" a los que se aplicaban, y les
+  puso esa fecha de fin. Durante once días el checkout cobró los packs a precio lleno aunque la PDP
+  mostrara el descuento. Se les sacó la fecha de fin y quedaron activos. Producto (Hormify), monto
+  fijo, una vez por pedido, mínimo de unidades y la combinación con descuentos de pedido se
+  revisaron y estaban bien. **Si se vuelve a borrar o recrear el producto, revisar que sigan
+  activos**: el estado no se ve desde el tema.
+- **Tarifa:** "Envío sin cargo" pasó a $0 sin mínimo, sin la condición de envío gratis desde
+  $55.000, y se eliminó "Envío a domicilio" ($5.000 hasta $54.999,99). La zona Argentina queda con
+  una sola opción.
+
 ### 3. Las cuotas quedan con centavos
 
 $77.500 no se divide en tres: el renglón bajo las tarjetas va a decir **3 cuotas sin interés de
