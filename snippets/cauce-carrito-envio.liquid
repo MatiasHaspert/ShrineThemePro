@@ -30,6 +30,10 @@
   en el editor: un monto comercial ausente no se muestra como pendiente visible
   (eso es para los datos legales, ver D-004), se calla — pero quien puede cargarlo
   tiene que verlo.
+
+  Con el carrito vacio tampoco se dibuja: el drawer la renderiza aunque no haya
+  productos, y con el umbral en 1 (envio gratis en todo, D-069) decia "Te faltan
+  $1,00". Al agregar algo, Shrine re-renderiza el drawer y la barra aparece.
 {% endcomment %}
 
 {%- liquid
@@ -37,7 +41,8 @@
   assign cauce_actual = cart.items_subtotal_price
 -%}
 
-{%- if cauce_umbral > 0 -%}
+{%- if cauce_umbral > 0 and cart.item_count == 0 -%}
+{%- elsif cauce_umbral > 0 -%}
   {%- liquid
     if cauce_actual >= cauce_umbral
       assign cauce_logrado = true
