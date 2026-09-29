@@ -190,7 +190,7 @@
             "option_2_benefit_color": "text",
             "option_2_caption": "[precio_dia] por día",
             "option_2_percentage_off_text": "0",
-            "option_2_fixed_amount_off": "37900",
+            "option_2_fixed_amount_off": "40900",
             "option_2_price_text": "[price]",
             "option_2_compare_price": "compare_price",
             "option_2_compare_price_text": "[compare_price]",
@@ -205,7 +205,7 @@
             "option_3_benefit_color": "text",
             "option_3_caption": "[precio_dia] por día",
             "option_3_percentage_off_text": "0",
-            "option_3_fixed_amount_off": "76800",
+            "option_3_fixed_amount_off": "81200",
             "option_3_price_text": "[price]",
             "option_3_compare_price": "compare_price",
             "option_3_compare_price_text": "[compare_price]",
@@ -237,7 +237,7 @@
             "text_color": "#10262a",
             "text_1": "",
             "text_2": "El precio tachado es lo que costarían esos frascos comprados de a uno.",
-            "text_3": "Los packs de 2 y 3 frascos van con envío sin cargo.",
+            "text_3": "El envío es gratis en todas las compras.",
             "icon_scale": 110,
             "icon_color": "#5f99a2",
             "icon_1": "info",
@@ -292,7 +292,7 @@
             "alignment": "left",
             "text_color": "#10262a",
             "text_1": "30 días para devolverlo, con el frasco cerrado",
-            "text_2": "Envío a todo el país",
+            "text_2": "Envío gratis a todo el país",
             "text_3": "",
             "icon_scale": 110,
             "icon_color": "#5f99a2",
@@ -385,7 +385,7 @@
             "collapse_icon": "carret",
             "display_top_border": true,
             "open": false,
-            "content": "<p>Despachamos desde Buenos Aires a todo el país. El plazo estimado de entrega es de 3 a 10 días hábiles y el costo se calcula en el checkout según tu código postal.</p><p>El envío es sin cargo en compras desde $55.000.</p>",
+            "content": "<p>Despachamos desde Buenos Aires a todo el país. El plazo estimado de entrega es de 3 a 10 días hábiles.</p><p>El envío es gratis en todas las compras.</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0
@@ -546,7 +546,7 @@
         "m5": {
           "type": "text",
           "settings": {
-            "title": "Envío a todo el país"
+            "title": "Envío gratis a todo el país"
           }
         },
         "m6": {
@@ -1394,8 +1394,8 @@
           "settings": {
             "icon": "local_shipping",
             "filled_icon": false,
-            "title": "Envío a todo el país",
-            "text": "<p>De 3 a 10 días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
+            "title": "Envío gratis a todo el país",
+            "text": "<p>De 3 a 10 días hábiles, sin costo en todas las compras.</p>"
           }
         },
         "f2": {
@@ -1582,7 +1582,7 @@
           "settings": {
             "column": "col_1",
             "visibility": "always-display",
-            "text": "<ul><li>Dos cápsulas por día: cada frasco rinde 30 días</li><li>Sin hormonas. Con vitaminas B6, B5, B12 y zinc, y 15 plantas</li><li>El pack de 3 frascos es el de mejor precio por día</li><li>3 cuotas sin interés o 10 % off pagando con transferencia</li><li>Envío a todo el país y 30 días para devolverlo, con el frasco cerrado</li></ul>",
+            "text": "<ul><li>Dos cápsulas por día: cada frasco rinde 30 días</li><li>Sin hormonas. Con vitaminas B6, B5, B12 y zinc, y 15 plantas</li><li>El pack de 3 frascos es el de mejor precio por día</li><li>3 cuotas sin interés o 10 % off pagando con transferencia</li><li>Envío gratis a todo el país y 30 días para devolverlo, con el frasco cerrado</li></ul>",
             "text_style": "body",
             "alignment": "left",
             "mobile_alignment": "mobile-left",

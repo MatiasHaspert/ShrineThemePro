@@ -51,9 +51,7 @@ por eso dice "Devoluciones" y no "Política de reembolso".
 >
 > **Costo**
 >
-> El costo del envío se calcula en el checkout según tu código postal, y lo ves antes de pagar.
-> El envío es sin cargo cuando el total de los productos, con los descuentos ya aplicados, es de
-> $55.000 o más.
+> El envío es gratis en todas las compras, sin monto mínimo y a cualquier punto del país.
 >
 > **Seguimiento**
 >
@@ -74,9 +72,11 @@ Qué sostiene cada dato:
 
 - **3 a 10 días hábiles y "desde Buenos Aires":** es lo que ya publica el acordeón de envíos de la
   PDP. "Desde que se acredita el pago" lo confirmó el comercio el 2026-09-27.
-- **$55.000 con los descuentos aplicados:** es como calcula el checkout la tarifa sin cargo
-  (CLAIMS-AUDIT §6). Es el mismo número que la barra de anuncio, el acordeón y la nota del bloque de
-  compra: si cambia el umbral, cambia acá también.
+- **Gratis en todas las compras:** lo decidió el comercio el 2026-09-28 con los precios nuevos
+  (D-069). Exige que la tarifa de envío del admin sea $0 para todo el país. Es la misma promesa que
+  la barra de anuncio, el acordeón, la nota del bloque de compra y la FAQ: si vuelve un umbral,
+  cambia acá también. Hasta el 2026-09-28 decía "sin cargo desde $55.000 con los descuentos
+  aplicados".
 - **Sin seguimiento:** lo confirmó el comercio el 2026-09-27 (D-066).
 - **Dañado o equivocado:** reponer o devolver el dinero es lo que exige igual la Ley 24.240 cuando
   lo que llega no es lo que se compró. Está escrito como promesa, así que hay que cumplirlo.
@@ -231,5 +231,6 @@ Para publicarla: **Tienda online → Páginas → Agregar página**, título "Pr
 contenido vacío y plantilla **`faq`**. El handle queda `preguntas-frecuentes`.
 
 La sección emite `FAQPage` en JSON-LD con las mismas preguntas que se ven. Hay tres datos escritos
-a mano que se repiten en otros lugares: el umbral de $55.000, el horario de atención y el número de
+a mano que se repiten en otros lugares: el envío gratis en todas las compras (D-069; antes, el
+umbral de $55.000), el horario de atención y el número de
 WhatsApp del último link. Si cambia alguno, hay que cambiarlo acá también.

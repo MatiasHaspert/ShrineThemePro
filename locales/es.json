@@ -581,7 +581,7 @@
     "carrito": {
       "reaseguro_arrepentimiento": "{{ dias }} días de arrepentimiento",
       "reaseguro_iva": "Precio final con IVA",
-      "reaseguro_envio": "Envío a todo el país",
+      "reaseguro_envio": "Envío gratis a todo el país",
       "envio_falta": "Te faltan [monto] para el envío gratis",
       "envio_logrado": "Tenés el envío gratis",
       "envio_progreso": "Progreso hacia el envío gratis",

@@ -524,8 +524,8 @@ Esta sección se generó leyendo el template: si cambia el template, se regenera
 | Encabezado | 2 CÁPSULAS AL DÍA · CADA FRASCO, UN MES |
 | Bajada | La mayoría de las mujeres nota los cambios más claros entre el segundo y el tercer mes de uso diario. |
 | Escalón 1 | **1 frasco · 30 días** · caption `+ envío` · descuento $0 (provisorio, D-054 §4) |
-| Escalón 2 | **2 frascos · 60 días** · caption `[price_each] por frasco` · descuento $37.900 (provisorio, D-054 §4) |
-| Escalón 3 | **3 frascos · 90 días** · cinta **RESULTADOS ÓPTIMOS · 90 DÍAS** · caption `[price_each] por frasco` · descuento $76.800 (provisorio, D-054 §4) |
+| Escalón 2 | **2 frascos · 60 días** · caption `[price_each] por frasco` · descuento $40.900 (D-069; antes $37.900) |
+| Escalón 3 | **3 frascos · 90 días** · cinta **RESULTADOS ÓPTIMOS · 90 DÍAS** · caption `[price_each] por frasco` · descuento $81.200 (D-069; antes $76.800) |
 | Letra chica | El precio tachado es lo que costarían esos frascos comprados de a uno. / Los packs de 2 y 3 frascos van con envío sin cargo. |
 
 ### 10.3 Pestañas del hero
@@ -593,7 +593,7 @@ Título **Por qué Hormify es distinto** · Comparado con los multivitamínicos 
 - Con piperina para absorber mejor cada activo
 - Analizado por laboratorio externo
 - Producción nacional
-- **Precio** · en Hormify, el costo por día: sale del precio del producto dividido por 30 días, no se escribe (hoy **$1.663/día**) · en Otros: *Según la marca*
+- **Precio** · en Hormify, el costo por día: sale del precio del producto dividido por 30 días, no se escribe (hoy **$1.763/día**, D-069) · en Otros: *Según la marca*
 
 ### 10.8 Qué esperar · `cauce-progreso`
 

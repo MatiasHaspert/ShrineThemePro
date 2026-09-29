@@ -459,7 +459,7 @@
         },
         "umbral_envio": {
           "label": "Envío gratis a partir de",
-          "info": "Monto en pesos, solo el número. Ej: 45000. Se usa en la barra de anuncio y en los acordeones de la PDP."
+          "info": "Monto en pesos, solo el número. Ej: 45000. Decide el chip \"Envío gratis\" de cada escalón y la barra del carrito. Con 1, el envío es gratis en todas las compras. Vacío o 0 los apaga. Los textos de la barra de anuncio, los acordeones y la FAQ se escriben a mano: si cambia, revisarlos."
         },
         "header__pagos": {
           "content": "Medios de pago"

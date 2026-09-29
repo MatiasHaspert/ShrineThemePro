@@ -3678,3 +3678,73 @@ JSON, el comercio había cambiado el margen inferior del título de 9 a 0, y ese
 - **No se miró renderizada**, ni a 1440 ni a 390 px: es el mismo límite de D-066 §9.
 
 ---
+
+## D-069 · 2026-09-28 · Precios nuevos de Hormify y envío gratis en todas las compras
+
+**Decisión.** El comercio cambió la oferta el 2026-09-28:
+
+| Pack | Antes | Ahora | Descuento del escalón | Por día | Con transferencia (10 %) |
+|---|---|---|---|---|---|
+| 1 frasco | $49.900 | **$52.900** | — | $1.763 | $47.610 |
+| 2 frascos | $61.900 | **$64.900** | $40.900 (era $37.900) | $1.082 | $58.410 |
+| 3 frascos | $72.900 | **$77.500** | $81.200 (era $76.800) | $861 | $69.750 |
+
+Y el envío pasa a ser **gratis en todas las compras**, incluido el frasco suelto. El umbral de
+$55.000 (D-052) desaparece. El comercio lo eligió el 2026-09-28 frente a dejarlo solo para los
+packs de 2 y 3: con el frasco a $52.900 y el umbral en $55.000, el carrito le habría dicho a quien
+compra uno "Te faltan $2.100 para el envío gratis", el mismo caso que descartó el umbral de $50.000.
+
+La planilla del comercio trae además el CPA y el ROAS de equilibrio de cada pack. Son datos
+internos para las campañas y no van a ninguna superficie.
+
+### 1. Qué cambió en el tema
+
+- **`product.hormify.json`, bloque `ofertas`:** `option_2_fixed_amount_off` 37900 → **40900** y
+  `option_3_fixed_amount_off` 76800 → **81200**. Son `2 × 52.900 − 64.900` y
+  `3 × 52.900 − 77.500`. Total, tachado, precio por día, CTA y cuotas salen de ahí y del precio
+  de la variante: no hay otro número de precio escrito a mano en la PDP.
+- **`cauce_umbral_envio_gratis`: 55000 → 1.** Con 1 el chip "Envío gratis" sale en las tres
+  tarjetas, la barra del carrito dice siempre "Tenés el envío gratis" y el empujón de "sumá uno
+  más" no aparece nunca. Se descartó dejarlo vacío: apaga el chip, que es la marca de envío pegada
+  al botón de compra. El texto de ayuda del setting ahora explica las dos cosas.
+- **Textos escritos a mano:**
+
+  | Dónde | Antes | Ahora |
+  |---|---|---|
+  | Barra de anuncio (global) | Envío gratis en compras desde $55.000 | Envío gratis a todo el país |
+  | Nota del bloque de compra | Los packs de 2 y 3 frascos van con envío sin cargo. | El envío es gratis en todas las compras. |
+  | Línea bajo el botón, marquesina, íconos de confianza (PDP y home), cierre (PDP y home), reaseguro del carrito | Envío a todo el país | Envío **gratis** a todo el país |
+  | Acordeón de envíos | …el costo se calcula en el checkout según tu código postal. / Sin cargo desde $55.000. | 3 a 10 días hábiles. / Gratis en todas las compras. |
+  | Íconos de confianza, bajada (PDP y home) | El costo se calcula en el checkout según tu código postal. | Sin costo en todas las compras. |
+  | FAQ de compra (`page.faq.json`) | ¿Cuándo el envío es gratis? — desde $55.000 | ¿Cuánto cuesta el envío? — Nada, sin monto mínimo |
+
+  "El costo se calcula según tu código postal" tenía que salir aunque nadie lo pidiera: con envío
+  gratis para todos, pasó a ser falso.
+- **`docs/POLITICAS.md`**, sección de envío: el texto nuevo de "Costo" para pegar en el admin.
+
+**No se tocó `product.cauce-landing.json`** (la landing del R-ALA): el producto no está publicado
+(D-065). Sus descuentos y su acordeón de envíos siguen con los números viejos. Si vuelve, hay que
+revisarla entera.
+
+### 2. Lo que no se ve desde el repo, y lo carga el comercio
+
+El comercio eligió cargarlo él. Todo esto tiene que estar **el mismo día del merge**, porque el
+tema ya promete los precios y el envío gratis:
+
+1. **Precio de la variante** de Hormify: $49.900 → **$52.900**. Sin eso, el tema calcula todo
+   sobre $49.900 y los packs se ven a $58.900 y $68.500.
+2. **Descuentos automáticos de R6** (`CLAIMS-AUDIT.md`): cantidad 2 → **−$40.900** y cantidad 3 →
+   **−$81.200**, con la combinación con descuentos de pedido activada (para `TRANSFERENCIA10`).
+3. **Tarifa de envío:** $0 para todo el país, sin mínimo, en Configuración → Envíos. Sacar la
+   tarifa paga y la condición de $55.000.
+4. **Política de envío** (Configuración → Políticas, `/settings/legal`): reemplazar el párrafo de
+   "Costo" por el de `docs/POLITICAS.md`. La publicada todavía dice "sin cargo desde $55.000".
+
+### 3. Las cuotas quedan con centavos
+
+$77.500 no se divide en tres: el renglón bajo las tarjetas va a decir **3 cuotas sin interés de
+$25.833,33**. Es el monto exacto y así se deja: redondearlo hacia abajo prometería una cuota que
+Mercado Pago no cobra. `MEJOR PRECIO POR DÍA` (H17) sigue siendo verdadera: $861 contra $1.082 y
+$1.763.
+
+---

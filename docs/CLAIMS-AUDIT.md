@@ -229,8 +229,9 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       `docs/POLITICAS.md` (2026-09-27, D-067), con dos `[[PENDIENTE]]` en los Términos: el nombre
       del titular y el domicilio completo.
 - [ ] **BLOQUEANTE · R6 · Los descuentos automáticos de los escalones (D-047).** Dos descuentos
-      automáticos de Shopify: cantidad 2 → precio final $61.900 (−$37.900) y cantidad 3 → precio
-      final $72.900 (−$76.800). Tienen que coincidir al peso con `option_2_fixed_amount_off` y
+      automáticos de Shopify: cantidad 2 → precio final $64.900 (−$40.900) y cantidad 3 → precio
+      final $77.500 (−$81.200), sobre el frasco a $52.900. Montos del 2026-09-28 (D-069); hasta
+      entonces eran $61.900 (−$37.900) y $72.900 (−$76.800) sobre $49.900. Tienen que coincidir al peso con `option_2_fixed_amount_off` y
       `option_3_fixed_amount_off` del bloque `ofertas`. Si no se cargan, los escalones vuelven a
       `0` y las dos cintas salen.
 - [x] ~~R6b · La cinta "ENVÍO GRATIS" del escalón 3~~ — **cerrado 2026-09-09 (D-047c) y resuelto
@@ -242,7 +243,12 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       gratis", calculado contra su total ya descontado.** No hay exclusividad que declarar ni
       texto que mantenga nadie, y el riesgo del art. 8 por esta vía queda cerrado.
 - [ ] **BLOQUEANTE · La tarifa de envío gratis tiene que existir en Shopify.**
-      `cauce_umbral_envio_gratis` está cargado en **$55.000** y la promesa la publican **cinco**
+      **Desde el 2026-09-28 (D-069) el envío es gratis en todas las compras:** la tarifa de
+      Configuración → Envíos tiene que ser $0 para todo el país, sin mínimo, y
+      `cauce_umbral_envio_gratis` está en **1**, así que el chip sale en los tres escalones y la
+      barra del carrito siempre dice "Tenés el envío gratis". Ya no hay umbral que un cupón pueda
+      perforar: lo que sigue sobre el aire de cada pack es historia. Lo de abajo es el estado
+      anterior. `cauce_umbral_envio_gratis` estaba cargado en **$55.000** y la promesa la publican **cinco**
       superficies: la barra de anuncio, el acordeón de envíos, la nota del bloque de oferta, la
       barra de progreso del carrito (D-046) y, desde el 2026-09-12, el chip "Envío gratis" dentro
       de los escalones 2 y 3 (D-050c) — que es la que está pegada al botón de compra. El setting
@@ -552,10 +558,10 @@ La regla 1 sí se mantiene: **ningún claim está en un `.liquid`**. `cauce-cont
 | H11 | Analizado por laboratorio externo · producción nacional | proceso / origen | sellos, comparativa | COA de un tercero y RNE del elaborador **de este SKU** (A3 y A4 son del R-ALA) |
 | H12 | "Otros suplementos" no tienen H1–H11 | comparativa | `comparativa` | que sea verdad para la categoría; con una sola X en contra de todo el resto, es la fila más expuesta de la página (mismo riesgo que R5) |
 | H13 | ~~Cinta `RESULTADOS ÓPTIMOS · 90 DÍAS`~~ | eficacia + plazo | — | salió en D-066; en su lugar va H17 |
-| H14 | Costo por día (`$1.663/día`) contra "Según la marca" | precio | `comparativa`, fila de precio | se calcula del precio de la variante sobre 30 días, redondeado al peso: si cambia el precio, cambia la fila. El precio total sigue en el bloque de compra. "Según la marca" no afirma ningún precio ajeno; poner uno sería un claim que hay que poder probar (D-058) |
+| H14 | Costo por día (`$1.763/día` desde D-069) contra "Según la marca" | precio | `comparativa`, fila de precio | se calcula del precio de la variante sobre 30 días, redondeado al peso: si cambia el precio, cambia la fila. El precio total sigue en el bloque de compra. "Según la marca" no afirma ningún precio ajeno; poner uno sería un claim que hay que poder probar (D-058) |
 | H15 | La B6 contribuye a regular la actividad hormonal y a disminuir el cansancio; el ácido pantoténico, a la síntesis de hormonas esteroideas; la B12, a la función psicológica normal | función de nutriente | bajada por ángulo (`identidad`, `energia`), `solucion` (mecanismo, D-068) y pie de `dolor` | cantidad significativa en el rótulo (B6 224 %, B12 2.250 %, B5 50 %) y la redacción de las declaraciones autorizadas del Reg. UE 432/2012. En Argentina la tiene que validar quien tramite el RNPA |
 | H16 | Cinta `EL MÁS ELEGIDO` | popularidad | escalón 2 | pedidos reales. **Bloqueante** (§8.3): es el mismo caso que D-047b |
-| H17 | Cinta `MEJOR PRECIO POR DÍA` | precio | escalón 3 | verdadera por cálculo: $810 contra $1.032 y $1.663 (`[precio_dia]`, D-066). Si cambia la escalera de precios, hay que revisarla |
+| H17 | Cinta `MEJOR PRECIO POR DÍA` | precio | escalón 3 | verdadera por cálculo: $861 contra $1.082 y $1.763 con los precios de D-069 (antes $810, $1.032 y $1.663; `[precio_dia]`, D-066). Si cambia la escalera de precios, hay que revisarla |
 | H18 | "30 días para devolverlo", con el frasco cerrado | condición comercial | barra de anuncio (global), íconos, línea bajo el botón, marquesina, garantía, acordeón Devoluciones, cierre, bajada `transparencia` | la regla escrita en los Términos del servicio (§8.3). Vale para toda la tienda porque la barra es global |
 | H19 | 3 cuotas sin interés | condición comercial | barra, marquesina, renglón bajo los escalones, medios de pago, carrito, cierre | plan activo en Mercado Pago, confirmado por el comercio el 2026-09-27 |
 | H20 | Cinco situaciones sin promesa: cansancio al levantarse, el jean que aprieta, irritabilidad, despertarse de madrugada, menos ganas | síntoma, sin efecto atribuido | `dolor` (D-068) | nada que probar: ninguna línea dice que el producto lo resuelva. El riesgo es la yuxtaposición con el producto (Disp. ANMAT 4980/05), el mismo que D-033 anotó para el R-ALA. Es la línea "síntomas sí, promesas no" |

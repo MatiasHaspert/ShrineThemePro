@@ -24,14 +24,14 @@
           "type": "pregunta",
           "settings": {
             "pregunta": "¿Hacen envíos a todo el país?",
-            "respuesta": "<p>Sí. Despachamos desde Buenos Aires a cualquier punto de Argentina. La entrega tarda entre 3 y 10 días hábiles y el costo se calcula en el checkout según tu código postal, antes de pagar.</p>"
+            "respuesta": "<p>Sí. Despachamos desde Buenos Aires a cualquier punto de Argentina. La entrega tarda entre 3 y 10 días hábiles.</p>"
           }
         },
         "p2": {
           "type": "pregunta",
           "settings": {
-            "pregunta": "¿Cuándo el envío es gratis?",
-            "respuesta": "<p>Cuando el total de los productos, con los descuentos ya aplicados, llega a $55.000.</p>"
+            "pregunta": "¿Cuánto cuesta el envío?",
+            "respuesta": "<p>Nada. El envío es gratis en todas las compras, sin monto mínimo y a cualquier punto del país.</p>"
           }
         },
         "p3": {
