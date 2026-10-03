@@ -322,6 +322,14 @@ link limpio `/products/<handle>` (ver D-038 y D-042).
       emite `AggregateRating` (D-006). **La cinta ya no existe:** el escalón 2 quedó sin badge y
       el destaque se mudó al 3 con un texto que no habla de nadie más que del producto
       (`LA TOMA COMPLETA · 90 DÍAS`). No quedó nada que confirmar contra los pedidos reales.
+- [ ] **BLOQUEANTE · `EL MÁS ELEGIDO · 43 % OFF` en el escalón 2 del R-ALA (D-071).** La cinta volvió el
+      2026-10-03 a pedido del comercio. "El más elegido" es el mismo caso de D-047b: confirmarlo contra
+      los pedidos del retesteo, o sacarlo (`option_2_badge` del bloque `ofertas`). **El 43 está escrito
+      a mano:** es `(99.800 − 56.900) / 99.800`. Si cambia el precio del producto, el precio de
+      comparación o el `option_2_fixed_amount_off`, hay que recalcularlo.
+- [ ] **El precio tachado de $49.900 (D-071).** Es un precio anterior real: el R-ALA se vendió a ese
+      valor hasta el 2026-10-03. Deja de poder llamarse "anterior" si la rebaja se vuelve permanente
+      (Ley 24.240 art. 8: lo que se publica tiene que ser cierto).
 - [ ] **BLOQUEANTE · La bajada del bloque de oferta cita ensayos clínicos (D-051).** El texto es
       *"Los ensayos clínicos con R-ALA evalúan tomas diarias sostenidas de 8 a 12 semanas."* No
       afirma un resultado ni un plazo de efecto —dice qué duración usan los estudios, no qué pasa

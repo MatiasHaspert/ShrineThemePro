@@ -3834,3 +3834,64 @@ O sea: no es un revert a `95ea859`. Vuelve lo que era de Hormify y se queda lo q
   los leen (`datos`, `fichas`) están apagados en la landing.
 
 ---
+
+## D-071 · 2026-10-03 · R-ALA: baja el precio, el frasco suelto muestra el anterior tachado y la cinta pasa al pack de 2
+
+**Decisión.** Oferta nueva para el retesteo, pedida por el comercio:
+
+| Pack | Antes | Ahora | Tachado | Ahorro | Por frasco | Con transferencia (10 %) |
+|---|---|---|---|---|---|---|
+| 1 frasco | $49.900 | **$45.900** | $49.900 | $4.000 | $45.900 | $41.310 |
+| 2 frascos | $61.900 | **$56.900** | $99.800 | $42.900 | $28.450 | $51.210 |
+| 3 frascos | $72.900 | **$67.900** | $149.700 | $81.800 | $22.633,33 | $61.110 |
+
+### 1. El precio anterior es el precio de comparación de Shopify, no un texto
+
+El tachado del frasco suelto no se escribe en el tema. El bloque `ofertas` ya lo dibuja solo cuando
+la variante tiene un precio de comparación mayor que el precio (`option_N_compare_price:
+compare_price`, que es como estaba). Así que la rebaja se carga en el admin: **precio $45.900,
+precio de comparación $49.900**. La home, el carrito, el checkout y el feed toman el mismo número.
+
+**Alternativa descartada:** dejar la variante en $49.900 y ponerle `fixed_amount_off` 4.000 al
+escalón 1. El tachado saldría igual, pero haría falta un descuento automático también para un
+frasco, y la home y el carrito seguirían mostrando $49.900 hasta el checkout.
+
+Los packs se calculan desde el precio nuevo: `option_2_fixed_amount_off` 37.900 → **34.900**
+(`2 × 45.900 − 56.900`) y `option_3_fixed_amount_off` 76.800 → **69.800** (`3 × 45.900 − 67.900`).
+El tachado de los packs sigue saliendo del precio de comparación: 2 × y 3 × $49.900. Por eso la
+nota del bloque cambia: decía "lo que costarían esos frascos comprados de a uno", que con el
+frasco a $45.900 ya no es cierto, y ahora dice "el precio anterior de esa misma cantidad de
+frascos".
+
+### 2. La cinta
+
+| | Antes | Ahora |
+|---|---|---|
+| Escalón 2 | — | **`EL MÁS ELEGIDO · 43 % OFF`** |
+| Escalón 3 | `LA TOMA COMPLETA · 90 DÍAS` | — |
+
+La cinta junta la prueba social con la magnitud del descuento, que es el único dato de la tarjeta
+que no estaba dicho: el ahorro ya figura en pesos, el porcentaje no. 43 % es $42.900 sobre $99.800
+(42,99 %). **Es un número escrito a mano** y "el más elegido" es la afirmación de D-047b: los dos
+quedan anotados en `CLAIMS-AUDIT.md` §6.
+
+No se movieron ni el preseleccionado ni el fondo destacado: siguen en el escalón 3 (D-051), que es
+el de ticket más alto. Es la misma combinación que tuvo Hormify desde D-066: cinta de popularidad
+en el 2, destaque en el 3. El fondo es una regla de CSS (`[for='quantity3']`) compartida con la
+plantilla de Hormify.
+
+### 3. Centavos
+
+$67.900 no se divide en tres: el pack de 3 dice **$22.633,33 por frasco** y **3 cuotas sin interés
+de $22.633,33**. Es el mismo criterio de D-069 §3: el monto exacto, sin redondear.
+
+### 4. Lo que no se ve desde el repo, y lo carga el comercio
+
+1. **Variante:** precio $45.900 y precio de comparación $49.900.
+2. **Descuentos automáticos** sobre el producto nuevo: cantidad 2 → **−$34.900**, cantidad 3 →
+   **−$69.800**, una vez por pedido, sin fecha de fin y combinables con `TRANSFERENCIA10`.
+
+El tema y el admin tienen que cambiar juntos. Con el tema nuevo y el precio viejo, los packs se ven
+a $64.900 y $79.900; con el precio nuevo y el tema viejo, a $53.900 y $60.900.
+
+---
