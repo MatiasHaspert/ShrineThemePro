@@ -147,6 +147,12 @@
             "margin_bottom": 24
           }
         },
+        "ancla_comprar": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<span id=\"comprar\" class=\"cauce-ancla\" aria-hidden=\"true\"></span>"
+          }
+        },
         "ofertas": {
           "type": "quantity_selector",
           "settings": {
@@ -183,7 +189,7 @@
             "option_1_benefit_position": "top",
             "option_1_benefit_style": "outlined",
             "option_1_benefit_color": "text",
-            "option_1_caption": "+ envío",
+            "option_1_caption": "",
             "option_1_percentage_off_text": "",
             "option_1_fixed_amount_off": "0",
             "option_1_price_text": "[price]",
@@ -247,7 +253,7 @@
             "text_color": "#10262a",
             "text_1": "",
             "text_2": "El precio tachado es lo que costarían esos frascos comprados de a uno.",
-            "text_3": "Los packs de 2 y 3 frascos van con envío sin cargo.",
+            "text_3": "El envío es gratis en todas las compras.",
             "icon_scale": 110,
             "icon_color": "#5f99a2",
             "icon_1": "info",
@@ -374,7 +380,7 @@
             "collapse_icon": "carret",
             "display_top_border": true,
             "open": false,
-            "content": "<p>Despachamos desde Buenos Aires. El plazo estimado es de 3 a 10 días habiles sujetos a la disponibilidad de stock y el costo se calcula en el checkout según tu código postal. Envío sin cargo en compras desde $55.000.</p>",
+            "content": "<p>Despachamos desde Buenos Aires. El plazo estimado es de 3 a 10 días hábiles sujetos a la disponibilidad de stock.</p><p>El envío es gratis en todas las compras.</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0
@@ -383,14 +389,14 @@
         "acordeon_garantia": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Cambios y devoluciones",
+            "heading": "Devoluciones: 30 días",
             "heading_size": "medium",
             "icon": "undo",
             "filled_icon": false,
             "collapse_icon": "carret",
             "display_top_border": true,
             "open": false,
-            "content": "<p>Tenés 10 días corridos desde que recibís el pedido para arrepentirte de la compra y pedir la devolución del importe pagado, sin costo (Res. SCI 424/2020). El producto tiene que estar sin abrir.</p><p>Para iniciarlo, entrá al botón de arrepentimiento del pie de página o escribinos a cauce@caucearg.com.</p>",
+            "content": "<p>Tenés 30 días corridos desde que recibís el pedido para devolverlo, sin explicar por qué. El frasco tiene que estar cerrado: si compraste un pack, podés devolver los frascos que no abriste. Te devolvemos lo que pagaste por ellos y el envío de vuelta corre por nuestra cuenta.</p><p>Los primeros 10 días son, además, tu derecho de arrepentimiento (Res. SCI 424/2020). Para iniciar la devolución, entrá al botón de arrepentimiento del pie de página o escribinos a cauce@caucearg.com.</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0
@@ -443,6 +449,7 @@
         "bullets_a",
         "bullets_b",
         "separador",
+        "ancla_comprar",
         "ofertas",
         "nota_precios",
         "suscripcion",
@@ -946,7 +953,7 @@
         "posicion_imagen": "izquierda",
         "relacion": "4 / 5",
         "boton_texto": "Ver la fórmula y el precio",
-        "boton_link": "#shopify-section-main",
+        "boton_link": "#comprar",
         "color_scheme": "background-1",
         "ancho_maximo": 1120,
         "padding_top": 40,
@@ -1376,8 +1383,8 @@
           "settings": {
             "icon": "local_shipping",
             "filled_icon": false,
-            "title": "Envío a todo el país",
-            "text": "<p>De 3 a 10 días hábiles. El costo se calcula en el checkout según tu código postal.</p>"
+            "title": "Envío gratis a todo el país",
+            "text": "<p>De 3 a 10 días hábiles, sin costo en todas las compras.</p>"
           }
         },
         "f2": {
@@ -1524,13 +1531,13 @@
         "t4": {
           "type": "text",
           "settings": {
-            "title": "Envío a todo el país"
+            "title": "Envío gratis a todo el país"
           }
         },
         "t5": {
           "type": "text",
           "settings": {
-            "title": "10 días de arrepentimiento"
+            "title": "30 días para devolverlo"
           }
         }
       },
@@ -1778,7 +1785,7 @@
           "settings": {
             "column": "col_1",
             "visibility": "always-display",
-            "heading": "Si te arrepentís, se devuelve",
+            "heading": "Tenés 30 días para devolverlo",
             "title_highlight_color": "#6d388b",
             "heading_size": "h1",
             "alignment": "left",
@@ -1792,7 +1799,7 @@
           "settings": {
             "column": "col_1",
             "visibility": "always-display",
-            "text": "<p>No es una promesa comercial: es un derecho que tenés por la Resolución SCI 424/2020 y que acá está escrito sin condiciones escondidas.</p>",
+            "text": "<p>La ley te da 10 días para arrepentirte de una compra online. Nosotros te damos 30: si cambiás de idea, nos avisás y te devolvemos lo que pagaste.</p>",
             "text_style": "body",
             "alignment": "left",
             "mobile_alignment": "mobile-left",
@@ -1812,7 +1819,7 @@
             "icon_color": "accent-2",
             "icon_heading_size": "h4",
             "icon_text_alignment": "left",
-            "title": "10 días corridos",
+            "title": "30 días corridos",
             "text": "<p>Se cuentan desde que recibís el pedido, no desde que lo comprás.</p>",
             "margin_top": 0,
             "margin_bottom": 20
@@ -1830,8 +1837,8 @@
             "icon_color": "accent-2",
             "icon_heading_size": "h4",
             "icon_text_alignment": "left",
-            "title": "Sin costo para vos",
-            "text": "<p>Se devuelve el importe pagado. El costo de la devolución lo asumimos nosotros.</p>",
+            "title": "Con el frasco cerrado",
+            "text": "<p>Lo devolvés sin abrir. Si compraste un pack, podés devolver los frascos que no abriste y te devolvemos lo que pagaste por ellos.</p>",
             "margin_top": 0,
             "margin_bottom": 20
           }
@@ -1848,8 +1855,8 @@
             "icon_color": "accent-2",
             "icon_heading_size": "h4",
             "icon_text_alignment": "left",
-            "title": "Sin explicar por qué",
-            "text": "<p>No hace falta que des un motivo. Basta con que nos avises dentro del plazo.</p>",
+            "title": "Sin costo y sin explicar por qué",
+            "text": "<p>El envío de vuelta lo pagamos nosotros y no hace falta que des un motivo. Escribinos por WhatsApp o a cauce@caucearg.com.</p>",
             "margin_top": 0,
             "margin_bottom": 20
           }
@@ -2128,7 +2135,7 @@
           "settings": {
             "column": "col_1",
             "visibility": "always-display",
-            "text": "<ul><li>Isómero R puro, sin mezcla racémica</li><li>600 mg por cápsula, una por día</li><li>Certificado de análisis por lote</li><li>Producción nacional, envío a todo el país</li><li>10 días para arrepentirte, sin costo</li></ul>",
+            "text": "<ul><li>Isómero R puro, sin mezcla racémica</li><li>600 mg por cápsula, una por día</li><li>Certificado de análisis por lote</li><li>Producción nacional, envío gratis a todo el país</li><li>30 días para devolverlo, con el frasco cerrado</li></ul>",
             "text_style": "body",
             "alignment": "left",
             "mobile_alignment": "mobile-left",

@@ -3762,3 +3762,75 @@ Mercado Pago no cobra. `MEJOR PRECIO POR DÍA` (H17) sigue siendo verdadera: $86
 $1.763.
 
 ---
+
+## D-070 · 2026-10-03 · Vuelve el R-ALA: la home y la paleta dejan de vender Hormify
+
+**Decisión.** El comercio volvió a cargar el Ácido R-Alfa Lipoico para retestearlo y Hormify dejó de
+estar publicado: el 2026-10-03 `caucearg.com/products.json` lista un solo producto, el R-ALA, a
+$49.900, y la URL de Hormify da 404. La tienda vuelve a venderlo, con dos criterios que fijó el
+comercio ese día:
+
+| Pregunta | Respuesta | Se descartó |
+|---|---|---|
+| Envío | **gratis en todas las compras** (D-069 sigue en pie) | volver al umbral de $55.000 del diseño original |
+| Lo global de la etapa Hormify | **se queda**: 30 días para devolverlo, cuotas sin interés en la barra, WhatsApp, página de preguntas, botones en mayúscula | revertir todo al estado del 17/9 |
+
+O sea: no es un revert a `95ea859`. Vuelve lo que era de Hormify y se queda lo que es de la tienda.
+
+### 1. Qué cambió
+
+- **`templates/index.json`** vuelve a la home de D-038, tal como estaba en `e970ad3^`: hero,
+  pilares, producto, banda, FAQ y manifiesto. Tres ajustes encima:
+  - **El handle.** El producto recargado es
+    `acido-r-alfa-lipoico-de-maxima-potencia-apoyo-para-el-azucar-en-sangre`; el anterior
+    (`…-capsulas-de-600-mg-en-forma-r-pura`) da 404 y no redirige. Se cambió en los cuatro lugares:
+    los tres botones y el `product` de `featured-product`.
+  - La banda dice "Envío gratis a todo el país", con el texto de D-069.
+  - La pregunta de devolución de la FAQ toma el texto de `page.faq.json` (30 días).
+- **`layout/theme.liquid`** pierde las tres líneas que forzaban `plantilla--hormify` en la home
+  (D-065 §3). La home vuelve a ÓXIDO. La clase por sufijo sigue: `product.hormify.json` no se tocó
+  y, si el producto vuelve, toma su paleta sola.
+- **`templates/product.cauce-landing.json`**, lo que D-069 había dejado pendiente ("si vuelve, hay
+  que revisarla entera"). Los precios no cambian: $49.900 / $61.900 / $72.900
+  (`fixed_amount_off` 37.900 y 76.800).
+
+  | Dónde | Antes | Ahora |
+  |---|---|---|
+  | Escalón 1, caption | + envío | *(vacío)* |
+  | Nota del bloque de compra | Los packs de 2 y 3 frascos van con envío sin cargo. | El envío es gratis en todas las compras. |
+  | Acordeón de envíos | …el costo se calcula en el checkout según tu código postal. Envío sin cargo en compras desde $55.000. | …3 a 10 días hábiles sujetos a la disponibilidad de stock. / El envío es gratis en todas las compras. |
+  | Acordeón de devoluciones | Cambios y devoluciones · 10 días | Devoluciones: 30 días, con el texto de Hormify |
+  | Banda y marquesina | Envío a todo el país · 10 días de arrepentimiento | Envío gratis a todo el país · 30 días para devolverlo |
+  | Garantía | Si te arrepentís, se devuelve · 10 días corridos | Tenés 30 días para devolverlo, con los tres puntos de D-066 §2 |
+  | Cierre | envío a todo el país · 10 días para arrepentirte, sin costo | envío gratis a todo el país · 30 días para devolverlo, con el frasco cerrado |
+
+  Todo el texto nuevo ya estaba aprobado en la PDP de Hormify o en `page.faq.json`: no se abre
+  ningún claim. "10 días para arrepentirte" de la banda queda, igual que en la home: es el derecho
+  legal y sigue siendo cierto.
+- **El ancla rota de D-054 §5.** El botón de `resultados` ("Ver la fórmula y el precio") apuntaba a
+  `#shopify-section-main`, que no existe. Ahora hay un bloque `ancla_comprar` antes de `ofertas` y
+  el botón va a `#comprar`.
+- **`templates/page.faq.json`:** la pregunta "¿Dónde veo qué tiene Hormify…?" enlazaba a una URL
+  que da 404. Ahora nombra al R-ALA y enlaza a su ficha, sin citar pestañas que esa ficha no tiene.
+
+### 2. Lo que no se tocó
+
+- `product.hormify.json`, sus secciones y el bloque 20 de `cauce-brand.css` siguen en el repo.
+- Los bloques apagados de la landing (`faq`, `fichas`, `comparativa`…) quedan con su texto viejo.
+  El `faq` apagado todavía dice "el costo se calcula según tu código postal" y "10 días": hay que
+  corregirlo antes de prenderlo.
+- Lo que el §6 de `CLAIMS-AUDIT.md` tiene abierto sobre la landing ("1574+ reseñas", la encuesta,
+  los testimonios) sigue abierto.
+
+### 3. Lo que no se ve desde el repo, y lo revisa el comercio
+
+- **Los descuentos automáticos de los packs.** Estaban atados a Hormify, que ya no existe, y el
+  R-ALA recargado tiene un ID nuevo (`15403123048660`). Es el mismo caso de D-069 §2: Shopify los
+  desactiva solo y la PDP sigue mostrando el precio de pack. Tienen que quedar sobre el producto
+  nuevo: cantidad 2 → **−$37.900**, cantidad 3 → **−$76.800**, una vez por pedido, activos, sin
+  fecha de fin y combinables con descuentos de pedido (`TRANSFERENCIA10`).
+- La plantilla ya está asignada: la ficha viva sale con `plantilla--cauce-landing`.
+- **Los metafields `cauce.*`.** No se verificó si el producto recargado los tiene. Los bloques que
+  los leen (`datos`, `fichas`) están apagados en la landing.
+
+---
