@@ -620,11 +620,12 @@ button.shopify-payment-button__button--unbranded {
    destacado mientras estaba elegido.
 
    Aca el fondo deja de depender del estado: las tres tarjetas van en BLANCO y
-   el escalon 3 va siempre en SEDIMENTO. La seleccion sigue leyendose por el
+   la destacada va siempre en SEDIMENTO. La seleccion sigue leyendose por el
    borde -que pasa de 30 % a pleno- y por el punto indicador, que es lo que un
-   grupo de radios necesita. El selector es [for="quantity3"] y no un
-   data-quantity: engancha el TERCER escalon, no "el que lleva 3 frascos".
-   Ver D-051. */
+   grupo de radios necesita. Cual es la destacada lo dice el setting
+   cauce_destacado del bloque, que le pone la clase en
+   snippets/quantity-breaks.liquid; antes era [for="quantity3"], fijo en el
+   tercer escalon. Ver D-051 y D-072. */
 .quantity-breaks-container .quantity-break,
 .quantity-breaks-container input:checked + .quantity-break {
   background: var(--cauce-blanco);
@@ -636,13 +637,13 @@ button.shopify-payment-button__button--unbranded {
   }
 }
 
-.quantity-breaks-container label[for='quantity3'].quantity-break,
-.quantity-breaks-container input:checked + label[for='quantity3'].quantity-break {
+.quantity-breaks-container label.quantity-break--cauce-destacado.quantity-break,
+.quantity-breaks-container input:checked + label.quantity-break--cauce-destacado.quantity-break {
   background: var(--cauce-sedimento);
 }
 
 @media (hover: hover) {
-  .quantity-breaks-container label[for='quantity3'].quantity-break:hover {
+  .quantity-breaks-container label.quantity-break--cauce-destacado.quantity-break:hover {
     background: var(--cauce-sedimento);
   }
 }
@@ -651,7 +652,7 @@ button.shopify-payment-button__button--unbranded {
    blanco de la tarjeta. En la tarjeta destacada ese borde queda contra SEDIMENTO
    y desaparece, asi que ahi el chip se invierte: pastilla blanca, texto CAUCE,
    15,76:1. Es el mismo chip, resuelto para los dos fondos. */
-.quantity-breaks-container label[for='quantity3'] .quantity-break__envio {
+.quantity-breaks-container label.quantity-break--cauce-destacado .quantity-break__envio {
   background: var(--cauce-blanco);
   border-color: var(--cauce-blanco);
 }

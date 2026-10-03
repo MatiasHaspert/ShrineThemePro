@@ -3895,3 +3895,29 @@ El tema y el admin tienen que cambiar juntos. Con el tema nuevo y el precio viej
 a $64.900 y $79.900; con el precio nuevo y el tema viejo, a $53.900 y $60.900.
 
 ---
+
+## D-072 · 2026-10-03 · R-ALA: el preseleccionado y el fondo destacado pasan al pack de 2
+
+**Decisión.** A pedido del comercio, el pack de 2 queda como el centro de la oferta: además de la
+cinta (D-071) lleva el fondo destacado y entra elegido. D-071 §2 había dejado las dos cosas en el
+escalón 3.
+
+| | Antes | Ahora |
+|---|---|---|
+| Preseleccionado | escalón 3 | **escalón 2** |
+| Fondo destacado | escalón 3, fijo por CSS | **escalón 2**, por setting |
+| CTA al cargar | `Agregar 3 frascos · $67.900` | `Agregar 2 frascos · $56.900` |
+| Cuotas | escalón 3 | escalón 3 (no se pidió moverlas) |
+
+**El destaque deja de estar atado a CSS.** D-051 lo había fijado con `[for='quantity3']` y había
+anotado el límite: "moverlo es editar esa regla, no un setting". Esa regla la comparte la plantilla
+de Hormify, que tiene que seguir destacando el 3. Ahora hay un select en el bloque,
+**`cauce_destacado`** (default `option_3`), y `snippets/quantity-breaks.liquid` le pone la clase
+`quantity-break--cauce-destacado` a esa tarjeta. `cauce-brand.css` pinta la clase. Sigue siendo
+fijo en el sentido de D-051: no viaja con la selección.
+
+`product.hormify.json` no carga el setting y toma el default, así que no cambia.
+`featured-product` no lo tiene en su schema: el snippet cae en `option_3`, que es lo que hacía la
+regla vieja.
+
+---

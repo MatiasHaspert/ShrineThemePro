@@ -33,7 +33,13 @@
   Con cauce_compacto las lineas de cauce-escalon-extras se reducen al chip de
   envio y lo demas pasa a un renglon debajo de las tarjetas
   (snippets/cauce-escalones-pie.liquid).
+
+  Cuarto agregado CAUCE: la clase quantity-break--cauce-destacado en la tarjeta
+  que elige el setting cauce_destacado del bloque. Es la que cauce-brand.css
+  pinta con el fondo fijo. Sin el setting (featured-product no lo tiene) cae en
+  el tercer escalon, que es donde estaba fijo por CSS. Ver D-072.
 {%- endcomment -%}
+{%- assign cauce_destacado = block.settings.cauce_destacado | default: 'option_3' -%}
 {%- capture cauce_duracion_1 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_1_quantity %}{% endcapture -%}
 {%- capture cauce_duracion_2 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_2_quantity %}{% endcapture -%}
 {%- capture cauce_duracion_3 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_3_quantity %}{% endcapture -%}
@@ -201,7 +207,7 @@
       >
       <label
         for="quantity1"
-        class="quantity-break{% if cauce_o1_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_1_badge_style }} quantity-break--benefit-{{ block.settings.option_1_benefit_position }}"
+        class="quantity-break{% if cauce_destacado == 'option_1' %} quantity-break--cauce-destacado{% endif %}{% if cauce_o1_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_1_badge_style }} quantity-break--benefit-{{ block.settings.option_1_benefit_position }}"
         data-quantity="{{ block.settings.option_1_quantity }}"
         data-input="input_1"
         data-percentage-left="{{ percentage_left }}"
@@ -461,7 +467,7 @@
       >
       <label
         for="quantity2"
-        class="quantity-break{% if cauce_o2_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_2_badge_style }} quantity-break--benefit-{{ block.settings.option_2_benefit_position }}"
+        class="quantity-break{% if cauce_destacado == 'option_2' %} quantity-break--cauce-destacado{% endif %}{% if cauce_o2_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_2_badge_style }} quantity-break--benefit-{{ block.settings.option_2_benefit_position }}"
         data-quantity="{{ block.settings.option_2_quantity }}"
         data-input="input_2"
         data-percentage-left="{{ percentage_left }}"
@@ -721,7 +727,7 @@
       >
       <label
         for="quantity3"
-        class="quantity-break{% if cauce_o3_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_3_badge_style }} quantity-break--benefit-{{ block.settings.option_3_benefit_position }}"
+        class="quantity-break{% if cauce_destacado == 'option_3' %} quantity-break--cauce-destacado{% endif %}{% if cauce_o3_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_3_badge_style }} quantity-break--benefit-{{ block.settings.option_3_benefit_position }}"
         data-quantity="{{ block.settings.option_3_quantity }}"
         data-input="input_3"
         data-percentage-left="{{ percentage_left }}"
@@ -981,7 +987,7 @@
       >
       <label
         for="quantity4"
-        class="quantity-break{% if cauce_o4_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_4_badge_style }} quantity-break--benefit-{{ block.settings.option_4_benefit_position }}"
+        class="quantity-break{% if cauce_destacado == 'option_4' %} quantity-break--cauce-destacado{% endif %}{% if cauce_o4_badge != blank %} quantity-break--badge{% else %} quantity-break--no-badge{% endif %} quantity-break--badge-style-{{ block.settings.option_4_badge_style }} quantity-break--benefit-{{ block.settings.option_4_benefit_position }}"
         data-quantity="{{ block.settings.option_4_quantity }}"
         data-input="input_4"
         data-percentage-left="{{ percentage_left }}"
