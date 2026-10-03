@@ -7,9 +7,12 @@
     indice     {number}  requerido. 1..4. Cual de los cuatro escalones es.
     total      {number}  requerido. Total del escalon EN CENTAVOS, ya descontado.
     ahorro     {number}  requerido. option_N_price_difference, en centavos.
-    cuotas_en  {string}  opcional. 'option_1'..'option_4' o vacio: en que escalon
-                         se dibujan las cuotas. Sale del setting
+    cuotas_en  {string}  opcional. 'option_1'..'option_4', 'todos' o vacio: en
+                         que escalon se dibujan las cuotas. Sale del setting
                          cauce_cuotas_escalon del bloque.
+    sin_ahorro {boolean} opcional. true no dibuja la linea de ahorro: el tachado
+                         de al lado ya lo dice. Sale del setting cauce_sin_ahorro
+                         del bloque. Ver D-073.
     compacto   {boolean} opcional. true dibuja solo el chip de envio; ahorro,
                          transferencia y cuotas no salen. Lo usa el modo
                          cauce_compacto del bloque, que las pasa a un renglon
@@ -56,7 +59,7 @@
   assign cauce_ahorro_money = cauce_ahorro | money_without_trailing_zeros
 -%}
 
-{%- if cauce_ahorro > 0 and compacto != true -%}
+{%- if cauce_ahorro > 0 and compacto != true and sin_ahorro != true -%}
   <span class="quantity-break__ahorro">
     {{- 'cauce.pdp.ahorro_escalon' | t: monto: cauce_ahorro_money -}}
   </span>
@@ -82,7 +85,13 @@
   </span>
 {%- endif -%}
 
-{%- if cauce_cuotas_n > 0 and cuotas_en == cauce_indice_actual and compacto != true -%}
+{%- liquid
+  assign cauce_cuotas_aca = false
+  if cuotas_en == cauce_indice_actual or cuotas_en == 'todos'
+    assign cauce_cuotas_aca = true
+  endif
+-%}
+{%- if cauce_cuotas_n > 0 and cauce_cuotas_aca and compacto != true -%}
   {%- liquid
     assign cauce_cuota_monto = cauce_total | divided_by: cauce_cuotas_n
     assign cauce_cuota_money = cauce_cuota_monto | money_without_trailing_zeros

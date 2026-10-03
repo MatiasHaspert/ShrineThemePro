@@ -3921,3 +3921,32 @@ fijo en el sentido de D-051: no viaja con la selección.
 regla vieja.
 
 ---
+
+## D-073 · 2026-10-03 · R-ALA: las cuotas van en los tres packs y sale la línea "Ahorrás $X"
+
+**Decisión.** A pedido del comercio: las 3 cuotas sin interés se anuncian en las tres tarjetas, no
+solo en una, y la línea de ahorro en pesos sale porque cada tarjeta ya cargaba demasiado.
+
+| Tarjeta | Antes | Ahora |
+|---|---|---|
+| 1 frasco | Ahorrás $4.000 · envío · transferencia | envío · transferencia · **3 cuotas de $15.300** |
+| 2 frascos | por frasco · Ahorrás $42.900 · envío · transferencia | por frasco · envío · transferencia · **3 cuotas de $18.966,66** |
+| 3 frascos | por frasco · Ahorrás $81.800 · envío · transferencia · cuotas | por frasco · envío · transferencia · 3 cuotas de $22.633,33 |
+
+Son dos settings del bloque `ofertas`, así que Hormify no cambia:
+
+- **`cauce_cuotas_escalon` suma el valor `todos`.** D-051 lo había hecho de un solo escalón porque
+  dónde anunciar financiación es decisión comercial; ahora la decisión es "en los tres". En modo
+  compacto `todos` no dibuja cuotas: el renglón de abajo anuncia las de un solo escalón.
+- **`cauce_sin_ahorro`** (checkbox, apagado por defecto) saca la línea `Ahorrás $X` de
+  `snippets/cauce-escalon-extras.liquid`. El tachado sigue, y la cinta del 2 sigue diciendo 43 %.
+
+**Las cuotas del pack de 2 quedan en $18.966,66.** $56.900 no se divide en tres y Liquid trunca la
+división al centavo: el monto exacto es $18.966,67. Es el mismo caso de D-069 §3 y del pack de 3
+($22.633,33); la diferencia es de menos de un centavo por cuota.
+
+**Del editor de temas.** Antes de este cambio se integraron `d19a151` y `d3c589f`: el comercio vació
+la bajada del bloque (la de los ensayos clínicos, que era un bloqueante del §6 de
+`CLAIMS-AUDIT.md`) y la nota del precio tachado.
+
+---

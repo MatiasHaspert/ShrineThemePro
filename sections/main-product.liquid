@@ -2402,15 +2402,23 @@
           "type": "select",
           "id": "cauce_cuotas_escalon",
           "label": "CAUCE · Escalon que muestra las cuotas",
-          "info": "La cantidad de cuotas sale de Configuracion del tema → CAUCE. Aca se elige en cual de los escalones se anuncian.",
+          "info": "La cantidad de cuotas sale de Configuracion del tema → CAUCE. Aca se elige en cual de los escalones se anuncian. \"En todos\" no aplica a las tarjetas compactas: el renglon de abajo anuncia las cuotas de un solo escalon.",
           "options": [
             { "value": "", "label": "En ninguno" },
+            { "value": "todos", "label": "En todos" },
             { "value": "option_1", "label": "Option #1" },
             { "value": "option_2", "label": "Option #2" },
             { "value": "option_3", "label": "Option #3" },
             { "value": "option_4", "label": "Option #4" }
           ],
           "default": ""
+        },
+        {
+          "type": "checkbox",
+          "id": "cauce_sin_ahorro",
+          "label": "CAUCE · Ocultar la linea \"Ahorras $X\"",
+          "info": "Saca el ahorro en pesos de las tarjetas. El precio tachado sigue. Ver D-073.",
+          "default": false
         },
         {
           "type": "select",
