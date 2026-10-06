@@ -4116,3 +4116,59 @@ sobre el fondo de página (3,24). El ámbar habitual de las estrellas, `#F2A900`
   estado vacío.
 
 ---
+
+## D-076 · 2026-10-06 · Aditivo dental: se llama Hocico Fresh, y la página deja de nombrar a SENASA
+
+**Decisión.** El comercio completó los datos que D-074 había dejado como `[COMPLETAR]` y
+`[A CONFIRMAR]`. La página queda sin huecos, salvo las tarjetas del bloque de reseñas (D-075), que
+se ven solo en el editor.
+
+| Dato | Antes | Ahora | De dónde sale |
+|---|---|---|---|
+| Nombre | `[COMPLETAR: nombre propio]` | **Hocico Fresh** | Lo eligió el comercio entre cuatro propuestas |
+| Registro | "Registrado en SENASA, certificado N.º `[COMPLETAR]`" en tres lugares | No se nombra | No hay certificado |
+| Elaborador | `[COMPLETAR: establecimiento, razón social, CUIT]` | No se nombra | El comercio eligió no dejar el hueco |
+| Edad | "Edad mínima: `[COMPLETAR]`" | Cachorros, adultos y perros mayores | La página de la referencia |
+| Uso diario | "Está pensado para usarse todos los días…" + registro | "Sí. Está formulado para usarse todos los días, en la dosis indicada" | La página de la referencia |
+| Sabor, olor, color | "Sin sabor, sin olor y sin color" | "Sin sabor, sin olor y no cambia el color del agua" | Sabor: confirmado por el comercio. Olor y color: como la referencia |
+| Entrega | 3 a 5 días hábiles | **3 a 10 días hábiles** | Confirmado por el comercio |
+| Cuotas y transferencia | A confirmar | 3 cuotas sin interés · 10 % por transferencia | Confirmado por el comercio |
+| Contacto | `[COMPLETAR: WhatsApp o mail]` | WhatsApp o cauce@caucearg.com | El de la tienda. La referencia no muestra ninguno |
+
+### 1. Sin certificado, la página no dice que está registrado
+
+Salió de los tres lugares donde estaba: el bloque de respaldo, la pestaña "Ingredientes" y la
+pregunta 6. El generador de la plantilla ahora falla si el texto contiene "SENASA".
+
+El bloque de respaldo se había armado alrededor del registro (D-074 §1), en el lugar donde la
+referencia pone a un veterinario. Sin registro pasa a ser una ficha del producto: presentación,
+dosis, cuánto rinde y para quién, con "qué lleva" y "qué no lleva" al lado. Se llama "La fórmula, a
+la vista".
+
+**Lo que esta decisión no resuelve.** El producto sigue siendo un producto veterinario (Res.
+SENASA 1642/2019) y la publicidad de uno sin registrar está prohibida (art. 36 b). Sacar el número
+de la página evita afirmar algo falso; no cambia esa situación. Pautar sin registro es una decisión
+del comercio, anotada como abierta en su investigación (sección 5).
+
+### 2. El color
+
+El líquido es verde, como el de la referencia. "Sin color" al lado de la foto de una botella verde
+se contradice, así que la página dice lo que importa para quien compra: **no cambia el color del
+agua**. "Color" salió de la lista "qué no lleva". Olor y color quedan a confirmar con la muestra:
+el comercio confirmó solo el sabor.
+
+### 3. Lo que sale de la página de la referencia, y hay que confirmar con el laboratorio
+
+La edad ("cachorros, adultos y perros mayores") y que es para uso diario son afirmaciones de otra
+marca sobre otra fórmula. Se usaron a pedido del comercio, reescritas. Cuando haya laboratorio y
+fórmula propia, son los dos primeros datos a confirmar, junto con los tres ingredientes, "sin
+xilitol", el olor y el color.
+
+### 4. Hocico Fresh
+
+Es el más parecido a la referencia de los cuatro propuestos (una palabra chica y "Fresh" grande),
+que es lo que el comercio busca para rehacer los anuncios con su envase. No se revisó el registro
+de marcas del INPI: una búsqueda web no encontró otro producto para perros con ese nombre, y eso no
+alcanza para darlo por libre.
+
+---

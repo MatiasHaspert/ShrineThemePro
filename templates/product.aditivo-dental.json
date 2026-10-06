@@ -277,13 +277,13 @@
         "fichas": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "<ul class=\"cauce-fichas\" role=\"list\"><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'gota' %}<span>1 litro · rinde 60 días</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'hoja' %}<span>Sin sabor, sin olor y sin color</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'envio' %}<span>Entrega en 3 a 5 días hábiles</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'escudo' %}<span>Garantía de 30 días</span></li></ul>"
+            "custom_liquid": "<ul class=\"cauce-fichas\" role=\"list\"><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'gota' %}<span>1 litro · rinde 60 días</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'hoja' %}<span>Sin sabor ni olor · no cambia el color del agua</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'envio' %}<span>Entrega en 3 a 10 días hábiles</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'escudo' %}<span>Garantía de 30 días</span></li></ul>"
           }
         },
         "pestanas": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% render 'cauce-pestanas',\n  id: product_form_id,\n  etiqueta: 'Más sobre el producto',\n  titulo_1: 'Cómo se usa',\n  contenido_1: '<ol><li>Llená el bebedero como siempre.</li><li>Agregá una tapita (15 ml) por cada litro de agua. La tapa de la botella es la medida.</li><li>Repetilo cada vez que le cambiás el agua.</li></ol><p>Una botella de 1 litro rinde 60 días.</p>',\n  titulo_2: 'Ingredientes',\n  contenido_2: '<p>Cloruro de cetilpiridinio, extracto de té verde y gluconato de zinc.</p><p>Sin xilitol. Sin sabor, sin olor y sin color.</p><p>Registrado en SENASA, certificado N.º [COMPLETAR: número de certificado].</p>',\n  titulo_3: 'Qué esperar',\n  contenido_3: '<p>Lo primero que suele notarse es el aliento. No hay un plazo garantizado: depende de cada perro.</p><p>Ayuda a reducir la placa que se forma todos los días. El sarro que ya está formado lo saca el veterinario.</p><p>Si no te convence, tenés la garantía de 30 días.</p>'\n%}"
+            "custom_liquid": "{% render 'cauce-pestanas',\n  id: product_form_id,\n  etiqueta: 'Más sobre el producto',\n  titulo_1: 'Cómo se usa',\n  contenido_1: '<ol><li>Llená el bebedero como siempre.</li><li>Agregá una tapita (15 ml) por cada litro de agua. La tapa de la botella es la medida.</li><li>Repetilo cada vez que le cambiás el agua.</li></ol><p>Una botella de 1 litro rinde 60 días.</p>',\n  titulo_2: 'Ingredientes',\n  contenido_2: '<p>Cloruro de cetilpiridinio, extracto de té verde y gluconato de zinc.</p><p>Sin xilitol. Sin sabor y sin olor, y no cambia el color del agua.</p>',\n  titulo_3: 'Qué esperar',\n  contenido_3: '<p>Lo primero que suele notarse es el aliento. No hay un plazo garantizado: depende de cada perro.</p><p>Ayuda a reducir la placa que se forma todos los días. El sarro que ya está formado lo saca el veterinario.</p><p>Si no te convence, tenés la garantía de 30 días.</p>'\n%}"
           }
         },
         "sticky": {
@@ -445,22 +445,29 @@
         "d1": {
           "type": "dato",
           "settings": {
-            "etiqueta": "Registro",
-            "valor": "Registrado en SENASA, certificado N.º [COMPLETAR: número de certificado]"
+            "etiqueta": "Presentación",
+            "valor": "Botella de 1 litro. La tapa a rosca es la medida: 15 ml."
           }
         },
         "d2": {
           "type": "dato",
           "settings": {
-            "etiqueta": "Laboratorio elaborador",
-            "valor": "[COMPLETAR: establecimiento, razón social, CUIT]"
+            "etiqueta": "Dosis",
+            "valor": "Una tapita por cada litro de agua, cada vez que le cambiás el agua."
           }
         },
         "d3": {
           "type": "dato",
           "settings": {
-            "etiqueta": "Presentación",
-            "valor": "Botella de 1 litro. La tapa a rosca es la medida: 15 ml."
+            "etiqueta": "Cuánto rinde",
+            "valor": "60 días."
+          }
+        },
+        "d4": {
+          "type": "dato",
+          "settings": {
+            "etiqueta": "Para quién",
+            "valor": "Perros de toda raza y tamaño: cachorros, adultos y mayores. No es para gatos."
           }
         },
         "l1": {
@@ -498,32 +505,26 @@
           "settings": {
             "texto": "Olor"
           }
-        },
-        "n4": {
-          "type": "no_lleva",
-          "settings": {
-            "texto": "Color"
-          }
         }
       },
       "block_order": [
         "d1",
         "d2",
         "d3",
+        "d4",
         "l1",
         "l2",
         "l3",
         "n1",
         "n2",
-        "n3",
-        "n4"
+        "n3"
       ],
       "settings": {
         "volanta": "",
-        "titulo": "El registro y la fórmula, a la vista",
+        "titulo": "La fórmula, a la vista",
         "heading_size": "h1",
-        "bajada": "<p>Antes de ponerlo en el agua de tu perro, mirá quién lo registra, quién lo elabora, qué lleva y qué no lleva.</p>",
-        "ficha_titulo": "Datos del producto",
+        "bajada": "<p>Antes de ponerlo en el agua de tu perro, mirá qué lleva, qué no lleva y cómo se usa.</p>",
+        "ficha_titulo": "Hocico Fresh",
         "lleva_titulo": "Qué lleva",
         "no_lleva_titulo": "Qué no lleva",
         "pie": "",
@@ -594,7 +595,7 @@
           "settings": {
             "etiqueta": "Primer día",
             "titulo": "Lo agregás al agua",
-            "texto": "<p>Una tapita por litro en el bebedero. No tiene sabor, olor ni color: tu perro toma agua como siempre.</p>",
+            "texto": "<p>Una tapita por litro en el bebedero. No tiene sabor ni olor y no cambia el color del agua: tu perro toma como siempre.</p>",
             "icono": "ninguno",
             "alt": ""
           }
@@ -666,7 +667,7 @@
           "settings": {
             "etiqueta": "",
             "titulo": "Agregá una tapita por litro",
-            "texto": "<p>La tapa de la botella es la medida: 15 ml por cada litro de agua. Sin sabor, sin olor y sin color.</p>",
+            "texto": "<p>La tapa de la botella es la medida: 15 ml por cada litro de agua. Sin sabor, sin olor y sin cambiarle el color al agua.</p>",
             "icono": "ninguno",
             "alt": ""
           }
@@ -738,7 +739,7 @@
           "settings": {
             "etiqueta": "",
             "titulo": "Para toda raza y tamaño",
-            "texto": "<p>Desde los perros muy chicos hasta los grandes, con la misma dosis. Sin xilitol.</p>",
+            "texto": "<p>Cachorros, adultos y perros mayores, de los más chicos a los más grandes, con la misma dosis. Sin xilitol.</p>",
             "icono": "corazon",
             "alt": ""
           }
@@ -861,7 +862,7 @@
             "icon_heading_size": "h4",
             "icon_text_alignment": "left",
             "title": "Sin devolver el producto",
-            "text": "<p>Te quedás con lo que compraste. Para pedirla, escribinos a <strong>[COMPLETAR: WhatsApp o mail]</strong>.</p>",
+            "text": "<p>Te quedás con lo que compraste. Para pedirla, escribinos por WhatsApp o a cauce@caucearg.com.</p>",
             "margin_top": 0,
             "margin_bottom": 20
           }
@@ -947,7 +948,7 @@
           "type": "pregunta",
           "settings": {
             "pregunta": "¿Mi perro va a notar el sabor?",
-            "respuesta": "<p>No tiene sabor, olor ni color, así que el agua queda igual que siempre.</p>"
+            "respuesta": "<p>No. No tiene sabor ni olor y no cambia el color del agua, así que queda igual que siempre.</p>"
           }
         },
         "q3": {
@@ -961,7 +962,7 @@
           "type": "pregunta",
           "settings": {
             "pregunta": "¿Sirve para cualquier edad y tamaño?",
-            "respuesta": "<p>Sirve para perros de toda raza y tamaño, desde los muy chicos hasta los grandes. Edad mínima: <strong>[COMPLETAR: según el laboratorio]</strong>. No es para gatos.</p>"
+            "respuesta": "<p>Sí. Sirve para cachorros, adultos y perros mayores, de toda raza y tamaño. No es para gatos.</p>"
           }
         },
         "q5": {
@@ -975,7 +976,7 @@
           "type": "pregunta",
           "settings": {
             "pregunta": "¿Es seguro para todos los días?",
-            "respuesta": "<p>Está pensado para usarse todos los días, en la dosis indicada: una tapita por litro de agua. No lleva xilitol. Registrado en SENASA, certificado N.º <strong>[COMPLETAR: número de certificado]</strong>.</p>"
+            "respuesta": "<p>Sí. Está formulado para usarse todos los días, en la dosis indicada: una tapita por litro de agua. No lleva xilitol.</p>"
           }
         },
         "q7": {
@@ -989,14 +990,14 @@
           "type": "pregunta",
           "settings": {
             "pregunta": "¿Qué pasa si mi perro no quiere tomar el agua?",
-            "respuesta": "<p>Tenés la garantía de 30 días: si no te convence, te reintegramos lo que pagaste por una unidad, sin devolver el producto. Escribinos a <strong>[COMPLETAR: WhatsApp o mail]</strong>.</p>"
+            "respuesta": "<p>Tenés la garantía de 30 días: si no te convence, te reintegramos lo que pagaste por una unidad, sin devolver el producto. Escribinos por WhatsApp o a cauce@caucearg.com.</p>"
           }
         },
         "q9": {
           "type": "pregunta",
           "settings": {
             "pregunta": "¿Cómo son el envío, las cuotas y la garantía?",
-            "respuesta": "<p>El envío es gratis a todo el país y llega en 3 a 5 días hábiles. Pagás con Mercado Pago: 3 cuotas sin interés con tarjeta, o 10 % menos por transferencia.</p><p>La garantía es de 30 días desde que llega el pedido: reintegro de una unidad, sin devolver el producto, una por persona.</p>"
+            "respuesta": "<p>El envío es gratis a todo el país y llega en 3 a 10 días hábiles. Pagás con Mercado Pago: 3 cuotas sin interés con tarjeta, o 10 % menos por transferencia.</p><p>La garantía es de 30 días desde que llega el pedido: reintegro de una unidad, sin devolver el producto, una por persona.</p>"
           }
         }
       },
