@@ -3950,3 +3950,113 @@ la bajada del bloque (la de los ensayos clínicos, que era un bloqueante del §6
 `CLAIMS-AUDIT.md`) y la nota del precio tachado.
 
 ---
+
+## D-074 · 2026-10-06 · Aditivo dental para perros: PDP propia, verde y en DM Sans, sobre una rama sin publicar
+
+**Decisión.** Producto nuevo a testear: un aditivo líquido para el agua del bebedero. La página
+toma la secuencia de bloques de la PDP de una marca colombiana que vende lo mismo (estructura,
+orden y ritmo; ningún texto, imagen, nombre ni número de ellos) y la arma con el sistema de CAUCE.
+Vive en `templates/product.aditivo-dental.json`, en la rama `feature/aditivo-dental`, conectada
+como tema en borrador (`188903424212`). `main` no se tocó.
+
+### 1. Qué se reutilizó y qué es nuevo
+
+| Bloque | Pieza |
+|---|---|
+| Banda en movimiento | `horizontal-ticker` |
+| Bloque de compra | `main-product` con el selector de packs de siempre (`quantity_selector`) |
+| Pestañas del bloque de compra | **`snippets/cauce-pestanas.liquid`**, sobre el `<cauce-tabs>` que ya existía |
+| Problema · rutina · pasos · beneficios | **`sections/cauce-media-lista.liquid`**, una sección con cuatro formas de lista |
+| Respaldo (registro y fórmula) | **`sections/cauce-respaldo.liquid`** |
+| Ingredientes | **`sections/cauce-fichas.liquid`**, carrusel de scroll-snap |
+| Garantía | `custom-columns` |
+| Preguntas | `cauce-faq` |
+| Pie | el del tema, sin cambios |
+
+Las fotos todavía no existen. Donde falta una, `snippets/cauce-foto-pendiente.liquid` dibuja un
+recuadro del tamaño de la foto final con el pedido de producción escrito adentro.
+
+**Alternativa descartada:** armar los cuatro bloques de foto y lista con `cauce-dolor`,
+`cauce-progreso`, `cauce-etapas` y `cauce-solucion`. Ninguna tiene la disposición de la referencia
+(foto de un lado, lista del otro, con el título de cualquiera de los dos lados) y las cuatro están
+escritas para un suplemento: sus advertencias de claims citan a ANMAT, y este producto lo regula
+SENASA.
+
+### 2. La paleta y la tipografía son de la plantilla, no del tema
+
+Bloque 26 de `cauce-brand.css`, con el mismo mecanismo que Hormify (D-054): la clase
+`plantilla--aditivo-dental` en `<html>` pisa los tokens. VERDE BOSQUE `#0F3D24`, VERDE HOJA
+`#2E7D4F`, VERDE CLARO `#DDF0E2`, fondo `#F6F8F4`, texto `#14201A` y botón NARANJA `#E8590C`.
+
+- **El acento y el botón se separan.** En CAUCE y en Hormify son el mismo color. Acá el acento de
+  marca (`--cauce-acento`) es VERDE HOJA y el botón sale de `--color-base-accent-1`, que pasa a
+  NARANJA.
+- **Blanco sobre NARANJA da 3,58:1.** No llega a AA para texto chico. Queda solo en la etiqueta del
+  botón, que va en negrita y mayúscula. Es el color pedido por el comercio.
+- **DM Sans se carga solo en esta plantilla** (`layout/theme.liquid`).
+- **El encabezado pasa a VERDE BOSQUE por CSS**, y el logo —un PNG de un solo color— se lleva a
+  blanco con un filtro. No se subió otro archivo ni se tocó `header-group.json`.
+- **La barra de anuncios del tema no se muestra en esta plantilla.** Uno de sus cuatro mensajes
+  ("30 días para devolverlo") no es la garantía de este producto, y la página lleva su propia banda.
+
+### 3. Lo que cambió fuera de la plantilla
+
+Todo es opt-in o está condicionado al sufijo: las otras páginas no cambian.
+
+- **`cauce_redondear`** (checkbox del bloque `quantity_selector`, apagado por defecto). Muestra el
+  precio por unidad y la cuota redondeados al peso: $71.900 / 3 = **$23.967**, no $23.966,66. Es lo
+  contrario del criterio de D-069 §3 y D-073 (monto exacto, con centavos), y por eso es un setting
+  y no un cambio de criterio: el R-ALA sigue como estaba.
+- **`cauce_cta_fijo`** (ídem). El botón no se reescribe con "Agregar N frascos · $total": queda
+  "Agregar al carrito". El texto de `cauce.pdp.cta_agregar` dice "frascos" y este producto es una
+  botella.
+- **`sections/cauce-legal-bar.liquid`** no dibuja la leyenda de suplemento dietario en esta
+  plantilla. Diría algo falso del producto.
+- **`assets/cauce.js`** envuelve cada `[COMPLETAR: …]` de la página con `.cauce-pendiente`. En esta
+  plantilla esa clase es un resaltador amarillo.
+
+### 4. La oferta
+
+| Pack | Precio | Por unidad | Tachado | Ahorro | Transferencia | 3 cuotas |
+|---|---|---|---|---|---|---|
+| 1 botella | $49.900 | — | — | — | $44.910 | $16.633 |
+| 2 botellas | $59.900 | $29.950 | $99.800 | $39.900 | $53.910 | $19.967 |
+| 3 botellas | $71.900 | $23.967 | $149.700 | $77.800 | $64.710 | $23.967 |
+
+`option_2_fixed_amount_off` 39.900 y `option_3_fixed_amount_off` 77.800. El pack de 2 entra
+elegido y lleva el fondo destacado. Sin cinta: "el más elegido" no se puede sostener en un producto
+que todavía no vendió, y el porcentaje de descuento se pidió afuera.
+
+### 5. Claims
+
+El marco es el de SENASA para productos veterinarios, no el de ANMAT. La página dice que ayuda a
+mantener el aliento fresco y a reducir la placa que después se vuelve sarro, que se usa sin
+cepillado y con una tapita en el agua. No dice que elimina el sarro, no da plazos ni porcentajes,
+no nombra enfermedades y no cita veterinarios. El registro se enuncia como "Registrado en SENASA,
+certificado N.º …". La función de cada ingrediente (bloque de ingredientes) la escribió el tema y
+**la tiene que confirmar el laboratorio** antes de publicar.
+
+### 6. Lo que queda pendiente
+
+- **Datos sin cargar**, marcados `[COMPLETAR: …]` en la página: nombre del producto, certificado de
+  SENASA, elaborador, edad mínima y contacto.
+- **Fotos.** Once: cinco de la galería (hoy son imágenes de marcador cargadas en el producto) y
+  seis en las secciones.
+- **Descuentos automáticos.** No se crearon. Sin ellos el carrito cobra 2 × y 3 × $49.900. Hacen
+  falta dos, como los del R-ALA: cantidad mínima 2 → **−$39.900** y cantidad mínima 3 →
+  **−$77.800**, sobre este producto, combinables con `TRANSFERENCIA10`.
+- **Plantilla del producto.** El admin solo ofrece las plantillas del tema publicado, así que el
+  producto (`aditivo-dental-perros`, en borrador) no la tiene asignada. Se asigna después de
+  mergear.
+- **El carrito no se probó.** Un producto en borrador no se puede agregar.
+
+### 7. Dos cosas que conviene saber para la próxima plantilla
+
+- **Shopify rechaza un `templates/*.json` entero, sin avisar, si un `range` lleva un valor fuera de
+  paso.** Pasó con cuatro paddings del `horizontal-ticker` (10 y 14 con `step` 4): las secciones y
+  los assets subieron y la plantilla no. `theme check` no lo marca. Es el mismo silencio de D-058.
+- **El editor de temas sí muestra productos en borrador y tiene vista de celular.** Es la única
+  forma de ver un producto en borrador con una plantilla de un tema sin publicar: el enlace de
+  vista previa del producto ignora `preview_theme_id`.
+
+---
