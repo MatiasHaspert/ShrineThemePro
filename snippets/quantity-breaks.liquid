@@ -39,6 +39,12 @@
   pinta con el fondo fijo. Sin el setting (featured-product no lo tiene) cae en
   el tercer escalon, que es donde estaba fijo por CSS. Ver D-072.
 {%- endcomment -%}
+{%- comment -%}
+  Quinto agregado CAUCE (D-074), dos settings del bloque, apagados por defecto:
+  cauce_redondear muestra el precio por unidad y la cuota redondeados al peso
+  (71.900 / 3 = $23.967 y no $23.966,66); cauce_cta_fijo vacia data-cauce-cta,
+  asi assets/cauce.js no reescribe el boton y queda el texto del tema.
+{%- endcomment -%}
 {%- assign cauce_destacado = block.settings.cauce_destacado | default: 'option_3' -%}
 {%- capture cauce_duracion_1 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_1_quantity %}{% endcapture -%}
 {%- capture cauce_duracion_2 %}{% render 'cauce-duracion', producto: product, cantidad: block.settings.option_2_quantity %}{% endcapture -%}
@@ -163,6 +169,9 @@
         assign option_1_price_difference = option_1_compare_price | minus: option_1_price
         assign option_1_price_difference_rounded = option_1_price_difference | divided_by: 100.00 | round | times: 100
         assign option_1_price_each = option_1_price | divided_by: block.settings.option_1_quantity
+        if block.settings.cauce_redondear
+          assign option_1_price_each = option_1_price | times: 1.0 | divided_by: block.settings.option_1_quantity | divided_by: 100 | round | times: 100
+        endif
         assign option_1_compare_price_each = option_1_compare_price | divided_by: block.settings.option_1_quantity
       %}
       {%- comment -%}
@@ -192,6 +201,9 @@
         capture cauce_cta_1
           echo 'cauce.pdp.cta_agregar' | t: count: block.settings.option_1_quantity, total: cauce_total_1_money
         endcapture
+        if block.settings.cauce_cta_fijo
+          assign cauce_cta_1 = ''
+        endif
       -%}
       <input
         id="quantity1"
@@ -292,7 +304,8 @@
                 ahorro: option_1_price_difference,
                 cuotas_en: block.settings.cauce_cuotas_escalon,
                 compacto: block.settings.cauce_compacto,
-                sin_ahorro: block.settings.cauce_sin_ahorro
+                sin_ahorro: block.settings.cauce_sin_ahorro,
+                redondear: block.settings.cauce_redondear
               %}
             </div>
             <div class="quantity-break__right dynamic-price">
@@ -429,6 +442,9 @@
         assign option_2_price_difference = option_2_compare_price | minus: option_2_price
         assign option_2_price_difference_rounded = option_2_price_difference | divided_by: 100.00 | round | times: 100
         assign option_2_price_each = option_2_price | divided_by: block.settings.option_2_quantity
+        if block.settings.cauce_redondear
+          assign option_2_price_each = option_2_price | times: 1.0 | divided_by: block.settings.option_2_quantity | divided_by: 100 | round | times: 100
+        endif
         assign option_2_compare_price_each = option_2_compare_price | divided_by: block.settings.option_2_quantity
       %}
       {%- liquid
@@ -453,6 +469,9 @@
         capture cauce_cta_2
           echo 'cauce.pdp.cta_agregar' | t: count: block.settings.option_2_quantity, total: cauce_total_2_money
         endcapture
+        if block.settings.cauce_cta_fijo
+          assign cauce_cta_2 = ''
+        endif
       -%}
       <input
         id="quantity2"
@@ -553,7 +572,8 @@
                 ahorro: option_2_price_difference,
                 cuotas_en: block.settings.cauce_cuotas_escalon,
                 compacto: block.settings.cauce_compacto,
-                sin_ahorro: block.settings.cauce_sin_ahorro
+                sin_ahorro: block.settings.cauce_sin_ahorro,
+                redondear: block.settings.cauce_redondear
               %}
             </div>
             <div class="quantity-break__right dynamic-price">
@@ -690,6 +710,9 @@
         assign option_3_price_difference = option_3_compare_price | minus: option_3_price
         assign option_3_price_difference_rounded = option_3_price_difference | divided_by: 100.00 | round | times: 100
         assign option_3_price_each = option_3_price | divided_by: block.settings.option_3_quantity
+        if block.settings.cauce_redondear
+          assign option_3_price_each = option_3_price | times: 1.0 | divided_by: block.settings.option_3_quantity | divided_by: 100 | round | times: 100
+        endif
         assign option_3_compare_price_each = option_3_compare_price | divided_by: block.settings.option_3_quantity
       %}
       {%- liquid
@@ -714,6 +737,9 @@
         capture cauce_cta_3
           echo 'cauce.pdp.cta_agregar' | t: count: block.settings.option_3_quantity, total: cauce_total_3_money
         endcapture
+        if block.settings.cauce_cta_fijo
+          assign cauce_cta_3 = ''
+        endif
       -%}
       <input
         id="quantity3"
@@ -814,7 +840,8 @@
                 ahorro: option_3_price_difference,
                 cuotas_en: block.settings.cauce_cuotas_escalon,
                 compacto: block.settings.cauce_compacto,
-                sin_ahorro: block.settings.cauce_sin_ahorro
+                sin_ahorro: block.settings.cauce_sin_ahorro,
+                redondear: block.settings.cauce_redondear
               %}
             </div>
             <div class="quantity-break__right dynamic-price">
@@ -951,6 +978,9 @@
         assign option_4_price_difference = option_4_compare_price | minus: option_4_price
         assign option_4_price_difference_rounded = option_4_price_difference | divided_by: 100.00 | round | times: 100
         assign option_4_price_each = option_4_price | divided_by: block.settings.option_4_quantity
+        if block.settings.cauce_redondear
+          assign option_4_price_each = option_4_price | times: 1.0 | divided_by: block.settings.option_4_quantity | divided_by: 100 | round | times: 100
+        endif
         assign option_4_compare_price_each = option_4_compare_price | divided_by: block.settings.option_4_quantity
       %}
       {%- liquid
@@ -975,6 +1005,9 @@
         capture cauce_cta_4
           echo 'cauce.pdp.cta_agregar' | t: count: block.settings.option_4_quantity, total: cauce_total_4_money
         endcapture
+        if block.settings.cauce_cta_fijo
+          assign cauce_cta_4 = ''
+        endif
       -%}
       <input
         id="quantity4"
@@ -1075,7 +1108,8 @@
                 ahorro: option_4_price_difference,
                 cuotas_en: block.settings.cauce_cuotas_escalon,
                 compacto: block.settings.cauce_compacto,
-                sin_ahorro: block.settings.cauce_sin_ahorro
+                sin_ahorro: block.settings.cauce_sin_ahorro,
+                redondear: block.settings.cauce_redondear
               %}
             </div>
             <div class="quantity-break__right dynamic-price">

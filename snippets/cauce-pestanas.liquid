@@ -1,0 +1,67 @@
+{% comment %}
+  CAUCE: pestanas dentro de la columna de compra de la PDP.
+
+  Son las mismas pestanas de sections/cauce-tabs.liquid —el elemento <cauce-tabs>
+  de assets/cauce.js, con el patron tabs del APG— pero como snippet: main-product
+  no acepta secciones adentro, asi que se renderiza desde un bloque custom_liquid.
+
+  Parametros (todos texto, vienen del bloque custom_liquid del template):
+    id                         {string}  requerido. Prefijo unico para los id de
+                                         pestanas y paneles (product_form_id sirve).
+    etiqueta                   {string}  opcional. Nombre accesible del grupo.
+    titulo_N, contenido_N      N = 1..3. El contenido es HTML. Una pestana sin
+                                         titulo o sin contenido no se dibuja.
+
+  Sin JS los tres paneles quedan visibles, uno debajo del otro, que es la
+  degradacion correcta: se lee todo, solo sin pestanas.
+
+  El copy vive en templates/*.json, no aca. Estilos: cauce-brand.css, bloque 26.
+  Ver docs/DECISIONS.md D-074.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_pest_n = 0
+  if titulo_1 != blank and contenido_1 != blank
+    assign cauce_pest_n = cauce_pest_n | plus: 1
+  endif
+  if titulo_2 != blank and contenido_2 != blank
+    assign cauce_pest_n = cauce_pest_n | plus: 1
+  endif
+  if titulo_3 != blank and contenido_3 != blank
+    assign cauce_pest_n = cauce_pest_n | plus: 1
+  endif
+  assign cauce_pest_primera = true
+-%}
+
+{%- if cauce_pest_n > 0 -%}
+  <cauce-tabs class="cauce-tabs cauce-pestanas">
+    <div class="cauce-tabs__lista cauce-pestanas__lista" role="tablist"{% if etiqueta != blank %} aria-label="{{ etiqueta | escape }}"{% endif %}>
+      {%- if titulo_1 != blank and contenido_1 != blank -%}
+        <button type="button" class="cauce-tabs__boton cauce-pestanas__boton" role="tab" id="CaucePestana-{{ id }}-1" aria-controls="CaucePestanaPanel-{{ id }}-1" aria-selected="{{ cauce_pest_primera }}" tabindex="{% if cauce_pest_primera %}0{% else %}-1{% endif %}">{{ titulo_1 }}</button>
+        {%- assign cauce_pest_primera = false -%}
+      {%- endif -%}
+      {%- if titulo_2 != blank and contenido_2 != blank -%}
+        <button type="button" class="cauce-tabs__boton cauce-pestanas__boton" role="tab" id="CaucePestana-{{ id }}-2" aria-controls="CaucePestanaPanel-{{ id }}-2" aria-selected="{{ cauce_pest_primera }}" tabindex="{% if cauce_pest_primera %}0{% else %}-1{% endif %}">{{ titulo_2 }}</button>
+        {%- assign cauce_pest_primera = false -%}
+      {%- endif -%}
+      {%- if titulo_3 != blank and contenido_3 != blank -%}
+        <button type="button" class="cauce-tabs__boton cauce-pestanas__boton" role="tab" id="CaucePestana-{{ id }}-3" aria-controls="CaucePestanaPanel-{{ id }}-3" aria-selected="{{ cauce_pest_primera }}" tabindex="{% if cauce_pest_primera %}0{% else %}-1{% endif %}">{{ titulo_3 }}</button>
+        {%- assign cauce_pest_primera = false -%}
+      {%- endif -%}
+    </div>
+
+    {%- assign cauce_pest_primera = true -%}
+    {%- if titulo_1 != blank and contenido_1 != blank -%}
+      <div class="cauce-tabs__panel cauce-pestanas__panel rte" role="tabpanel" id="CaucePestanaPanel-{{ id }}-1" aria-labelledby="CaucePestana-{{ id }}-1"{% unless cauce_pest_primera %} hidden{% endunless %}>{{ contenido_1 }}</div>
+      {%- assign cauce_pest_primera = false -%}
+    {%- endif -%}
+    {%- if titulo_2 != blank and contenido_2 != blank -%}
+      <div class="cauce-tabs__panel cauce-pestanas__panel rte" role="tabpanel" id="CaucePestanaPanel-{{ id }}-2" aria-labelledby="CaucePestana-{{ id }}-2"{% unless cauce_pest_primera %} hidden{% endunless %}>{{ contenido_2 }}</div>
+      {%- assign cauce_pest_primera = false -%}
+    {%- endif -%}
+    {%- if titulo_3 != blank and contenido_3 != blank -%}
+      <div class="cauce-tabs__panel cauce-pestanas__panel rte" role="tabpanel" id="CaucePestanaPanel-{{ id }}-3" aria-labelledby="CaucePestana-{{ id }}-3"{% unless cauce_pest_primera %} hidden{% endunless %}>{{ contenido_3 }}</div>
+      {%- assign cauce_pest_primera = false -%}
+    {%- endif -%}
+  </cauce-tabs>
+{%- endif -%}

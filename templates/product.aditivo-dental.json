@@ -1,0 +1,1040 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banda": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "m1": {
+          "type": "text",
+          "settings": {
+            "title": "Envío gratis a todo el país"
+          }
+        },
+        "m2": {
+          "type": "text",
+          "settings": {
+            "title": "3 cuotas sin interés"
+          }
+        },
+        "m3": {
+          "type": "text",
+          "settings": {
+            "title": "Garantía de 30 días"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "visibility": "always-display",
+        "speed": 3,
+        "direction": "normal",
+        "stop_on_hover": true,
+        "mobile_spacing": 40,
+        "desktop_spacing": 72,
+        "color_scheme": "background-2",
+        "mobile_text_size": 13,
+        "desktop_text_size": 15,
+        "italic_text": false,
+        "uppercase_text": false,
+        "bold_text": true,
+        "mobile_image_height": 26,
+        "desktop_image_height": 40,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 10,
+        "mobile_padding_bottom": 10,
+        "desktop_padding_top": 14,
+        "desktop_padding_bottom": 14,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39"
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "titulo": {
+          "type": "title",
+          "settings": {
+            "text_size": "h1",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "que_es": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<p class=\"cauce-pastilla\">{% render 'cauce-iconos', icono: 'gota' %}<span>Aditivo dental líquido para el agua de tu perro · 1 litro</span></p>"
+          }
+        },
+        "descripcion": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 15,
+            "desktop_text_size": 17,
+            "alignment": "left",
+            "text_color": "#10262a",
+            "text_1": "Una tapita en el bebedero cada vez que le cambiás el agua. Ayuda a mantener el aliento fresco y a reducir la placa que después se vuelve sarro, sin cepillado.",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 110,
+            "icon_color": "#5f99a2",
+            "icon_1": "",
+            "filled_icon_1": false,
+            "icon_2": "",
+            "filled_icon_2": false,
+            "icon_3": "",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "horizontal",
+            "column_gap": 1,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 0,
+            "margin_bottom": 18
+          }
+        },
+        "ancla_comprar": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<span id=\"comprar\" class=\"cauce-ancla\" aria-hidden=\"true\"></span>"
+          }
+        },
+        "ofertas": {
+          "type": "quantity_selector",
+          "settings": {
+            "full_width_classic": true,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": true,
+            "style": "normal",
+            "headline": "CADA BOTELLA DE 1 LITRO RINDE 60 DÍAS",
+            "cauce_subtitulo": "",
+            "cauce_cuotas_escalon": "todos",
+            "cauce_compacto": false,
+            "cauce_dias_frasco": 60,
+            "preselected": "option_2",
+            "display_selected_indicator": true,
+            "border_radius": 10,
+            "border_width": 1,
+            "color_scheme": "text",
+            "enable_variant_selectors": false,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "update_prices": false,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "pickers_label": "",
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "2",
+            "option_1_badge_color": "accent-1",
+            "option_1_label": "1 botella",
+            "option_1_benefit": "",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "outlined",
+            "option_1_benefit_color": "text",
+            "option_1_caption": "Rinde 60 días",
+            "option_1_percentage_off_text": "",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "",
+            "option_2_badge_style": "2",
+            "option_2_badge_color": "accent-1",
+            "option_2_label": "2 botellas",
+            "option_2_benefit": "",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "outlined",
+            "option_2_benefit_color": "text",
+            "option_2_caption": "[price_each] cada una",
+            "option_2_percentage_off_text": "0",
+            "option_2_fixed_amount_off": "39900",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 3,
+            "option_3_badge": "",
+            "option_3_badge_style": "2",
+            "option_3_badge_color": "accent-1",
+            "option_3_label": "3 botellas",
+            "option_3_benefit": "",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "outlined",
+            "option_3_benefit_color": "text",
+            "option_3_caption": "[price_each] cada una",
+            "option_3_percentage_off_text": "0",
+            "option_3_fixed_amount_off": "77800",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "Buy [quantity]",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "margin_top": 0,
+            "margin_bottom": 9,
+            "cauce_sin_ahorro": false,
+            "cauce_redondear": true,
+            "cauce_cta_fijo": true,
+            "cauce_destacado": "option_2"
+          }
+        },
+        "nota_precios": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 12,
+            "desktop_text_size": 13,
+            "alignment": "left",
+            "text_color": "#10262a",
+            "text_1": "",
+            "text_2": "El precio tachado es lo que costarían esas botellas compradas de a una.",
+            "text_3": "",
+            "icon_scale": 110,
+            "icon_color": "#5f99a2",
+            "icon_1": "info",
+            "filled_icon_1": false,
+            "icon_2": "",
+            "filled_icon_2": false,
+            "icon_3": "",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 1,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 0,
+            "margin_bottom": 18
+          }
+        },
+        "comprar": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": false,
+            "icon_scale": 110,
+            "icon_spacing": 10,
+            "display_price": false,
+            "enable_custom_color": false,
+            "custom_color": "#dd1d1d",
+            "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "margin_top": 0,
+            "margin_bottom": 15
+          }
+        },
+        "pagos": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-medios-pago', alineacion: 'left' %}"
+          }
+        },
+        "fichas": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<ul class=\"cauce-fichas\" role=\"list\"><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'gota' %}<span>1 litro · rinde 60 días</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'hoja' %}<span>Sin sabor, sin olor y sin color</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'envio' %}<span>Entrega en 3 a 5 días hábiles</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'escudo' %}<span>Garantía de 30 días</span></li></ul>"
+          }
+        },
+        "pestanas": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cauce-pestanas',\n  id: product_form_id,\n  etiqueta: 'Más sobre el producto',\n  titulo_1: 'Cómo se usa',\n  contenido_1: '<ol><li>Llená el bebedero como siempre.</li><li>Agregá una tapita (15 ml) por cada litro de agua. La tapa de la botella es la medida.</li><li>Repetilo cada vez que le cambiás el agua.</li></ol><p>Una botella de 1 litro rinde 60 días.</p>',\n  titulo_2: 'Ingredientes',\n  contenido_2: '<p>Cloruro de cetilpiridinio, extracto de té verde y gluconato de zinc.</p><p>Sin xilitol. Sin sabor, sin olor y sin color.</p><p>Registrado en SENASA, certificado N.º [COMPLETAR: número de certificado].</p>',\n  titulo_3: 'Qué esperar',\n  contenido_3: '<p>Lo primero que suele notarse es el aliento. No hay un plazo garantizado: depende de cada perro.</p><p>Ayuda a reducir la placa que se forma todos los días. El sarro que ya está formado lo saca el veterinario.</p><p>Si no te convence, tenés la garantía de 30 días.</p>'\n%}"
+          }
+        },
+        "sticky": {
+          "type": "sticky_atc",
+          "settings": {
+            "function": "scroll_#quantity-breaks-id",
+            "display_when": "after_scroll",
+            "button_label": "Elegir mi pack",
+            "enable_custom_btn_color": false,
+            "custom_btn_color": "#dd1d1d",
+            "color_scheme": "background-1",
+            "star_color": "#ffcc00",
+            "stars_label": "(xxxx Reviews)",
+            "picker_type": "combined",
+            "desktop_show_image": true,
+            "desktop_show_title": true,
+            "desktop_rating_stars": false,
+            "desktop_show_price": false,
+            "desktop_show_sale_badge": false,
+            "desktop_variant_picker": false,
+            "desktop_full_button_width": false,
+            "desktop_show_price_in_button": false,
+            "desktop_transparent_bg": false,
+            "mobile_show_image": false,
+            "mobile_show_title": false,
+            "mobile_rating_stars": false,
+            "mobile_show_price": false,
+            "mobile_show_sale_badge": false,
+            "mobile_variant_picker": false,
+            "mobile_full_button_width": true,
+            "mobile_show_price_in_button": false,
+            "mobile_transparent_bg": false
+          }
+        }
+      },
+      "block_order": [
+        "titulo",
+        "que_es",
+        "descripcion",
+        "ancla_comprar",
+        "ofertas",
+        "nota_precios",
+        "comprar",
+        "pagos",
+        "fichas",
+        "pestanas",
+        "sticky"
+      ],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": false,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "lightbox",
+        "arrows_color_scheme": "background-1",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_count": 5,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 12,
+        "mobile_spacing_pixels": 8,
+        "mobile_arrows_position": "hidden",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails": "show",
+        "mobile_thumbnails_count": 5,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 16,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 24,
+        "desktop_padding_top": 32,
+        "desktop_padding_bottom": 56
+      }
+    },
+    "problema": {
+      "type": "cauce-media-lista",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "01 · Placa",
+            "titulo": "Se forma todos los días.",
+            "texto": "<p>Después de cada comida queda sobre los dientes una película que no se ve. Si nada la interrumpe, se sigue acumulando.</p>",
+            "icono": "ninguno",
+            "alt": ""
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "02 · Sarro",
+            "titulo": "Es placa que se endureció.",
+            "texto": "<p>Una vez formado, el sarro lo saca el veterinario con una limpieza. Por eso este aditivo actúa antes, sobre la placa.</p>",
+            "icono": "ninguno",
+            "alt": ""
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "03 · Mal aliento",
+            "titulo": "Es la señal que aparece primero.",
+            "texto": "<p>Suele ser lo primero que notás cuando la placa se acumula. Es un buen momento para sumar una rutina de todos los días.</p>",
+            "icono": "ninguno",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3"
+      ],
+      "settings": {
+        "alt": "",
+        "foto_pendiente": "FOTO 16:9 — la boca de un perro con placa en los dientes. Foto real; no se presenta como un caso de cliente.",
+        "relacion": "16 / 9",
+        "posicion_imagen": "izquierda",
+        "epigrafe": "",
+        "volanta": "",
+        "titulo": "El mal aliento es lo primero que se nota",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "<p>La placa se forma en los dientes de tu perro todos los días. Si se deja, se endurece y se vuelve sarro. Conviene actuar antes.</p>",
+        "titulo_en": "media_abajo",
+        "estilo": "tarjetas",
+        "recuadro_titulo": "",
+        "recuadro_texto": "",
+        "boton_texto": "",
+        "boton_link": "",
+        "color_scheme": "inverse",
+        "ancho_maximo": 1200,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "respaldo": {
+      "type": "cauce-respaldo",
+      "blocks": {
+        "d1": {
+          "type": "dato",
+          "settings": {
+            "etiqueta": "Registro",
+            "valor": "Registrado en SENASA, certificado N.º [COMPLETAR: número de certificado]"
+          }
+        },
+        "d2": {
+          "type": "dato",
+          "settings": {
+            "etiqueta": "Laboratorio elaborador",
+            "valor": "[COMPLETAR: establecimiento, razón social, CUIT]"
+          }
+        },
+        "d3": {
+          "type": "dato",
+          "settings": {
+            "etiqueta": "Presentación",
+            "valor": "Botella de 1 litro. La tapa a rosca es la medida: 15 ml."
+          }
+        },
+        "l1": {
+          "type": "lleva",
+          "settings": {
+            "texto": "Cloruro de cetilpiridinio"
+          }
+        },
+        "l2": {
+          "type": "lleva",
+          "settings": {
+            "texto": "Extracto de té verde"
+          }
+        },
+        "l3": {
+          "type": "lleva",
+          "settings": {
+            "texto": "Gluconato de zinc"
+          }
+        },
+        "n1": {
+          "type": "no_lleva",
+          "settings": {
+            "texto": "Xilitol"
+          }
+        },
+        "n2": {
+          "type": "no_lleva",
+          "settings": {
+            "texto": "Sabor"
+          }
+        },
+        "n3": {
+          "type": "no_lleva",
+          "settings": {
+            "texto": "Olor"
+          }
+        },
+        "n4": {
+          "type": "no_lleva",
+          "settings": {
+            "texto": "Color"
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "l1",
+        "l2",
+        "l3",
+        "n1",
+        "n2",
+        "n3",
+        "n4"
+      ],
+      "settings": {
+        "volanta": "",
+        "titulo": "El registro y la fórmula, a la vista",
+        "heading_size": "h1",
+        "bajada": "<p>Antes de ponerlo en el agua de tu perro, mirá quién lo registra, quién lo elabora, qué lleva y qué no lleva.</p>",
+        "ficha_titulo": "Registro",
+        "lleva_titulo": "Qué lleva",
+        "no_lleva_titulo": "Qué no lleva",
+        "pie": "",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1120,
+        "padding_top": 72,
+        "padding_bottom": 40
+      }
+    },
+    "ingredientes": {
+      "type": "cauce-fichas",
+      "blocks": {
+        "f1": {
+          "type": "ficha",
+          "settings": {
+            "nombre": "Cloruro de cetilpiridinio",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — placa de vidrio con cloruro de cetilpiridinio (líquido transparente), vista desde arriba.",
+            "funcion": "Ayuda a reducir las bacterias que forman la placa.",
+            "detalle": "<p>Es un ingrediente de uso habitual en productos de higiene bucal. En el agua del bebedero, llega a los dientes cada vez que tu perro toma.</p>"
+          }
+        },
+        "f2": {
+          "type": "ficha",
+          "settings": {
+            "nombre": "Extracto de té verde",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — placa de vidrio con extracto de té verde (líquido verde oliva), vista desde arriba.",
+            "funcion": "Aporta polifenoles de origen vegetal.",
+            "detalle": "<p>Los polifenoles del té verde se usan en productos de higiene bucal para acompañar el aliento fresco.</p>"
+          }
+        },
+        "f3": {
+          "type": "ficha",
+          "settings": {
+            "nombre": "Gluconato de zinc",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — placa de vidrio con gluconato de zinc (polvo blanco o solución), vista desde arriba.",
+            "funcion": "Ayuda a neutralizar los compuestos que dan mal olor.",
+            "detalle": "<p>El zinc se une a los compuestos que le dan olor al aliento. Va disuelto en el agua, sin sabor.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {
+        "volanta": "",
+        "titulo": "Qué lleva y para qué",
+        "heading_size": "h1",
+        "bajada": "",
+        "pie": "",
+        "etiqueta_a11y": "Ingredientes",
+        "relacion": "1 / 1",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1120,
+        "padding_top": 40,
+        "padding_bottom": 72
+      }
+    },
+    "rutina": {
+      "type": "cauce-media-lista",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "Primer día",
+            "titulo": "Lo agregás al agua",
+            "texto": "<p>Una tapita por litro en el bebedero. No tiene sabor, olor ni color: tu perro toma agua como siempre.</p>",
+            "icono": "ninguno",
+            "alt": ""
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "Primera semana",
+            "titulo": "Ya es un hábito",
+            "texto": "<p>Cambiás el agua, sumás la tapita. No hay nada más que hacer ni de qué acordarse.</p>",
+            "icono": "ninguno",
+            "alt": ""
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "Día 60",
+            "titulo": "Se termina la botella",
+            "texto": "<p>Un litro rinde 60 días. Es el momento de reponer para no cortar la rutina.</p>",
+            "icono": "ninguno",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3"
+      ],
+      "settings": {
+        "alt": "",
+        "foto_pendiente": "FOTO 4:3 — un perro tomando agua del bebedero, con la botella en primer plano.",
+        "relacion": "4 / 3",
+        "posicion_imagen": "izquierda",
+        "epigrafe": "",
+        "volanta": "",
+        "titulo": "Cómo es la rutina,",
+        "titulo_acento": "del primer día al último",
+        "heading_size": "h1",
+        "bajada": "",
+        "titulo_en": "media_arriba",
+        "estilo": "linea",
+        "recuadro_titulo": "Uso continuo",
+        "recuadro_texto": "<p>La placa se vuelve a formar todos los días. Si cortás el uso, vuelve a acumularse: por eso es una rutina y no algo de una sola vez.</p>",
+        "boton_texto": "",
+        "boton_link": "",
+        "color_scheme": "inverse",
+        "ancho_maximo": 1200,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "pasos": {
+      "type": "cauce-media-lista",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "",
+            "titulo": "Llená el bebedero",
+            "texto": "<p>Con agua fresca, como cualquier día.</p>",
+            "icono": "ninguno",
+            "alt": ""
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "",
+            "titulo": "Agregá una tapita por litro",
+            "texto": "<p>La tapa de la botella es la medida: 15 ml por cada litro de agua. Sin sabor, sin olor y sin color.</p>",
+            "icono": "ninguno",
+            "alt": ""
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "",
+            "titulo": "Cambiá el agua todos los días",
+            "texto": "<p>Y cada vez que la cambiás, volvé a poner la tapita.</p>",
+            "icono": "ninguno",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3"
+      ],
+      "settings": {
+        "alt": "",
+        "foto_pendiente": "FOTO 1:1 — una mano volcando la tapita en el bebedero, con la botella al lado y un perro mirando.",
+        "relacion": "1 / 1",
+        "posicion_imagen": "izquierda",
+        "epigrafe": "",
+        "volanta": "",
+        "titulo": "Tres pasos, y ninguno es cepillarle los dientes",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "<p>Tu perro ya toma agua todos los días. Eso es todo lo que hace falta.</p>",
+        "titulo_en": "lista",
+        "estilo": "pasos",
+        "recuadro_titulo": "",
+        "recuadro_texto": "",
+        "boton_texto": "Elegir mi pack",
+        "boton_link": "#comprar",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1200,
+        "padding_top": 72,
+        "padding_bottom": 40
+      }
+    },
+    "beneficios": {
+      "type": "cauce-media-lista",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "",
+            "titulo": "Aliento más fresco",
+            "texto": "<p>Ayuda a mantener el aliento fresco, con una tapita en el agua de todos los días.</p>",
+            "icono": "gota",
+            "alt": ""
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "",
+            "titulo": "Menos placa acumulándose",
+            "texto": "<p>Ayuda a reducir la placa que después se vuelve sarro. Sin cepillado ni pelea: no hay que abrirle la boca.</p>",
+            "icono": "escudo",
+            "alt": ""
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "",
+            "titulo": "Para toda raza y tamaño",
+            "texto": "<p>Desde los perros muy chicos hasta los grandes, con la misma dosis. Sin xilitol.</p>",
+            "icono": "corazon",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3"
+      ],
+      "settings": {
+        "alt": "",
+        "foto_pendiente": "FOTO 4:3 — una persona con su perro al aire libre, con la botella en primer plano.",
+        "relacion": "4 / 3",
+        "posicion_imagen": "izquierda",
+        "epigrafe": "",
+        "volanta": "",
+        "titulo": "Lo que hace por la boca de tu perro",
+        "titulo_acento": "",
+        "heading_size": "h1",
+        "bajada": "",
+        "titulo_en": "lista",
+        "estilo": "filas",
+        "recuadro_titulo": "",
+        "recuadro_texto": "",
+        "boton_texto": "",
+        "boton_link": "",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1200,
+        "padding_top": 40,
+        "padding_bottom": 72
+      }
+    },
+    "garantia": {
+      "type": "custom-columns",
+      "blocks": {
+        "g0": {
+          "type": "heading",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "Garantía de 30 días",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g1": {
+          "type": "richtext",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "text": "<p>Probalo durante 30 días desde que te llega el pedido. Si no te convence, te reintegramos lo que pagaste por una unidad, y no hace falta que devuelvas el producto.</p>",
+            "text_style": "body",
+            "alignment": "left",
+            "mobile_alignment": "mobile-left",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g5": {
+          "type": "custom_liquid",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "custom_liquid": "<a class=\"button button--primary\" href=\"#comprar\">Elegir mi pack</a>",
+            "margin_top": 4,
+            "margin_bottom": 0
+          }
+        },
+        "g2": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "schedule",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "30 días desde que llega",
+            "text": "<p>Se cuentan desde que recibís el pedido, no desde que lo comprás.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g3": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "payments",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Reintegro de una unidad",
+            "text": "<p>$49.900 si compraste 1 botella, $29.950 si compraste el pack de 2 y $23.967 si compraste el pack de 3.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g4": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "inventory_2",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Sin devolver el producto",
+            "text": "<p>Te quedás con lo que compraste. Para pedirla, escribinos a <strong>[COMPLETAR: WhatsApp o mail]</strong>.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "g6": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "person",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h4",
+            "icon_text_alignment": "left",
+            "title": "Una garantía por persona",
+            "text": "<p>Se suma a tu derecho de arrepentimiento: 10 días corridos para devolver la compra, con el botón del pie de página.</p>",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        }
+      },
+      "block_order": [
+        "g0",
+        "g1",
+        "g5",
+        "g2",
+        "g3",
+        "g4",
+        "g6"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "color_scheme": "background-2",
+        "columns_count": 2,
+        "column_gap_desktop": 64,
+        "row_gap_desktop": 24,
+        "desktop_vertical_alignment": "flex-start",
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 30,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 5,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 7,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "faq": {
+      "type": "cauce-faq",
+      "blocks": {
+        "q1": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cómo se usa?",
+            "respuesta": "<p>Agregá una tapita (15 ml) por cada litro de agua del bebedero, cada vez que le cambiás el agua. La tapa de la botella es la medida.</p>"
+          }
+        },
+        "q2": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Mi perro va a notar el sabor?",
+            "respuesta": "<p>No tiene sabor, olor ni color, así que el agua queda igual que siempre.</p>"
+          }
+        },
+        "q3": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cuándo se nota el cambio?",
+            "respuesta": "<p>Lo primero que suele notarse es el aliento. No hay un plazo garantizado: depende de cada perro y de cómo esté su boca.</p>"
+          }
+        },
+        "q4": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Sirve para cualquier edad y tamaño?",
+            "respuesta": "<p>Sirve para perros de toda raza y tamaño, desde los muy chicos hasta los grandes. Edad mínima: <strong>[COMPLETAR: según el laboratorio]</strong>. No es para gatos.</p>"
+          }
+        },
+        "q5": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Reemplaza el cepillado o la limpieza del veterinario?",
+            "respuesta": "<p>No. Ayuda a reducir la placa que se forma todos los días, pero el sarro que ya está formado lo saca el veterinario con una limpieza. Los controles con tu veterinario siguen siendo necesarios.</p>"
+          }
+        },
+        "q6": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Es seguro para todos los días?",
+            "respuesta": "<p>Está pensado para usarse todos los días, en la dosis indicada: una tapita por litro de agua. No lleva xilitol. Registrado en SENASA, certificado N.º <strong>[COMPLETAR: número de certificado]</strong>.</p>"
+          }
+        },
+        "q7": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Tiene xilitol?",
+            "respuesta": "<p>No. La fórmula no lleva xilitol.</p>"
+          }
+        },
+        "q8": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Qué pasa si mi perro no quiere tomar el agua?",
+            "respuesta": "<p>Tenés la garantía de 30 días: si no te convence, te reintegramos lo que pagaste por una unidad, sin devolver el producto. Escribinos a <strong>[COMPLETAR: WhatsApp o mail]</strong>.</p>"
+          }
+        },
+        "q9": {
+          "type": "pregunta",
+          "settings": {
+            "pregunta": "¿Cómo son el envío, las cuotas y la garantía?",
+            "respuesta": "<p>El envío es gratis a todo el país y llega en 3 a 5 días hábiles. Pagás con Mercado Pago: 3 cuotas sin interés con tarjeta, o 10 % menos por transferencia.</p><p>La garantía es de 30 días desde que llega el pedido: reintegro de una unidad, sin devolver el producto, una por persona.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9"
+      ],
+      "name": "CAUCE · Preguntas",
+      "settings": {
+        "volanta": "",
+        "titulo": "Preguntas frecuentes",
+        "heading_size": "h1",
+        "pie": "",
+        "producto": "",
+        "emitir_schema": true,
+        "color_scheme": "background-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "banda",
+    "main",
+    "problema",
+    "respaldo",
+    "ingredientes",
+    "rutina",
+    "pasos",
+    "beneficios",
+    "garantia",
+    "faq"
+  ]
+}

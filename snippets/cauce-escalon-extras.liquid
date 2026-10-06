@@ -13,6 +13,9 @@
     sin_ahorro {boolean} opcional. true no dibuja la linea de ahorro: el tachado
                          de al lado ya lo dice. Sale del setting cauce_sin_ahorro
                          del bloque. Ver D-073.
+    redondear  {boolean} opcional. true redondea la cuota al peso, sin
+                         centavos. Sale del setting cauce_redondear del bloque.
+                         Ver D-074.
     compacto   {boolean} opcional. true dibuja solo el chip de envio; ahorro,
                          transferencia y cuotas no salen. Lo usa el modo
                          cauce_compacto del bloque, que las pasa a un renglon
@@ -94,6 +97,9 @@
 {%- if cauce_cuotas_n > 0 and cauce_cuotas_aca and compacto != true -%}
   {%- liquid
     assign cauce_cuota_monto = cauce_total | divided_by: cauce_cuotas_n
+    if redondear
+      assign cauce_cuota_monto = cauce_total | times: 1.0 | divided_by: cauce_cuotas_n | divided_by: 100 | round | times: 100
+    endif
     assign cauce_cuota_money = cauce_cuota_monto | money_without_trailing_zeros
   -%}
   <span class="quantity-break__cuotas">

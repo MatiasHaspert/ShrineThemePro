@@ -415,6 +415,17 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..600&family=Newsreader:opsz,wght@6..72,400&family=DM+Mono:wght@400&display=swap"
     >
+    {%- comment -%}
+      CAUCE: la PDP del aditivo dental va entera en DM Sans (bloque 26 de
+      cauce-brand.css). Se pide solo en esa plantilla: en el resto del sitio
+      seria una fuente descargada que nada usa. Ver D-074.
+    {%- endcomment -%}
+    {%- if cauce_plantilla == 'aditivo-dental' -%}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap"
+      >
+    {%- endif -%}
     {{ 'cauce-brand.css' | asset_url | stylesheet_tag }}
 
     {% comment %}

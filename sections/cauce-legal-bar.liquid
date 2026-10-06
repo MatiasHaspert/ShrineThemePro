@@ -107,7 +107,14 @@
     </div>
 
     <div class="cauce-legal__disclaimer">
-      {% render 'cauce-disclaimer' %}
+      {%- comment -%}
+        La leyenda es la de suplemento dietario (CAA art. 1381). El aditivo dental
+        para perros no es un suplemento ni lo regula ANMAT: en su plantilla la
+        leyenda no va, porque diria algo falso del producto. Ver D-074.
+      {%- endcomment -%}
+      {%- unless template.suffix == 'aditivo-dental' -%}
+        {% render 'cauce-disclaimer' %}
+      {%- endunless -%}
       {%- if section.settings.mostrar_defensa -%}
         <p class="cauce-legal__defensa">{{ 'cauce.legal.defensa_consumidor' | t }}</p>
       {%- endif -%}

@@ -434,6 +434,59 @@
 
   cauceWhatsappSobreBarra();
 
+  /* ----------------------------------------------------------------------
+     Los datos que faltan se marcan solos (D-074).
+
+     Una pagina que se arma antes de tener todos los datos lleva el hueco
+     escrito en el texto: "[COMPLETAR: numero de certificado]". Vive en
+     settings de texto plano y en richtext, donde no se puede poner una clase,
+     asi que se envuelve aca con .cauce-pendiente para que se vea desde lejos.
+     Solo recorre el DOM si el texto aparece: en una pagina sin huecos no hace
+     nada. No toca <script>, <style> ni campos de formulario.
+     -------------------------------------------------------------------- */
+  function caucePendientes() {
+    const raiz = document.getElementById('MainContent') || document.body;
+    if (!raiz || raiz.textContent.indexOf('[COMPLETAR') === -1) return;
+
+    const patron = /\[COMPLETAR[^\]]*\]/g;
+    const walker = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (nodo) {
+        const padre = nodo.parentElement;
+        if (!padre || padre.closest('script, style, textarea, noscript, .cauce-pendiente')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return nodo.nodeValue.indexOf('[COMPLETAR') === -1
+          ? NodeFilter.FILTER_REJECT
+          : NodeFilter.FILTER_ACCEPT;
+      }
+    });
+
+    const nodos = [];
+    while (walker.nextNode()) nodos.push(walker.currentNode);
+
+    nodos.forEach(function (nodo) {
+      const texto = nodo.nodeValue;
+      const trozo = document.createDocumentFragment();
+      let desde = 0;
+      let hallado;
+      patron.lastIndex = 0;
+      while ((hallado = patron.exec(texto))) {
+        if (hallado.index > desde) {
+          trozo.appendChild(document.createTextNode(texto.slice(desde, hallado.index)));
+        }
+        const marca = document.createElement('span');
+        marca.className = 'cauce-pendiente';
+        marca.textContent = hallado[0];
+        trozo.appendChild(marca);
+        desde = hallado.index + hallado[0].length;
+      }
+      if (desde < texto.length) trozo.appendChild(document.createTextNode(texto.slice(desde)));
+      nodo.parentNode.replaceChild(trozo, nodo);
+    });
+  }
+
+  caucePendientes();
+
   if (!customElements.get('cauce-tabs')) customElements.define('cauce-tabs', CauceTabs);
   if (!customElements.get('cauce-ugc')) customElements.define('cauce-ugc', CauceUgc);
   if (!customElements.get('cauce-hero')) customElements.define('cauce-hero', CauceHero);

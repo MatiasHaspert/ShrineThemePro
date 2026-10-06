@@ -5255,3 +5255,867 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   text-align: center;
   color: var(--cauce-cauce);
 }
+
+/* ==========================================================================
+   26. Aditivo dental para perros — paleta, tipografia y piezas de su PDP
+   Ver templates/product.aditivo-dental.json y docs/DECISIONS.md D-074.
+
+   El producto se testea con un envase verde y su pagina acompana a la etiqueta:
+   verde en vez de la paleta de CAUCE, y toda en DM Sans. Se resuelve como la
+   linea Hormify (bloque 20): la clase plantilla--aditivo-dental en <html> pisa
+   los tokens de marca y las variables de Shrine que salen de los mismos
+   settings, y ninguna seccion declara un hex.
+
+     VERDE BOSQUE  #0F3D24  encabezado, bloques oscuros, titulos   (lugar de CAUCE)
+     VERDE HOJA    #2E7D4F  acentos, tildes, iconos                (lugar de OXIDO y VADO)
+     MENTA         #8FE0AE  el acento sobre VERDE BOSQUE           (lugar de OXIDO CLARO)
+     VERDE CLARO   #DDF0E2  bandas y fichas                        (lugar de SEDIMENTO)
+     FONDO         #F6F8F4  fondo de pagina
+     TEXTO         #14201A  parrafos
+     NARANJA       #E8590C  boton de compra, etiqueta blanca
+
+   Una diferencia con Hormify: aca el acento y el boton no son el mismo color. El
+   acento de marca (--cauce-acento: tildes, iconos, cierres de titulo) es VERDE
+   HOJA; el boton sale de --color-base-accent-1, que pasa a NARANJA. Son dos
+   variables distintas justamente para poder separarlos.
+
+   Contraste medido (WCAG 2.1, sRGB):
+                              sobre FONDO   sobre VERDE CLARO   sobre VERDE BOSQUE
+     TEXTO ...................  15.71 AAA     14.10 AAA             —
+     VERDE BOSQUE ............  11.47 AAA     10.29 AAA             —
+     VERDE HOJA ..............   4.72 AA       4.24 grande           —
+     VERDE HOJA TEXTO #256B41    6.03 AA       5.41 AA               —
+     MENTA ...................    —             —                   7.85 AAA
+     Blanco ..................    —             —                  12.26 AAA
+     Blanco sobre VERDE HOJA ..  5.05 AA   (tilde de los pasos)
+     Blanco sobre NARANJA ....   3.58   ->  solo texto grande o en negrita.
+
+   ATENCION: blanco sobre NARANJA da 3.58:1. AA pide 4.5 para texto chico y 3.0
+   para texto de 18.66px en negrita o mas. La etiqueta del boton de compra va en
+   negrita y mayuscula, asi que entra como texto grande; el naranja no se usa
+   para texto chico en ningun otro lugar. Es el color pedido por el comercio.
+   ========================================================================== */
+
+:root.plantilla--aditivo-dental {
+  --cauce-cauce:       #0F3D24; /* VERDE BOSQUE */
+  --cauce-sedimento:   #DDF0E2; /* VERDE CLARO  */
+  --cauce-sedimento-2: #C9E6D1;
+  --cauce-vado:        #2E7D4F; /* VERDE HOJA   */
+  --cauce-vado-texto:  #256B41;
+  --cauce-oxido:       #2E7D4F; /* VERDE HOJA   */
+  --cauce-oxido-claro: #8FE0AE; /* MENTA        */
+  --cauce-fondo:       #F6F8F4;
+  --cauce-texto:       #14201A;
+  --cauce-naranja:     #E8590C;
+
+  --cauce-linea:        rgba(15, 61, 36, 0.14);
+  --cauce-linea-fuerte: rgba(15, 61, 36, 0.28);
+  --cauce-linea-clara:  rgba(221, 240, 226, 0.22);
+
+  /* Toda la pagina en DM Sans. El logo se queda en Archivo: es el de CAUCE. */
+  --cauce-font-titulo: 'DM Sans', var(--font-body-family, system-ui), sans-serif;
+  --cauce-font-texto:  'DM Sans', var(--font-body-family, system-ui), sans-serif;
+  --cauce-font-dato:   'DM Sans', var(--font-body-family, system-ui), sans-serif;
+
+  --color-base-text: 15, 61, 36;
+  --color-shadow: 15, 61, 36;
+  --color-base-outline-button-labels: 15, 61, 36;
+  --color-base-background-1: 246, 248, 244;
+  --gradient-base-background-1: #F6F8F4;
+  --color-base-background-2: 221, 240, 226;
+  --gradient-base-background-2: #DDF0E2;
+  --color-base-accent-1: 232, 89, 12;
+  --gradient-base-accent-1: #E8590C;
+  --color-base-accent-2: 46, 125, 79;
+  --gradient-base-accent-2: #2E7D4F;
+
+  /* La pagina de referencia es de esquinas redondas; CAUCE es de 2px. */
+  --buttons-radius: 10px;
+  --buttons-radius-outset: 11px;
+}
+
+/* --color-base-text hace dos trabajos en Shrine: es el color del texto y el
+   fondo de .color-inverse. El fondo tiene que ser VERDE BOSQUE y el parrafo
+   TEXTO, asi que el primer plano de los esquemas claros se pisa aparte. */
+:root.plantilla--aditivo-dental,
+.plantilla--aditivo-dental .color-background-1,
+.plantilla--aditivo-dental .color-background-2 {
+  --color-foreground: 20, 32, 26;
+  --cauce-icono: var(--cauce-vado);
+}
+
+.plantilla--aditivo-dental body {
+  background-color: var(--cauce-fondo);
+}
+
+/* Titulos en negrita y en VERDE BOSQUE. Newsreader iba en 400; DM Sans en 400
+   no se distingue del parrafo. Sobre las bandas oscuras heredan el blanco. */
+.plantilla--aditivo-dental :is(h1, h2, h3, h4, .h0, .h1, .h2, .h3, .h4) {
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--cauce-cauce);
+}
+
+.plantilla--aditivo-dental :is(.color-inverse, .color-text, .color-accent-1, .color-accent-2) :is(h1, h2, h3, h4, .h0, .h1, .h2, .h3, .h4) {
+  color: inherit;
+}
+
+/* Los datos (precios, cuotas) iban en DM Mono con numeros de ancho fijo. En
+   DM Sans se pide lo mismo para que las columnas de precios sigan alineadas. */
+.plantilla--aditivo-dental :is(.quantity-break__price, .quantity-break__compare-price, .quantity-break__caption, .quantity-break__ahorro, .quantity-break__cuotas, .quantity-break__transferencia) {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Encabezado: el logo centrado sobre una banda VERDE BOSQUE. El header del tema
+   va en el esquema blanco; aca se le pisan las tres variables del esquema. El
+   logo es un PNG de un solo color (TINTA) con fondo transparente: el filtro lo
+   lleva a blanco sin subir otro archivo. El cajon del menu trae su propio
+   esquema y no cambia. */
+.plantilla--aditivo-dental .header-wrapper {
+  --color-background: 15, 61, 36;
+  --gradient-background: #0F3D24;
+  --color-foreground: 255, 255, 255;
+}
+
+.plantilla--aditivo-dental .header__heading-logo {
+  filter: brightness(0) invert(1);
+}
+
+/* La barra de anuncios del tema rota cuatro mensajes de la tienda, y uno ("30
+   dias para devolverlo") no es la garantia de este producto. Esta pagina lleva
+   su propia banda en movimiento, con sus datos, justo debajo del encabezado. */
+.plantilla--aditivo-dental .announcement-bar-section {
+  display: none;
+}
+
+/* Un dato que falta se ve desde lejos: resaltador amarillo, en cualquier fondo.
+   assets/cauce.js envuelve cada "[COMPLETAR: …]" de la pagina con esta clase. */
+.plantilla--aditivo-dental .cauce-pendiente {
+  padding: 0.1em 0.4em;
+  border: 0;
+  border-radius: 0.3em;
+  background: #FFE38A;
+  color: #14201A;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Recuadro de foto pendiente ---------------------------------------------- */
+/* Ver snippets/cauce-foto-pendiente.liquid. */
+
+.cauce-foto-pendiente {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: var(--cauce-foto-relacion, 1 / 1);
+  padding: 1.6rem;
+  border: 2px dashed var(--cauce-linea-fuerte);
+  border-radius: 1.2rem;
+  background-color: var(--cauce-sedimento);
+  background-image: repeating-linear-gradient(-45deg, transparent 0 1.2rem, rgba(255, 255, 255, 0.45) 1.2rem 2.4rem);
+  color: var(--cauce-cauce);
+  text-align: center;
+}
+
+.cauce-foto-pendiente__texto {
+  max-width: 34ch;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Bloque de compra -------------------------------------------------------- */
+
+/* La linea que dice que es el producto, debajo del titulo. */
+.cauce-pastilla {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0.8rem 0 1.2rem;
+  padding: 1rem 1.4rem;
+  border-radius: 1rem;
+  background: var(--cauce-sedimento);
+  color: var(--cauce-cauce);
+  font-family: var(--cauce-font-texto);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.cauce-pastilla .cauce-icono {
+  width: 2rem;
+  height: 2rem;
+  color: var(--cauce-oxido);
+}
+
+/* Las fichas cortas debajo del boton: dos por renglon, tambien en telefono. */
+.cauce-fichas {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 1.6rem 0 0;
+  padding: 0;
+}
+
+.cauce-fichas__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  border-radius: 1rem;
+  background: var(--cauce-sedimento);
+  color: var(--cauce-cauce);
+  font-family: var(--cauce-font-texto);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.cauce-fichas__item .cauce-icono {
+  width: 2.2rem;
+  height: 2.2rem;
+  color: var(--cauce-oxido);
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-fichas__item {
+    padding: 1.4rem 1.6rem;
+    font-size: 1.4rem;
+  }
+}
+
+/* Pestanas de la columna de compra. Ver snippets/cauce-pestanas.liquid.
+   Reusan <cauce-tabs>; aca solo cambia la forma: una caja con las pestanas como
+   cabecera a todo el ancho, en vez de una fila de enlaces subrayados. Los
+   selectores llevan dos clases para ganarle a .cauce-tabs__* sin !important. */
+.cauce-pestanas {
+  display: block;
+  margin: 2.4rem 0 0;
+  border: 1px solid var(--cauce-linea-fuerte);
+  border-radius: 1.2rem;
+  background: var(--cauce-blanco);
+  overflow: hidden;
+}
+
+.cauce-pestanas .cauce-pestanas__lista {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--cauce-linea-fuerte);
+  overflow: visible;
+}
+
+.cauce-pestanas .cauce-pestanas__boton {
+  margin: 0;
+  padding: 1.2rem 0.6rem;
+  border: 0;
+  border-right: 1px solid var(--cauce-linea-fuerte);
+  background: var(--cauce-sedimento);
+  color: var(--cauce-cauce);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: normal;
+  opacity: 1;
+}
+
+.cauce-pestanas .cauce-pestanas__boton:last-child { border-right: 0; }
+
+.cauce-pestanas .cauce-pestanas__boton[aria-selected="true"] {
+  background: var(--cauce-blanco);
+  font-weight: 700;
+}
+
+.cauce-pestanas .cauce-pestanas__boton:focus-visible {
+  outline: 2px solid var(--cauce-oxido);
+  outline-offset: -2px;
+}
+
+.cauce-pestanas .cauce-pestanas__panel {
+  max-width: none;
+  margin: 0;
+  padding: 1.8rem;
+  color: var(--cauce-texto, var(--cauce-cauce));
+  font-size: 1.5rem;
+  line-height: 1.55;
+}
+
+.cauce-pestanas__panel > :first-child { margin-top: 0; }
+.cauce-pestanas__panel > :last-child { margin-bottom: 0; }
+
+/* Foto y lista ------------------------------------------------------------ */
+/* Ver sections/cauce-media-lista.liquid. */
+
+.cauce-medialista__inner,
+.cauce-respaldo__inner,
+.cauce-fichas-seccion__inner {
+  padding-top: var(--padding-top, 7.2rem);
+  padding-bottom: var(--padding-bottom, 7.2rem);
+}
+
+@media screen and (max-width: 749px) {
+  .cauce-medialista__inner,
+  .cauce-respaldo__inner,
+  .cauce-fichas-seccion__inner {
+    padding-top: calc(var(--padding-top, 7.2rem) * 0.75);
+    padding-bottom: calc(var(--padding-bottom, 7.2rem) * 0.75);
+  }
+}
+
+.cauce-medialista__inner {
+  display: grid;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-medialista-ancho, 1200px), var(--page-width, 1440px));
+}
+
+.cauce-medialista__columna {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  min-width: 0;
+}
+
+@media screen and (min-width: 990px) {
+  .cauce-medialista__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 4.8rem;
+    align-items: center;
+  }
+
+  .cauce-medialista__inner--sin-media { grid-template-columns: 1fr; }
+
+  .cauce-medialista__inner--derecha .cauce-medialista__columna--media { order: 2; }
+}
+
+.cauce-medialista__media { margin: 0; }
+
+.cauce-medialista__imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 1.2rem;
+}
+
+.cauce-medialista__epigrafe {
+  margin: var(--cauce-aire-xs) 0 0;
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+.cauce-medialista__titulo {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.cauce-medialista__bajada {
+  max-width: 56ch;
+  margin-top: 1.2rem;
+  font-size: 1.6rem;
+  line-height: 1.55;
+}
+
+.cauce-medialista__bajada > :first-child { margin-top: 0; }
+.cauce-medialista__bajada > :last-child { margin-bottom: 0; }
+
+.cauce-medialista__lista {
+  list-style: none;
+  display: grid;
+  margin: 0;
+  padding: 0;
+}
+
+.cauce-medialista__texto { min-width: 0; }
+
+/* El <h3> de cada item junta la etiqueta y el nombre. Dos clases: es un rotulo
+   de lista y no un titulo de seccion, asi que no toma el cuerpo ni el color de
+   los h3 del tema; los hereda del item, que sabe sobre que fondo esta. */
+.cauce-medialista .cauce-medialista__cabeza {
+  margin: 0;
+  font-family: var(--cauce-font-texto);
+  font-size: inherit;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: inherit;
+}
+
+.cauce-medialista__etiqueta,
+.cauce-medialista__nombre { display: block; }
+
+.cauce-medialista__nombre {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.cauce-medialista__parrafo {
+  margin-top: 0.6rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.cauce-medialista__parrafo > :first-child { margin-top: 0; }
+.cauce-medialista__parrafo > :last-child { margin-bottom: 0; }
+
+.cauce-medialista__cta { align-self: flex-start; }
+
+/* Recuadro final: un velo del color del texto, asi sirve en claro y en oscuro. */
+.cauce-medialista__recuadro {
+  padding: 2rem;
+  border-radius: 1.2rem;
+  background: rgba(var(--color-foreground), 0.1);
+}
+
+.cauce-medialista__recuadro-titulo {
+  margin: 0 0 0.8rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--cauce-acento);
+}
+
+.cauce-medialista__recuadro-texto {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.cauce-medialista__recuadro-texto > :first-child { margin-top: 0; }
+.cauce-medialista__recuadro-texto > :last-child { margin-bottom: 0; }
+
+/* Forma 1 — tarjetas con etiqueta. Cada tarjeta es una superficie clara, aunque
+   la seccion sea oscura: por eso fija su fondo y su color y no los hereda. */
+.cauce-medialista--tarjetas .cauce-medialista__lista { gap: 1.6rem; }
+
+.cauce-medialista--tarjetas .cauce-medialista__item {
+  padding: 2rem;
+  border-left: 0.4rem solid var(--cauce-oxido);
+  border-radius: 0.4rem;
+  background: var(--cauce-sedimento);
+  color: var(--cauce-texto, var(--cauce-cauce));
+}
+
+.cauce-medialista--tarjetas .cauce-medialista__etiqueta {
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Forma 2 — linea de tiempo. La linea y el marcador son pseudo-elementos del
+   <li>, como en cauce-progreso (bloque 13). */
+.cauce-medialista--linea .cauce-medialista__lista { gap: 2.8rem; }
+
+.cauce-medialista--linea .cauce-medialista__item {
+  position: relative;
+  padding-left: 3.2rem;
+}
+
+.cauce-medialista--linea .cauce-medialista__item::before {
+  content: '';
+  position: absolute;
+  left: calc(0.5rem - 0.5px);
+  top: 1.6rem;
+  bottom: -2.8rem;
+  width: 1px;
+  background-color: currentColor;
+  opacity: 0.35;
+}
+
+.cauce-medialista--linea .cauce-medialista__item:last-child::before { bottom: 0; }
+
+.cauce-medialista--linea .cauce-medialista__item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.1rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.cauce-medialista--linea .cauce-medialista__cabeza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+}
+
+.cauce-medialista--linea .cauce-medialista__etiqueta {
+  padding: 0.5rem 1.4rem;
+  border-radius: 10rem;
+  background: var(--cauce-sedimento);
+  color: var(--cauce-cauce);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cauce-medialista--linea .cauce-medialista__nombre { font-size: 1.9rem; }
+
+.cauce-medialista--linea .cauce-medialista__parrafo { margin-top: 1rem; }
+
+/* Formas 3 y 4 — pasos con tilde y filas con icono. Una fila por item, con una
+   regla fina debajo. La regla es el color del texto al 16 %: se ve en los tres
+   esquemas sin una regla por esquema. */
+.cauce-medialista--pasos .cauce-medialista__item,
+.cauce-medialista--filas .cauce-medialista__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 1.6rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.16);
+}
+
+.cauce-medialista--pasos .cauce-medialista__item:first-child,
+.cauce-medialista--filas .cauce-medialista__item:first-child { padding-top: 0; }
+
+.cauce-medialista__marca {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.cauce-medialista--pasos .cauce-medialista__marca {
+  width: 2.8rem;
+  height: 2.8rem;
+  background: var(--cauce-acento);
+  color: var(--cauce-acento-label);
+}
+
+.cauce-medialista--pasos .cauce-medialista__marca .cauce-icono {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: currentColor;
+  stroke-width: 2.6;
+}
+
+.cauce-medialista--filas .cauce-medialista__item { gap: 2rem; }
+
+.cauce-medialista--filas .cauce-medialista__marca {
+  width: 6.4rem;
+  height: 6.4rem;
+  background: var(--cauce-sedimento);
+  color: var(--cauce-oxido);
+}
+
+.cauce-medialista--filas .cauce-medialista__marca .cauce-icono {
+  width: 2.8rem;
+  height: 2.8rem;
+  color: currentColor;
+}
+
+.cauce-medialista__redonda {
+  display: block;
+  width: 9.6rem;
+  height: 9.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Respaldo ---------------------------------------------------------------- */
+/* Ver sections/cauce-respaldo.liquid. */
+
+.cauce-respaldo__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-respaldo-ancho, 1120px), var(--page-width, 1440px));
+}
+
+.cauce-respaldo__encabezado {
+  max-width: 62ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.cauce-respaldo__titulo {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.cauce-respaldo__bajada {
+  margin-top: 1.2rem;
+  font-size: 1.6rem;
+  line-height: 1.55;
+}
+
+.cauce-respaldo__bajada > :first-child { margin-top: 0; }
+.cauce-respaldo__bajada > :last-child { margin-bottom: 0; }
+
+.cauce-respaldo__grilla {
+  display: grid;
+  gap: 1.6rem;
+}
+
+@media screen and (min-width: 990px) {
+  .cauce-respaldo__grilla {
+    grid-template-columns: 5fr 7fr;
+    gap: 2.4rem;
+    align-items: stretch;
+  }
+
+  .cauce-respaldo__grilla--una { grid-template-columns: 1fr; }
+}
+
+/* La ficha es una superficie oscura adentro de una seccion clara: fija su fondo
+   y su color, y redeclara los tokens que se definen por superficie (bloque 0). */
+.cauce-respaldo__ficha {
+  padding: 2.4rem;
+  border-radius: 1.2rem;
+  background: var(--cauce-cauce);
+  color: var(--cauce-blanco);
+  --cauce-icono: var(--cauce-oxido-claro);
+}
+
+.cauce-respaldo__ficha-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0 0 2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cauce-respaldo__datos {
+  display: grid;
+  gap: 1.8rem;
+  margin: 0;
+}
+
+.cauce-respaldo__dato-etiqueta {
+  margin: 0 0 0.4rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.cauce-respaldo__dato-valor {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.cauce-respaldo__listas {
+  display: grid;
+  gap: 1.6rem;
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-respaldo__listas { grid-template-columns: 1fr 1fr; }
+}
+
+.cauce-respaldo__grupo {
+  padding: 2.4rem;
+  border: 1px solid var(--cauce-linea);
+  border-radius: 1.2rem;
+  background: var(--cauce-blanco);
+  color: var(--cauce-texto, var(--cauce-cauce));
+}
+
+.cauce-respaldo .cauce-respaldo__grupo-titulo {
+  margin: 0 0 1.6rem;
+  font-size: 1.8rem;
+  line-height: 1.3;
+  color: var(--cauce-cauce);
+}
+
+.cauce-respaldo__lista {
+  list-style: none;
+  display: grid;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cauce-respaldo__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.cauce-respaldo__item .cauce-icono {
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.1rem;
+  color: var(--cauce-oxido);
+  stroke-width: 2.2;
+}
+
+.cauce-respaldo__lista--no .cauce-icono { color: var(--cauce-vado-texto); }
+
+.cauce-respaldo__pie {
+  max-width: 72ch;
+  margin-inline: auto;
+  font-size: 1.3rem;
+  text-align: center;
+  opacity: 0.75;
+}
+
+.cauce-respaldo__pie > :first-child { margin-top: 0; }
+.cauce-respaldo__pie > :last-child { margin-bottom: 0; }
+
+/* Carrusel de fichas ------------------------------------------------------ */
+/* Ver sections/cauce-fichas.liquid. */
+
+.cauce-fichas-seccion__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cauce-aire-m);
+  max-width: min(var(--cauce-fichas-ancho, 1200px), var(--page-width, 1440px));
+}
+
+.cauce-fichas-seccion__encabezado {
+  max-width: 62ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.cauce-fichas-seccion__titulo {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.cauce-fichas-seccion__bajada {
+  margin-top: 1.2rem;
+  font-size: 1.6rem;
+  line-height: 1.55;
+}
+
+.cauce-fichas-seccion__bajada > :first-child { margin-top: 0; }
+.cauce-fichas-seccion__bajada > :last-child { margin-bottom: 0; }
+
+/* En telefono la fila se sale del margen de la pagina por los dos lados: la
+   ficha siguiente asoma y se entiende que hay mas. 1.5rem es el padding de
+   .page-width hasta 750px. */
+.cauce-fichas-carrusel {
+  list-style: none;
+  display: flex;
+  gap: 1.6rem;
+  margin: 0 -1.5rem;
+  padding: 0 1.5rem 1.2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cauce-fichas-carrusel:focus-visible {
+  outline: 2px solid var(--cauce-oxido);
+  outline-offset: 4px;
+}
+
+.cauce-fichas-carrusel__ficha {
+  flex: 0 0 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  min-width: 0;
+  padding: 2rem;
+  border: 1px solid var(--cauce-linea);
+  border-radius: 1.6rem;
+  background: var(--cauce-blanco);
+  color: var(--cauce-texto, var(--cauce-cauce));
+  scroll-snap-align: start;
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-fichas-carrusel__ficha { flex-basis: 44%; }
+}
+
+@media screen and (min-width: 990px) {
+  .cauce-fichas-carrusel {
+    display: grid;
+    grid-template-columns: repeat(var(--cauce-fichas-cols, 3), minmax(0, 1fr));
+    gap: 2.4rem;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+}
+
+.cauce-fichas-seccion .cauce-fichas-carrusel__nombre {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--cauce-cauce);
+}
+
+.cauce-fichas-carrusel__imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 1.2rem;
+}
+
+.cauce-fichas-carrusel__funcion {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--cauce-vado-texto);
+}
+
+summary.cauce-fichas-carrusel__funcion { cursor: pointer; }
+summary.cauce-fichas-carrusel__funcion::-webkit-details-marker { display: none; }
+
+.cauce-fichas-carrusel__funcion .cauce-icono {
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background: var(--cauce-cauce);
+  color: var(--cauce-blanco);
+  stroke-width: 2.4;
+}
+
+.cauce-fichas-carrusel__cerrar,
+.cauce-fichas-carrusel__mas[open] .cauce-fichas-carrusel__abrir { display: none; }
+
+.cauce-fichas-carrusel__mas[open] .cauce-fichas-carrusel__cerrar { display: block; }
+
+.cauce-fichas-carrusel__detalle {
+  margin-top: 1.2rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.cauce-fichas-carrusel__detalle > :first-child { margin-top: 0; }
+.cauce-fichas-carrusel__detalle > :last-child { margin-bottom: 0; }
+
+.cauce-fichas-seccion__pie {
+  max-width: 72ch;
+  margin-inline: auto;
+  font-size: 1.3rem;
+  text-align: center;
+  opacity: 0.75;
+}
+
+.cauce-fichas-seccion__pie > :first-child { margin-top: 0; }
+.cauce-fichas-seccion__pie > :last-child { margin-bottom: 0; }
