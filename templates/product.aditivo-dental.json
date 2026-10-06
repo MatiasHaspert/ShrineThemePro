@@ -1023,6 +1023,73 @@
         "padding_top": 72,
         "padding_bottom": 72
       }
+    },
+    "resenas": {
+      "type": "cauce-resenas",
+      "blocks": {
+        "r1": {
+          "type": "resena",
+          "settings": {
+            "puntaje": "0",
+            "autor": "[COMPLETAR: nombre del cliente]",
+            "titulo": "",
+            "texto": "[COMPLETAR: reseña real, con las palabras del cliente y su permiso]",
+            "fecha": "",
+            "verificada": false,
+            "alt": "",
+            "foto_pendiente": "FOTO 4:5 — la que mandó el cliente, con su permiso. Opcional. Sin antes y después."
+          }
+        },
+        "r2": {
+          "type": "resena",
+          "settings": {
+            "puntaje": "0",
+            "autor": "[COMPLETAR: nombre del cliente]",
+            "titulo": "",
+            "texto": "[COMPLETAR: reseña real, con las palabras del cliente y su permiso]",
+            "fecha": "",
+            "verificada": false,
+            "alt": "",
+            "foto_pendiente": "FOTO 4:5 — la que mandó el cliente, con su permiso. Opcional. Sin antes y después."
+          }
+        },
+        "r3": {
+          "type": "resena",
+          "settings": {
+            "puntaje": "0",
+            "autor": "[COMPLETAR: nombre del cliente]",
+            "titulo": "",
+            "texto": "[COMPLETAR: reseña real, con las palabras del cliente y su permiso]",
+            "fecha": "",
+            "verificada": false,
+            "alt": "",
+            "foto_pendiente": "FOTO 4:5 — la que mandó el cliente, con su permiso. Opcional. Sin antes y después."
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "volanta": "",
+        "titulo": "Reseñas de clientes",
+        "heading_size": "h1",
+        "pie": "",
+        "etiqueta_una": "reseña",
+        "etiqueta_varias": "reseñas",
+        "etiqueta_de_cinco": "de 5 estrellas",
+        "etiqueta_verificada": "Compra verificada",
+        "ver_mas": "Ver más reseñas",
+        "aviso_editor": "[COMPLETAR: reseñas reales] Estas tarjetas se ven solo acá, en el editor. En la tienda el bloque aparece cuando haya al menos una reseña completa: texto, nombre y puntaje.",
+        "visibles": 6,
+        "relacion": "4 / 5",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1200,
+        "padding_top": 24,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
@@ -1035,6 +1102,7 @@
     "pasos",
     "beneficios",
     "garantia",
-    "faq"
+    "faq",
+    "resenas"
   ]
 }

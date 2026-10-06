@@ -6122,3 +6122,314 @@ summary.cauce-fichas-carrusel__funcion::-webkit-details-marker { display: none; 
 
 .cauce-fichas-seccion__pie > :first-child { margin-top: 0; }
 .cauce-fichas-seccion__pie > :last-child { margin-bottom: 0; }
+
+/* ==========================================================================
+   27. PDP — reseñas de clientes
+   Ver sections/cauce-resenas.liquid y docs/DECISIONS.md D-075.
+
+   Un resumen (promedio, cantidad, barras por puntaje) y una grilla de tarjetas
+   en columnas, como un muro: cada tarjeta mide lo que mide su foto y su texto,
+   y las columnas las reparte el navegador (CSS columns, sin JS).
+
+   La estrella es el unico color nuevo. --cauce-estrella vale el acento de la
+   marca salvo que la plantilla lo pise: en el aditivo dental es un ambar
+   (#C77700) elegido para pasar 3:1 como objeto grafico sobre la tarjeta blanca
+   (3.46) y sobre el fondo de pagina (3.24). El ambar clasico de las estrellas,
+   #F2A900, da 2.01 y no se usa. El puntaje ademas va en el aria-label.
+   ========================================================================== */
+
+:root { --cauce-estrella: var(--cauce-oxido); }
+
+:root.plantilla--aditivo-dental { --cauce-estrella: #C77700; }
+
+.cauce-resenas__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  max-width: min(var(--cauce-resenas-ancho, 1200px), var(--page-width, 1440px));
+  padding-top: var(--padding-top, 7.2rem);
+  padding-bottom: var(--padding-bottom, 7.2rem);
+}
+
+@media screen and (max-width: 749px) {
+  .cauce-resenas__inner {
+    padding-top: calc(var(--padding-top, 7.2rem) * 0.75);
+    padding-bottom: calc(var(--padding-bottom, 7.2rem) * 0.75);
+  }
+}
+
+.cauce-resenas__titulo {
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* Estrellas --------------------------------------------------------------- */
+
+.cauce-resenas__estrella {
+  flex: 0 0 auto;
+  display: block;
+  width: 1.8rem;
+  height: 1.8rem;
+  fill: currentColor;
+}
+
+.cauce-resenas__estrellas {
+  display: inline-flex;
+  gap: 0.1rem;
+  color: var(--cauce-estrella);
+}
+
+.cauce-resenas__punto { display: inline-flex; }
+.cauce-resenas__punto--vacio { color: var(--cauce-linea-fuerte); }
+
+/* El promedio se dibuja con dos filas de cinco estrellas, una vacia y otra
+   llena encima, recortada al porcentaje que corresponde: 4,6 llena el 92 %. */
+.cauce-resenas__estrellas--promedio {
+  position: relative;
+  display: inline-block;
+}
+
+.cauce-resenas__fila-vacia,
+.cauce-resenas__fila-llena {
+  display: flex;
+  gap: 0.1rem;
+}
+
+.cauce-resenas__fila-vacia { color: var(--cauce-linea-fuerte); }
+
+.cauce-resenas__fila-llena {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.cauce-resenas__estrellas--promedio .cauce-resenas__estrella {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+/* Resumen ----------------------------------------------------------------- */
+
+.cauce-resenas__resumen {
+  display: grid;
+  gap: 2rem;
+  padding: 2.4rem;
+  border: 1px solid var(--cauce-linea);
+  border-radius: 1.2rem;
+  background: var(--cauce-blanco);
+  color: var(--cauce-texto, var(--cauce-cauce));
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-resenas__resumen {
+    grid-template-columns: auto minmax(0, 36rem);
+    gap: 4.8rem;
+    align-items: center;
+    justify-content: start;
+  }
+}
+
+.cauce-resenas__promedio {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.cauce-resenas__numero {
+  margin: 0;
+  font-size: 4.8rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--cauce-cauce);
+}
+
+.cauce-resenas__cantidad {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.cauce-resenas__barras {
+  list-style: none;
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cauce-resenas__barra {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 1.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.cauce-resenas__barra-nombre {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 3.6rem;
+}
+
+.cauce-resenas__barra-nombre .cauce-resenas__estrella {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--cauce-estrella);
+}
+
+.cauce-resenas__barra-pista {
+  display: block;
+  height: 0.8rem;
+  border-radius: 10rem;
+  background: var(--cauce-linea);
+  overflow: hidden;
+}
+
+.cauce-resenas__barra-relleno {
+  display: block;
+  height: 100%;
+  border-radius: 10rem;
+  background: var(--cauce-estrella);
+}
+
+.cauce-resenas__barra-cuenta {
+  min-width: 2ch;
+  text-align: right;
+}
+
+/* Aviso del editor: solo se dibuja con request.design_mode. */
+.cauce-resenas__aviso {
+  margin: 0;
+  padding: 1.2rem 1.6rem;
+  border: 2px dashed var(--cauce-linea-fuerte);
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Grilla ------------------------------------------------------------------ */
+
+.cauce-resenas__grilla {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 1;
+  column-gap: 1.6rem;
+}
+
+@media screen and (min-width: 750px) {
+  .cauce-resenas__grilla { columns: 2; }
+}
+
+@media screen and (min-width: 990px) {
+  .cauce-resenas__grilla { columns: 3; }
+}
+
+/* inline-block con ancho completo y no solo break-inside: Safari parte igual
+   una tarjeta entre dos columnas si es un bloque comun. */
+.cauce-resenas__tarjeta {
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 1.6rem;
+  border: 1px solid var(--cauce-linea);
+  border-radius: 1.2rem;
+  background: var(--cauce-blanco);
+  color: var(--cauce-texto, var(--cauce-cauce));
+  overflow: hidden;
+  break-inside: avoid;
+}
+
+.cauce-resenas__tarjeta--pendiente { border: 2px dashed var(--cauce-linea-fuerte); }
+
+img.cauce-resenas__foto {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.cauce-resenas__tarjeta .cauce-foto-pendiente {
+  border-width: 0 0 2px;
+  border-radius: 0;
+}
+
+.cauce-resenas__cuerpo {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.6rem;
+}
+
+.cauce-resenas__autor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+.cauce-resenas__nombre { font-weight: 700; }
+
+.cauce-resenas__verificada {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.3rem;
+  color: var(--cauce-vado-texto);
+}
+
+.cauce-resenas__verificada .cauce-icono {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: currentColor;
+}
+
+/* Dos clases: es el titulo de una tarjeta, no un titulo de seccion. */
+.cauce-resenas .cauce-resenas__encabezado-tarjeta {
+  margin: 0;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.7rem;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.cauce-resenas__texto {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.cauce-resenas__fecha {
+  margin: 0;
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+/* El resto de las reseñas. Abierto, el boton sobra y se va. */
+.cauce-resenas__mas-boton {
+  display: flex;
+  width: fit-content;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.cauce-resenas__mas-boton::-webkit-details-marker { display: none; }
+
+.cauce-resenas__mas[open] > .cauce-resenas__mas-boton { display: none; }
+
+.cauce-resenas__mas[open] > .cauce-resenas__grilla { margin-top: 0; }
+
+.cauce-resenas__pie {
+  max-width: 72ch;
+  font-size: 1.3rem;
+  opacity: 0.75;
+}
+
+.cauce-resenas__pie > :first-child { margin-top: 0; }
+.cauce-resenas__pie > :last-child { margin-bottom: 0; }

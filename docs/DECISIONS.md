@@ -4062,3 +4062,57 @@ certificado N.º …". La función de cada ingrediente (bloque de ingredientes) 
   vista previa del producto ignora `preview_theme_id`.
 
 ---
+
+## D-075 · 2026-10-06 · Aditivo dental: el bloque de reseñas se arma, y no se puede llenar con relleno
+
+**Decisión.** D-074 había dejado afuera el bloque de reseñas porque no hay ninguna real. A pedido
+del comercio se arma igual, como `sections/cauce-resenas.liquid`, último bloque de
+`product.aditivo-dental.json`: un resumen (promedio, cantidad y barras por puntaje) y una grilla de
+tarjetas con foto, estrellas, nombre, título y texto. Sigue sin haber reseñas: la sección queda
+lista y vacía.
+
+### 1. De dónde salen las reseñas
+
+La tienda no tiene una app de reseñas y no se instaló ninguna. Cada reseña es un bloque de la
+sección, cargado a mano desde el editor cuando un cliente la manda y autoriza a publicarla. El tope
+de Shopify es de 50 bloques por sección.
+
+**Alternativa descartada por ahora:** una app (Judge.me, Shopify Product Reviews). Pide el mail al
+comprador y verifica la compra sola, que es lo correcto cuando haya volumen; hoy es instalar y
+configurar una app para un producto que todavía no vendió. Cuando se instale, esta sección se apaga
+y va el bloque de la app.
+
+### 2. Lo que la sección no deja hacer
+
+- **El promedio, la cantidad y las barras se calculan** de las reseñas cargadas. No hay un campo
+  para escribirlos.
+- **Una reseña cuenta solo si está completa:** texto, nombre y puntaje, sin `[COMPLETAR`. El puntaje
+  arranca en "sin puntaje" y no en 5: un bloque recién agregado no suma cinco estrellas.
+- **Una reseña incompleta se dibuja solo en el editor de temas** (`request.design_mode`). En la
+  tienda no sale, y sin ninguna completa la sección entera no se dibuja. Es la regla de D-074 ("si
+  no hay reseñas, el bloque no va") cumplida por el código y no por acordarse de apagar la sección.
+- **"Compra verificada" es una casilla por reseña**, apagada por defecto.
+- **No emite `AggregateRating`.** Google no lo toma para reseñas que el comercio carga sobre su
+  propio producto.
+
+Las tres tarjetas que trae la plantilla son huecos (`[COMPLETAR: reseña real…]`), para ver el
+bloque maquetado en el editor.
+
+### 3. La estrella es un color nuevo
+
+`--cauce-estrella`. Vale el acento de la marca salvo que la plantilla lo pise; en el aditivo dental
+es ámbar `#C77700`, elegido para pasar 3:1 como objeto gráfico sobre la tarjeta blanca (3,46) y
+sobre el fondo de página (3,24). El ámbar habitual de las estrellas, `#F2A900`, da 2,01.
+
+### 4. Lo que sigue pendiente
+
+- **Las reseñas.** Reales, con permiso, y sin fotos de antes y después. El texto de una reseña
+  también es un claim: una que diga que el producto curó algo no se publica tal cual.
+- **La línea de estrellas del bloque de compra** ("4,7 · N reseñas") no se armó. `main-product` no
+  ve los bloques de otra sección, así que habría que escribir el número a mano, que es justo lo que
+  esta decisión evita.
+- **Con reseñas reales no se vio en el tema.** La lógica se probó renderizando la sección con datos
+  de prueba fuera de Shopify (promedio, barras, "ver más", pendientes); en el tema solo se vio el
+  estado vacío.
+
+---
