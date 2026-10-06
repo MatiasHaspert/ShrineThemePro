@@ -6127,9 +6127,14 @@ summary.cauce-fichas-carrusel__funcion::-webkit-details-marker { display: none; 
    27. PDP — reseñas de clientes
    Ver sections/cauce-resenas.liquid y docs/DECISIONS.md D-075.
 
-   Un resumen (promedio, cantidad, barras por puntaje) y una grilla de tarjetas
-   en columnas, como un muro: cada tarjeta mide lo que mide su foto y su texto,
-   y las columnas las reparte el navegador (CSS columns, sin JS).
+   Un resumen (promedio, cantidad, barras por puntaje) y una grilla de tarjetas:
+   una columna en telefono, dos en tablet y tres en escritorio. Cada tarjeta
+   mide lo que mide su foto y su texto, y se alinea arriba con las de su fila.
+
+   Es CSS grid y no CSS columns (el "muro" de la pagina de referencia). Con
+   columns el navegador reparte por alto, no por orden: tres tarjetas quedaban
+   dos en la primera columna y la tercera vacia, y las reseñas se leian de
+   arriba abajo en vez de izquierda a derecha, que es el orden en que se cargan.
 
    La estrella es el unico color nuevo. --cauce-estrella vale el acento de la
    marca salvo que la plantilla lo pise: en el aditivo dental es un ambar
@@ -6317,32 +6322,28 @@ summary.cauce-fichas-carrusel__funcion::-webkit-details-marker { display: none; 
 
 .cauce-resenas__grilla {
   list-style: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 1.6rem;
   margin: 0;
   padding: 0;
-  columns: 1;
-  column-gap: 1.6rem;
 }
 
 @media screen and (min-width: 750px) {
-  .cauce-resenas__grilla { columns: 2; }
+  .cauce-resenas__grilla { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media screen and (min-width: 990px) {
-  .cauce-resenas__grilla { columns: 3; }
+  .cauce-resenas__grilla { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-/* inline-block con ancho completo y no solo break-inside: Safari parte igual
-   una tarjeta entre dos columnas si es un bloque comun. */
 .cauce-resenas__tarjeta {
-  display: inline-block;
-  width: 100%;
-  margin: 0 0 1.6rem;
   border: 1px solid var(--cauce-linea);
   border-radius: 1.2rem;
   background: var(--cauce-blanco);
   color: var(--cauce-texto, var(--cauce-cauce));
   overflow: hidden;
-  break-inside: avoid;
 }
 
 .cauce-resenas__tarjeta--pendiente { border: 2px dashed var(--cauce-linea-fuerte); }
@@ -6423,7 +6424,9 @@ img.cauce-resenas__foto {
 
 .cauce-resenas__mas[open] > .cauce-resenas__mas-boton { display: none; }
 
-.cauce-resenas__mas[open] > .cauce-resenas__grilla { margin-top: 0; }
+/* Abierto, el resto sigue a la primera grilla con el mismo aire que hay entre
+   dos filas: el gap del contenedor (2.4rem) menos lo que falta para 1.6rem. */
+.cauce-resenas__mas[open] { margin-top: -0.8rem; }
 
 .cauce-resenas__pie {
   max-width: 72ch;
