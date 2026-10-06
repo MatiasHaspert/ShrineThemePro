@@ -5406,7 +5406,10 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
 /* Recuadro de foto pendiente ---------------------------------------------- */
 /* Ver snippets/cauce-foto-pendiente.liquid. */
 
-.cauce-foto-pendiente {
+/* div. y no solo la clase: el recuadro recibe ademas la clase de imagen de la
+   seccion (__imagen), que pone display: block para el <img>. Con el tipo
+   adelante esta regla le gana y el texto queda centrado. */
+div.cauce-foto-pendiente {
   display: flex;
   align-items: center;
   justify-content: center;
