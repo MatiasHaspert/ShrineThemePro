@@ -4042,13 +4042,15 @@ certificado N.º …". La función de cada ingrediente (bloque de ingredientes) 
   SENASA, elaborador, edad mínima y contacto.
 - **Fotos.** Once: cinco de la galería (hoy son imágenes de marcador cargadas en el producto) y
   seis en las secciones.
-- **Descuentos automáticos.** No se crearon. Sin ellos el carrito cobra 2 × y 3 × $49.900. Hacen
-  falta dos, como los del R-ALA: cantidad mínima 2 → **−$39.900** y cantidad mínima 3 →
-  **−$77.800**, sobre este producto, combinables con `TRANSFERENCIA10`.
+- **Descuentos automáticos: creados y activos**, con la misma forma que los del R-ALA (solo este
+  producto, una vez por pedido, combinables con descuentos de pedido): `Aditivo dental 2 unidades`,
+  cantidad mínima 2 → **−$39.900**, y `Aditivo dental 3 unidades`, cantidad mínima 3 →
+  **−$77.800**. Si el producto se borra y se vuelve a cargar, Shopify los desactiva (D-069 §2).
 - **Plantilla del producto.** El admin solo ofrece las plantillas del tema publicado, así que el
   producto (`aditivo-dental-perros`, en borrador) no la tiene asignada. Se asigna después de
   mergear.
-- **El carrito no se probó.** Un producto en borrador no se puede agregar.
+- **El carrito no se probó.** Un producto en borrador no se puede agregar: falta comprobar, con el
+  producto activo, que cada pack cobra $49.900, $59.900 y $71.900 y lo que muestra el checkout.
 
 ### 7. Dos cosas que conviene saber para la próxima plantilla
 
