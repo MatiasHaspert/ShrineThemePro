@@ -5329,6 +5329,11 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
   --color-base-accent-2: 46, 125, 79;
   --gradient-base-accent-2: #2E7D4F;
 
+  /* El hito destacado de la linea de tiempo: DORADO, con el texto VERDE BOSQUE
+     encima. Ver D-079. */
+  --cauce-destacado: #D9A514;
+  --cauce-destacado-label: #0F3D24;
+
   /* La pagina de referencia es de esquinas redondas; CAUCE es de 2px. */
   --buttons-radius: 10px;
   --buttons-radius-outset: 11px;
@@ -5358,6 +5363,12 @@ cart-drawer.is-empty .cauce-carrito.drawer__inner {
 
 .plantilla--aditivo-dental :is(.color-inverse, .color-text, .color-accent-1, .color-accent-2) :is(h1, h2, h3, h4, .h0, .h1, .h2, .h3, .h4) {
   color: inherit;
+}
+
+/* El cierre del titulo de la linea de tiempo va en cursiva, como en la
+   referencia. */
+.plantilla--aditivo-dental .cauce-medialista--linea .cauce-medialista__titulo .cauce-acento {
+  font-style: italic;
 }
 
 /* Los datos (precios, cuotas) iban en DM Mono con numeros de ancho fijo. En
@@ -5905,59 +5916,160 @@ div.cauce-foto-pendiente {
 }
 
 /* Forma 2 — linea de tiempo. La linea y el marcador son pseudo-elementos del
-   <li>, como en cauce-progreso (bloque 13). */
-.cauce-medialista--linea .cauce-medialista__lista { gap: 2.8rem; }
+   <li>, como en cauce-progreso (bloque 13). Ver docs/DECISIONS.md D-079.
+
+   Cinco medidas atan todo: donde cae la linea (--x), cuanto se corre el texto
+   (--sangria), a que altura queda el centro de la pastilla (--centro), el aire
+   entre hitos (--paso) y el hueco entre un marcador y la linea (--corte). El
+   marcador va centrado en la pastilla, y la linea no es continua: cada tramo
+   arranca --corte debajo de un marcador y termina --corte arriba del siguiente. */
+.cauce-medialista--linea {
+  --cauce-linea-x: 1.2rem;
+  --cauce-linea-sangria: 3.6rem;
+  --cauce-linea-centro: 1.7rem;
+  --cauce-linea-paso: 2.4rem;
+  --cauce-linea-corte: 2rem;
+  --cauce-linea-destacado: var(--cauce-destacado, var(--cauce-acento));
+  --cauce-linea-destacado-label: var(--cauce-destacado-label, var(--cauce-acento-label));
+}
+
+.cauce-medialista--linea .cauce-medialista__lista { gap: var(--cauce-linea-paso); }
 
 .cauce-medialista--linea .cauce-medialista__item {
   position: relative;
-  padding-left: 3.2rem;
+  padding-left: var(--cauce-linea-sangria);
 }
 
 .cauce-medialista--linea .cauce-medialista__item::before {
   content: '';
   position: absolute;
-  left: calc(0.5rem - 0.5px);
-  top: 1.6rem;
-  bottom: -2.8rem;
+  left: calc(var(--cauce-linea-x) - 0.5px);
+  top: calc(var(--cauce-linea-centro) + var(--cauce-linea-corte));
+  bottom: calc(var(--cauce-linea-corte) - var(--cauce-linea-paso) - var(--cauce-linea-centro));
   width: 1px;
   background-color: currentColor;
-  opacity: 0.35;
+  opacity: 0.55;
 }
 
+/* El ultimo tramo termina con el hito, salvo que abajo venga el recuadro: ahi
+   baja hasta casi tocarlo (la columna separa lista y recuadro 2.4rem). */
 .cauce-medialista--linea .cauce-medialista__item:last-child::before { bottom: 0; }
+.cauce-medialista--linea .cauce-medialista__lista--sigue .cauce-medialista__item:last-child::before { bottom: -1.2rem; }
 
 .cauce-medialista--linea .cauce-medialista__item::after {
   content: '';
   position: absolute;
-  left: 0;
-  top: 1.1rem;
+  left: calc(var(--cauce-linea-x) - 0.5rem);
+  top: calc(var(--cauce-linea-centro) - 0.5rem);
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
   background-color: currentColor;
 }
 
+/* Sin flex-wrap: si el titulo no entra al lado de la pastilla, se parte ahi
+   mismo en dos renglones y no baja entero. Alineado arriba, para que la
+   pastilla (y con ella el marcador) no se mueva cuando el titulo se parte. */
 .cauce-medialista--linea .cauce-medialista__cabeza {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.8rem 1.2rem;
+  align-items: flex-start;
+  gap: 1.2rem;
 }
 
 .cauce-medialista--linea .cauce-medialista__etiqueta {
-  padding: 0.5rem 1.4rem;
+  padding: 0.9rem 1.6rem;
   border-radius: 10rem;
   background: var(--cauce-sedimento);
   color: var(--cauce-cauce);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
+  line-height: 1.6rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  white-space: nowrap;
+  flex: none;
 }
 
-.cauce-medialista--linea .cauce-medialista__nombre { font-size: 1.9rem; }
+/* 0.4rem arriba: centra el primer renglon del titulo (2.6rem) en la pastilla
+   (3.4rem). */
+.cauce-medialista--linea .cauce-medialista__nombre {
+  min-width: 0;
+  padding-top: 0.4rem;
+  font-size: 2rem;
+}
 
-.cauce-medialista--linea .cauce-medialista__parrafo { margin-top: 1rem; }
+.cauce-medialista--linea .cauce-medialista__parrafo {
+  margin-top: 1.6rem;
+  font-size: 1.6rem;
+}
+
+/* El texto del hito puede ser una lista de un renglon. Shrine le da 2rem de
+   sangria a .rte ul; aca la vineta queda casi al filo de la pastilla. Y es un
+   <ul> adentro de un <ol>: sin fijarla, el navegador le pone la vineta hueca
+   de las listas anidadas. */
+.cauce-medialista--linea .cauce-medialista__parrafo :is(ul, ol) {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.cauce-medialista--linea .cauce-medialista__parrafo ul { list-style-type: disc; }
+
+/* Hito destacado: la pastilla, el marcador y la estrella en --cauce-destacado.
+   En el aditivo dental es DORADO #D9A514: 5.45 sobre VERDE BOSQUE (marcador y
+   estrella) y 5.45 con el texto VERDE BOSQUE encima (pastilla). */
+.cauce-medialista--linea .cauce-medialista__item--destacado::after { background-color: var(--cauce-linea-destacado); }
+
+.cauce-medialista--linea .cauce-medialista__item--destacado .cauce-medialista__etiqueta {
+  background: var(--cauce-linea-destacado);
+  color: var(--cauce-linea-destacado-label);
+}
+
+.cauce-medialista--linea .cauce-medialista__estrella {
+  white-space: nowrap;
+  color: var(--cauce-linea-destacado);
+}
+
+.cauce-medialista--linea .cauce-medialista__estrella .cauce-icono {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.6rem;
+  vertical-align: -0.3rem;
+  color: currentColor;
+}
+
+/* El recuadro final cuelga de la misma linea: se corre lo mismo que los hitos y
+   su icono queda centrado sobre ella, a media altura. */
+.cauce-medialista--linea .cauce-medialista__recuadro {
+  position: relative;
+  margin-left: var(--cauce-linea-sangria);
+  padding: 2.4rem 2.8rem;
+  background: rgba(var(--color-foreground), 0.14);
+}
+
+.cauce-medialista--linea .cauce-medialista__recuadro-titulo { font-size: 2rem; }
+.cauce-medialista--linea .cauce-medialista__recuadro-texto { font-size: 1.6rem; }
+
+.cauce-medialista__recuadro-marca {
+  position: absolute;
+  left: calc(var(--cauce-linea-x) - var(--cauce-linea-sangria) - 1.2rem);
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.5rem;
+  background: var(--cauce-acento);
+  color: var(--cauce-acento-label);
+  transform: translateY(-50%);
+}
+
+.cauce-medialista__recuadro-marca .cauce-icono {
+  width: 1.8rem;
+  height: 1.8rem;
+  color: currentColor;
+  stroke-width: 2;
+}
 
 /* Formas 3 y 4 — pasos con tilde y filas con icono. Una fila por item, con una
    regla fina debajo. La regla es el color del texto al 16 %: se ve en los tres

@@ -4273,3 +4273,61 @@ garantizado, que el sarro ya formado lo saca el veterinario (sigue en el bloque 
 garantía de 30 días (sigue en las fichas de abajo del botón y en su bloque).
 
 ---
+
+## D-079 · 2026-10-07 · Aditivo dental: la rutina pasa a ser la línea de tiempo de la referencia, con su texto
+
+**Decisión.** El bloque `rutina` (`cauce-media-lista`, forma "línea de tiempo") toma el armado y el
+texto de la referencia: cinco hitos en vez de tres, el del medio destacado, cada texto como una
+viñeta y el recuadro final colgado de la misma línea. El título pasa a "Lo que pasa dentro de tu
+mascota *en los primeros 60 días*". La foto es la que ya había cargado el comercio.
+
+### 1. Lo que cambió en la sección
+
+Todo es de la forma `linea`; las otras tres formas no cambian.
+
+| | |
+|---|---|
+| Hito destacado | Casilla nueva por item, **"Destacar este item"**: pastilla y marcador en `--cauce-destacado` y una estrella pegada al título |
+| Línea | Ya no es continua: son tramos, con un hueco arriba y abajo de cada marcador. El marcador va centrado en la pastilla |
+| Recuadro final | Se corre lo mismo que los hitos y lleva un ícono (`infinito`, nuevo en `cauce-iconos`) centrado sobre la línea. El último tramo baja hasta casi tocarlo |
+| Texto del hito | Si es una lista, la viñeta queda al filo de la pastilla y es llena (un `<ul>` adentro de un `<ol>` sale hueca por defecto) |
+| Título | El cierre en acento va en cursiva, solo en esta plantilla |
+
+Cinco variables atan las medidas (`--cauce-linea-x`, `-sangria`, `-centro`, `-paso`, `-corte`), en
+el bloque de la forma 2 de `cauce-brand.css`.
+
+**El título del hito no baja de renglón entero.** Con `flex-wrap`, a 345 px "Resultados visibles"
+caía debajo de la pastilla y la estrella quedaba sola en un tercer renglón. Ahora el título se
+parte al lado de la pastilla y la estrella va pegada a la última palabra (`&#8288;`).
+
+### 2. DORADO
+
+Color nuevo, solo en esta plantilla: `--cauce-destacado: #D9A514`. Da 5,45 sobre VERDE BOSQUE
+(marcador y estrella) y 5,45 con el texto VERDE BOSQUE encima (pastilla). **No es igual a la
+referencia:** allá la pastilla lleva el texto amarillo claro sobre mostaza, que acá daría menos de
+3:1. Fuera de esta plantilla el token cae en el acento.
+
+El fondo tampoco es el de la referencia (casi negro): es el VERDE BOSQUE de los demás bloques
+oscuros de la página.
+
+### 3. El texto es el de la referencia
+
+Palabra por palabra, por decisión del comercio, con tres erratas corregidas ("aliento-", "visibles
+encías", "dias") y "Botella terminada" en lugar de "Frasco terminado". Igual que en D-078, va
+contra D-074 §5:
+
+| Hito | Qué contradice |
+|---|---|
+| "Semana 2 · Resultados visibles", "Día 30 · Dientes más limpios" | Plazos de resultado |
+| "Mejoras visibles en encías y placa" | Efecto sobre las encías: no estaba en ningún otro bloque |
+| "Reducción significativa de placa y sarro" | El bloque del problema dice que el sarro ya formado lo saca el veterinario |
+| "continuar el tratamiento", "se interrumpe el tratamiento" | "Tratamiento" es vocabulario terapéutico; la página decía "rutina" |
+
+El recuadro está en tuteo ("Agrega"); el resto de la página, en voseo.
+
+### 4. Lo que no se vio
+
+En un teléfono. Se verificó en un tema de desarrollo con el producto real, en escritorio, y la
+columna de la lista achicada a 290 y 345 px.
+
+---

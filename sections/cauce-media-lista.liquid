@@ -9,7 +9,9 @@
     tarjetas  fichas claras con una etiqueta chica arriba ("01 · Placa"), un
               titulo y un parrafo. El bloque del problema.
     linea     hitos colgados de una linea vertical, cada uno con su pastilla.
-              La rutina en el tiempo.
+              La rutina en el tiempo. Un hito puede ir destacado (pastilla y
+              marcador en dorado, estrella al lado del titulo) y el recuadro
+              final cuelga de la misma linea, con su icono. Ver D-079.
     pasos     filas con tilde, separadas por una regla fina. Como se usa.
     filas     filas con un icono (o una foto redonda) a la izquierda. Beneficios.
 
@@ -55,6 +57,11 @@
   assign cauce_lista_tag = 'ul'
   if cauce_estilo == 'linea' or cauce_estilo == 'pasos'
     assign cauce_lista_tag = 'ol'
+  endif
+
+  assign cauce_hay_recuadro = false
+  if section.settings.recuadro_titulo != blank or section.settings.recuadro_texto != blank
+    assign cauce_hay_recuadro = true
   endif
 
   assign cauce_alt = section.settings.alt | default: section.settings.imagen.alt
@@ -145,15 +152,19 @@
         {%- endif -%}
 
         {%- if cauce_hay_items -%}
-          <{{ cauce_lista_tag }} class="cauce-medialista__lista" role="list">
+          <{{ cauce_lista_tag }} class="cauce-medialista__lista{% if cauce_hay_recuadro %} cauce-medialista__lista--sigue{% endif %}" role="list">
             {%- for block in section.blocks -%}
               {%- liquid
                 if block.settings.titulo == blank and block.settings.texto == blank
                   continue
                 endif
                 assign cauce_item_alt = block.settings.alt | default: block.settings.imagen.alt
+                assign cauce_destacado = false
+                if cauce_estilo == 'linea' and block.settings.destacado
+                  assign cauce_destacado = true
+                endif
               -%}
-              <li class="cauce-medialista__item" {{ block.shopify_attributes }}>
+              <li class="cauce-medialista__item{% if cauce_destacado %} cauce-medialista__item--destacado{% endif %}" {{ block.shopify_attributes }}>
                 {%- if cauce_estilo == 'pasos' -%}
                   <span class="cauce-medialista__marca">
                     {%- render 'cauce-iconos', icono: 'visto' -%}
@@ -184,7 +195,13 @@
                         <span class="cauce-medialista__etiqueta">{{ block.settings.etiqueta }}</span>
                       {%- endif -%}
                       {%- if block.settings.titulo != blank -%}
-                        <span class="cauce-medialista__nombre">{{ block.settings.titulo }}</span>
+                        <span class="cauce-medialista__nombre">
+                          {{- block.settings.titulo -}}
+                          {%- comment -%} &#8288; pega la estrella a la ultima palabra: no baja sola de renglon. {%- endcomment -%}
+                          {%- if cauce_destacado -%}
+                            <span class="cauce-medialista__estrella">&#8288;{%- render 'cauce-iconos', icono: 'estrella' -%}</span>
+                          {%- endif -%}
+                        </span>
                       {%- endif -%}
                     </h3>
                   {%- endif -%}
@@ -198,8 +215,13 @@
           </{{ cauce_lista_tag }}>
         {%- endif -%}
 
-        {%- if section.settings.recuadro_titulo != blank or section.settings.recuadro_texto != blank -%}
+        {%- if cauce_hay_recuadro -%}
           <div class="cauce-medialista__recuadro">
+            {%- if cauce_estilo == 'linea' -%}
+              <span class="cauce-medialista__recuadro-marca">
+                {%- render 'cauce-iconos', icono: 'infinito' -%}
+              </span>
+            {%- endif -%}
             {%- if section.settings.recuadro_titulo != blank -%}
               <p class="cauce-medialista__recuadro-titulo">{{ section.settings.recuadro_titulo }}</p>
             {%- endif -%}
@@ -364,6 +386,13 @@
         },
         { "type": "text", "id": "titulo", "label": "Titulo" },
         { "type": "richtext", "id": "texto", "label": "Texto" },
+        {
+          "type": "checkbox",
+          "id": "destacado",
+          "label": "Destacar este item",
+          "info": "Solo en la forma \"Linea de tiempo\": pastilla y marcador en dorado y una estrella al lado del titulo.",
+          "default": false
+        },
         {
           "type": "select",
           "id": "icono",

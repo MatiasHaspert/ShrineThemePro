@@ -675,9 +675,10 @@
         "i1": {
           "type": "item",
           "settings": {
-            "etiqueta": "Primer día",
-            "titulo": "Lo agregás al agua",
-            "texto": "<p>Una tapita por litro en el bebedero. No tiene sabor ni olor y no cambia el color del agua: tu perro toma como siempre.</p>",
+            "etiqueta": "Día 1",
+            "titulo": "Primer uso",
+            "texto": "<ul><li>Los activos (CPC y extracto de té verde) comienzan a actuar en la cavidad oral</li></ul>",
+            "destacado": false,
             "icono": "ninguno",
             "alt": ""
           }
@@ -685,9 +686,10 @@
         "i2": {
           "type": "item",
           "settings": {
-            "etiqueta": "Primera semana",
-            "titulo": "Ya es un hábito",
-            "texto": "<p>Cambiás el agua, sumás la tapita. No hay nada más que hacer ni de qué acordarse.</p>",
+            "etiqueta": "Días 3 – 7",
+            "titulo": "Acción acumulada",
+            "texto": "<ul><li>Reducción progresiva de bacterias. Primeras mejoras perceptibles en el aliento.</li></ul>",
+            "destacado": false,
             "icono": "ninguno",
             "alt": ""
           }
@@ -695,9 +697,32 @@
         "i3": {
           "type": "item",
           "settings": {
+            "etiqueta": "Semana 2",
+            "titulo": "Resultados visibles",
+            "texto": "<ul><li>Aliento notablemente más fresco. Mejoras visibles en encías y placa.</li></ul>",
+            "destacado": true,
+            "icono": "ninguno",
+            "alt": ""
+          }
+        },
+        "i4": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "Día 30",
+            "titulo": "Dientes más limpios",
+            "texto": "<ul><li>Reducción significativa de placa y sarro con uso diario constante.</li></ul>",
+            "destacado": false,
+            "icono": "ninguno",
+            "alt": ""
+          }
+        },
+        "i5": {
+          "type": "item",
+          "settings": {
             "etiqueta": "Día 60",
-            "titulo": "Se termina la botella",
-            "texto": "<p>Un litro rinde 60 días. Es el momento de reponer para no cortar la rutina.</p>",
+            "titulo": "Botella terminada",
+            "texto": "<ul><li>Dos meses de higiene dental diaria completos. Es el momento de continuar el tratamiento.</li></ul>",
+            "destacado": false,
             "icono": "ninguno",
             "alt": ""
           }
@@ -706,7 +731,9 @@
       "block_order": [
         "i1",
         "i2",
-        "i3"
+        "i3",
+        "i4",
+        "i5"
       ],
       "settings": {
         "imagen": "shopify://shop_images/Gemini_Generated_Image_f24mjnf24mjnf24m.jpg",
@@ -716,14 +743,14 @@
         "posicion_imagen": "izquierda",
         "epigrafe": "",
         "volanta": "",
-        "titulo": "Cómo es la rutina,",
-        "titulo_acento": "del primer día al último",
+        "titulo": "Lo que pasa dentro de tu mascota",
+        "titulo_acento": "en los primeros 60 días",
         "heading_size": "h1",
         "bajada": "",
         "titulo_en": "media_arriba",
         "estilo": "linea",
-        "recuadro_titulo": "Uso continuo",
-        "recuadro_texto": "<p>La placa se vuelve a formar todos los días. Si cortás el uso, vuelve a acumularse: por eso es una rutina y no algo de una sola vez.</p>",
+        "recuadro_titulo": "Uso continuo – La clave del cuidado bucal",
+        "recuadro_texto": "<p>La placa vuelve si se interrumpe el tratamiento. Agrega una tapita 15ml por cada litro de agua diariamente para mantener la protección activa.</p>",
         "boton_texto": "",
         "boton_link": "",
         "color_scheme": "inverse",
