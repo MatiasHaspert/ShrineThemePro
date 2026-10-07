@@ -291,6 +291,7 @@
           "settings": {
             "nombre": "Extracto de té verde",
             "texto": "Aporta polifenoles de origen vegetal, que se usan en higiene bucal para acompañar el aliento fresco.",
+            "imagen": "shopify://shop_images/hojateverde.avif",
             "alt": "",
             "foto_pendiente": "FOTO 1:1 — placa de vidrio con extracto de té verde (líquido verde oliva), vista desde arriba.",
             "nosotros": true,
@@ -302,6 +303,7 @@
           "settings": {
             "nombre": "Tres ingredientes, una fórmula",
             "texto": "Cetilpiridinio, té verde y zinc van juntos en cada tapita, para ayudar a reducir la placa que se forma todos los días.",
+            "imagen": "shopify://shop_images/25.avif",
             "alt": "",
             "foto_pendiente": "FOTO 1:1 — los tres ingredientes juntos en sus placas de vidrio, vista desde arriba.",
             "nosotros": true,
@@ -313,6 +315,7 @@
           "settings": {
             "nombre": "Acción sobre las bacterias",
             "texto": "Ayuda a reducir las bacterias de la boca que forman la placa y dan mal aliento, cada vez que tu perro toma agua.",
+            "imagen": "shopify://shop_images/26.avif",
             "alt": "",
             "foto_pendiente": "FOTO 1:1 — dientes de un perro, primer plano.",
             "nosotros": true,
@@ -324,6 +327,7 @@
           "settings": {
             "nombre": "Sin xilitol, sin sabor ni olor",
             "texto": "No lleva xilitol. No tiene sabor ni olor y no cambia el color del agua: tu perro toma como siempre.",
+            "imagen": "shopify://shop_images/27.avif",
             "alt": "",
             "foto_pendiente": "FOTO 1:1 — bebedero con agua transparente, vista desde arriba.",
             "nosotros": true,
@@ -335,6 +339,7 @@
           "settings": {
             "nombre": "Cloruro de cetilpiridinio",
             "texto": "Ingrediente de uso habitual en productos de higiene bucal. Ayuda a reducir las bacterias que forman la placa.",
+            "imagen": "shopify://shop_images/26_1.avif",
             "alt": "",
             "foto_pendiente": "FOTO 1:1 — placa de vidrio con cloruro de cetilpiridinio (líquido transparente), vista desde arriba.",
             "nosotros": true,
@@ -346,6 +351,7 @@
           "settings": {
             "nombre": "Gluconato de zinc",
             "texto": "Se une a los compuestos que le dan olor al aliento y ayuda a neutralizarlos. Va disuelto en el agua, sin sabor.",
+            "imagen": "shopify://shop_images/29.avif",
             "alt": "",
             "foto_pendiente": "FOTO 1:1 — placa de vidrio con gluconato de zinc (polvo blanco o solución), vista desde arriba.",
             "nosotros": true,
