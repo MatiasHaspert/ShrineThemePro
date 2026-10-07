@@ -631,20 +631,22 @@
           "type": "ficha",
           "settings": {
             "nombre": "Extracto de té verde",
+            "imagen": "shopify://shop_images/imagenpdp2.avif",
             "alt": "",
             "foto_pendiente": "FOTO 1:1 — placa de vidrio con extracto de té verde (líquido verde oliva), vista desde arriba.",
-            "funcion": "Aporta polifenoles de origen vegetal.",
-            "detalle": "<p>Los polifenoles del té verde se usan en productos de higiene bucal para acompañar el aliento fresco.</p>"
+            "funcion": "El antiinflamatorio natural",
+            "detalle": "<p>Reduce la inflamación gingival y fortalece el tejido de las encías con polifenoles antioxidantes.</p><ul><li>Reduce la inflamación de encías.</li><li>Antioxidante de origen natural</li><li>Fortalece el tejido gingival</li></ul>"
           }
         },
         "f3": {
           "type": "ficha",
           "settings": {
             "nombre": "Gluconato de zinc",
+            "imagen": "shopify://shop_images/11_614d123b-c111-4356-9d2f-c5d9f37ea9ad.webp",
             "alt": "",
             "foto_pendiente": "FOTO 1:1 — placa de vidrio con gluconato de zinc (polvo blanco o solución), vista desde arriba.",
-            "funcion": "Ayuda a neutralizar los compuestos que dan mal olor.",
-            "detalle": "<p>El zinc se une a los compuestos que le dan olor al aliento. Va disuelto en el agua, sin sabor.</p>"
+            "funcion": "El disolvente de sarro",
+            "detalle": "<p>Descompone el sarro existente y regula el pH oral para crear un entorno desfavorable para las bacterias.</p><ul><li>Disuelve el sarro acumulado</li><li>Regula el pH de la boca.</li><li>Crea un territorio inhóspito para bacterias&nbsp;</li></ul>"
           }
         }
       },
@@ -655,7 +657,7 @@
       ],
       "settings": {
         "volanta": "",
-        "titulo": "Qué lleva y para qué",
+        "titulo": "&nbsp;<strong>Ingredientes Activos - Lo que trabaja con cada sorbo</strong>&nbsp;",
         "heading_size": "h1",
         "bajada": "",
         "pie": "",
@@ -707,6 +709,7 @@
         "i3"
       ],
       "settings": {
+        "imagen": "shopify://shop_images/Gemini_Generated_Image_f24mjnf24mjnf24m.jpg",
         "alt": "",
         "foto_pendiente": "FOTO 4:3 — un perro tomando agua del bebedero, con la botella en primer plano.",
         "relacion": "4 / 3",
