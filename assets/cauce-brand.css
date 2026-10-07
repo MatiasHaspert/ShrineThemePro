@@ -5556,6 +5556,196 @@ div.cauce-foto-pendiente {
 .cauce-pestanas__panel > :first-child { margin-top: 0; }
 .cauce-pestanas__panel > :last-child { margin-bottom: 0; }
 
+/* Titulo opcional arriba de la caja: se queda con el margen de arriba. */
+.cauce-pestanas__titulo {
+  margin: 2.4rem 0 1.2rem;
+  font-size: 2rem;
+  line-height: 1.25;
+}
+
+.cauce-pestanas__titulo + .cauce-pestanas { margin-top: 0; }
+
+/* Lista de beneficios adentro de una pestana: un titulo y renglones separados
+   por una linea, sin vinetas. El panel es .rte y Shrine le pone sangria y
+   vineta a .rte ul: por eso la clase del panel adelante. */
+.cauce-pestanas__panel .cauce-beneficios__titulo {
+  margin: 0 0 1.2rem;
+  font-size: 1.8rem;
+  line-height: 1.4;
+}
+
+.cauce-pestanas__panel .cauce-beneficios {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cauce-pestanas__panel .cauce-beneficios > li {
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--cauce-linea);
+}
+
+.cauce-pestanas__panel .cauce-beneficios > li:last-child {
+  padding-bottom: 0.4rem;
+  border-bottom: 0;
+}
+
+/* Tabla de ingredientes clave, adentro de una pestana. Ver
+   snippets/cauce-ingredientes-clave.liquid y docs/DECISIONS.md D-077.
+   El panel es .rte, y Shrine le pone padding a .rte table td y borde y sombra a
+   .rte img: cada celda y la foto llevan dos clases para ganarles sin !important.
+   La forma angosta es la de base y no la de telefono: entre 750 y 989 px la
+   columna de compra mide menos que en un telefono. En esa forma el texto baja
+   debajo de la foto y el nombre y ocupa todo el ancho de la celda (a 320 px, al
+   lado de la foto le quedaban 88 px), y la tabla le toma 0.8rem de cada lado al
+   padding del panel. */
+.cauce-clave {
+  --cauce-clave-col: 5.6rem;
+  --cauce-clave-col-otros: 4rem;
+  --cauce-clave-foto: 3.6rem;
+  width: calc(100% + 1.6rem);
+  margin: 0 -0.8rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  font-family: var(--cauce-font-texto);
+}
+
+.cauce-clave .cauce-clave__esquina,
+.cauce-clave .cauce-clave__ingrediente,
+.cauce-clave .cauce-clave__nosotros,
+.cauce-clave .cauce-clave__otros {
+  border: 0;
+  border-bottom: 1px solid var(--cauce-linea);
+  vertical-align: middle;
+  text-align: center;
+}
+
+.cauce-clave tbody tr:last-child > * { border-bottom: 0; }
+
+.cauce-clave .cauce-clave__esquina { padding: 0; }
+
+.cauce-clave .cauce-clave__ingrediente {
+  padding: 1.4rem 1rem 1.4rem 0;
+  font-weight: 400;
+  text-align: left;
+}
+
+.cauce-clave .cauce-clave__nosotros,
+.cauce-clave .cauce-clave__otros {
+  padding: 1.2rem 0.4rem;
+}
+
+.cauce-clave thead .cauce-clave__nosotros,
+.cauce-clave thead .cauce-clave__otros {
+  color: var(--cauce-cauce);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+/* La columna propia: cabecera VERDE BOSQUE con las puntas de arriba redondas y
+   una banda clara que baja por todas las filas. En el aditivo dental: blanco
+   sobre la cabecera 12.26, la tilde sobre la banda 6.27, la cruz sobre el
+   blanco del panel 8.52. */
+.cauce-clave thead .cauce-clave__nosotros {
+  width: var(--cauce-clave-col);
+  border-bottom-color: transparent;
+  border-radius: 0.8rem 0.8rem 0 0;
+  background: var(--cauce-cauce);
+  color: var(--cauce-blanco);
+  font-weight: 700;
+}
+
+.cauce-clave thead .cauce-clave__otros { width: var(--cauce-clave-col-otros); }
+
+.cauce-clave tbody .cauce-clave__nosotros { background: var(--cauce-sedimento); }
+
+.cauce-clave tbody tr:last-child .cauce-clave__nosotros { border-radius: 0 0 0.8rem 0.8rem; }
+
+.cauce-clave__fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+}
+
+.cauce-clave .cauce-clave__foto {
+  flex: none;
+  display: block;
+  width: var(--cauce-clave-foto);
+  height: var(--cauce-clave-foto);
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: none;
+  object-fit: cover;
+}
+
+.cauce-clave .cauce-clave__foto--pendiente {
+  border: 2px dashed var(--cauce-linea-fuerte);
+  background: var(--cauce-sedimento);
+}
+
+.cauce-clave__cuerpo { display: contents; }
+
+.cauce-clave__nombre {
+  flex: 1 1 0;
+  min-width: 0;
+  color: var(--cauce-cauce);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.cauce-clave__texto {
+  flex: 0 0 100%;
+  color: rgba(var(--color-foreground), 0.78);
+  font-size: 1.3rem;
+  line-height: 1.5;
+}
+
+.cauce-clave__si,
+.cauce-clave__no {
+  display: block;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0 auto;
+}
+
+.cauce-clave__si { color: var(--cauce-exito); }
+.cauce-clave__no { color: var(--cauce-error); }
+
+@media screen and (min-width: 990px) {
+  .cauce-clave {
+    --cauce-clave-col: 7.6rem;
+    --cauce-clave-col-otros: 5.2rem;
+    --cauce-clave-foto: 4.8rem;
+    width: 100%;
+    margin: 0;
+  }
+
+  .cauce-clave .cauce-clave__ingrediente { padding: 1.6rem 1.2rem 1.6rem 0; }
+
+  .cauce-clave__fila {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+
+  .cauce-clave__cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .cauce-clave__nombre { flex: none; font-size: 1.5rem; }
+  .cauce-clave__texto { flex: none; }
+  .cauce-clave__si,
+  .cauce-clave__no { width: 2.4rem; height: 2.4rem; }
+}
+
 /* Foto y lista ------------------------------------------------------------ */
 /* Ver sections/cauce-media-lista.liquid. */
 

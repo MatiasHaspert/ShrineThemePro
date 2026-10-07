@@ -1,0 +1,131 @@
+{% comment %}
+  CAUCE: tabla de ingredientes clave, para una pestana de la columna de compra.
+
+  Una fila por ingrediente: foto redonda, nombre y una linea con lo que hace; al
+  lado, la columna propia pintada con la tilde y la columna de "los otros" con la
+  cruz. Va adentro de snippets/cauce-pestanas.liquid, capturada desde el mismo
+  bloque custom_liquid:
+
+    {% capture cauce_clave %}{% render 'cauce-ingredientes-clave', bloques: section.blocks, nosotros: 'Hocico Fresh' %}{% endcapture %}
+    {% render 'cauce-pestanas', ..., titulo_2: 'Ingredientes clave', contenido_2: cauce_clave %}
+
+  Parametros:
+    bloques   {array}   requerido. section.blocks de main-product. Solo se leen
+                        los de tipo cauce_ingrediente_clave, en su orden.
+    nosotros  {string}  opcional. Encabezado de la columna propia. Default: el
+                        nombre de la tienda.
+    otros     {string}  opcional. Encabezado de la otra columna. Default "Otros".
+    titulo    {string}  opcional. <caption> oculto de la tabla.
+
+  Por que las filas son bloques de main-product y no parametros de texto, como el
+  resto de las pestanas: cada fila lleva una foto, y un custom_liquid no tiene
+  selector de imagenes. El bloque no dibuja nada en su lugar de la columna; lo
+  junta este snippet. Ver docs/DECISIONS.md D-077.
+
+  Lo que resuelve por construccion:
+
+  - Es una <table> de verdad, igual que cauce-comparativa: el ingrediente es el
+    <th> de su fila y cada icono lleva "Si" / "No" oculto.
+  - Sin foto, la fila dibuja un circulo punteado del mismo tamano, con el pedido
+    de produccion como nombre accesible. El layout no se mueve al cargarla.
+  - Sin ninguna fila con nombre no devuelve nada, y cauce-pestanas no dibuja la
+    pestana.
+
+  ADVERTENCIA DE CLAIMS. Es publicidad comparativa: cada fila afirma algo de este
+  producto y, con la cruz, lo niega de toda la categoria. Todo el texto vive en
+  templates/*.json. No escribas copy adentro de este archivo: "Si" y "No" son
+  etiquetas de accesibilidad, no claims.
+{% endcomment %}
+
+{%- liquid
+  assign cauce_clave_n = 0
+  for block in bloques
+    if block.type == 'cauce_ingrediente_clave' and block.settings.nombre != blank
+      assign cauce_clave_n = cauce_clave_n | plus: 1
+    endif
+  endfor
+
+  assign cauce_clave_nosotros = nosotros | default: shop.name
+  assign cauce_clave_otros = otros | default: 'Otros'
+-%}
+
+{%- if cauce_clave_n > 0 -%}
+  <table class="cauce-clave">
+    {%- if titulo != blank -%}
+      <caption class="visually-hidden">{{ titulo | strip_html }}</caption>
+    {%- endif -%}
+    <thead>
+      <tr>
+        <td class="cauce-clave__esquina"></td>
+        <th scope="col" class="cauce-clave__nosotros">{{ cauce_clave_nosotros }}</th>
+        <th scope="col" class="cauce-clave__otros">{{ cauce_clave_otros }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for block in bloques -%}
+        {%- liquid
+          if block.type != 'cauce_ingrediente_clave' or block.settings.nombre == blank
+            continue
+          endif
+          assign cauce_clave_alt = block.settings.alt | default: block.settings.imagen.alt
+        -%}
+        <tr {{ block.shopify_attributes }}>
+          <th scope="row" class="cauce-clave__ingrediente">
+            <span class="cauce-clave__fila">
+              {%- if block.settings.imagen != blank -%}
+                {{
+                  block.settings.imagen
+                  | image_url: width: 192
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '48, 96, 144, 192',
+                    sizes: '48px',
+                    class: 'cauce-clave__foto',
+                    alt: cauce_clave_alt
+                }}
+              {%- elsif block.settings.foto_pendiente != blank -%}
+                <span
+                  class="cauce-clave__foto cauce-clave__foto--pendiente"
+                  role="img"
+                  aria-label="{{ block.settings.foto_pendiente | strip_html | escape }}"
+                ></span>
+              {%- endif -%}
+              <span class="cauce-clave__cuerpo">
+                <span class="cauce-clave__nombre">{{ block.settings.nombre }}</span>
+                {%- if block.settings.texto != blank -%}
+                  <span class="cauce-clave__texto">{{ block.settings.texto }}</span>
+                {%- endif -%}
+              </span>
+            </span>
+          </th>
+          <td class="cauce-clave__nosotros">
+            {%- if block.settings.nosotros -%}
+              <svg class="cauce-clave__si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="m5 12.8 4.6 4.7L19 6.5"/>
+              </svg>
+              <span class="visually-hidden">Sí</span>
+            {%- else -%}
+              <svg class="cauce-clave__no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
+                <path d="M6.5 5l11 14M17.5 5l-11 14"/>
+              </svg>
+              <span class="visually-hidden">No</span>
+            {%- endif -%}
+          </td>
+          <td class="cauce-clave__otros">
+            {%- if block.settings.otros -%}
+              <svg class="cauce-clave__si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="m5 12.8 4.6 4.7L19 6.5"/>
+              </svg>
+              <span class="visually-hidden">Sí</span>
+            {%- else -%}
+              <svg class="cauce-clave__no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
+                <path d="M6.5 5l11 14M17.5 5l-11 14"/>
+              </svg>
+              <span class="visually-hidden">No</span>
+            {%- endif -%}
+          </td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+{%- endif -%}

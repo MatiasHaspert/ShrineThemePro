@@ -8,6 +8,7 @@
   Parametros (todos texto, vienen del bloque custom_liquid del template):
     id                         {string}  requerido. Prefijo unico para los id de
                                          pestanas y paneles (product_form_id sirve).
+    titulo                     {string}  opcional. Titulo visible arriba de la caja.
     etiqueta                   {string}  opcional. Nombre accesible del grupo.
     titulo_N, contenido_N      N = 1..3. El contenido es HTML. Una pestana sin
                                          titulo o sin contenido no se dibuja.
@@ -34,6 +35,9 @@
 -%}
 
 {%- if cauce_pest_n > 0 -%}
+  {%- if titulo != blank -%}
+    <h2 class="cauce-pestanas__titulo">{{ titulo }}</h2>
+  {%- endif -%}
   <cauce-tabs class="cauce-tabs cauce-pestanas">
     <div class="cauce-tabs__lista cauce-pestanas__lista" role="tablist"{% if etiqueta != blank %} aria-label="{{ etiqueta | escape }}"{% endif %}>
       {%- if titulo_1 != blank and contenido_1 != blank -%}

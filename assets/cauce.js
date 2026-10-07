@@ -25,6 +25,15 @@
 
       this.addEventListener('click', this.onClick.bind(this));
       this.addEventListener('keydown', this.onKeydown.bind(this));
+      // Editor de temas: al elegir un bloque que vive en un panel oculto (una
+      // fila de la tabla de ingredientes), se abre su pestana.
+      this.addEventListener('shopify:block:select', this.onBlockSelect.bind(this));
+    }
+
+    onBlockSelect(e) {
+      for (let i = 0; i < this.panels.length; i++) {
+        if (this.panels[i] && this.panels[i].contains(e.target)) this.select(i);
+      }
     }
 
     onClick(e) {

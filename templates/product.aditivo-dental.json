@@ -283,7 +283,73 @@
         "pestanas": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% render 'cauce-pestanas',\n  id: product_form_id,\n  etiqueta: 'Más sobre el producto',\n  titulo_1: 'Cómo se usa',\n  contenido_1: '<ol><li>Llená el bebedero como siempre.</li><li>Agregá una tapita (15 ml) por cada litro de agua. La tapa de la botella es la medida.</li><li>Repetilo cada vez que le cambiás el agua.</li></ol><p>Una botella de 1 litro rinde 60 días.</p>',\n  titulo_2: 'Ingredientes',\n  contenido_2: '<p>Cloruro de cetilpiridinio, extracto de té verde y gluconato de zinc.</p><p>Sin xilitol. Sin sabor y sin olor, y no cambia el color del agua.</p>',\n  titulo_3: 'Qué esperar',\n  contenido_3: '<p>Lo primero que suele notarse es el aliento. No hay un plazo garantizado: depende de cada perro.</p><p>Ayuda a reducir la placa que se forma todos los días. El sarro que ya está formado lo saca el veterinario.</p><p>Si no te convence, tenés la garantía de 30 días.</p>'\n%}"
+            "custom_liquid": "{% capture cauce_clave %}{% render 'cauce-ingredientes-clave', bloques: section.blocks, nosotros: 'Hocico Fresh', otros: 'Otros', titulo: 'Ingredientes clave' %}{% endcapture %}\n{% render 'cauce-pestanas',\n  id: product_form_id,\n  titulo: 'Conocé más sobre Hocico Fresh:',\n  etiqueta: 'Más sobre el producto',\n  titulo_1: 'Cómo se usa',\n  contenido_1: '<ol><li>Llená el bebedero como siempre.</li><li>Agregá una tapita (15 ml) por cada litro de agua. La tapa de la botella es la medida.</li><li>Repetilo cada vez que le cambiás el agua.</li></ol><p>Una botella de 1 litro rinde 60 días.</p>',\n  titulo_2: 'Ingredientes clave',\n  contenido_2: cauce_clave,\n  titulo_3: 'Beneficios del producto',\n  contenido_3: '<h3 class=\"cauce-beneficios__titulo\">¿Le temes al cepillo de dientes? Hocico Fresh cuida la boca de tu perro sin esfuerzo</h3><ul class=\"cauce-beneficios\" role=\"list\"><li>Dientes más limpios en 30 días o menos con uso diario</li><li>Elimina placa y controla las bacterias que causan enfermedades orales</li><li>Refresca el aliento hasta por 12 horas sin necesidad de cepillado</li><li>Solo añade una tapa al agua cada vez que la cambies — ¡así de fácil!</li><li>100% ingredientes naturales. Seguro para perros adultos de todas las razas y tamaños</li><li>Previene enfermedades que pueden afectar corazón, pulmón e hígado</li></ul>'\n%}"
+          }
+        },
+        "clave1": {
+          "type": "cauce_ingrediente_clave",
+          "settings": {
+            "nombre": "Extracto de té verde",
+            "texto": "Aporta polifenoles de origen vegetal, que se usan en higiene bucal para acompañar el aliento fresco.",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — placa de vidrio con extracto de té verde (líquido verde oliva), vista desde arriba.",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "clave2": {
+          "type": "cauce_ingrediente_clave",
+          "settings": {
+            "nombre": "Tres ingredientes, una fórmula",
+            "texto": "Cetilpiridinio, té verde y zinc van juntos en cada tapita, para ayudar a reducir la placa que se forma todos los días.",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — los tres ingredientes juntos en sus placas de vidrio, vista desde arriba.",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "clave3": {
+          "type": "cauce_ingrediente_clave",
+          "settings": {
+            "nombre": "Acción sobre las bacterias",
+            "texto": "Ayuda a reducir las bacterias de la boca que forman la placa y dan mal aliento, cada vez que tu perro toma agua.",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — dientes de un perro, primer plano.",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "clave4": {
+          "type": "cauce_ingrediente_clave",
+          "settings": {
+            "nombre": "Sin xilitol, sin sabor ni olor",
+            "texto": "No lleva xilitol. No tiene sabor ni olor y no cambia el color del agua: tu perro toma como siempre.",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — bebedero con agua transparente, vista desde arriba.",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "clave5": {
+          "type": "cauce_ingrediente_clave",
+          "settings": {
+            "nombre": "Cloruro de cetilpiridinio",
+            "texto": "Ingrediente de uso habitual en productos de higiene bucal. Ayuda a reducir las bacterias que forman la placa.",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — placa de vidrio con cloruro de cetilpiridinio (líquido transparente), vista desde arriba.",
+            "nosotros": true,
+            "otros": false
+          }
+        },
+        "clave6": {
+          "type": "cauce_ingrediente_clave",
+          "settings": {
+            "nombre": "Gluconato de zinc",
+            "texto": "Se une a los compuestos que le dan olor al aliento y ayuda a neutralizarlos. Va disuelto en el agua, sin sabor.",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — placa de vidrio con gluconato de zinc (polvo blanco o solución), vista desde arriba.",
+            "nosotros": true,
+            "otros": false
           }
         },
         "sticky": {
@@ -330,6 +396,12 @@
         "pagos",
         "fichas",
         "pestanas",
+        "clave1",
+        "clave2",
+        "clave3",
+        "clave4",
+        "clave5",
+        "clave6",
         "sticky"
       ],
       "settings": {

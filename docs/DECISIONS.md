@@ -4172,3 +4172,104 @@ de marcas del INPI: una búsqueda web no encontró otro producto para perros con
 alcanza para darlo por libre.
 
 ---
+
+## D-077 · 2026-10-06 · Aditivo dental: la pestaña "Ingredientes clave" pasa a ser una tabla comparativa
+
+**Decisión.** La pestaña del medio de la columna de compra deja de ser dos renglones de texto y pasa
+a ser una tabla como la de la referencia: una fila por ingrediente (foto redonda, nombre y una
+línea con lo que hace), la columna de Hocico Fresh pintada con la tilde y la columna "Otros" con la
+cruz. La pestaña se llama "Ingredientes clave". El carrusel de fichas de más abajo no cambia.
+
+### 1. Cómo está hecha
+
+| | |
+|---|---|
+| Filas | Bloques nuevos de `main-product`, tipo **`cauce_ingrediente_clave`**: nombre, texto, foto, alt, pedido de foto y una casilla por columna. No dibujan nada en su lugar de la columna |
+| Tabla | **`snippets/cauce-ingredientes-clave.liquid`** recorre `section.blocks`, junta esos bloques y arma una `<table>` real, con "Sí" / "No" oculto en cada ícono |
+| Pestaña | El bloque `custom_liquid` de las pestañas captura la tabla y se la pasa a `cauce-pestanas` como `contenido_2` |
+| Estilos | `cauce-brand.css`, bloque 26, a continuación de las pestañas. Ningún hex: cabecera `--cauce-cauce`, banda `--cauce-sedimento`, tilde `--cauce-exito`, cruz `--cauce-error` |
+| Editor | `<cauce-tabs>` escucha `shopify:block:select`: al elegir una fila en el editor se abre su pestaña |
+
+**Por qué bloques de `main-product` y no parámetros de texto, como las otras dos pestañas.** Cada
+fila lleva una foto, y un `custom_liquid` no tiene selector de imágenes. Con bloques, las filas se
+agregan, se sacan y se reordenan desde el editor. **Alternativa descartada:** un metaobjeto por
+ingrediente colgado del producto; saca el copy de `templates/*.json`, que es donde vive todo el
+resto.
+
+**Dos formas, y la angosta es la de base.** Desde 990 px la foto, el nombre y el texto van en fila.
+Por debajo, el texto baja y ocupa todo el ancho de la celda: a 320 px, al lado de la foto le
+quedaban 88 px y cada fila medía 224 a 280 px. Queda en 149 a 185 px. No es un corte de teléfono:
+entre 750 y 989 px la columna de compra es más angosta que en un teléfono.
+
+### 2. Las seis filas, y lo que se cambió de la referencia
+
+El comercio pidió las seis filas de la referencia. Tres son ingredientes de la fórmula (té verde,
+cloruro de cetilpiridinio, gluconato de zinc) y llevan el copy de las fichas. Las otras tres son
+rótulos de la referencia que no se podían pasar tal cual:
+
+| Referencia | Queda | Por qué |
+|---|---|---|
+| Complejo de ingredientes naturales | Tres ingredientes, una fórmula | El cetilpiridinio no es de origen natural |
+| Agentes antibacterianos, "hasta por 12 horas" | Acción sobre las bacterias | D-074 §5: sin plazos |
+| Sin colorantes ni químicos, "100 % natural" | Sin xilitol, sin sabor ni olor | El líquido es verde y lleva cetilpiridinio. La fila dice lo que la página ya afirma en otros bloques |
+
+Ninguna dice "elimina". Los títulos de estas tres filas son del tema, no del comercio: se cambian
+desde el editor.
+
+### 3. La cruz en "Otros" es decisión del comercio
+
+Las seis filas llevan cruz en "Otros", como en la referencia. Es publicidad comparativa, y en las
+filas de ingredientes afirma que ningún otro aditivo lleva té verde, cetilpiridinio o zinc: la
+propia referencia los lleva. Se le planteó al comercio con dos alternativas (cruz solo donde se
+sostiene, o sin columna "Otros") y eligió dejarla. Cada fila tiene su casilla, así que se puede
+corregir por fila sin tocar código.
+
+### 4. Lo que queda pendiente
+
+- **Las seis fotos.** Sin foto la fila dibuja un círculo punteado. Las tres de ingredientes son las
+  mismas que pide el carrusel de fichas: se cargan una vez en Archivos y se eligen en los dos
+  lugares.
+- **Con foto no se vio, y en un teléfono tampoco.** Se verificó en un tema de desarrollo con el
+  producto real, en escritorio. La forma angosta se midió ahí mismo, achicando la caja a 294 y
+  360 px con el corte de 990 px anulado: el editor del admin no terminó de cargar.
+- **El texto de las filas** lo tiene que confirmar el laboratorio, igual que el de las fichas
+  (D-074 §5).
+
+---
+
+## D-078 · 2026-10-06 · Aditivo dental: "Qué esperar" pasa a "Beneficios del producto", con el texto de la referencia
+
+**Decisión.** La tercera pestaña de la columna de compra deja de ser "Qué esperar" y pasa a ser
+"Beneficios del producto", con el armado de la referencia: un título y seis renglones separados por
+una línea, sin viñetas. Arriba de la caja de pestañas va un título, "Conocé más sobre Hocico
+Fresh:".
+
+- `snippets/cauce-pestanas.liquid` acepta un parámetro `titulo`, opcional.
+- La lista es HTML en `contenido_3`, como las otras pestañas de texto: `.cauce-beneficios__titulo`
+  y `.cauce-beneficios`, en el bloque 26 de `cauce-brand.css`.
+
+### 1. El texto es el de la referencia, por decisión del comercio
+
+D-074 dice que la página no toma "ningún texto, imagen, nombre ni número" de la referencia y que no
+da plazos, no dice "elimina" y no nombra enfermedades. Esta pestaña es la excepción: el comercio
+pidió que fuera idéntica a la captura y, con dos alternativas reescritas a la vista, eligió el
+texto tal cual, cambiando solo el nombre del producto.
+
+| Renglón | Qué contradice |
+|---|---|
+| "Dientes más limpios en 30 días o menos" | D-074 §5, sin plazos. La pestaña que reemplaza decía "no hay un plazo garantizado" |
+| "Elimina placa y controla las bacterias que causan enfermedades orales" | D-074 §5: "ayuda a reducir", y sin enfermedades |
+| "Refresca el aliento hasta por 12 horas" | D-074 §5, sin plazos |
+| "100% ingredientes naturales. Seguro para perros adultos…" | La pestaña de al lado lista cloruro de cetilpiridinio. El resto de la página dice cachorros, adultos y mayores (D-076) |
+| "Previene enfermedades que pueden afectar corazón, pulmón e hígado" | Es una indicación terapéutica en un producto veterinario sin registro (D-076 §1) |
+
+El título de adentro y los renglones están en tuteo ("temes", "añade"); el resto de la página, en
+voseo.
+
+### 2. Lo que salió con "Qué esperar"
+
+Tres cosas que la pestaña decía y ya no están en la columna de compra: que no hay un plazo
+garantizado, que el sarro ya formado lo saca el veterinario (sigue en el bloque del problema) y la
+garantía de 30 días (sigue en las fichas de abajo del botón y en su bloque).
+
+---
