@@ -132,6 +132,10 @@
             "headline": "CADA BOTELLA DE 1 LITRO RINDE 60 DÍAS",
             "cauce_subtitulo": "",
             "cauce_cuotas_escalon": "todos",
+            "cauce_sin_ahorro": false,
+            "cauce_redondear": true,
+            "cauce_cta_fijo": true,
+            "cauce_destacado": "option_2",
             "cauce_compacto": false,
             "cauce_dias_frasco": 60,
             "preselected": "option_2",
@@ -211,11 +215,7 @@
             "option_4_compare_price": "compare_price",
             "option_4_compare_price_text": "[compare_price]",
             "margin_top": 0,
-            "margin_bottom": 9,
-            "cauce_sin_ahorro": false,
-            "cauce_redondear": true,
-            "cauce_cta_fijo": true,
-            "cauce_destacado": "option_2"
+            "margin_bottom": 9
           }
         },
         "nota_precios": {
@@ -277,7 +277,7 @@
         "fichas": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "<ul class=\"cauce-fichas\" role=\"list\"><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'gota' %}<span>1 litro · rinde 60 días</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'hoja' %}<span>Sin sabor ni olor · no cambia el color del agua</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'envio' %}<span>Entrega en 3 a 10 días hábiles</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'escudo' %}<span>Garantía de 30 días</span></li></ul>"
+            "custom_liquid": "<ul class=\"cauce-fichas\" role=\"list\"><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'gota' %}<span>1 litro · rinde 60 días</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'hoja' %}<span>Sin sabor ni olor, 100% indetectable</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'envio' %}<span>Entrega en 3 a 10 días hábiles</span></li><li class=\"cauce-fichas__item\">{% render 'cauce-iconos', icono: 'escudo' %}<span>Garantía de 30 días</span></li></ul>"
           }
         },
         "pestanas": {
@@ -457,7 +457,7 @@
           "settings": {
             "etiqueta": "01 · Placa",
             "titulo": "Se forma todos los días.",
-            "texto": "<p>Después de cada comida queda sobre los dientes una película que no se ve. Si nada la interrumpe, se sigue acumulando.</p>",
+            "texto": "<p>Después de cada comida, bacterias forman sobre los dientes una película que no se ve. Sin higiene, ese ciclo nunca se interrumpe.</p>",
             "icono": "ninguno",
             "alt": ""
           }
@@ -466,8 +466,8 @@
           "type": "item",
           "settings": {
             "etiqueta": "02 · Sarro",
-            "titulo": "Es placa que se endureció.",
-            "texto": "<p>Una vez formado, el sarro lo saca el veterinario con una limpieza. Por eso este aditivo actúa antes, sobre la placa.</p>",
+            "titulo": "Placa endurecida que el cepillo ya no puede quitar.",
+            "texto": "<p>Una vez formado, el sarro lo saca el veterinario con una limpieza con anestesia. Por eso este aditivo actúa antes, sobre la placa.</p>",
             "icono": "ninguno",
             "alt": ""
           }
@@ -476,8 +476,8 @@
           "type": "item",
           "settings": {
             "etiqueta": "03 · Mal aliento",
-            "titulo": "Es la señal que aparece primero.",
-            "texto": "<p>Suele ser lo primero que notás cuando la placa se acumula. Es un buen momento para sumar una rutina de todos los días.</p>",
+            "titulo": "No es normal - es evidencia de infección activa.",
+            "texto": "<p>Ese olor no es una característica de la especie. Es la huella de colonias bacterianas destruyendo tejido gingival en este momento.</p>",
             "icono": "ninguno",
             "alt": ""
           }
@@ -489,16 +489,17 @@
         "i3"
       ],
       "settings": {
+        "imagen": "shopify://shop_images/imagenPdp.avif",
         "alt": "",
         "foto_pendiente": "FOTO 16:9 — la boca de un perro con placa en los dientes. Foto real; no se presenta como un caso de cliente.",
         "relacion": "16 / 9",
         "posicion_imagen": "izquierda",
         "epigrafe": "",
         "volanta": "",
-        "titulo": "El mal aliento es lo primero que se nota",
+        "titulo": "El 70% de las mascotas sufre enfermedad oral antes de los 3 años",
         "titulo_acento": "",
         "heading_size": "h1",
-        "bajada": "<p>La placa se forma en los dientes de tu perro todos los días. Si se deja, se endurece y se vuelve sarro. Conviene actuar antes.</p>",
+        "bajada": "<p>Y la mayoría de dueños no lo saben hasta que el daño ya es irreversible. El mal aliento es la primera señal - y casi siempre se ignora.</p>",
         "titulo_en": "media_abajo",
         "estilo": "tarjetas",
         "recuadro_titulo": "",
@@ -613,10 +614,11 @@
           "type": "ficha",
           "settings": {
             "nombre": "Cloruro de cetilpiridinio",
+            "imagen": "shopify://shop_images/imagenpdp1.avif",
             "alt": "",
             "foto_pendiente": "FOTO 1:1 — placa de vidrio con cloruro de cetilpiridinio (líquido transparente), vista desde arriba.",
             "funcion": "Ayuda a reducir las bacterias que forman la placa.",
-            "detalle": "<p>Es un ingrediente de uso habitual en productos de higiene bucal. En el agua del bebedero, llega a los dientes cada vez que tu perro toma.</p>"
+            "detalle": "<p>Destruye la placa bacteriana en la fuente y previene su reaparición. El activo principal de la formula.</p><ul><li>Elimina la placa desde el origen.</li><li>Previene reaparición diaria.</li><li>Actúa en toda la cavidad oral.&nbsp;</li></ul>"
           }
         },
         "f2": {
