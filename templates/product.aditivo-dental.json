@@ -464,6 +464,7 @@
             "etiqueta": "01 · Placa",
             "titulo": "Se forma todos los días.",
             "texto": "<p>Después de cada comida, bacterias forman sobre los dientes una película que no se ve. Sin higiene, ese ciclo nunca se interrumpe.</p>",
+            "destacado": false,
             "icono": "ninguno",
             "alt": ""
           }
@@ -474,6 +475,7 @@
             "etiqueta": "02 · Sarro",
             "titulo": "Placa endurecida que el cepillo ya no puede quitar.",
             "texto": "<p>Una vez formado, el sarro lo saca el veterinario con una limpieza con anestesia. Por eso este aditivo actúa antes, sobre la placa.</p>",
+            "destacado": false,
             "icono": "ninguno",
             "alt": ""
           }
@@ -484,6 +486,7 @@
             "etiqueta": "03 · Mal aliento",
             "titulo": "No es normal - es evidencia de infección activa.",
             "texto": "<p>Ese olor no es una característica de la especie. Es la huella de colonias bacterianas destruyendo tejido gingival en este momento.</p>",
+            "destacado": false,
             "icono": "ninguno",
             "alt": ""
           }
@@ -768,6 +771,7 @@
             "etiqueta": "",
             "titulo": "Llená el bebedero",
             "texto": "<p>Con agua fresca, como cualquier día.</p>",
+            "destacado": false,
             "icono": "ninguno",
             "alt": ""
           }
@@ -778,6 +782,7 @@
             "etiqueta": "",
             "titulo": "Agregá una tapita por litro",
             "texto": "<p>La tapa de la botella es la medida: 15 ml por cada litro de agua. Sin sabor, sin olor y sin cambiarle el color al agua.</p>",
+            "destacado": false,
             "icono": "ninguno",
             "alt": ""
           }
@@ -786,8 +791,20 @@
           "type": "item",
           "settings": {
             "etiqueta": "",
-            "titulo": "Cambiá el agua todos los días",
-            "texto": "<p>Y cada vez que la cambiás, volvé a poner la tapita.</p>",
+            "titulo": "Los activos trabajan con cada sorbo",
+            "texto": "<p>Recubren dientes y encías, disuelven la placa bacteriana y neutralizan el mal aliento desde la raíz.</p>",
+            "destacado": false,
+            "icono": "ninguno",
+            "alt": ""
+          }
+        },
+        "item_AGXgiN": {
+          "type": "item",
+          "settings": {
+            "etiqueta": "",
+            "titulo": "Semana 2, los resultados son visibles:",
+            "texto": "<p>Placa reducida, sarro menor, aliento notablemente mejorado, Sin visita adicional al veterinario.</p>",
+            "destacado": false,
             "icono": "ninguno",
             "alt": ""
           }
@@ -796,16 +813,18 @@
       "block_order": [
         "i1",
         "i2",
-        "i3"
+        "i3",
+        "item_AGXgiN"
       ],
       "settings": {
+        "imagen": "shopify://shop_images/landing.png",
         "alt": "",
         "foto_pendiente": "FOTO 1:1 — una mano volcando la tapita en el bebedero, con la botella al lado y un perro mirando.",
         "relacion": "1 / 1",
         "posicion_imagen": "izquierda",
         "epigrafe": "",
         "volanta": "",
-        "titulo": "Tres pasos, y ninguno es cepillarle los dientes",
+        "titulo": "Tu rutina no cambia. La boca de tu mascota, sí.",
         "titulo_acento": "",
         "heading_size": "h1",
         "bajada": "<p>Tu perro ya toma agua todos los días. Eso es todo lo que hace falta.</p>",
@@ -830,6 +849,7 @@
             "etiqueta": "",
             "titulo": "Aliento más fresco",
             "texto": "<p>Ayuda a mantener el aliento fresco, con una tapita en el agua de todos los días.</p>",
+            "destacado": false,
             "icono": "gota",
             "alt": ""
           }
@@ -840,6 +860,7 @@
             "etiqueta": "",
             "titulo": "Menos placa acumulándose",
             "texto": "<p>Ayuda a reducir la placa que después se vuelve sarro. Sin cepillado ni pelea: no hay que abrirle la boca.</p>",
+            "destacado": false,
             "icono": "escudo",
             "alt": ""
           }
@@ -850,6 +871,7 @@
             "etiqueta": "",
             "titulo": "Para toda raza y tamaño",
             "texto": "<p>Cachorros, adultos y perros mayores, de los más chicos a los más grandes, con la misma dosis. Sin xilitol.</p>",
+            "destacado": false,
             "icono": "corazon",
             "alt": ""
           }
