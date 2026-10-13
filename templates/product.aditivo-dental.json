@@ -848,9 +848,10 @@
           "settings": {
             "etiqueta": "",
             "titulo": "Aliento más fresco",
-            "texto": "<p>Ayuda a mantener el aliento fresco, con una tapita en el agua de todos los días.</p>",
+            "texto": "<p>Mantiene el aliento fresco hasta por 12 horas y equilibrar la flora bacteriana oral con una mezcla probiótica pendiente de patente.</p>",
             "destacado": false,
             "icono": "gota",
+            "imagen": "shopify://shop_images/7_3b0eecbf-db6f-4b74-95a4-206927adc745.avif",
             "alt": ""
           }
         },
@@ -858,10 +859,11 @@
           "type": "item",
           "settings": {
             "etiqueta": "",
-            "titulo": "Menos placa acumulándose",
+            "titulo": "Combate la acumulación de sarro y placa",
             "texto": "<p>Ayuda a reducir la placa que después se vuelve sarro. Sin cepillado ni pelea: no hay que abrirle la boca.</p>",
             "destacado": false,
             "icono": "escudo",
+            "imagen": "shopify://shop_images/6_923cfb04-ca58-4f79-bda5-57e46165f755.avif",
             "alt": ""
           }
         },
@@ -870,9 +872,10 @@
           "settings": {
             "etiqueta": "",
             "titulo": "Para toda raza y tamaño",
-            "texto": "<p>Cachorros, adultos y perros mayores, de los más chicos a los más grandes, con la misma dosis. Sin xilitol.</p>",
+            "texto": "<p>Cachorros, adultos y perros mayores, de los más chicos a los más grandes, con la misma dosis.</p>",
             "destacado": false,
             "icono": "corazon",
+            "imagen": "shopify://shop_images/landing4.png",
             "alt": ""
           }
         }
@@ -883,13 +886,14 @@
         "i3"
       ],
       "settings": {
+        "imagen": "shopify://shop_images/landing2.png",
         "alt": "",
         "foto_pendiente": "FOTO 4:3 — una persona con su perro al aire libre, con la botella en primer plano.",
         "relacion": "4 / 3",
         "posicion_imagen": "izquierda",
         "epigrafe": "",
         "volanta": "",
-        "titulo": "Lo que hace por la boca de tu perro",
+        "titulo": "Mejora la salud dental y el bienestar de tu perro&nbsp;",
         "titulo_acento": "",
         "heading_size": "h1",
         "bajada": "",
@@ -1163,12 +1167,13 @@
         "r1": {
           "type": "resena",
           "settings": {
-            "puntaje": "0",
-            "autor": "[COMPLETAR: nombre del cliente]",
-            "titulo": "",
-            "texto": "[COMPLETAR: reseña real, con las palabras del cliente y su permiso]",
+            "puntaje": "5",
+            "autor": "Camila R. O.",
+            "titulo": "Mi Golden por fin no huele a pescado",
+            "texto": "Tengo un Golden Retriever de 6 años y honestamente ya no soportaba el aliento que tenía. Probé galletas dentales, juguetes, hasta intenté cepillarlo pero él odia que le metan la mano en la boca. Una amiga veterinaria me recomendó este producto y al mes ya la diferencia era enorme. Le pongo la tapita en su bowl todas las mañanas y listo, sin pelea.",
             "fecha": "",
-            "verificada": false,
+            "verificada": true,
+            "imagen": "shopify://shop_images/ffkR6tdQfN.webp",
             "alt": "",
             "foto_pendiente": "FOTO 4:5 — la que mandó el cliente, con su permiso. Opcional. Sin antes y después."
           }
@@ -1176,12 +1181,13 @@
         "r2": {
           "type": "resena",
           "settings": {
-            "puntaje": "0",
-            "autor": "[COMPLETAR: nombre del cliente]",
-            "titulo": "",
-            "texto": "[COMPLETAR: reseña real, con las palabras del cliente y su permiso]",
+            "puntaje": "5",
+            "autor": "Esteban G. I.",
+            "titulo": "Cumple lo que promete",
+            "texto": "He comprado muchos productos para perros que prometen cosas y no funcionan. Este sí. A mi husky le mejoró el aliento bastante y los dientes los tiene más limpios. Punto.",
             "fecha": "",
-            "verificada": false,
+            "verificada": true,
+            "imagen": "shopify://shop_images/acJM75YGXQ.webp",
             "alt": "",
             "foto_pendiente": "FOTO 4:5 — la que mandó el cliente, con su permiso. Opcional. Sin antes y después."
           }
@@ -1190,20 +1196,65 @@
           "type": "resena",
           "settings": {
             "puntaje": "0",
-            "autor": "[COMPLETAR: nombre del cliente]",
-            "titulo": "",
-            "texto": "[COMPLETAR: reseña real, con las palabras del cliente y su permiso]",
+            "autor": "Malena B. O.",
+            "titulo": "Lo que necesitaba mi peludo",
+            "texto": "Mi border collie tenia un mal aliento que no resistia nadie. Probe esto sin muchas espectativas y resulto ser justo lo que necesitabamos. Ya van casi tres meses y el cambio es total.",
             "fecha": "",
-            "verificada": false,
+            "verificada": true,
+            "imagen": "shopify://shop_images/XQ3kCQQsZd.webp",
             "alt": "",
             "foto_pendiente": "FOTO 4:5 — la que mandó el cliente, con su permiso. Opcional. Sin antes y después."
+          }
+        },
+        "resena_Tj3CYX": {
+          "type": "resena",
+          "settings": {
+            "puntaje": "1",
+            "autor": "Hernán C. D.",
+            "titulo": "Esperaba mejor olor",
+            "texto": "A ver, el producto puede que limpie y todo eso pero pensé que iba a tener un olor más rico tipo menta para mí también sentirlo. No huele a nada. No es lo que esperaba.",
+            "fecha": "",
+            "verificada": true,
+            "alt": "",
+            "foto_pendiente": ""
+          }
+        },
+        "resena_HUVeR3": {
+          "type": "resena",
+          "settings": {
+            "puntaje": "5",
+            "autor": "Adriana P. C.",
+            "titulo": "Cinco semanas y mi criolla otra cosa",
+            "texto": "Rescaté a mi perra hace tiempo y traía los dientes en muy mal estado. Llevo cinco semanas con el aditivo y de verdad se le ven mucho mejor. Las encías ya no sangran cuando muerde sus juguetes. Me hubiera gustado conocer el producto antes.",
+            "fecha": "",
+            "verificada": true,
+            "imagen": "shopify://shop_images/GhJRdrbNKP.webp",
+            "alt": "",
+            "foto_pendiente": ""
+          }
+        },
+        "resena_3ANNwQ": {
+          "type": "resena",
+          "settings": {
+            "puntaje": "5",
+            "autor": "Mateo H. R.",
+            "titulo": "Súper práctico",
+            "texto": "Lo más cómodo es que uno no tiene que hacer nada raro. Le echo la tapita al agua y ya. Mi pug Bruno tenía el aliento horrible y en unas tres semanas mejoró bastante.",
+            "fecha": "",
+            "verificada": true,
+            "imagen": "shopify://shop_images/nDXTbfwEAM.webp",
+            "alt": "",
+            "foto_pendiente": ""
           }
         }
       },
       "block_order": [
         "r1",
         "r2",
-        "r3"
+        "r3",
+        "resena_Tj3CYX",
+        "resena_HUVeR3",
+        "resena_3ANNwQ"
       ],
       "settings": {
         "volanta": "",
