@@ -4331,3 +4331,80 @@ En un teléfono. Se verificó en un tema de desarrollo con el producto real, en 
 columna de la lista achicada a 290 y 345 px.
 
 ---
+
+## D-080 · 2026-10-13 · Aditivo dental: bloque "Una boca más sana, mes a mes", como en la referencia
+
+**Decisión.** Sección nueva, `sections/cauce-meses.liquid`, entre `beneficios` y `garantia`: un
+título, una pestaña por mes y una fila de fotos, una por mes. El mes elegido lleva la foto cuadrada
+y, debajo, su título y su texto; los demás muestran la foto en 4:3 y nada más. Se armó midiendo la
+captura de la referencia.
+
+**Alternativa descartada:** `cauce-tabs`. Ahí el panel que no está elegido desaparece, y acá las
+tres fotos se ven siempre.
+
+### 1. Lo que salió de la captura
+
+| | Referencia | Acá |
+|---|---|---|
+| Pestañas | 3 de 233 px sobre un bloque de 1168: 20 % cada una | 20 % del bloque cada una |
+| Etiqueta de la pestaña | DM Sans 16 px negrita, 16 px de sangría | Igual |
+| Subrayado | El mes elegido, línea llana y tenue; los demás, guiones del color del texto | Igual. Es al revés de lo habitual |
+| Fotos | 16 px adentro del título, 16 px entre sí, radio 12 px | Igual |
+| Foto elegida / las demás | 1:1 / 4:3, mismo ancho | Igual |
+| Título del mes | 17 px negrita, 8 px debajo de la foto | Igual |
+| Texto del mes | 14 px, interlínea 18,5 px | Igual |
+
+### 2. Lo que no es igual
+
+- **El título va en negrita**, como todos los de esta página (D-074 §2). En la referencia es de
+  peso medio.
+- **La paleta es la de la plantilla**: fondo `#F6F8F4` y VERDE BOSQUE, no el `#F6F7FF` y el
+  `#002C0B` de la captura.
+- **El bloque mide 1100 px útiles y no 1168.** Es el ancho de las demás secciones de la página
+  (`page_width` 1200). En una pantalla de 1888 px cada foto mide 345 px en vez de 368, y el texto
+  del mes 1 corta un renglón antes.
+
+### 3. Lo que la captura no muestra, y se decidió acá
+
+- **Cómo se cambia de mes.** Con la pestaña o tocando la foto. No avanza solo: el comercio
+  confirmó que en la referencia tampoco.
+- **El teléfono.** Debajo de 750 px es un carrusel de scroll-snap, como el de las fichas: cada mes
+  es una tarjeta completa (foto cuadrada y texto), la siguiente asoma, y las pestañas marcan cuál
+  se está viendo. Tocar una pestaña desplaza la fila.
+- **Nada salta al cambiar de mes.** Cada foto vive en un casillero cuadrado fijo y pasa de 75 % a
+  100 % de alto ahí adentro; el texto de los otros meses se apaga con `opacity` y sigue ocupando su
+  lugar. La sección mide siempre lo que mide el texto más largo.
+
+Las pestañas son `<button aria-pressed>` y no `role="tab"`: en teléfono los tres textos están a la
+vista a la vez. Sin JS no se dibujan y quedan las tres tarjetas abiertas. El comportamiento es
+`<cauce-meses>`, en `assets/cauce.js`; los estilos, el bloque 28 de `cauce-brand.css`.
+
+### 4. El espaciado
+
+`meses` lleva 8 px arriba y 72 abajo. Con los 72 que `beneficios` ya tenía abajo quedan 80 px entre
+las dos, lo mismo que entre las otras secciones vecinas del mismo fondo (`respaldo` e
+`ingredientes`, `pasos` y `beneficios`, 40 + 40). Así ninguna sección ya publicada cambia. Si el
+bloque se mueve de lugar, ese 8 hay que revisarlo.
+
+### 5. El texto
+
+El del mes 1 es el de la captura, palabra por palabra. "Aliento fresco desde el día 1" es un plazo
+de resultado (D-074 §5), como los de D-078 y D-079, y además no coincide con dos lugares de la
+misma página: la línea de tiempo pone las primeras mejoras del aliento en "Días 3 – 7", y la
+pregunta 3 dice que "no hay un plazo garantizado".
+
+### 6. Lo que queda pendiente
+
+- **La sección entra apagada** (`"disabled": true` en la plantilla), por decisión del comercio: se
+  prende desde el editor del tema cuando estén los textos y las fotos. Hasta entonces la página
+  publicada no cambia.
+- **El texto de los meses 2 y 3+.** La captura muestra solo el mes 1. Están como `[COMPLETAR: …]`
+  y los carga el comercio desde el editor.
+- **Las tres fotos.** Cuadradas, con lo importante en el centro: sin elegir se ven en 4:3 y pierden
+  una franja arriba y otra abajo.
+- **Con fotos cargadas no se vio en Shopify.** Se verificó en un tema de desarrollo con el producto
+  real, a 1888 px y con un teléfono de 390 px emulado, con los recuadros de foto pendiente. Con
+  fotos se vio solo en una maqueta local (la sección renderizada fuera de Shopify con el CSS y el JS
+  del tema). En un teléfono de verdad no se vio.
+
+---

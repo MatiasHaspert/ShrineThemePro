@@ -905,6 +905,56 @@
         "padding_bottom": 72
       }
     },
+    "meses": {
+      "type": "cauce-meses",
+      "disabled": true,
+      "blocks": {
+        "m1": {
+          "type": "mes",
+          "settings": {
+            "etiqueta": "Mes 1",
+            "titulo": "Empieza la rutina",
+            "texto": "<p>Aliento fresco desde el día 1. Los activos comienzan a trabajar acumulativamente en encías y dientes desde el primer sorbo.</p>",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — una persona con su perro y la botella de Hocico Fresh a la vista."
+          }
+        },
+        "m2": {
+          "type": "mes",
+          "settings": {
+            "etiqueta": "Mes 2",
+            "titulo": "[COMPLETAR: título del mes 2]",
+            "texto": "<p>[COMPLETAR: texto del mes 2]</p>",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — una persona abrazando a su perro, al aire libre."
+          }
+        },
+        "m3": {
+          "type": "mes",
+          "settings": {
+            "etiqueta": "Mes 3+",
+            "titulo": "[COMPLETAR: título del mes 3+]",
+            "texto": "<p>[COMPLETAR: texto del mes 3+]</p>",
+            "alt": "",
+            "foto_pendiente": "FOTO 1:1 — primer plano de un perro contento, con la boca abierta."
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "titulo": "Una boca más sana, mes a mes",
+        "heading_size": "h1",
+        "etiqueta_a11y": "",
+        "color_scheme": "background-1",
+        "ancho_maximo": 1200,
+        "padding_top": 8,
+        "padding_bottom": 72
+      }
+    },
     "garantia": {
       "type": "custom-columns",
       "blocks": {
@@ -1234,6 +1284,7 @@
     "rutina",
     "pasos",
     "beneficios",
+    "meses",
     "garantia",
     "faq",
     "resenas"

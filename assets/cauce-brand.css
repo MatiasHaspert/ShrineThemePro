@@ -6738,3 +6738,218 @@ img.cauce-resenas__foto {
 
 .cauce-resenas__pie > :first-child { margin-top: 0; }
 .cauce-resenas__pie > :last-child { margin-bottom: 0; }
+
+/* ==========================================================================
+   28. PDP — mes a mes
+   Ver sections/cauce-meses.liquid y docs/DECISIONS.md D-080.
+
+   Un titulo, una fila de pestanas (una por mes) y una fila de fotos. El mes
+   elegido lleva la foto cuadrada y su texto debajo; los demas, la foto en 4:3
+   y nada mas. Las medidas salen de la captura de la referencia: las pestanas
+   ocupan el 20 % del bloque cada una, las fotos van 16px adentro del titulo y
+   16px separadas entre si, con 12px de radio.
+
+   El subrayado esta al reves de lo habitual, y es asi en la referencia: el mes
+   elegido lleva una linea llana y tenue, y los demas, guiones del color del
+   texto.
+
+   Dos formas. En telefono es un carrusel de scroll-snap y cada mes es una
+   tarjeta completa (foto cuadrada y texto); desde 750px es una grilla y solo el
+   mes elegido se abre.
+
+   Al cambiar de mes no se mueve nada alrededor. Cada foto vive en un casillero
+   cuadrado que no cambia de tamano: la foto pasa de 75 % a 100 % de alto ahi
+   adentro, y object-fit hace el recorte. El texto de los meses sin elegir se
+   apaga con opacity y sigue ocupando su lugar, asi que la fila mide siempre lo
+   que mide el texto mas largo.
+   ========================================================================== */
+
+.cauce-meses {
+  --cauce-meses-tinta: var(--cauce-cauce);
+  --cauce-meses-linea: rgba(var(--color-foreground), 0.1);
+}
+
+.cauce-meses.color-inverse { --cauce-meses-tinta: currentColor; }
+
+.cauce-meses__inner {
+  max-width: min(var(--cauce-meses-ancho, 1200px), var(--page-width, 1440px));
+  padding-top: var(--padding-top, 5.6rem);
+  padding-bottom: var(--padding-bottom, 5.6rem);
+}
+
+@media screen and (max-width: 749px) {
+  .cauce-meses__inner {
+    padding-top: calc(var(--padding-top, 5.6rem) * 0.75);
+    padding-bottom: calc(var(--padding-bottom, 5.6rem) * 0.75);
+  }
+}
+
+.cauce-meses__titulo {
+  margin: 0 0 0.8rem;
+  text-wrap: balance;
+}
+
+.cauce-meses__cuerpo { display: block; }
+
+/* Pestanas ---------------------------------------------------------------- */
+
+.cauce-meses__pestanas {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+.cauce-meses__pestana {
+  appearance: none;
+  margin: 0;
+  padding: 1rem 0.8rem 1rem 0;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 0;
+  background: none;
+  color: var(--cauce-meses-tinta);
+  font-family: var(--cauce-font-texto);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cauce-meses__pestana[aria-pressed="true"] { border-bottom: 1px solid var(--cauce-meses-linea); }
+
+.cauce-meses__pestana:focus-visible {
+  outline: 2px solid var(--cauce-oxido);
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .cauce-meses__pestana[aria-pressed="false"]:hover { border-bottom-style: solid; }
+}
+
+/* Fotos ------------------------------------------------------------------- */
+
+/* En telefono la fila se sale del margen de la pagina por los dos lados, como
+   el carrusel de fichas: la tarjeta siguiente asoma. 1.5rem es el padding de
+   .page-width hasta 750px. Sin barra: las pestanas dicen donde se esta. */
+.cauce-meses__lista {
+  list-style: none;
+  display: flex;
+  gap: 1.6rem;
+  margin: 1.6rem -1.5rem 0;
+  padding: 0 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.5rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.cauce-meses__lista::-webkit-scrollbar { display: none; }
+
+.cauce-meses__item {
+  flex: 0 0 80%;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.cauce-meses__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+/* El recuadro de foto pendiente recibe esta misma clase: ocupa el casillero
+   igual que la foto. */
+.cauce-meses__imagen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1.2rem;
+}
+
+.cauce-meses__texto {
+  margin-top: 0.8rem;
+  overflow-wrap: break-word;
+}
+
+/* Dos clases: es el titulo de una tarjeta, no un titulo de seccion. relative
+   por el nombre del mes que va oculto adentro (.visually-hidden es absolute):
+   sin un ancestro posicionado adentro del carrusel, no se desplaza con la
+   tarjeta, queda fuera de la fila y le da scroll horizontal a la pagina. */
+.cauce-meses .cauce-meses__nombre {
+  position: relative;
+  margin: 0;
+  font-family: var(--cauce-font-texto);
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: var(--cauce-meses-tinta);
+}
+
+.cauce-meses__parrafo {
+  font-size: 1.5rem;
+  line-height: 1.45;
+}
+
+.cauce-meses__parrafo > :first-child { margin-top: 0; }
+.cauce-meses__parrafo > :last-child { margin-bottom: 0; }
+
+@media screen and (min-width: 750px) {
+  .cauce-meses__pestanas {
+    width: calc(var(--cauce-meses-n, 3) * 20%);
+    max-width: 100%;
+  }
+
+  .cauce-meses__pestana { padding-inline: 1.6rem; }
+
+  .cauce-meses__lista {
+    display: grid;
+    grid-template-columns: repeat(var(--cauce-meses-n, 3), minmax(0, 1fr));
+    margin: 1.6rem 0 0;
+    padding: 0 1.6rem;
+    overflow: visible;
+  }
+
+  .cauce-meses__imagen { transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+
+  .cauce-meses__texto { transition: opacity 0.2s ease; }
+
+  .cauce-meses__parrafo {
+    font-size: 1.4rem;
+    line-height: 1.32;
+  }
+
+  .cauce-meses__item:not(.cauce-meses__item--activo) .cauce-meses__imagen {
+    height: 75%;
+    cursor: pointer;
+  }
+
+  .cauce-meses__item:not(.cauce-meses__item--activo) .cauce-meses__texto {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* El texto entra cuando la foto ya arranco a crecer. */
+  .cauce-meses__item--activo .cauce-meses__texto { transition-delay: 0.1s; }
+
+  /* Sin JS no hay con que elegir: las tres abiertas. Va despues de las dos
+     reglas de arriba, con la misma especificidad. */
+  .no-js .cauce-meses__item .cauce-meses__imagen { height: 100%; }
+  .no-js .cauce-meses__item .cauce-meses__texto { opacity: 1; }
+}
+
+.no-js .cauce-meses__pestanas { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cauce-meses__imagen,
+  .cauce-meses__texto {
+    transition: none;
+  }
+}

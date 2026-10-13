@@ -1,6 +1,6 @@
 /*
   CAUCE — comportamiento de las secciones cauce-*.
-  Vanilla, sin dependencias, tres custom elements. Se carga con defer.
+  Vanilla, sin dependencias, cuatro custom elements. Se carga con defer.
 
   Todo lo que se puede resolver en CSS o con HTML nativo esta resuelto ahi:
   los acordeones son <details>, los carruseles son scroll-snap. Este archivo
@@ -269,6 +269,115 @@
   }
 
   /* ----------------------------------------------------------------------
+     <cauce-meses> — una pestana y una foto por mes
+     (sections/cauce-meses.liquid, D-080).
+
+     Elegir un mes es cambiar una clase y un aria-pressed: el tamano de la foto
+     y el texto que se ve los resuelve CSS. Se elige con la pestana, tocando la
+     foto o llegando con el foco a un enlace del texto.
+
+     En telefono la fila es un carrusel de scroll-snap y el mes elegido es el
+     que esta a la vista: lo decide la posicion del scroll, no el clic. La
+     pestana solo desplaza la fila. Si ademas marcara el mes, el desplazamiento
+     suave lo devolveria al de partida antes de llegar.
+
+     Carrusel o grilla no se pregunta con un media query repetido aca: es
+     carrusel si el CSS dejo la fila con scroll y el contenido no entra. Las
+     dos cosas: en la grilla (overflow visible) una palabra larga puede
+     desbordar una columna angosta, y eso no la vuelve carrusel.
+     -------------------------------------------------------------------- */
+  class CauceMeses extends HTMLElement {
+    connectedCallback() {
+      this.lista = this.querySelector('.cauce-meses__lista');
+      this.items = Array.from(this.querySelectorAll('[data-cauce-mes]'));
+      this.botones = Array.from(this.querySelectorAll('[data-cauce-mes-boton]'));
+      if (!this.lista || this.items.length < 2) return;
+
+      this.activo = 0;
+      this.cuadro = 0;
+
+      this.addEventListener('click', this.onElegir.bind(this));
+      this.addEventListener('focusin', this.onElegir.bind(this));
+      // Editor de temas: al elegir el bloque de un mes, se abre ese mes.
+      this.addEventListener('shopify:block:select', this.onElegir.bind(this));
+      this.lista.addEventListener('scroll', this.onScroll.bind(this), { passive: true });
+    }
+
+    disconnectedCallback() {
+      if (this.cuadro) cancelAnimationFrame(this.cuadro);
+    }
+
+    esCarrusel() {
+      return (
+        getComputedStyle(this.lista).overflowX !== 'visible' &&
+        this.lista.scrollWidth > this.lista.clientWidth + 1
+      );
+    }
+
+    onElegir(e) {
+      const boton = e.target.closest('[data-cauce-mes-boton]');
+      // El foco sobre una pestana no elige: con Tab se pasa por las tres.
+      if (boton && e.type === 'focusin') return;
+
+      const i = boton
+        ? this.botones.indexOf(boton)
+        : this.items.indexOf(e.target.closest('[data-cauce-mes]'));
+      if (i === -1) return;
+
+      if (!this.esCarrusel()) {
+        this.marcar(i);
+        return;
+      }
+
+      const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      this.lista.scrollTo({
+        left: this.items[i].offsetLeft - this.items[0].offsetLeft,
+        behavior: reducido ? 'auto' : 'smooth',
+      });
+    }
+
+    onScroll() {
+      if (this.cuadro) return;
+      this.cuadro = requestAnimationFrame(
+        function () {
+          this.cuadro = 0;
+          if (this.esCarrusel()) this.marcar(this.aLaVista());
+        }.bind(this)
+      );
+    }
+
+    // El mes cuyo borde izquierdo quedo mas cerca del inicio de la fila. La
+    // ultima tarjeta no llega a alinearse a la izquierda (la fila se termina
+    // antes), asi que el final del scroll es siempre el ultimo mes.
+    aLaVista() {
+      const x = this.lista.scrollLeft;
+      if (x >= this.lista.scrollWidth - this.lista.clientWidth - 2) return this.items.length - 1;
+
+      const origen = this.items[0].offsetLeft;
+      let cerca = 0;
+      let minimo = Infinity;
+      for (let i = 0; i < this.items.length; i++) {
+        const d = Math.abs(this.items[i].offsetLeft - origen - x);
+        if (d < minimo) {
+          minimo = d;
+          cerca = i;
+        }
+      }
+      return cerca;
+    }
+
+    marcar(index) {
+      if (index === this.activo) return;
+      this.activo = index;
+      for (let i = 0; i < this.items.length; i++) {
+        const on = i === index;
+        this.items[i].classList.toggle('cauce-meses__item--activo', on);
+        if (this.botones[i]) this.botones[i].setAttribute('aria-pressed', String(on));
+      }
+    }
+  }
+
+  /* ----------------------------------------------------------------------
      Empujon de envio gratis del carrito: agrega una unidad por AJAX sin salir
      del drawer (snippets/cauce-carrito-nudge.liquid).
 
@@ -499,4 +608,5 @@
   if (!customElements.get('cauce-tabs')) customElements.define('cauce-tabs', CauceTabs);
   if (!customElements.get('cauce-ugc')) customElements.define('cauce-ugc', CauceUgc);
   if (!customElements.get('cauce-hero')) customElements.define('cauce-hero', CauceHero);
+  if (!customElements.get('cauce-meses')) customElements.define('cauce-meses', CauceMeses);
 })();
