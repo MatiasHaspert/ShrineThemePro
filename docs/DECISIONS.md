@@ -4391,7 +4391,8 @@ bloque se mueve de lugar, ese 8 hay que revisarlo.
 El del mes 1 es el de la captura, palabra por palabra. "Aliento fresco desde el día 1" es un plazo
 de resultado (D-074 §5), como los de D-078 y D-079, y además no coincide con dos lugares de la
 misma página: la línea de tiempo pone las primeras mejoras del aliento en "Días 3 – 7", y la
-pregunta 3 dice que "no hay un plazo garantizado".
+pregunta 3 (que el comercio reescribió el mismo día desde el editor) habla de "las primeras dos
+semanas".
 
 ### 6. Lo que queda pendiente
 
