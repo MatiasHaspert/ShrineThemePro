@@ -601,6 +601,7 @@
         "n2",
         "n3"
       ],
+      "disabled": true,
       "settings": {
         "volanta": "",
         "titulo": "La fórmula, a la vista",
@@ -911,7 +912,6 @@
     },
     "meses": {
       "type": "cauce-meses",
-      "disabled": true,
       "blocks": {
         "m1": {
           "type": "mes",
@@ -1316,7 +1316,7 @@
         "etiqueta_de_cinco": "de 5 estrellas",
         "etiqueta_verificada": "Compra verificada",
         "ver_mas": "Ver más reseñas",
-        "aviso_editor": "[COMPLETAR: reseñas reales] Estas tarjetas se ven solo acá, en el editor. En la tienda el bloque aparece cuando haya al menos una reseña completa: texto, nombre y puntaje.",
+        "aviso_editor": "",
         "visibles": 6,
         "relacion": "4 / 5",
         "color_scheme": "background-1",
